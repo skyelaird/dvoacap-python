@@ -107,17 +107,17 @@ def compute_zenith_angle(
     # Get solar declination (latitude) for this month
     # Choose beginning or end of month value based on which is closer
     sun_lat_start, sun_lat_end = SUN_LAT[month]
-    
+
     if abs(point.latitude - sun_lat_start) > abs(point.latitude - sun_lat_end):
         sun_lat = sun_lat_start
     else:
         sun_lat = sun_lat_end
-    
+
     # Calculate zenith angle using spherical trigonometry
     # This is the great circle angular distance between point and sub-solar point
     cos_zenith = (
         math.sin(point.latitude) * math.sin(sun_lat) +
-        math.cos(point.latitude) * math.cos(sun_lat) * 
+        math.cos(point.latitude) * math.cos(sun_lat) *
         math.cos(point.longitude - sun_lon)
     )
     

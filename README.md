@@ -61,7 +61,7 @@ See [examples/](examples/) for more detailed usage examples.
 
 ## 📊 Project Status
 
-**Current Phase: 4 of 5 Complete (80%)**
+**Current Phase: 5 of 5 In Progress (85%)**
 
 ### ✅ Completed Modules
 
@@ -99,24 +99,30 @@ See [examples/](examples/) for more detailed usage examples.
 
 ### 🚧 In Progress
 
-- None currently
+- **Phase 5: Signal Predictions** (Partial)
+  - ✓ Noise modeling (atmospheric, galactic, man-made)
+  - ✓ Antenna gain calculations
+  - ✓ Prediction engine framework
+  - ⚠ Full end-to-end integration (in progress)
+  - *Source: VoaCapEng.pas, AntGain.pas, NoiseMdl.pas*
 
 ### 📅 Planned
 
-- **Phase 5: Signal Predictions**
-  - MUF/FOT/LUF calculations
-  - Signal strength prediction
-  - Reliability estimates
-  - *Source: VoaCapEng.pas*
+- Complete Phase 5 integration and testing
 
 ## 📚 Documentation
 
+### User Guides
+- **[Usage Guide](docs/USAGE.md)** - Comprehensive API usage patterns and examples
+- **[Integration Guide](docs/INTEGRATION.md)** - Integrating with web apps, dashboards, and databases
 - **[Quick Start](docs/QUICK_START%20v0.1.pdf)** - Getting started guide
+
+### Technical Documentation
 - **[Project Status](docs/PROJECT_STATUS.pdf)** - Detailed progress tracker
 - **[Phase 1 Summary](docs/PATHGEOMETRY_PORT_SUMMARY.pdf)** - Path geometry implementation
 - **[Phase 2 Summary](docs/PHASE2_COMPLETE.pdf)** - Solar & geomagnetic implementation
-- **[Phase 3 Summary](docs/PHASE3_COMPLETE.pdf)** - Ionospheric profiles implementation
-- **[Phase 4 Summary](docs/PHASE4_COMPLETE.pdf)** - Raytracing implementation (to be created)
+- **[Phase 3 Summary](docs/PHASE3_COMPLETE.md)** - Ionospheric profiles implementation
+- **[Phase 4 Summary](docs/PHASE4_SUMMARY.md)** - Raytracing implementation
 
 ## 🧪 Testing
 
@@ -204,7 +210,7 @@ Contributions are welcome! This is a large project with many modules still to po
 - Performance optimization
 - Validation against reference data
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines (coming soon).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📖 References
 
