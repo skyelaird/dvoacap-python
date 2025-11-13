@@ -1,0 +1,190 @@
+#!/usr/bin/env python3
+"""
+VE1ATM HF Propagation Dashboard Server
+
+Lightweight Flask server that:
+- Serves the dashboard and static files
+- Provides API endpoint to trigger prediction generation
+- Allows on-demand refresh from the web interface
+
+Usage:
+    python3 server.py
+
+Then visit: http://localhost:8000
+"""
+
+import sys
+import json
+import threading
+import subprocess
+from pathlib import Path
+from datetime import datetime
+from flask import Flask, jsonify, send_from_directory, request
+from flask_cors import CORS
+
+# Add parent directory to import dvoacap
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for API requests
+
+# Global state for prediction generation
+generation_state = {
+    'running': False,
+    'progress': 0,
+    'message': 'Ready',
+    'last_updated': None,
+    'error': None
+}
+
+
+def run_prediction_generator():
+    """
+    Run the prediction generator in a background thread
+    Updates global state as it progresses
+    """
+    global generation_state
+
+    try:
+        generation_state['running'] = True
+        generation_state['progress'] = 10
+        generation_state['message'] = 'Starting prediction engine...'
+        generation_state['error'] = None
+
+        # Run the prediction generator as a subprocess
+        script_path = Path(__file__).parent / 'generate_predictions.py'
+
+        generation_state['progress'] = 20
+        generation_state['message'] = 'Fetching solar conditions...'
+
+        # Execute the script
+        result = subprocess.run(
+            [sys.executable, str(script_path)],
+            cwd=str(Path(__file__).parent),
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 minute timeout
+        )
+
+        if result.returncode == 0:
+            generation_state['progress'] = 100
+            generation_state['message'] = 'Predictions updated successfully!'
+            generation_state['last_updated'] = datetime.now().isoformat()
+        else:
+            generation_state['error'] = f"Generator failed: {result.stderr[:200]}"
+            generation_state['message'] = 'Generation failed'
+
+    except subprocess.TimeoutExpired:
+        generation_state['error'] = 'Prediction generation timed out (>5 minutes)'
+        generation_state['message'] = 'Timeout error'
+    except Exception as e:
+        generation_state['error'] = str(e)
+        generation_state['message'] = f'Error: {str(e)[:100]}'
+    finally:
+        generation_state['running'] = False
+
+
+# =============================================================================
+# API Endpoints
+# =============================================================================
+
+@app.route('/api/generate', methods=['POST'])
+def trigger_generation():
+    """
+    API endpoint to trigger prediction generation
+
+    Returns:
+        JSON with status
+    """
+    global generation_state
+
+    if generation_state['running']:
+        return jsonify({
+            'status': 'already_running',
+            'message': 'Prediction generation already in progress'
+        }), 409
+
+    # Start generation in background thread
+    thread = threading.Thread(target=run_prediction_generator, daemon=True)
+    thread.start()
+
+    return jsonify({
+        'status': 'started',
+        'message': 'Prediction generation started'
+    })
+
+
+@app.route('/api/status', methods=['GET'])
+def get_status():
+    """
+    API endpoint to check generation status
+
+    Returns:
+        JSON with current state
+    """
+    return jsonify(generation_state)
+
+
+@app.route('/api/data', methods=['GET'])
+def get_prediction_data():
+    """
+    API endpoint to fetch current prediction data
+
+    Returns:
+        JSON prediction data
+    """
+    try:
+        data_file = Path(__file__).parent / 'propagation_data.json'
+        if data_file.exists():
+            with open(data_file, 'r') as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({'error': 'No prediction data available'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# =============================================================================
+# Static File Serving
+# =============================================================================
+
+@app.route('/')
+def index():
+    """Serve the main dashboard"""
+    return send_from_directory('.', 'dashboard.html')
+
+
+@app.route('/<path:path>')
+def serve_static(path):
+    """Serve static files"""
+    return send_from_directory('.', path)
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+def main():
+    """Start the Flask server"""
+    import argparse
+
+    parser = argparse.ArgumentParser(description='VE1ATM Propagation Dashboard Server')
+    parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
+    parser.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+
+    args = parser.parse_args()
+
+    print("=" * 80)
+    print("VE1ATM HF Propagation Dashboard Server")
+    print("=" * 80)
+    print(f"\n✓ Server starting on http://{args.host}:{args.port}")
+    print(f"✓ Dashboard: http://{args.host}:{args.port}/")
+    print(f"✓ Press Ctrl+C to stop\n")
+    print("=" * 80)
+
+    app.run(host=args.host, port=args.port, debug=args.debug)
+
+
+if __name__ == '__main__':
+    main()
