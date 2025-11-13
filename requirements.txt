@@ -1,0 +1,20 @@
+# DVOACAP-Python Dependencies
+
+# Core dependencies (required)
+numpy>=1.20.0
+
+# Development dependencies (optional)
+# Install with: pip install -e ".[dev]"
+
+# Testing
+pytest>=7.0
+pytest-cov>=4.0
+
+# Code quality
+black>=22.0
+flake8>=4.0
+mypy>=0.950
+
+# Documentation (future)
+# sphinx>=4.0
+# sphinx-rtd-theme>=1.0
