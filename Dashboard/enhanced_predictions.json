@@ -1,7 +1,7 @@
 {
   "predictions": {
     "current_conditions": {
-      "generated": "2025-11-13T20:32:35.689204+00:00",
+      "generated": "2025-11-13T20:46:48.735367+00:00",
       "solar": {
         "sfi": 150.0,
         "ssn": 100.0,
@@ -16,10 +16,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 143.0,
+              "snr_db": 146.1,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -30,10 +30,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 149.1,
+              "snr_db": 149.3,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -44,10 +44,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 155.6,
+              "snr_db": 152.6,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -58,10 +58,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 161.8,
+              "snr_db": 156.9,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -72,10 +72,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 166.1,
+              "snr_db": 161.7,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -86,10 +86,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 169.8,
+              "snr_db": 167.8,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         },
@@ -100,10 +100,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 171.9,
+              "snr_db": 171.5,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 35.81
             }
           }
         }
