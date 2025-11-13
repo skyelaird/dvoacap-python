@@ -71,7 +71,11 @@ def run_prediction_generator():
             generation_state['message'] = 'Predictions updated successfully!'
             generation_state['last_updated'] = datetime.now().isoformat()
         else:
-            generation_state['error'] = f"Generator failed: {result.stderr[:200]}"
+            # Combine stdout and stderr for complete error message
+            error_output = result.stderr if result.stderr else result.stdout
+            if not error_output:
+                error_output = f"Process exited with code {result.returncode}"
+            generation_state['error'] = f"Generator failed: {error_output[:500]}"
             generation_state['message'] = 'Generation failed'
 
     except subprocess.TimeoutExpired:
@@ -164,6 +168,34 @@ def serve_static(path):
 # Main
 # =============================================================================
 
+def check_dependencies():
+    """
+    Check if required dependencies are installed
+    Returns tuple: (success: bool, missing: list)
+    """
+    missing = []
+
+    # Check core dependencies
+    try:
+        import numpy
+    except ImportError:
+        missing.append('numpy')
+
+    try:
+        import requests
+    except ImportError:
+        missing.append('requests')
+
+    # Check if dvoacap module is importable
+    try:
+        sys.path.insert(0, str(Path(__file__).parent.parent))
+        from src.dvoacap.prediction_engine import PredictionEngine
+    except ImportError as e:
+        missing.append(f'dvoacap ({str(e)})')
+
+    return len(missing) == 0, missing
+
+
 def main():
     """Start the Flask server"""
     import argparse
@@ -172,8 +204,26 @@ def main():
     parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
     parser.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    parser.add_argument('--skip-deps-check', action='store_true', help='Skip dependency check')
 
     args = parser.parse_args()
+
+    # Check dependencies unless skipped
+    if not args.skip_deps_check:
+        success, missing = check_dependencies()
+        if not success:
+            print("=" * 80)
+            print("ERROR: Missing Dependencies")
+            print("=" * 80)
+            print("\nThe following required packages are not installed:")
+            for dep in missing:
+                print(f"  ✗ {dep}")
+            print("\nTo fix this, run:")
+            print("  pip install -e .[dashboard]")
+            print("\nOr install individual packages:")
+            print("  pip install numpy requests flask flask-cors")
+            print("=" * 80)
+            sys.exit(1)
 
     print("=" * 80)
     print("VE1ATM HF Propagation Dashboard Server")

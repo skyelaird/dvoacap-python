@@ -354,6 +354,40 @@ jobs:
 
 ## 🐛 Troubleshooting
 
+### "Generator failed" Error in Dashboard
+
+**Error**: When clicking "Refresh Predictions", you see "Complete! Error: Generator failed:"
+
+**Cause**: This usually indicates missing dependencies or import errors.
+
+**Solution**:
+
+1. Check the detailed error message shown in the dashboard alert
+2. Install all required dependencies:
+
+```bash
+# From repository root
+pip install -e .[dashboard]
+
+# Or install packages individually
+pip install numpy requests flask flask-cors
+```
+
+3. Verify dependencies are installed:
+
+```bash
+python3 -c "import numpy, requests, flask, flask_cors; print('All dependencies OK')"
+```
+
+4. Test the generator directly to see full error output:
+
+```bash
+cd Dashboard
+python3 generate_predictions.py
+```
+
+**Note**: The server now performs a dependency check on startup and will show exactly which packages are missing.
+
 ### Predictions Not Generating
 
 **Error**: `ModuleNotFoundError: No module named 'dvoacap'`
