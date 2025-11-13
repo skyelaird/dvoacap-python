@@ -68,11 +68,18 @@ We welcome contributions in the following areas:
    - Caching strategies
    - Memory optimization
 
-5. **Features**
+5. **Dashboard and Web Interface**
+   - Dashboard UI/UX improvements
+   - Additional visualization features
+   - API endpoint enhancements
+   - Mobile app development
+   - Multi-user service features (see Dashboard/ISSUE_MULTI_USER_WEB_APP.md)
+
+6. **Features**
    - Data visualization tools
-   - GUI/web interface
    - Additional antenna models
    - Import/export utilities
+   - Integration with external APIs
 
 ### Types of Contributions
 

@@ -340,6 +340,8 @@ async def health_check():
 
 ## Web Dashboard Integration
 
+> **Note:** DVOACAP-Python includes a complete production-ready dashboard in the `Dashboard/` directory with Flask backend, interactive visualizations, and DXCC tracking. See [Dashboard/README.md](../Dashboard/README.md) for setup instructions. The examples below show how to build your own custom dashboards.
+
 ### React Dashboard Example
 
 ```javascript
