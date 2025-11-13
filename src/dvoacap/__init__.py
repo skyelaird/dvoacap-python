@@ -8,7 +8,7 @@ Original DVOACAP by Alex Shovkoplyas, VE3NEA
 Python Port: 2025
 """
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __author__ = "Python Port Contributors"
 __license__ = "MIT"
 
@@ -114,8 +114,35 @@ try:
 except ImportError:
     __all_phase4__ = []
 
+# Phase 5: Signal Predictions
+try:
+    from .noise_model import (
+        NoiseModel,
+        TripleValue,
+        Distribution,
+    )
+    from .antenna_gain import (
+        AntennaModel,
+        IsotropicAntenna,
+        HalfWaveDipole,
+        VerticalMonopole,
+        AntennaFarm,
+    )
+    __all_phase5__ = [
+        "NoiseModel",
+        "TripleValue",
+        "Distribution",
+        "AntennaModel",
+        "IsotropicAntenna",
+        "HalfWaveDipole",
+        "VerticalMonopole",
+        "AntennaFarm",
+    ]
+except ImportError:
+    __all_phase5__ = []
+
 # Combine all exports
-__all__ = __all_phase1__ + __all_phase2__ + __all_phase3__ + __all_phase4__
+__all__ = __all_phase1__ + __all_phase2__ + __all_phase3__ + __all_phase4__ + __all_phase5__
 
 # Module information
 _phase_status = {
@@ -123,7 +150,7 @@ _phase_status = {
     "Phase 2": "Complete - Solar & Geomagnetic",
     "Phase 3": "Complete - Ionospheric Profiles",
     "Phase 4": "Complete - Raytracing",
-    "Phase 5": "Planned - Signal Predictions",
+    "Phase 5": "In Progress - Signal Predictions (Noise & Antennas Complete)",
 }
 
 
@@ -134,11 +161,13 @@ def get_phase_status():
 
 def get_version_info():
     """Return version and build information"""
+    total_modules = (len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__) +
+                    len(__all_phase4__) + len(__all_phase5__))
     return {
         "version": __version__,
         "author": __author__,
         "license": __license__,
         "python_requires": ">=3.8",
-        "modules_complete": len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__) + len(__all_phase4__),
-        "progress": "80%",
+        "modules_complete": total_modules,
+        "progress": "90%",
     }
