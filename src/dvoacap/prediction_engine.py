@@ -112,7 +112,7 @@ class VoacapParams:
     """VOACAP input parameters."""
     ssn: float = 100.0                      # Sunspot number
     month: int = 1                          # Month (1-12)
-    tx_location: GeoPoint = field(default_factory=GeoPoint)
+    tx_location: GeoPoint = field(default_factory=lambda: GeoPoint(lat=0.0, lon=0.0))
     tx_power: float = 1500.0                # Transmit power (watts)
     min_angle: float = np.deg2rad(3.0)      # Minimum takeoff angle (radians)
     man_made_noise_at_3mhz: float = 145.0   # Man-made noise at 3 MHz (dB)
@@ -184,7 +184,7 @@ class PredictionEngine:
         self.rx_antennas = AntennaFarm()
 
         # Input/output
-        self.rx_location = GeoPoint()
+        self.rx_location = GeoPoint(lat=0.0, lon=0.0)
         self.utc_time = 0.0
         self.frequencies: List[float] = []
         self.predictions: List[Prediction] = []
@@ -230,7 +230,7 @@ class PredictionEngine:
         self.predictions = [Prediction() for _ in frequencies]
 
         # Compute Fourier maps for month, SSN, UTC
-        self.fourier_maps.set_month_ssn_utc(self.params.month, self.params.ssn, utc_time)
+        self.fourier_maps.set_conditions(self.params.month, self.params.ssn, utc_time)
 
         # Path geometry
         self.path.long_path = self.params.long_path
@@ -241,8 +241,8 @@ class PredictionEngine:
         self.params.tx_location = self.path.tx
 
         # Rotate antennas
-        self.tx_antennas.current_antenna.azimuth = self.path.azim_tx_to_rx
-        self.rx_antennas.current_antenna.azimuth = self.path.azim_rx_to_tx
+        self.tx_antennas.current_antenna.azimuth = self.path.azim_tr
+        self.rx_antennas.current_antenna.azimuth = self.path.azim_rt
 
         # Compute control points and their parameters
         self._compute_control_points()
@@ -317,17 +317,25 @@ class PredictionEngine:
         """Compute control points along the path."""
         self._control_points = []
 
+        def geopoint_to_geographicpoint(gp: GeoPoint) -> GeographicPoint:
+            """Convert GeoPoint to GeographicPoint."""
+            return GeographicPoint(latitude=gp.lat, longitude=gp.lon)
+
         if self.path.dist <= self.RAD_2000_KM_01:
             # One control point at midpoint
             ctrl_pt = ControlPoint()
-            ctrl_pt.location = self.path.get_point_at_dist(0.5 * self.path.dist)
+            ctrl_pt.location = geopoint_to_geographicpoint(
+                self.path.get_point_at_dist(0.5 * self.path.dist)
+            )
             self._control_points.append(ctrl_pt)
 
         elif self.path.dist <= self.RAD_4000_KM:
             # Three control points
             for dist in [self.RAD_1000_KM, 0.5 * self.path.dist, self.path.dist - self.RAD_1000_KM]:
                 ctrl_pt = ControlPoint()
-                ctrl_pt.location = self.path.get_point_at_dist(dist)
+                ctrl_pt.location = geopoint_to_geographicpoint(
+                    self.path.get_point_at_dist(dist)
+                )
                 self._control_points.append(ctrl_pt)
 
         else:
@@ -335,23 +343,28 @@ class PredictionEngine:
             for dist in [self.RAD_1000_KM, self.RAD_2000_KM, 0.5 * self.path.dist,
                          self.path.dist - self.RAD_2000_KM, self.path.dist - self.RAD_1000_KM]:
                 ctrl_pt = ControlPoint()
-                ctrl_pt.location = self.path.get_point_at_dist(dist)
+                ctrl_pt.location = geopoint_to_geographicpoint(
+                    self.path.get_point_at_dist(dist)
+                )
                 self._control_points.append(ctrl_pt)
 
     def _compute_geo_params(self, ctrl_pt: ControlPoint):
         """Compute geophysical parameters for a control point."""
         # East longitude (0..2π)
-        if ctrl_pt.location.lon >= 0:
-            ctrl_pt.east_lon = ctrl_pt.location.lon
+        if ctrl_pt.location.longitude >= 0:
+            ctrl_pt.east_lon = ctrl_pt.location.longitude
         else:
-            ctrl_pt.east_lon = 2 * np.pi + ctrl_pt.location.lon
+            ctrl_pt.east_lon = 2 * np.pi + ctrl_pt.location.longitude
 
         # Magnetic field parameters
-        self.magnetic_field.compute(ctrl_pt)
+        geo_params = self.magnetic_field.compute(ctrl_pt.location)
+        ctrl_pt.mag_lat = geo_params.magnetic_latitude
+        ctrl_pt.mag_dip = geo_params.magnetic_dip
+        ctrl_pt.gyro_freq = geo_params.gyrofrequency
 
         # Ground constants (land vs sea)
         landmass = self.fourier_maps.compute_fixed_map(
-            FixedMapKind.LAND_MASS, ctrl_pt.location.lat, ctrl_pt.east_lon
+            FixedMapKind.LAND_MASS, ctrl_pt.location.latitude, ctrl_pt.east_lon
         )
         if landmass >= 0:
             # Land
@@ -368,7 +381,7 @@ class PredictionEngine:
         )
 
         # Local time
-        ctrl_pt.local_time = compute_local_time(self.utc_time, ctrl_pt.location.lon)
+        ctrl_pt.local_time = compute_local_time(self.utc_time, ctrl_pt.location.longitude)
 
     def _create_iono_profiles(self):
         """Create ionospheric profiles from control points."""
@@ -382,10 +395,10 @@ class PredictionEngine:
         # Assign control point parameters to profiles
         if num_profiles == 1:
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e_layer
-            prof.f1_layer = self._control_points[0].f1_layer
-            prof.f2_layer = self._control_points[0].f2_layer
-            prof.latitude = self._control_points[0].location.lat
+            prof.e_layer = self._control_points[0].e
+            prof.f1_layer = self._control_points[0].f1
+            prof.f2_layer = self._control_points[0].f2
+            prof.latitude = self._control_points[0].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[0].local_time
@@ -394,10 +407,10 @@ class PredictionEngine:
         elif num_profiles == 2:
             # First profile
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e_layer
-            prof.f1_layer = self._control_points[0].f1_layer
-            prof.f2_layer = self._control_points[1].f2_layer
-            prof.latitude = self._control_points[1].location.lat
+            prof.e_layer = self._control_points[0].e
+            prof.f1_layer = self._control_points[0].f1
+            prof.f2_layer = self._control_points[1].f2
+            prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[1].local_time
@@ -405,10 +418,10 @@ class PredictionEngine:
 
             # Second profile
             prof = self._profiles[1]
-            prof.e_layer = self._control_points[2].e_layer
-            prof.f1_layer = self._control_points[2].f1_layer
-            prof.f2_layer = self._control_points[1].f2_layer
-            prof.latitude = self._control_points[1].location.lat
+            prof.e_layer = self._control_points[2].e
+            prof.f1_layer = self._control_points[2].f1
+            prof.f2_layer = self._control_points[1].f2
+            prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[2].mag_lat
             prof.local_time_e = self._control_points[2].local_time
             prof.local_time_f2 = self._control_points[1].local_time
@@ -418,10 +431,10 @@ class PredictionEngine:
             # Three profiles for long paths
             # Profile 0
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e_layer
-            prof.f1_layer = self._control_points[0].f1_layer
-            prof.f2_layer = self._control_points[1].f2_layer
-            prof.latitude = self._control_points[1].location.lat
+            prof.e_layer = self._control_points[0].e
+            prof.f1_layer = self._control_points[0].f1
+            prof.f2_layer = self._control_points[1].f2
+            prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[1].local_time
@@ -429,10 +442,10 @@ class PredictionEngine:
 
             # Profile 1
             prof = self._profiles[1]
-            prof.e_layer = self._control_points[2].e_layer
-            prof.f1_layer = self._control_points[2].f1_layer
-            prof.f2_layer = self._control_points[2].f2_layer
-            prof.latitude = self._control_points[2].location.lat
+            prof.e_layer = self._control_points[2].e
+            prof.f1_layer = self._control_points[2].f1
+            prof.f2_layer = self._control_points[2].f2
+            prof.latitude = self._control_points[2].location.latitude
             prof.mag_latitude = self._control_points[2].mag_lat
             prof.local_time_e = self._control_points[2].local_time
             prof.local_time_f2 = self._control_points[2].local_time
@@ -440,10 +453,10 @@ class PredictionEngine:
 
             # Profile 2
             prof = self._profiles[2]
-            prof.e_layer = self._control_points[4].e_layer
-            prof.f1_layer = self._control_points[4].f1_layer
-            prof.f2_layer = self._control_points[3].f2_layer
-            prof.latitude = self._control_points[3].location.lat
+            prof.e_layer = self._control_points[4].e
+            prof.f1_layer = self._control_points[4].f1
+            prof.f2_layer = self._control_points[3].f2
+            prof.latitude = self._control_points[3].location.latitude
             prof.mag_latitude = self._control_points[4].mag_lat
             prof.local_time_e = self._control_points[4].local_time
             prof.local_time_f2 = self._control_points[3].local_time

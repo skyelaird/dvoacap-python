@@ -11,7 +11,7 @@ combining CCIR/URSI maps with local solar/geomagnetic conditions.
 """
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 from .fourier_maps import FourierMaps, VarMapKind, FixedMapKind
 from .ionospheric_profile import LayerInfo
@@ -58,19 +58,19 @@ class ControlPoint:
     location and time along a propagation path.
     """
     # Location
-    location: GeographicPoint
-    east_lon: float  # East longitude in radians
-    distance_rad: float  # Distance from transmitter in radians
+    location: GeographicPoint = field(default_factory=lambda: GeographicPoint(0.0, 0.0))
+    east_lon: float = 0.0  # East longitude in radians
+    distance_rad: float = 0.0  # Distance from transmitter in radians
 
     # Time and solar
-    local_time: float  # Local time as fraction of day (0-1)
-    zen_angle: float  # Solar zenith angle in radians
-    zen_max: float  # Maximum zenith for F1 layer
+    local_time: float = 0.0  # Local time as fraction of day (0-1)
+    zen_angle: float = 0.0  # Solar zenith angle in radians
+    zen_max: float = 0.0  # Maximum zenith for F1 layer
 
     # Geomagnetic
-    mag_lat: float  # Magnetic latitude in radians
-    mag_dip: float  # Magnetic dip angle in radians
-    gyro_freq: float  # Gyrofrequency in MHz
+    mag_lat: float = 0.0  # Magnetic latitude in radians
+    mag_dip: float = 0.0  # Magnetic dip angle in radians
+    gyro_freq: float = 0.0  # Gyrofrequency in MHz
 
     # Ground parameters
     gnd_sig: float = 0.005  # Ground conductivity (S/m)
