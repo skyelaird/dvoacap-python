@@ -112,7 +112,12 @@ See [examples/](examples/) for more detailed usage examples.
 
 ## 📚 Documentation
 
+### User Guides
+- **[Usage Guide](docs/USAGE.md)** - Comprehensive API usage patterns and examples
+- **[Integration Guide](docs/INTEGRATION.md)** - Integrating with web apps, dashboards, and databases
 - **[Quick Start](docs/QUICK_START%20v0.1.pdf)** - Getting started guide
+
+### Technical Documentation
 - **[Project Status](docs/PROJECT_STATUS.pdf)** - Detailed progress tracker
 - **[Phase 1 Summary](docs/PATHGEOMETRY_PORT_SUMMARY.pdf)** - Path geometry implementation
 - **[Phase 2 Summary](docs/PHASE2_COMPLETE.pdf)** - Solar & geomagnetic implementation
