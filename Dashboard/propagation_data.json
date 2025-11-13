@@ -1,9 +1,7960 @@
 {
-  "generated": "2025-11-13T20:13:44.380887+00:00",
+  "generated": "2025-11-13T20:17:05.893137+00:00",
   "station": {
     "call": "VE1ATM",
     "lat": 44.374,
     "lon": -64.3,
     "grid": "FN74ui",
-    "antenna": "DX Commander 7m Vertical",
-    "location": 
+    "antenna": "DX Commander 7m Vertical"
+  },
+  "solar_conditions": {
+    "sfi": 150.0,
+    "ssn": 100.0,
+    "kp": 2.0,
+    "a_index": 10.0,
+    "timestamp": "2025-11-13T20:17:04.883190+00:00"
+  },
+  "bands": [
+    "40m",
+    "30m",
+    "20m",
+    "17m",
+    "15m",
+    "12m",
+    "10m"
+  ],
+  "regions": {
+    "EU": "Europe",
+    "UK": "United Kingdom",
+    "JA": "Japan",
+    "VK": "Australia",
+    "ZL": "New Zealand",
+    "AF": "Africa",
+    "SA": "South America",
+    "CA": "Central America",
+    "AS": "Asia",
+    "OC": "Oceania"
+  },
+  "predictions": [
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 0,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 10.12,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 0,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 10.01,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 0,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 17.8,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 0,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 20.85,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 0,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 24.62,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 0,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 14.28,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 145.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 154.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 162.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 166.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 0,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 20.34,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 0,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 19.05,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 0,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 13.91,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 0,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 20.53,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 2,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 10.94,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 2,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 10.4,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 2,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 15.67,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 2,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 16.53,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 2,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 18.22,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 2,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 13.04,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 146.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 155.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 162.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 166.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 2,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 16.44,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 2,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 14.28,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 2,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 13.63,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 2,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 16.0,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 4,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 10.35,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 4,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 10.65,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 4,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 14.84,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 4,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 13.86,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 4,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 14.43,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 4,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 15.14,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 148.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 155.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 162.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 166.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 4,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 16.83,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 4,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 12.24,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 4,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 15.19,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 4,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 13.08,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 6,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 7.9,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 6,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 7.91,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 6,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 14.79,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 6,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 14.02,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 6,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 14.05,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 6,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 12.46,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 151.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 156.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 162.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 166.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.4,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 6,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 16.77,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 6,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 11.99,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 6,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 13.44,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 6,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 14.22,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 8,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 10.51,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 8,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 9.38,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 8,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 13.03,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 8,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 13.36,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 8,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 14.5,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 8,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 13.67,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 154.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 158.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 161.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 165.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 8,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 13.54,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 8,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 11.69,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 8,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 10.25,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 8,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 13.76,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 10,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 18.07,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 10,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 16.05,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 10,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 11.27,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 10,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 10.49,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 10,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 11.33,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 10,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 24.75,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 154.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 157.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 159.6,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 163.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 167.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 10,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 18.37,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 10,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 9.85,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 10,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 12.15,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 10,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 10.72,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 12,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 28.08,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 12,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 25.11,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 12,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 10.63,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 12,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 11.92,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 12,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 16.05,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 12,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 35.04,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 154.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 156.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 158.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 161.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 165.2,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 169.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 171.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 12,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 29.31,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 12,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 18.25,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 12,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 19.62,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 12,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 11.99,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 14,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 32.36,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 14,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 29.09,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 14,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 12.82,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 14,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 21.46,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 14,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 21.62,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 14,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 37.14,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 151.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 154.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 155.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 159.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 163.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 171.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 14,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 33.78,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 14,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 30.1,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 14,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 14.36,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 14,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 20.48,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 16,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 29.89,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 16,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 28.09,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 16,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 12.04,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 16,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 29.23,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 16,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 20.66,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 16,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 35.81,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 146.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 149.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 152.6,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 156.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 161.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 167.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 171.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 16,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 37.91,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 16,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 30.69,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 16,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 12.53,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 16,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 24.31,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 18,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 22.23,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 18,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 23.08,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 18,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 10.88,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 18,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 24.27,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 18,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 27.13,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 18,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 32.97,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 143.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 148.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 153.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 158.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 163.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 168.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 171.7,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 18,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 37.07,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 18,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 29.29,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 18,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 12.36,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 18,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 17.13,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 20,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 14.36,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 20,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 16.09,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 20,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 14.59,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 20,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 24.22,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 20,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 28.7,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 20,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 26.58,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 143.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 149.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 155.6,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 161.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 166.1,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 169.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 171.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 20,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 35.11,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 20,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 29.05,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 20,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 12.17,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 20,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 26.06,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "EU",
+      "region_name": "Europe",
+      "utc_hour": 22,
+      "distance_km": 5414.0,
+      "azimuth": 55.5,
+      "muf": 10.95,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "region_name": "United Kingdom",
+      "utc_hour": 22,
+      "distance_km": 4496.0,
+      "azimuth": 53.4,
+      "muf": 11.75,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "JA",
+      "region_name": "Japan",
+      "utc_hour": 22,
+      "distance_km": 10798.0,
+      "azimuth": 342.0,
+      "muf": 22.81,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "VK",
+      "region_name": "Australia",
+      "utc_hour": 22,
+      "distance_km": 17242.0,
+      "azimuth": 314.7,
+      "muf": 27.72,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "ZL",
+      "region_name": "New Zealand",
+      "utc_hour": 22,
+      "distance_km": 15334.0,
+      "azimuth": 253.4,
+      "muf": 32.86,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AF",
+      "region_name": "Africa",
+      "utc_hour": 22,
+      "distance_km": 9553.0,
+      "azimuth": 94.0,
+      "muf": 19.7,
+      "bands": {
+        "40m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 143.8,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 151.5,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 159.6,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 165.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 167.9,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 170.3,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "GOOD",
+          "reliability": 100.0,
+          "snr": 172.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "SA",
+      "region_name": "South America",
+      "utc_hour": 22,
+      "distance_km": 6668.0,
+      "azimuth": 169.6,
+      "muf": 29.09,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "CA",
+      "region_name": "Central America",
+      "utc_hour": 22,
+      "distance_km": 4066.0,
+      "azimuth": 224.7,
+      "muf": 25.86,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "0F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "AS",
+      "region_name": "Asia",
+      "utc_hour": 22,
+      "distance_km": 11591.0,
+      "azimuth": 14.0,
+      "muf": 10.47,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    },
+    {
+      "region": "OC",
+      "region_name": "Oceania",
+      "utc_hour": 22,
+      "distance_km": 14972.0,
+      "azimuth": 308.7,
+      "muf": 27.35,
+      "bands": {
+        "40m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "30m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "20m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "17m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "15m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "12m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        },
+        "10m": {
+          "status": "CLOSED",
+          "reliability": 0.0,
+          "snr": 0.0,
+          "mode": "F2F2",
+          "hops": 0,
+          "elevation": 0.0
+        }
+      }
+    }
+  ]
+}
