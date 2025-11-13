@@ -94,8 +94,9 @@
     
     <div class="box" style="text-align: center;">
         <h2 style="margin-top: 0;">Ready to Use!</h2>
-        <p>Your personalized HF propagation prediction tool is ready. Click below to view current band conditions.</p>
-        <a href="propagation_dashboard.html" class="button">🌍 Open Dashboard</a>
+        <p>Your personalized HF propagation prediction tool using DVOACAP-Python is ready.</p>
+        <a href="dashboard.html" class="button">🌍 Open Dashboard</a>
+        <a href="README.md" class="button" style="background: linear-gradient(135deg, #2d5a4f 0%, #3a8c6d 100%);">📖 Documentation</a>
     </div>
     
     <div class="box">
@@ -136,12 +137,14 @@
         
         <h3>2. Update Predictions</h3>
         <p>To get fresh predictions with latest solar data, run:</p>
-        <div class="code">python3 generate_propagation.py</div>
+        <div class="code">python3 generate_predictions.py</div>
+        <p>Or use the update script:</p>
+        <div class="code">./update_predictions.sh</div>
         <p>Then refresh the dashboard in your browser.</p>
         
         <h3>3. Schedule Automatic Updates</h3>
-        <p>For continuous updates, set up a cron job to regenerate every 1-3 hours:</p>
-        <div class="code">0 */2 * * * cd /path/to/predictions && python3 generate_propagation.py</div>
+        <p>For continuous updates, set up a cron job to regenerate every 2 hours:</p>
+        <div class="code">0 */2 * * * cd /path/to/Dashboard && python3 generate_predictions.py</div>
     </div>
     
     <div class="box">
@@ -171,9 +174,11 @@
         
         <p><strong>Backend (Python):</strong></p>
         <ul>
+            <li>Uses DVOACAP-Python full prediction engine (Phases 1-5)</li>
             <li>Fetches current solar-terrestrial data from NOAA Space Weather</li>
-            <li>Calculates MUF (Maximum Usable Frequency) using ITU-R propagation models</li>
-            <li>Estimates signal quality, SNR, and reliability for each band/path</li>
+            <li>Calculates ionospheric parameters with CCIR/URSI coefficients</li>
+            <li>Performs ray tracing and MUF calculations</li>
+            <li>Computes signal strength, SNR, and reliability for each band/path</li>
             <li>Generates 24-hour timeline predictions</li>
             <li>Outputs JSON data file</li>
         </ul>
@@ -191,11 +196,14 @@
         <h2>📁 Your Files</h2>
         
         <ul>
-            <li><strong>propagation_dashboard.html</strong> - The main dashboard interface</li>
-            <li><strong>generate_propagation.py</strong> - Python script to generate predictions</li>
+            <li><strong>dashboard.html</strong> - The main dashboard interface</li>
+            <li><strong>index.html</strong> - This quick start guide</li>
+            <li><strong>generate_predictions.py</strong> - Prediction generator using DVOACAP</li>
+            <li><strong>update_predictions.sh</strong> - Convenient update script</li>
             <li><strong>propagation_data.json</strong> - Current prediction data (auto-generated)</li>
-            <li><strong>dxcc_summary.json</strong> - Your DXCC worked/needed list from your QRZ log</li>
-            <li><strong>README.md</strong> - Detailed documentation</li>
+            <li><strong>dxcc_summary.json</strong> - Your DXCC worked/needed list</li>
+            <li><strong>README.md</strong> - Comprehensive documentation</li>
+            <li><strong>archive/</strong> - Old/deprecated files from development</li>
         </ul>
     </div>
     
@@ -216,7 +224,7 @@
         
         <h3>Option 3: Local Web Server</h3>
         <div class="code">python3 -m http.server 8000</div>
-        <p>Then visit: http://localhost:8000/propagation_dashboard.html</p>
+        <p>Then visit: http://localhost:8000/dashboard.html</p>
     </div>
     
     <div class="box">
@@ -224,22 +232,22 @@
         
         <p>This system can be enhanced with:</p>
         <ul>
-            <li>Full VOACAP integration for maximum accuracy</li>
             <li>Gray line visualization and solar terminator tracking</li>
             <li>Alert notifications for rare DX openings to needed entities</li>
             <li>Historical propagation analysis from your actual QSOs</li>
             <li>Integration with DX cluster for real-time spots</li>
             <li>Contest mode with optimized band recommendations</li>
+            <li>Multi-antenna pattern support and gain calculations</li>
         </ul>
     </div>
     
     <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #2a3f5f;">
         <p style="color: #6a7f9f;">
             <strong>VE1ATM HF Propagation Prediction System</strong><br>
-            Custom-built for your QTH at FN74ui<br>
+            Powered by DVOACAP-Python | Custom-built for FN74ui<br>
             <em>73 and good DX!</em> 📡
         </p>
-        <a href="propagation_dashboard.html" class="button">🚀 Launch Dashboard</a>
+        <a href="dashboard.html" class="button">🚀 Launch Dashboard</a>
     </div>
 </body>
 </html>

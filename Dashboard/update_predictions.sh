@@ -5,20 +5,20 @@
 #
 
 echo "========================================="
-echo "  VE1ATM HF Propagation Prediction"
+echo "  VE1ATM HF Propagation Dashboard"
 echo "  Updating with latest solar data..."
 echo "========================================="
 echo ""
 
 # Run the Python prediction generator
-python3 generate_propagation.py
+python3 generate_predictions.py
 
 echo ""
 echo "✓ Predictions updated!"
 echo ""
 echo "View your dashboard:"
-echo "  • Open: propagation_dashboard.html"
+echo "  • Open: dashboard.html"
 echo "  • Or run: python3 -m http.server 8000"
-echo "  • Then visit: http://localhost:8000/propagation_dashboard.html"
+echo "  • Then visit: http://localhost:8000/dashboard.html"
 echo ""
 echo "========================================="
