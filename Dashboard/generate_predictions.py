@@ -90,11 +90,11 @@ def fetch_solar_conditions() -> Dict:
             'timestamp': datetime.now(timezone.utc).isoformat()
         }
 
-        print(f"✓ Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, Kp={solar_data['kp']:.1f}")
+        print(f"[OK] Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, Kp={solar_data['kp']:.1f}")
         return solar_data
 
     except Exception as e:
-        print(f"⚠ Could not fetch live solar data: {e}")
+        print(f"[WARNING] Could not fetch live solar data: {e}")
         print("  Using default mid-cycle conditions")
         return {
             'sfi': 150.0,
@@ -191,7 +191,7 @@ def generate_prediction(
         }
 
     except Exception as e:
-        print(f"  ⚠ Error predicting {region_code} at {utc_hour:02d}00 UTC: {e}")
+        print(f"  [WARNING] Error predicting {region_code} at {utc_hour:02d}00 UTC: {e}")
         # Return empty prediction
         return {
             'region': region_code,
@@ -220,7 +220,7 @@ def generate_24hour_forecast() -> Dict:
     solar = fetch_solar_conditions()
 
     # Initialize prediction engine
-    print("\n✓ Initializing DVOACAP prediction engine...")
+    print("\n[OK] Initializing DVOACAP prediction engine...")
     engine = PredictionEngine()
 
     # Configure engine
@@ -233,7 +233,7 @@ def generate_24hour_forecast() -> Dict:
     engine.params.required_snr = 10.0  # 10 dB SNR for good copy
     engine.params.required_reliability = 0.9
 
-    print(f"✓ Configuration: Month={now.month}, SSN={solar['ssn']:.0f}, TX Power=100W")
+    print(f"[OK] Configuration: Month={now.month}, SSN={solar['ssn']:.0f}, TX Power=100W")
 
     # Generate predictions
     frequencies = list(BANDS.values())
@@ -242,7 +242,7 @@ def generate_24hour_forecast() -> Dict:
     # Sample UTC hours (every 2 hours for performance, can do hourly if needed)
     utc_hours = range(0, 24, 2)
 
-    print(f"\n✓ Generating predictions for {len(TARGET_REGIONS)} regions, {len(utc_hours)} time points...")
+    print(f"\n[OK] Generating predictions for {len(TARGET_REGIONS)} regions, {len(utc_hours)} time points...")
     print()
 
     for utc_hour in utc_hours:
@@ -254,7 +254,7 @@ def generate_24hour_forecast() -> Dict:
             all_predictions.append(pred)
             hour_count += 1
 
-        print(f"✓ {hour_count} regions")
+        print(f"[OK] {hour_count} regions")
 
     # Build output structure
     output = {
@@ -286,14 +286,14 @@ def main():
 
     print()
     print("=" * 80)
-    print(f"✓ Predictions saved to: {output_file}")
+    print(f"[OK] Predictions saved to: {output_file}")
     print("=" * 80)
     print()
     print("Summary:")
-    print(f"  • Total predictions: {len(data['predictions'])}")
-    print(f"  • Regions covered: {len(TARGET_REGIONS)}")
-    print(f"  • Bands: {', '.join(BANDS.keys())}")
-    print(f"  • Generated: {data['generated']}")
+    print(f"  * Total predictions: {len(data['predictions'])}")
+    print(f"  * Regions covered: {len(TARGET_REGIONS)}")
+    print(f"  * Bands: {', '.join(BANDS.keys())}")
+    print(f"  * Generated: {data['generated']}")
     print()
     print("Next steps:")
     print("  1. Open Dashboard/dashboard.html in your browser")
