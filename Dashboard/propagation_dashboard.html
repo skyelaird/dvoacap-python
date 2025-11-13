@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE1ATM HF Propagation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            padding: 1.5rem 2rem;
+            border-bottom: 3px solid #4a90e2;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .station-info {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #b0c4de;
+        }
+        
+        .solar-conditions {
+            background: #162236;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            border-bottom: 1px solid #2a3f5f;
+        }
+        
+        .solar-metric {
+            text-align: center;
+        }
+        
+        .solar-metric .label {
+            font-size: 0.8rem;
+            color: #8a9bb5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .solar-metric .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-top: 0.2rem;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: #162236;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #2a3f5f;
+        }
+        
+        .card h2 {
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #2a3f5f;
+            padding-bottom: 0.5rem;
+        }
+        
+        #map {
+            height: 500px;
+            border-radius: 8px;
+            border: 2px solid #2a3f5f;
+        }
+        
+        .band-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .band-status {
+            background: #0d1520;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #2a3f5f;
+            transition: all 0.3s ease;
+        }
+        
+        .band-status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+        
+        .band-status .band-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .band-status .band-freq {
+            font-size: 0.8rem;
+            color: #6a7f9f;
+            margin-bottom: 1rem;
+        }
+        
+        .region-list {
+            font-size: 0.85rem;
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+        
+        .region-item {
+            padding: 0.3rem 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #1a2738;
+        }
+        
+        .quality-good { color: #4ade80; }
+        .quality-fair { color: #fbbf24; }
+        .quality-poor { color: #f87171; }
+        .quality-closed { color: #6b7280; }
+        
+        .reliability {
+            font-weight: bold;
+        }
+        
+        .timeline {
+            margin-top: 1rem;
+        }
+        
+        .timeline-hour {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid #1a2738;
+        }
+        
+        .timeline-hour:hover {
+            background: #0d1520;
+        }
+        
+        .hour-label {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .hour-bands {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .hour-band {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            background: #0d1520;
+            border: 1px solid #2a3f5f;
+        }
+        
+        .hour-band.open {
+            background: #065f46;
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+        
+        .hour-band.marginal {
+            background: #713f12;
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        
+        .dxcc-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dxcc-stat {
+            background: #0d1520;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .dxcc-stat .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .dxcc-stat .label {
+            font-size: 0.85rem;
+            color: #8a9bb5;
+            margin-top: 0.3rem;
+        }
+        
+        .update-info {
+            text-align: center;
+            color: #6a7f9f;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #0d1520;
+            border-radius: 6px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-good { background: #4ade80; }
+        .status-fair { background: #fbbf24; }
+        .status-poor { background: #f87171; }
+        .status-closed { background: #6b7280; }
+        
+        @media (max-width: 1200px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📡 VE1ATM HF Propagation Monitor</h1>
+        <div class="station-info">
+            <span><strong>Location:</strong> FN74ui (Lunenburg, NS)</span>
+            <span><strong>Antenna:</strong> DX Commander 7m Vertical</span>
+            <span><strong>Bands:</strong> 40m - 10m</span>
+        </div>
+    </div>
+    
+    <div class="solar-conditions" id="solarConditions">
+        <!-- Solar data will be inserted here -->
+    </div>
+    
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <h2>🌍 Current Band Openings</h2>
+                <div id="map"></div>
+            </div>
+            
+            <div class="card">
+                <h2>🎯 DXCC Progress</h2>
+                <div class="dxcc-stats" id="dxccStats">
+                    <!-- DXCC stats will be inserted here -->
+                </div>
+                <div id="mostWanted">
+                    <!-- Most wanted list will be here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📊 Band Conditions by Region</h2>
+            <div class="band-grid" id="bandGrid">
+                <!-- Band status cards will be inserted here -->
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>⏰ 24-Hour Propagation Forecast</h2>
+            <div class="timeline" id="timeline">
+                <!-- Timeline will be inserted here -->
+            </div>
+        </div>
+        
+        <div class="update-info" id="updateInfo">
+            <!-- Update timestamp will be inserted here -->
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let propData = null;
+        let map = null;
+        
+        // Load propagation data
+        async function loadPropagationData() {
+            try {
+                const response = await fetch('propagation_data.json');
+                propData = await response.json();
+                initializeDashboard();
+            } catch (error) {
+                console.error('Error loading propagation data:', error);
+                document.getElementById('updateInfo').innerHTML = 
+                    '<strong>⚠️ Error loading propagation data. Please regenerate predictions.</strong>';
+            }
+        }
+        
+        function initializeDashboard() {
+            renderSolarConditions();
+            renderDXCCStats();
+            renderBandGrid();
+            renderTimeline();
+            renderMap();
+            renderUpdateInfo();
+        }
+        
+        function renderSolarConditions() {
+            const solar = propData.current_conditions.solar;
+            const html = `
+                <div class="solar-metric">
+                    <div class="label">Solar Flux</div>
+                    <div class="value">${solar.sfi}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Sunspot #</div>
+                    <div class="value">${solar.ssn}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Kp Index</div>
+                    <div class="value">${solar.kp}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">A Index</div>
+                    <div class="value">${solar.a_index}</div>
+                </div>
+            `;
+            document.getElementById('solarConditions').innerHTML = html;
+        }
+        
+        function renderDXCCStats() {
+            const dxcc = propData.dxcc;
+            const worked = dxcc.dxcc_worked?.length || 0;
+            const confirmed = dxcc.dxcc_confirmed_lotw?.length || 0;
+            const missing = dxcc.dxcc_missing?.length || 0;
+            
+            const html = `
+                <div class="dxcc-stat">
+                    <div class="number">${worked}</div>
+                    <div class="label">Worked</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${confirmed}</div>
+                    <div class="label">Confirmed</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${missing}</div>
+                    <div class="label">Needed</div>
+                </div>
+            `;
+            document.getElementById('dxccStats').innerHTML = html;
+            
+            // Show a few most wanted
+            if (dxcc.entity_names && dxcc.dxcc_missing) {
+                const topNeeded = dxcc.dxcc_missing.slice(0, 10);
+                const neededHtml = '<div style="margin-top: 1rem;"><strong>Top Most Wanted:</strong><br>' +
+                    topNeeded.map(id => `<div style="padding: 0.2rem 0; font-size: 0.85rem;">• ${dxcc.entity_names[id] || id}</div>`).join('') +
+                    '</div>';
+                document.getElementById('mostWanted').innerHTML = neededHtml;
+            }
+        }
+        
+        function renderBandGrid() {
+            const bands = propData.current_conditions.bands;
+            let html = '';
+            
+            for (const [bandName, bandData] of Object.entries(bands)) {
+                const regions = bandData.regions;
+                const goodRegions = [];
+                const fairRegions = [];
+                
+                for (const [code, data] of Object.entries(regions)) {
+                    if (data.quality === 'GOOD') {
+                        goodRegions.push({code, ...data});
+                    } else if (data.quality === 'FAIR') {
+                        fairRegions.push({code, ...data});
+                    }
+                }
+                
+                let regionHtml = '';
+                if (goodRegions.length > 0) {
+                    regionHtml += goodRegions.map(r => 
+                        `<div class="region-item">
+                            <span><span class="status-indicator status-good"></span>${r.code}</span>
+                            <span class="quality-good reliability">${r.reliability}%</span>
+                        </div>`
+                    ).join('');
+                }
+                if (fairRegions.length > 0) {
+                    regionHtml += fairRegions.map(r => 
+                        `<div class="region-item">
+                            <span><span class="status-indicator status-fair"></span>${r.code}</span>
+                            <span class="quality-fair reliability">${r.reliability}%</span>
+                        </div>`
+                    ).join('');
+                }
+                
+                if (!regionHtml) {
+                    regionHtml = '<div style="text-align: center; color: #6b7280; padding: 1rem;">No openings</div>';
+                }
+                
+                html += `
+                    <div class="band-status">
+                        <div class="band-name">${bandName}</div>
+                        <div class="band-freq">${bandData.frequency} MHz</div>
+                        <div class="region-list">${regionHtml}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('bandGrid').innerHTML = html;
+        }
+        
+        function renderTimeline() {
+            const timeline = propData.timeline_24h;
+            let html = '';
+            
+            // Show every 3 hours to keep it manageable
+            for (let i = 0; i < timeline.hours.length; i += 3) {
+                const hour = timeline.hours[i];
+                const time = new Date(hour.time);
+                const hourLabel = time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: false}) + ' UTC';
+                
+                let bandHtml = '';
+                for (const [bandName, status] of Object.entries(hour.bands)) {
+                    if (status.open.length > 0) {
+                        bandHtml += `<div class="hour-band open">${bandName}: ${status.open.join(', ')}</div>`;
+                    } else if (status.marginal.length > 0) {
+                        bandHtml += `<div class="hour-band marginal">${bandName}: ${status.marginal.join(', ')}</div>`;
+                    }
+                }
+                
+                if (!bandHtml) {
+                    bandHtml = '<span style="color: #6b7280;">No good openings</span>';
+                }
+                
+                html += `
+                    <div class="timeline-hour">
+                        <div class="hour-label">${hourLabel}</div>
+                        <div class="hour-bands">${bandHtml}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('timeline').innerHTML = html;
+        }
+        
+        function renderMap() {
+            // Initialize Leaflet map centered on VE1ATM location
+            map = L.map('map', {
+                center: [44.374, -64.300],
+                zoom: 2,
+                worldCopyJump: false,
+                maxBounds: [[-90, -180], [90, 180]]
+            });
+            
+            // Dark tile layer
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '©OpenStreetMap, ©CartoDB',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add home marker
+            L.marker([44.374, -64.300], {
+                icon: L.divIcon({
+                    className: 'home-marker',
+                    html: '<div style="background: #4a90e2; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold;">VE1ATM</div>',
+                    iconSize: [80, 30]
+                })
+            }).addTo(map);
+            
+            // Add region markers and paths
+            const bands = propData.current_conditions.bands;
+            const bestBand = '20m'; // Show 20m paths as example
+            
+            if (bands[bestBand]) {
+                for (const [code, region] of Object.entries(bands[bestBand].regions)) {
+                    if (region.quality === 'GOOD' || region.quality === 'FAIR') {
+                        const color = region.quality === 'GOOD' ? '#4ade80' : '#fbbf24';
+                        
+                        // Draw path line
+                        const targetLat = propData.current_conditions.bands[bestBand].regions[code];
+                        // Simplified - in real version would have target coordinates
+                        
+                        // Add region label
+                        const regionInfo = {
+                            'EU': [50, 10], 'UK': [54, -2], 'JA': [36, 138],
+                            'VK': [-25, 135], 'ZL': [-41, 174], 'AF': [0, 20],
+                            'SA': [-15, -55], 'CA': [15, -90], 'AS': [30, 100], 'OC': [-10, 150]
+                        };
+                        
+                        if (regionInfo[code]) {
+                            L.circleMarker(regionInfo[code], {
+                                radius: 8,
+                                fillColor: color,
+                                color: color,
+                                weight: 2,
+                                opacity: 0.8,
+                                fillOpacity: 0.6
+                            }).addTo(map).bindPopup(`
+                                <strong>${code}</strong><br>
+                                ${region.name}<br>
+                                Quality: ${region.quality}<br>
+                                Reliability: ${region.reliability}%<br>
+                                Distance: ${region.distance_km} km
+                            `);
+                            
+                            // Draw path
+                            L.polyline([[44.374, -64.300], regionInfo[code]], {
+                                color: color,
+                                weight: 2,
+                                opacity: 0.5,
+                                dashArray: '5, 10'
+                            }).addTo(map);
+                        }
+                    }
+                }
+            }
+        }
+        
+        function renderUpdateInfo() {
+            const generated = new Date(propData.current_conditions.generated);
+            const html = `
+                <strong>Last Updated:</strong> ${generated.toLocaleString()} UTC<br>
+                <em>Predictions based on current ionospheric models and solar-terrestrial conditions</em>
+            `;
+            document.getElementById('updateInfo').innerHTML = html;
+        }
+        
+        // Initialize on page load
+        loadPropagationData();
+    </script>
+</body>
+</html>

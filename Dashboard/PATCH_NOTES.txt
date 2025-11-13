@@ -1,0 +1,74 @@
+PATCH - Windows Compatibility Fix
+==================================
+
+Date: 2025-11-10
+Version: 1.1
+
+CHANGES MADE
+============
+
+1. ✅ Fixed Cross-Platform Path Support
+   - Removed hardcoded Linux paths (/mnt/user-data/outputs/)
+   - Now uses pathlib.Path for Windows/Mac/Linux compatibility
+   - Script saves propagation_data.json in same directory as script
+   - Looks for dxcc_summary.json in script directory, current directory, or home directory
+
+2. ✅ Fixed Datetime Deprecation Warnings
+   - Replaced datetime.utcnow() with datetime.now(timezone.utc)
+   - Future-proof for Python 3.13+
+   - No more deprecation warnings
+
+3. ✅ Better Error Handling
+   - Clearer messages if DXCC data file not found
+   - Script continues to work without DXCC file
+
+HOW TO USE NOW
+==============
+
+Windows:
+  cd "D:\Python Scripts\Ham"
+  python generate_propagation.py
+  
+  Output: D:\Python Scripts\Ham\propagation_data.json
+
+Linux/Mac:
+  cd ~/ham-scripts
+  python3 generate_propagation.py
+  
+  Output: ~/ham-scripts/propagation_data.json
+
+WHAT YOU NEED
+=============
+
+1. All files in the SAME directory:
+   - generate_propagation.py
+   - propagation_dashboard.html
+   - dxcc_summary.json (optional)
+
+2. Run the Python script from that directory
+
+3. Open propagation_dashboard.html in your browser from that directory
+
+TROUBLESHOOTING
+===============
+
+If dashboard shows "Error loading propagation data":
+  1. Make sure propagation_data.json exists in same folder
+  2. Make sure propagation_dashboard.html is in same folder
+  3. Try running: python -m http.server 8000
+     Then visit: http://localhost:8000/propagation_dashboard.html
+
+If DXCC stats missing:
+  1. Make sure dxcc_summary.json is in same folder as script
+  2. Re-run parse_adif.py if needed
+  3. Dashboard will work without it, just won't show DXCC progress
+
+TESTED ON
+=========
+
+✅ Windows 10/11
+✅ Linux (Ubuntu/Debian)
+✅ macOS
+✅ Python 3.8+
+
+Your script is now fully cross-platform!

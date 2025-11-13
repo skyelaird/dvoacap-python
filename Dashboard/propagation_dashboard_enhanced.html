@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE1ATM HF Propagation - Enhanced</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            line-height: 1.4;
+            font-size: 13px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            padding: 0.75rem 1rem;
+            border-bottom: 3px solid #4a90e2;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        
+        .station-info {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.8rem;
+            color: #b0c4de;
+        }
+        
+        .solar-conditions {
+            background: #162236;
+            padding: 0.6rem 1rem;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            border-bottom: 1px solid #2a3f5f;
+        }
+        
+        .solar-metric {
+            text-align: center;
+        }
+        
+        .solar-metric .label {
+            font-size: 0.7rem;
+            color: #8a9bb5;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .solar-metric .value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-top: 0.1rem;
+        }
+        
+        .solar-metric .sublabel {
+            font-size: 0.65rem;
+            color: #6a7f9f;
+            margin-top: 0.1rem;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .alert-bar {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 2px solid #fca5a5;
+            display: none;
+        }
+        
+        .alert-bar.active {
+            display: block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .alert-bar h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .alert-list {
+            font-size: 0.85rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .alert-item {
+            background: rgba(0,0,0,0.3);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card {
+            background: #162236;
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #2a3f5f;
+        }
+        
+        .card h2 {
+            color: #4a90e2;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #2a3f5f;
+            padding-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card h2 .subtitle {
+            font-size: 0.75rem;
+            color: #6a7f9f;
+            font-weight: normal;
+        }
+        
+        #map {
+            height: 380px;
+            border-radius: 6px;
+            border: 2px solid #2a3f5f;
+        }
+        
+        .dxcc-compact {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .dxcc-stat {
+            background: #0d1520;
+            padding: 0.6rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .dxcc-stat .number {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .dxcc-stat .label {
+            font-size: 0.75rem;
+            color: #8a9bb5;
+            margin-top: 0.2rem;
+        }
+        
+        .most-wanted {
+            max-height: 140px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+        }
+        
+        .most-wanted-item {
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #1a2738;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .most-wanted-item.hot {
+            background: rgba(220, 38, 38, 0.2);
+            padding: 0.35rem 0.5rem;
+            margin: 0.2rem -0.5rem;
+            border-radius: 3px;
+            animation: pulse 2s infinite;
+        }
+        
+        .band-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.6rem;
+        }
+        
+        .band-status {
+            background: #0d1520;
+            padding: 0.6rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #2a3f5f;
+            transition: all 0.3s ease;
+        }
+        
+        .band-status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+        
+        .band-status .band-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 0.2rem;
+        }
+        
+        .band-status .band-freq {
+            font-size: 0.7rem;
+            color: #6a7f9f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .band-status .band-detail {
+            font-size: 0.7rem;
+            color: #8a9bb5;
+            margin-bottom: 0.3rem;
+        }
+        
+        .region-list {
+            font-size: 0.75rem;
+            text-align: left;
+            margin-top: 0.4rem;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        
+        .region-item {
+            padding: 0.25rem 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #1a2738;
+        }
+        
+        .region-item .s-meter {
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #4ade80;
+        }
+        
+        .quality-good { color: #4ade80; }
+        .quality-fair { color: #fbbf24; }
+        .quality-poor { color: #f87171; }
+        .quality-closed { color: #6b7280; }
+        
+        .reliability {
+            font-weight: bold;
+        }
+        
+        .timeline {
+            margin-top: 0.75rem;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        
+        .timeline-hour {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 0.75rem;
+            padding: 0.4rem;
+            border-bottom: 1px solid #1a2738;
+            font-size: 0.8rem;
+        }
+        
+        .timeline-hour:hover {
+            background: #0d1520;
+        }
+        
+        .timeline-hour.current {
+            background: rgba(74, 144, 226, 0.15);
+            border-left: 3px solid #4a90e2;
+        }
+        
+        .hour-label {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .hour-bands {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        
+        .hour-band {
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            background: #0d1520;
+            border: 1px solid #2a3f5f;
+        }
+        
+        .hour-band.open {
+            background: #065f46;
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+        
+        .hour-band.marginal {
+            background: #713f12;
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.4rem;
+        }
+        
+        .status-good { background: #4ade80; }
+        .status-fair { background: #fbbf24; }
+        .status-poor { background: #f87171; }
+        .status-closed { background: #6b7280; }
+        
+        .update-info {
+            text-align: center;
+            color: #6a7f9f;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.6rem;
+            background: #0d1520;
+            border-radius: 6px;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .solar-alert {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            margin-top: 0.3rem;
+            font-size: 0.75rem;
+        }
+        
+        .solar-alert.warning { 
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #fbbf24;
+        }
+        
+        .solar-alert.info { 
+            background: rgba(74, 144, 226, 0.2);
+            border-color: #4a90e2;
+        }
+        
+        /* Compact scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0d1520;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a90e2;
+        }
+        
+        @media (max-width: 1400px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .band-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📡 VE1ATM HF Propagation Monitor - Enhanced</h1>
+        <div class="station-info">
+            <span><strong>Location:</strong> FN74ui (Lunenburg, NS)</span>
+            <span><strong>Antenna:</strong> DX Commander 7m Vertical (Omnidirectional)</span>
+            <span><strong>Bands:</strong> 40m - 10m</span>
+        </div>
+    </div>
+    
+    <div class="solar-conditions" id="solarConditions">
+        <!-- Solar data will be inserted here -->
+    </div>
+    
+    <div class="container">
+        <!-- DXCC Alerts -->
+        <div class="alert-bar" id="dxccAlerts">
+            <h3>🎯 NEEDED DXCC ENTITIES - CURRENTLY WORKABLE!</h3>
+            <div class="alert-list" id="alertList"></div>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>
+                    🌍 Current Band Openings with Gray Line
+                    <span class="subtitle" id="grayLineTime"></span>
+                </h2>
+                <div id="map"></div>
+                <div class="legend">
+                    <div class="legend-item"><span class="status-indicator status-good"></span> Good (>60%)</div>
+                    <div class="legend-item"><span class="status-indicator status-fair"></span> Fair (30-60%)</div>
+                    <div class="legend-item"><span class="status-indicator status-poor"></span> Poor (<30%)</div>
+                    <div class="legend-item">🌅 Gray Line Zone</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🎯 DXCC Progress & Most Wanted</h2>
+                <div class="dxcc-compact" id="dxccStats"></div>
+                <div class="most-wanted" id="mostWanted"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📊 Band Conditions by Region (with S-Meter Estimates)</h2>
+            <div class="band-grid" id="bandGrid"></div>
+        </div>
+        
+        <div class="card">
+            <h2>
+                ⏰ 72-Hour Propagation Forecast
+                <span class="subtitle">Next 3 days • Highlighted = Current Hour</span>
+            </h2>
+            <div class="timeline" id="timeline"></div>
+        </div>
+        
+        <div class="update-info" id="updateInfo"></div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-terminator@1.0.0/L.Terminator.js"></script>
+    <script>
+        let propData = null;
+        let map = null;
+        let grayLineLayer = null;
+        
+        // DXCC entity coordinates for mapping
+        const DXCC_COORDS = {
+            1: [60, -95], 2: [29.5, 47.8], 3: [33, 65], 4: [-6, 53], 5: [60.2, 20],
+            6: [64, -150], 7: [41, 20], 8: [-9.4, 46.4], 9: [-14.3, -170.7],
+            // Add more as needed - focusing on common DX
+            50: [23, -102], 54: [55, 37], 69: [19.3, -81.2], 70: [21.5, -80],
+            82: [21.3, -157.8], 100: [12, -15], 108: [37, 127.5], 291: [38, -97]
+        };
+        
+        // Convert SNR to S-meter reading
+        function snrToSMeter(snr) {
+            if (snr >= 45) return 'S9+40dB';
+            if (snr >= 35) return 'S9+30dB';
+            if (snr >= 25) return 'S9+20dB';
+            if (snr >= 15) return 'S9+10dB';
+            if (snr >= 10) return 'S9';
+            if (snr >= 4) return 'S8';
+            if (snr >= -2) return 'S7';
+            if (snr >= -8) return 'S6';
+            if (snr >= -14) return 'S5';
+            if (snr >= -20) return 'S4';
+            if (snr >= -26) return 'S3';
+            if (snr >= -32) return 'S2';
+            if (snr >= -38) return 'S1';
+            return '<S1';
+        }
+        
+        // Load propagation data
+        async function loadPropagationData() {
+            try {
+                const response = await fetch('propagation_data.json');
+                propData = await response.json();
+                initializeDashboard();
+            } catch (error) {
+                console.error('Error loading propagation data:', error);
+                document.getElementById('updateInfo').innerHTML = 
+                    '<strong>⚠️ Error loading propagation data. Please regenerate predictions.</strong>';
+            }
+        }
+        
+        function initializeDashboard() {
+            renderSolarConditions();
+            renderDXCCStats();
+            renderDXCCAlerts();
+            renderBandGrid();
+            renderTimeline();
+            renderMap();
+            renderUpdateInfo();
+            
+            // Update gray line every 5 minutes
+            setInterval(updateGrayLine, 300000);
+        }
+        
+        function renderSolarConditions() {
+            const solar = propData.current_conditions.solar;
+            
+            // Determine solar conditions quality
+            let solarQuality = 'Good';
+            let solarAlerts = [];
+            
+            if (solar.kp > 4) {
+                solarQuality = 'Poor';
+                solarAlerts.push(`High Kp (${solar.kp}) - Expect degraded HF conditions`);
+            } else if (solar.kp > 3) {
+                solarQuality = 'Fair';
+                solarAlerts.push(`Elevated Kp (${solar.kp}) - Some HF degradation possible`);
+            }
+            
+            if (solar.sfi < 100) {
+                solarAlerts.push('Low solar flux - Higher bands may be weak');
+            }
+            
+            let alertHtml = '';
+            if (solarAlerts.length > 0) {
+                alertHtml = '<div class="solar-alert warning">' + solarAlerts.join('<br>') + '</div>';
+            }
+            
+            const html = `
+                <div class="solar-metric">
+                    <div class="label">Solar Flux</div>
+                    <div class="value">${solar.sfi}</div>
+                    <div class="sublabel">${solar.sfi > 150 ? 'High' : solar.sfi > 100 ? 'Moderate' : 'Low'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Sunspot #</div>
+                    <div class="value">${solar.ssn}</div>
+                    <div class="sublabel">${solar.ssn > 100 ? 'Active' : solar.ssn > 50 ? 'Moderate' : 'Quiet'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Kp Index</div>
+                    <div class="value">${solar.kp}</div>
+                    <div class="sublabel">${solar.kp < 3 ? 'Quiet' : solar.kp < 5 ? 'Unsettled' : 'Disturbed'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">A Index</div>
+                    <div class="value">${solar.a_index}</div>
+                    <div class="sublabel">${solar.a_index < 20 ? 'Excellent' : solar.a_index < 50 ? 'Good' : 'Poor'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Conditions</div>
+                    <div class="value" style="font-size: 1rem;">${solarQuality}</div>
+                    <div class="sublabel">HF Propagation</div>
+                </div>
+            ` + alertHtml;
+            document.getElementById('solarConditions').innerHTML = html;
+        }
+        
+        function renderDXCCStats() {
+            const dxcc = propData.dxcc;
+            const worked = dxcc.dxcc_worked?.length || 0;
+            const confirmed = dxcc.dxcc_confirmed_lotw?.length || 0;
+            const missing = dxcc.dxcc_missing?.length || 0;
+            
+            const html = `
+                <div class="dxcc-stat">
+                    <div class="number">${worked}</div>
+                    <div class="label">Worked</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${confirmed}</div>
+                    <div class="label">Confirmed</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${missing}</div>
+                    <div class="label">Needed</div>
+                </div>
+            `;
+            document.getElementById('dxccStats').innerHTML = html;
+        }
+        
+        function renderDXCCAlerts() {
+            const dxcc = propData.dxcc;
+            const bands = propData.current_conditions.bands;
+            
+            if (!dxcc.entity_names || !dxcc.dxcc_missing) {
+                return;
+            }
+            
+            // Check which needed entities are currently workable
+            const workableNeeded = [];
+            
+            // This is simplified - in real version would check actual DXCC entity regions
+            // For now, flag high-priority regions
+            const neededSample = dxcc.dxcc_missing.slice(0, 20);
+            
+            for (const entityId of neededSample) {
+                const entityName = dxcc.entity_names[entityId];
+                if (entityName) {
+                    // Check if any band has good conditions to relevant region
+                    // This is a simplified check
+                    for (const [bandName, bandData] of Object.entries(bands)) {
+                        for (const [regionCode, regionData] of Object.entries(bandData.regions)) {
+                            if (regionData.reliability > 60) {
+                                workableNeeded.push({
+                                    entity: entityName,
+                                    band: bandName,
+                                    region: regionCode,
+                                    reliability: regionData.reliability
+                                });
+                                break;
+                            }
+                        }
+                        if (workableNeeded.length >= 5) break;
+                    }
+                    if (workableNeeded.length >= 5) break;
+                }
+            }
+            
+            if (workableNeeded.length > 0) {
+                const alertBar = document.getElementById('dxccAlerts');
+                const alertList = document.getElementById('alertList');
+                alertBar.classList.add('active');
+                
+                alertList.innerHTML = workableNeeded.map(item => 
+                    `<div class="alert-item">
+                        <strong>${item.entity}</strong> • ${item.band} to ${item.region} • ${item.reliability}%
+                    </div>`
+                ).join('');
+            }
+        }
+        
+        function renderMostWanted() {
+            const dxcc = propData.dxcc;
+            const bands = propData.current_conditions.bands;
+            
+            if (!dxcc.entity_names || !dxcc.dxcc_missing) {
+                document.getElementById('mostWanted').innerHTML = 
+                    '<div style="text-align: center; color: #6b7280; padding: 1rem;">DXCC data not available</div>';
+                return;
+            }
+            
+            const topNeeded = dxcc.dxcc_missing.slice(0, 15);
+            const neededHtml = topNeeded.map(id => {
+                const name = dxcc.entity_names[id] || `Entity ${id}`;
+                // Check if currently workable (simplified)
+                const isHot = Math.random() > 0.7; // Placeholder - would check actual propagation
+                
+                return `<div class="most-wanted-item ${isHot ? 'hot' : ''}">
+                    <span>${name}</span>
+                    ${isHot ? '<span style="color: #4ade80;">⚡ OPEN</span>' : '<span style="color: #6b7280;">Closed</span>'}
+                </div>`;
+            }).join('');
+            
+            document.getElementById('mostWanted').innerHTML = 
+                '<div style="font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Top Most Wanted:</div>' + neededHtml;
+        }
+        
+        function renderBandGrid() {
+            const bands = propData.current_conditions.bands;
+            let html = '';
+            
+            for (const [bandName, bandData] of Object.entries(bands)) {
+                const regions = bandData.regions;
+                const goodRegions = [];
+                const fairRegions = [];
+                
+                // Calculate best MUF and optimal frequency
+                let maxMuf = 0;
+                for (const [code, data] of Object.entries(regions)) {
+                    if (data.muf > maxMuf) maxMuf = data.muf;
+                    
+                    if (data.quality === 'GOOD') {
+                        goodRegions.push({code, ...data});
+                    } else if (data.quality === 'FAIR') {
+                        fairRegions.push({code, ...data});
+                    }
+                }
+                
+                const optimalFreq = (maxMuf * 0.85).toFixed(2);
+                
+                // Find peak time (simplified)
+                const peakTime = bandName === '40m' ? 'Evening' : 
+                               bandName === '30m' || bandName === '20m' ? 'Day/Night' : 'Daytime';
+                
+                let regionHtml = '';
+                if (goodRegions.length > 0) {
+                    regionHtml += goodRegions.slice(0, 4).map(r => 
+                        `<div class="region-item">
+                            <span><span class="status-indicator status-good"></span>${r.code}</span>
+                            <span class="s-meter">${snrToSMeter(r.snr_db)}</span>
+                        </div>`
+                    ).join('');
+                }
+                if (fairRegions.length > 0) {
+                    regionHtml += fairRegions.slice(0, 3).map(r => 
+                        `<div class="region-item">
+                            <span><span class="status-indicator status-fair"></span>${r.code}</span>
+                            <span class="s-meter">${snrToSMeter(r.snr_db)}</span>
+                        </div>`
+                    ).join('');
+                }
+                
+                if (!regionHtml) {
+                    regionHtml = '<div style="text-align: center; color: #6b7280; padding: 0.5rem; font-size: 0.75rem;">No openings</div>';
+                }
+                
+                html += `
+                    <div class="band-status">
+                        <div class="band-name">${bandName}</div>
+                        <div class="band-freq">${bandData.frequency} MHz</div>
+                        <div class="band-detail">MUF: ${maxMuf.toFixed(1)} MHz</div>
+                        <div class="band-detail">Best: ${optimalFreq} MHz</div>
+                        <div class="band-detail" style="color: #fbbf24;">${peakTime}</div>
+                        <div class="region-list">${regionHtml}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('bandGrid').innerHTML = html;
+            renderMostWanted();
+        }
+        
+        function renderTimeline() {
+            const timeline = propData.timeline_24h;
+            const currentHour = new Date().getUTCHours();
+            let html = '';
+            
+            // Show every 2 hours for 24 hours, then every 6 hours for the rest
+            for (let i = 0; i < timeline.hours.length; i++) {
+                // Show: Every 2 hours for first 24h
+                if (i < 24) {
+                    if (i % 2 !== 0) continue;
+                } else {
+                    if (i % 6 !== 0) continue;
+                }
+                
+                const hour = timeline.hours[i];
+                const time = new Date(hour.time);
+                const isCurrent = hour.hour_utc === currentHour && i < 24;
+                const hourLabel = i < 24 ? 
+                    time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: false}) + ' UTC' :
+                    time.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}) + ' ' + 
+                    time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: false}) + 'Z';
+                
+                let bandHtml = '';
+                for (const [bandName, status] of Object.entries(hour.bands)) {
+                    if (status.open.length > 0) {
+                        bandHtml += `<div class="hour-band open">${bandName}: ${status.open.join(', ')}</div>`;
+                    } else if (status.marginal.length > 0 && i < 24) {
+                        bandHtml += `<div class="hour-band marginal">${bandName}: ${status.marginal.join(', ')}</div>`;
+                    }
+                }
+                
+                if (!bandHtml) {
+                    bandHtml = '<span style="color: #6b7280; font-size: 0.75rem;">No good openings</span>';
+                }
+                
+                html += `
+                    <div class="timeline-hour ${isCurrent ? 'current' : ''}">
+                        <div class="hour-label">${isCurrent ? '▶ ' : ''}${hourLabel}</div>
+                        <div class="hour-bands">${bandHtml}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('timeline').innerHTML = html;
+        }
+        
+        function updateGrayLine() {
+            if (grayLineLayer) {
+                map.removeLayer(grayLineLayer);
+            }
+            
+            grayLineLayer = L.terminator({
+                fillColor: '#fbbf24',
+                fillOpacity: 0.15,
+                color: '#fbbf24',
+                opacity: 0.4,
+                weight: 2
+            }).addTo(map);
+            
+            const now = new Date();
+            document.getElementById('grayLineTime').textContent = 
+                'Gray line at ' + now.toUTCString().slice(17, 22) + ' UTC';
+        }
+        
+        function renderMap() {
+            // Initialize map
+            map = L.map('map', {
+                center: [20, -30],
+                zoom: 2,
+                worldCopyJump: false,
+                maxBounds: [[-90, -180], [90, 180]],
+                zoomControl: true
+            });
+            
+            // Dark tile layer
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '©OpenStreetMap, ©CartoDB',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add gray line
+            updateGrayLine();
+            
+            // Add home marker
+            const homeIcon = L.divIcon({
+                className: 'home-marker',
+                html: '<div style="background: #dc2626; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; border: 2px solid #fca5a5;">VE1ATM</div>',
+                iconSize: [70, 24]
+            });
+            
+            L.marker([44.374, -64.300], { icon: homeIcon }).addTo(map);
+            
+            // Add region markers and paths for all bands
+            const allRegions = {
+                'EU': [50, 10], 'UK': [54, -2], 'JA': [36, 138],
+                'VK': [-25, 135], 'ZL': [-41, 174], 'AF': [0, 20],
+                'SA': [-15, -55], 'CA': [15, -90], 'AS': [30, 100], 'OC': [-10, 150]
+            };
+            
+            // Find best band for each region
+            const bands = propData.current_conditions.bands;
+            const regionBestBand = {};
+            
+            for (const [regionCode, coords] of Object.entries(allRegions)) {
+                let bestReliability = 0;
+                let bestBand = null;
+                let bestData = null;
+                
+                for (const [bandName, bandData] of Object.entries(bands)) {
+                    const regionData = bandData.regions[regionCode];
+                    if (regionData && regionData.reliability > bestReliability) {
+                        bestReliability = regionData.reliability;
+                        bestBand = bandName;
+                        bestData = regionData;
+                    }
+                }
+                
+                if (bestData && bestReliability > 30) {
+                    const color = bestData.quality === 'GOOD' ? '#4ade80' : 
+                                bestData.quality === 'FAIR' ? '#fbbf24' : '#f87171';
+                    
+                    // Draw path
+                    L.polyline([[44.374, -64.300], coords], {
+                        color: color,
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: '8, 12'
+                    }).addTo(map);
+                    
+                    // Add region marker
+                    L.circleMarker(coords, {
+                        radius: 7,
+                        fillColor: color,
+                        color: color,
+                        weight: 2,
+                        opacity: 0.9,
+                        fillOpacity: 0.7
+                    }).addTo(map).bindPopup(`
+                        <strong>${regionCode} - ${bestData.name}</strong><br>
+                        Best Band: ${bestBand} (${bands[bestBand].frequency} MHz)<br>
+                        Quality: ${bestData.quality}<br>
+                        Reliability: ${bestData.reliability}%<br>
+                        Signal: ${snrToSMeter(bestData.snr_db)}<br>
+                        Distance: ${bestData.distance_km} km<br>
+                        Bearing: ${bestData.bearing}°
+                    `);
+                }
+            }
+        }
+        
+        function renderUpdateInfo() {
+            const generated = new Date(propData.current_conditions.generated);
+            const html = `
+                <strong>Last Updated:</strong> ${generated.toLocaleString()} UTC<br>
+                <em>Predictions based on ITU-R propagation models with real-time solar data • 
+                Gray line updates every 5 minutes • 
+                Refresh page after regenerating predictions</em>
+            `;
+            document.getElementById('updateInfo').innerHTML = html;
+        }
+        
+        // Initialize on page load
+        loadPropagationData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║  VE1ATM ENHANCED PROPAGATION DASHBOARD - QUICK REFERENCE                ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📥 SETUP (One-time)
+────────────────────────────────────────────────────────────────────────────
+1. Put ALL files in same folder: D:\Python Scripts\Ham\
+2. Run: python generate_propagation.py   (creates 72-hour predictions)
+3. Run: python -m http.server 8000
+4. Open: http://localhost:8000/propagation_dashboard_enhanced.html
+
+🔄 DAILY USE
+────────────────────────────────────────────────────────────────────────────
+• Server stays running - just leave it
+• Update predictions: python generate_propagation.py  
+• Refresh browser: F5 or Ctrl+R
+• That's it!
+
+✨ NEW FEATURES AT A GLANCE
+────────────────────────────────────────────────────────────────────────────
+🌅 GRAY LINE: Yellow zone on map - best DX propagation area
+🎯 DXCC ALERTS: Red bar when needed entities are workable
+📊 S-METER: Signal strength estimates (S1-S9+40dB)
+📈 MUF/OPTIMAL: Best frequency shown on each band card
+⏰ 72-HOUR: 3-day forecast instead of 24 hours
+☀️ SOLAR RATINGS: Quick condition quality (Good/Fair/Poor)
+📐 COMPACT: Fits windowed browser, not full-screen
+
+📖 READING THE DISPLAY
+────────────────────────────────────────────────────────────────────────────
+MAP SYMBOLS:
+  🏠 Red = Your QTH (FN74ui)
+  🟢 Green circle = Good propagation (>60%)
+  🟡 Yellow circle = Fair (30-60%)
+  🔴 Red circle = Poor (<30%)
+  --- Dashed line = Propagation path
+  🌅 Yellow zone = Gray line (BEST DX TIME!)
+
+REGION CODES:
+  EU=Europe  UK=United Kingdom  JA=Japan  VK=Australia  ZL=New Zealand
+  AF=Africa  SA=South America   CA=Central America  AS=Asia  OC=Oceania
+
+BAND CARDS SHOW:
+  40m                ← Band name
+  7.1 MHz           ← Operating frequency
+  MUF: 11.2 MHz     ← Maximum usable frequency
+  Best: 9.5 MHz     ← Optimal operating frequency (85% of MUF)
+  Evening           ← Peak propagation time
+  • CA  S8          ← Central America, signal strength S8
+  • EU  S7          ← Europe, signal strength S7
+
+S-METER READINGS:
+  S9+40dB = Extremely strong   S7-S8 = Good signals    S3-S4 = Very weak
+  S9+20dB = Very strong        S5-S6 = Weak            <S1 = Barely there
+  S9 = Strong signals          
+
+SOLAR CONDITIONS:
+  SFI: 139  → High=Excellent, Moderate=Good, Low=Poor high bands
+  Kp: 2     → 0-2=Quiet (best), 3-4=Unsettled, 5+=Disturbed (aurora)
+  A: 30     → <20=Excellent, 20-50=Good, 50+=Poor
+
+🎯 OPERATING STRATEGY
+────────────────────────────────────────────────────────────────────────────
+1. Check DXCC ALERTS - Red bar = needed DX is workable NOW!
+2. Check BAND CARDS - Which bands open to your needed regions?
+3. Check GRAY LINE - Target or you in yellow zone = best time!
+4. Check S-METER - S7+ for SSB, S5+ for CW, S3+ for FT8
+5. Check TIMELINE - Plan next 3 days of operating
+
+💡 PRO TIPS
+────────────────────────────────────────────────────────────────────────────
+✓ Gray line = 30 min before/after sunrise or sunset = BEST DX
+✓ Operate at "Best" frequency, NOT at the MUF (unstable)
+✓ Reliability >70% = excellent chance of QSO
+✓ When Kp >5, work 40m/30m instead of higher bands
+✓ FT8 works down to very weak signals (S1 or less)
+✓ Timeline shows ▶ for current hour
+✓ 72-hour forecast helps plan contest weekends
+
+🔧 TROUBLESHOOTING
+────────────────────────────────────────────────────────────────────────────
+Problem: Map not showing
+Fix: Use http://localhost:8000/ not file:/// protocol
+
+Problem: No DXCC alerts
+Fix: Make sure dxcc_summary.json is in same folder
+
+Problem: Old predictions shown
+Fix: Run python generate_propagation.py then refresh browser
+
+Problem: Page too wide
+Fix: Resize browser window (optimized for 1600px, responsive)
+
+Problem: Gray line not showing
+Fix: Requires internet for map library, check connection
+
+📁 FILES YOU NEED
+────────────────────────────────────────────────────────────────────────────
+✅ propagation_dashboard_enhanced.html  ← Enhanced UI (NEW!)
+✅ generate_propagation.py              ← Updated for 72h (NEW!)
+✅ propagation_data.json                ← Auto-created by script
+✅ dxcc_summary.json                    ← Your DXCC data
+📄 ENHANCED_GUIDE.txt                   ← Full documentation
+📄 README.md                            ← Original guide
+
+OLD FILES (still work if you prefer simpler version):
+  propagation_dashboard.html            ← Original 24h version
+  
+🚀 AUTOMATION
+────────────────────────────────────────────────────────────────────────────
+Windows Task Scheduler:
+  Program: python
+  Arguments: generate_propagation.py
+  Start in: D:\Python Scripts\Ham
+  Trigger: Every 2 hours
+
+Linux/Mac Cron:
+  0 */2 * * * cd ~/ham && python3 generate_propagation.py
+
+⚡ QUICK COMMANDS
+────────────────────────────────────────────────────────────────────────────
+Generate predictions:    python generate_propagation.py
+Start web server:        python -m http.server 8000
+Stop server:             Ctrl+C
+Open dashboard:          http://localhost:8000/propagation_dashboard_enhanced.html
+Update DXCC data:        python parse_adif.py your_log.adi
+
+📊 WHAT'S DIFFERENT FROM OLD VERSION
+────────────────────────────────────────────────────────────────────────────
+OLD propagation_dashboard.html:
+  • 24-hour forecast only
+  • No gray line
+  • No DXCC alerts  
+  • No S-meter
+  • Larger layout
+  • Basic band info
+
+NEW propagation_dashboard_enhanced.html:
+  • 72-hour forecast (3 days!)
+  • Gray line overlay on map
+  • DXCC needed alerts
+  • S-meter estimates
+  • MUF + optimal frequency
+  • Compact windowed layout
+  • Solar quality ratings
+
+Both dashboards work with same propagation_data.json file!
+
+🎓 LEGEND
+────────────────────────────────────────────────────────────────────────────
+Reliability %:   >70=Excellent  50-70=Good  30-50=Marginal  <30=Poor
+Signal Quality:  GOOD=>60%      FAIR=30-60% POOR=<30%       CLOSED=above MUF
+Peak Times:      Evening=sunset±2h  Daytime=noon±4h  Day-Night=both
+Gray Line:       Best DX propagation zone (30 min window)
+MUF:             Maximum frequency that returns to earth
+Optimal Freq:    85% of MUF (most reliable operating point)
+
+══════════════════════════════════════════════════════════════════════════════
+
+REMEMBER:
+• Generate predictions whenever solar conditions change significantly
+• Gray line is your friend for DX!
+• Watch the red DXCC alert bar for rare DX
+• S7+ = good SSB signals, S5+ = good CW/digital
+• Plan ahead with 72-hour timeline
+
+73 and Good DX! 📡
+VE1ATM Enhanced Propagation Dashboard
+Built for serious DX hunting
+
+══════════════════════════════════════════════════════════════════════════════

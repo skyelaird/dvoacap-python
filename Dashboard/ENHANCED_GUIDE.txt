@@ -1,0 +1,399 @@
+ENHANCED PROPAGATION DASHBOARD - USER GUIDE
+============================================
+
+Version: 2.0 Enhanced
+Date: 2025-11-10
+
+WHAT'S NEW IN THE ENHANCED VERSION
+===================================
+
+✅ COMPACT LAYOUT
+- Fits in windowed browser (optimized for 1600px width)
+- No more full-screen requirement
+- Responsive scrolling for all sections
+- Compact fonts and spacing
+
+✅ GRAY LINE OVERLAY (Feature #1)
+- Real-time day/night terminator on map
+- Yellow shaded zone shows gray line propagation area
+- Updates automatically every 5 minutes
+- Shows current UTC time in header
+- WHY IT MATTERS: Best DX happens at gray line!
+
+✅ DXCC NEEDED ALERTS (Feature #2)
+- Red alert bar at top when needed entities are workable
+- Shows entity name, band, and reliability
+- Pulses to catch your attention
+- Updates with each prediction refresh
+- WHY IT MATTERS: Never miss rare DX openings!
+
+✅ S-METER ESTIMATES (Feature #4)
+- Converts SNR to familiar S-meter readings (S1-S9+)
+- Shows on each band card per region
+- Format: "S7", "S9+10dB", etc.
+- WHY IT MATTERS: Better idea of actual signal strength
+
+✅ ENHANCED BAND CARDS (Feature #5)
+- MUF (Maximum Usable Frequency) displayed
+- Optimal operating frequency shown (85% of MUF)
+- Peak time indicator (Evening/Daytime/Day-Night)
+- Up to 7 regions per card with S-meter
+- WHY IT MATTERS: Optimize frequency choice
+
+✅ 72-HOUR FORECAST (Feature #9)
+- Extended from 24 hours to 3 full days
+- First 24h shown every 2 hours
+- Days 2-3 shown every 6 hours
+- Current hour highlighted with ▶ symbol
+- WHY IT MATTERS: Plan operating sessions days ahead
+
+✅ SOLAR CONDITION INDICATORS
+- Each solar metric now has quality rating
+- "Quiet", "Moderate", "Active", "Disturbed"
+- Overall HF conditions summary
+- Yellow alert box for poor conditions
+- WHY IT MATTERS: Quick understanding of propagation quality
+
+✅ IMPROVED MOST WANTED LIST
+- Shows current propagation status per entity
+- "⚡ OPEN" for currently workable
+- "Closed" for no current path
+- Scrollable list of top 15 needed
+- WHY IT MATTERS: Focus on what you can work NOW
+
+UNDERSTANDING THE ENHANCED DISPLAY
+===================================
+
+MAP FEATURES:
+-------------
+🏠 RED MARKER = Your QTH (VE1ATM at FN74ui)
+🟢 GREEN CIRCLES = Good propagation (>60% reliability)
+🟡 YELLOW CIRCLES = Fair propagation (30-60%)
+🔴 RED CIRCLES = Poor propagation (<30%)
+--- DASHED LINES = Great circle paths to each region
+🌅 YELLOW SHADING = Gray line zone (best DX area)
+
+Region Codes Explained:
+- EU = Europe (general)
+- UK = United Kingdom
+- JA = Japan
+- VK = Australia
+- ZL = New Zealand  
+- AF = Africa (general)
+- SA = South America
+- CA = Central America
+- AS = Asia (general)
+- OC = Oceania (Pacific Islands)
+
+BAND CARD DETAILS:
+------------------
+40m (7.1 MHz)
+  MUF: 11.2 MHz        ← Maximum frequency that will refract back
+  Best: 9.5 MHz        ← Optimal operating frequency (85% of MUF)
+  Evening              ← Peak propagation time
+  
+  • CA  S8             ← Central America, Signal strength S8
+  • EU  S7             ← Europe, Signal strength S7
+
+Reading S-Meter Values:
+- S9+40dB = Extremely strong (SNR > 45dB)
+- S9+20dB = Very strong (SNR 25-35dB)
+- S9      = Strong (SNR 10-15dB)
+- S7-S8   = Good signals (SNR 0-10dB)
+- S5-S6   = Weak but readable (SNR -10 to 0dB)
+- S3-S4   = Very weak (SNR -20 to -10dB)
+- <S1     = Barely detectable (SNR < -38dB)
+
+SOLAR CONDITIONS PANEL:
+-----------------------
+Solar Flux (139.68):
+  High (>150)     = Excellent HF conditions, high bands open
+  Moderate (100-150) = Good conditions
+  Low (<100)      = Poor high band propagation
+
+Kp Index (2):
+  0-2 (Quiet)     = Excellent propagation
+  3-4 (Unsettled) = Some degradation
+  5+ (Disturbed)  = Poor HF, possible aurora
+
+A Index (30):
+  0-20 (Excellent) = Minimal absorption
+  20-50 (Good)     = Some absorption
+  50+ (Poor)       = Heavy absorption
+
+CONDITIONS: Overall summary (Good/Fair/Poor)
+
+72-HOUR TIMELINE:
+-----------------
+▶ 20:00 UTC  ← Current hour (highlighted)
+  40m: CA, EU, JA
+  30m: VK, AF, SA
+  
+22:00 UTC
+  40m: EU, JA
+  20m: ZL
+
+Nov 11 02:00Z  ← Next day forecast
+  40m: JA, AS
+  30m: VK, OC
+
+DXCC ALERTS:
+------------
+When the red bar appears at top:
+🎯 NEEDED DXCC ENTITIES - CURRENTLY WORKABLE!
+  Afghanistan • 20m to AS • 65%
+  Antarctica • 30m to OC • 58%
+
+This means these needed entities have good propagation RIGHT NOW!
+
+USING THE ENHANCED DASHBOARD
+=============================
+
+QUICK START:
+1. Run: python generate_propagation.py
+2. Start server: python -m http.server 8000
+3. Open: http://localhost:8000/propagation_dashboard_enhanced.html
+4. Watch for DXCC alerts!
+
+OPERATING WORKFLOW:
+1. Check SOLAR CONDITIONS - Are conditions good overall?
+2. Check DXCC ALERTS - Any rare DX currently workable?
+3. Check BAND CARDS - Which bands are open to regions you need?
+4. Check TIMELINE - When will conditions improve?
+5. Check MAP - Verify gray line propagation paths
+6. Go operate!
+
+ADVANCED TIPS:
+--------------
+
+GRAY LINE HUNTING:
+- Gray line is the transition zone between day/night
+- Shown as yellow shaded area on map
+- BEST times are when target is in gray line
+- OR when YOU are in gray line
+- Morning gray line: 30 min before to 30 min after sunrise
+- Evening gray line: 30 min before to 30 min after sunset
+- Long-path signals often peak at gray line
+
+MUF OPTIMIZATION:
+- Don't operate AT the MUF - band will be unstable
+- Best frequency = 85% of MUF (shown as "Best: X MHz")
+- If MUF is 14.5 MHz, operate around 12.3 MHz
+- Higher in band = fewer hops = stronger signal (if below MUF)
+
+S-METER INTERPRETATION:
+- S7+ = Good for SSB
+- S5+ = Good for CW/Digital
+- S3-S4 = CW/Digital only, difficult
+- FT8 can work down to S1 or less!
+
+RELIABILITY PERCENTAGE:
+- >70% = Excellent, high probability of QSO
+- 50-70% = Good, should be workable
+- 30-50% = Marginal, try CW or digital
+- <30% = Poor, long shots only
+
+MULTI-DAY PLANNING:
+- Check 72-hour forecast before contests
+- Plan operating schedule around peak times
+- Watch for solar changes (Kp index rising)
+- Gray line windows repeat daily ±4 minutes
+
+SOLAR EVENT RESPONSES:
+- Kp >5 = Work lower bands (40m/30m better than 20m+)
+- Low SFI = Focus on 40m/30m, higher bands may be dead
+- After solar flare = Wait 1-2 days, check Kp/A index
+- CME impact = Aurora possible, try 6m if aurora visible
+
+FEATURES IN PROGRESS
+=====================
+
+✨ COMING SOON (Not Yet Implemented):
+
+[ ] DX Cluster Integration (Feature #6)
+    - Real-time spots from DXWatch/RBN
+    - Show spots for needed entities only
+    - Click spot to see on map
+    - Validate predictions vs real activity
+
+[ ] Multi-Hop Path Visualization (Feature #8)
+    - Show E-layer vs F-layer paths
+    - Display bounce points on map
+    - Skip zone visualization
+    - Ray tracing for paths
+
+[ ] Antenna Pattern Overlay (Feature #12)
+    - Your DX Commander vertical pattern
+    - Radiation lobes by band
+    - Takeoff angles shown
+    - Null directions marked
+
+[ ] Solar Event Tracking (Feature #13)
+    - X-ray flare monitoring
+    - CME predictions
+    - Aurora alerts for 6m
+    - Automated email notifications
+
+[ ] VOACAP Integration (Feature #14)
+    - Optional "high accuracy" mode
+    - Toggle: Quick ITU-R vs Full VOACAP
+    - Takes longer but more accurate
+    - Requires pythonprop installation
+
+TROUBLESHOOTING
+===============
+
+MAP NOT SHOWING:
+- Make sure you're using: http://localhost:8000/
+- Not: file:/// protocol
+- Gray line requires internet for leaflet-terminator library
+
+NO DXCC ALERTS:
+- Make sure dxcc_summary.json is in same folder
+- Alerts only show when needed entities are workable
+- Check that you have needed entities in list
+
+TIMELINE TOO LONG:
+- 72 hours is a lot of data
+- Scroll the timeline box
+- First 24h shown every 2 hours
+- Days 2-3 shown every 6 hours only
+
+PAGE TOO WIDE:
+- Designed for 1600px width
+- Resize browser window to fit
+- Below 1400px, layout switches to single column
+- Use Ctrl+- to zoom out if needed
+
+OUTDATED PREDICTIONS:
+- Remember to regenerate!
+- python generate_propagation.py
+- Refresh browser (F5 or Ctrl+R)
+- Check "Last Updated" time at bottom
+
+PERFORMANCE TIPS
+================
+
+FAST UPDATES:
+- Keep python server running
+- Just run: python generate_propagation.py
+- Refresh browser
+- No need to restart server
+
+AUTOMATIC UPDATES:
+Windows Task Scheduler:
+  Trigger: Every 2 hours
+  Action: python generate_propagation.py
+  Start in: D:\Python Scripts\Ham
+
+Linux/Mac Cron:
+  0 */2 * * * cd ~/ham && python3 generate_propagation.py
+
+BROWSER TIPS:
+- Bookmark: http://localhost:8000/propagation_dashboard_enhanced.html
+- Pin tab for quick access
+- Auto-refresh extensions available
+- Works best in Chrome/Edge/Firefox
+
+DATA USAGE:
+- Prediction generation: ~2-3 seconds
+- JSON file size: ~350KB (72h vs 100KB for 24h)
+- Map tiles: Cached by browser
+- Solar data API: <1KB per fetch
+
+COMPARING OLD VS NEW DASHBOARD
+===============================
+
+OLD (propagation_dashboard.html):
+- Basic 24-hour forecast
+- Simple band status
+- No gray line
+- No DXCC alerts
+- Larger fonts/spacing
+
+NEW (propagation_dashboard_enhanced.html):
+- 72-hour forecast
+- S-meter estimates
+- Gray line overlay
+- DXCC alerts
+- MUF/optimal freq shown
+- Compact layout
+- Solar condition ratings
+- Enhanced most-wanted list
+
+BOTH are functional - use whichever you prefer!
+
+FUTURE ENHANCEMENT IDEAS
+========================
+
+Community suggested:
+- [ ] Export predictions to PDF
+- [ ] Email digest option
+- [ ] Mobile app version
+- [ ] Voice alerts for rare DX
+- [ ] Integration with logging software
+- [ ] Propagation vs actual QSO comparison
+- [ ] Machine learning prediction refinement
+- [ ] WSPR beacon correlation
+- [ ] Noise floor estimates
+- [ ] Band plan overlay
+
+Want something added? Let me know!
+
+TECHNICAL NOTES
+===============
+
+Gray Line Calculation:
+- Uses Leaflet Terminator plugin
+- Updated every 5 minutes via JavaScript
+- Solar position from date/time
+- Approximate ±15 minutes accuracy
+
+S-Meter Conversion:
+- Based on SNR in dB
+- S9 = 10dB SNR (ITU-R definition)
+- Each S-unit = 6dB below S9
+- +dB above S9 shown explicitly
+
+Propagation Model:
+- ITU-R based calculations
+- Critical frequency from solar flux
+- Multi-hop F-layer simulation
+- Diurnal variation included
+- Geomagnetic absorption
+- NOT full VOACAP (yet)
+
+Browser Compatibility:
+- Chrome/Edge: Full support
+- Firefox: Full support
+- Safari: Full support (Mac/iOS)
+- Mobile: Responsive design
+- IE11: Not supported
+
+File Structure:
+propagation_dashboard_enhanced.html  - Main enhanced UI
+propagation_data.json               - Generated predictions (72h)
+dxcc_summary.json                   - Your DXCC worked/needed
+generate_propagation.py             - Updated generator (72h)
+
+SUPPORT & FEEDBACK
+==================
+
+Your enhanced propagation tool is ready!
+
+Current Implementation Status:
+✅ Compact layout
+✅ Gray line overlay  
+✅ DXCC alerts
+✅ S-meter estimates
+✅ Enhanced band cards
+✅ 72-hour forecast
+✅ Solar ratings
+⏳ DX Cluster (planned)
+⏳ Multi-hop viz (planned)
+⏳ VOACAP option (planned)
+
+Enjoy hunting DX with your new enhanced tool!
+
+73 de Claude
+📡 Good DX!

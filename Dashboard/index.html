@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE1ATM Propagation - Quick Start</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            color: #4a90e2;
+            border-bottom: 3px solid #2a3f5f;
+            padding-bottom: 1rem;
+        }
+        
+        h2 {
+            color: #4a90e2;
+            margin-top: 2rem;
+        }
+        
+        .box {
+            background: #162236;
+            border: 2px solid #2a3f5f;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid #4a90e2;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.5);
+        }
+        
+        .code {
+            background: #0d1520;
+            border: 1px solid #2a3f5f;
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .warning {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        ul {
+            margin-left: 2rem;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+        }
+        
+        .feature {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-left: 3px solid #4a90e2;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>📡 VE1ATM HF Propagation Prediction System</h1>
+    
+    <div class="box" style="text-align: center;">
+        <h2 style="margin-top: 0;">Ready to Use!</h2>
+        <p>Your personalized HF propagation prediction tool is ready. Click below to view current band conditions.</p>
+        <a href="propagation_dashboard.html" class="button">🌍 Open Dashboard</a>
+    </div>
+    
+    <div class="box">
+        <h2>✨ What You've Got</h2>
+        
+        <div class="feature">
+            <strong>📊 Real-time Band Predictions</strong><br>
+            See current propagation quality for all your bands (40m-10m) to major regions worldwide
+        </div>
+        
+        <div class="feature">
+            <strong>🎯 DXCC Integration</strong><br>
+            Your log shows: <span class="success">122 entities worked</span>, <span class="success">94 confirmed via LoTW</span><br>
+            Dashboard highlights which regions you still need for DXCC
+        </div>
+        
+        <div class="feature">
+            <strong>⏰ 24-Hour Forecast</strong><br>
+            Plan your operating sessions with hour-by-hour predictions showing when bands open/close
+        </div>
+        
+        <div class="feature">
+            <strong>🌍 Interactive Map</strong><br>
+            Visual display of propagation paths from your QTH (FN74ui) with color-coded signal strength
+        </div>
+        
+        <div class="feature">
+            <strong>☀️ Solar Conditions</strong><br>
+            Live solar flux, sunspot numbers, and geomagnetic indices affect propagation
+        </div>
+    </div>
+    
+    <div class="box">
+        <h2>🚀 Quick Start</h2>
+        
+        <h3>1. View Current Conditions (Now!)</h3>
+        <p>Click the <strong>Open Dashboard</strong> button above to see your current band conditions.</p>
+        
+        <h3>2. Update Predictions</h3>
+        <p>To get fresh predictions with latest solar data, run:</p>
+        <div class="code">python3 generate_propagation.py</div>
+        <p>Then refresh the dashboard in your browser.</p>
+        
+        <h3>3. Schedule Automatic Updates</h3>
+        <p>For continuous updates, set up a cron job to regenerate every 1-3 hours:</p>
+        <div class="code">0 */2 * * * cd /path/to/predictions && python3 generate_propagation.py</div>
+    </div>
+    
+    <div class="box">
+        <h2>📖 Understanding the Display</h2>
+        
+        <h3>Band Quality Indicators:</h3>
+        <ul>
+            <li><span class="success">GREEN (GOOD)</span> - Reliability > 60%, excellent conditions</li>
+            <li><span class="warning">YELLOW (FAIR)</span> - Reliability 30-60%, marginal conditions</li>
+            <li><span style="color: #f87171;">RED (POOR)</span> - Reliability < 30%, poor conditions</li>
+            <li><span style="color: #6b7280;">GRAY (CLOSED)</span> - Above MUF, band closed</li>
+        </ul>
+        
+        <h3>Solar Conditions (Higher is Generally Better):</h3>
+        <ul>
+            <li><strong>SFI (Solar Flux)</strong> - Currently using 150 (typical mid-cycle)</li>
+            <li><strong>SSN (Sunspot Number)</strong> - Currently using 100 (moderate activity)</li>
+            <li><strong>Kp Index</strong> - Lower is better (< 3 is good)</li>
+            <li><strong>A Index</strong> - Lower is better (< 20 is excellent)</li>
+        </ul>
+        
+        <p><span class="warning">Note:</span> Current predictions use estimated solar values. When you run the script with internet access, it will fetch real-time NOAA data automatically.</p>
+    </div>
+    
+    <div class="box">
+        <h2>🛠️ How It Works</h2>
+        
+        <p><strong>Backend (Python):</strong></p>
+        <ul>
+            <li>Fetches current solar-terrestrial data from NOAA Space Weather</li>
+            <li>Calculates MUF (Maximum Usable Frequency) using ITU-R propagation models</li>
+            <li>Estimates signal quality, SNR, and reliability for each band/path</li>
+            <li>Generates 24-hour timeline predictions</li>
+            <li>Outputs JSON data file</li>
+        </ul>
+        
+        <p><strong>Frontend (HTML/JavaScript):</strong></p>
+        <ul>
+            <li>Loads prediction JSON and renders beautiful dashboard</li>
+            <li>Interactive Leaflet.js world map with propagation paths</li>
+            <li>Responsive design works on desktop and mobile</li>
+            <li>No server required - pure static files</li>
+        </ul>
+    </div>
+    
+    <div class="box">
+        <h2>📁 Your Files</h2>
+        
+        <ul>
+            <li><strong>propagation_dashboard.html</strong> - The main dashboard interface</li>
+            <li><strong>generate_propagation.py</strong> - Python script to generate predictions</li>
+            <li><strong>propagation_data.json</strong> - Current prediction data (auto-generated)</li>
+            <li><strong>dxcc_summary.json</strong> - Your DXCC worked/needed list from your QRZ log</li>
+            <li><strong>README.md</strong> - Detailed documentation</li>
+        </ul>
+    </div>
+    
+    <div class="box">
+        <h2>🌟 Deployment Options</h2>
+        
+        <h3>Option 1: Local Use (Easiest)</h3>
+        <p>Just open the HTML files in your browser. Generate new predictions as needed.</p>
+        
+        <h3>Option 2: Static Website (Free Hosting)</h3>
+        <p>Upload these files to:</p>
+        <ul>
+            <li>GitHub Pages (free)</li>
+            <li>Netlify (free)</li>
+            <li>Cloudflare Pages (free)</li>
+        </ul>
+        <p>Set up a GitHub Action or cron job to regenerate predictions hourly and auto-deploy.</p>
+        
+        <h3>Option 3: Local Web Server</h3>
+        <div class="code">python3 -m http.server 8000</div>
+        <p>Then visit: http://localhost:8000/propagation_dashboard.html</p>
+    </div>
+    
+    <div class="box">
+        <h2>🔮 Future Enhancements</h2>
+        
+        <p>This system can be enhanced with:</p>
+        <ul>
+            <li>Full VOACAP integration for maximum accuracy</li>
+            <li>Gray line visualization and solar terminator tracking</li>
+            <li>Alert notifications for rare DX openings to needed entities</li>
+            <li>Historical propagation analysis from your actual QSOs</li>
+            <li>Integration with DX cluster for real-time spots</li>
+            <li>Contest mode with optimized band recommendations</li>
+        </ul>
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #2a3f5f;">
+        <p style="color: #6a7f9f;">
+            <strong>VE1ATM HF Propagation Prediction System</strong><br>
+            Custom-built for your QTH at FN74ui<br>
+            <em>73 and good DX!</em> 📡
+        </p>
+        <a href="propagation_dashboard.html" class="button">🚀 Launch Dashboard</a>
+    </div>
+</body>
+</html>

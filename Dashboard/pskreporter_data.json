@@ -1,0 +1,76 @@
+{
+  "callsign": "VE1ATM",
+  "timestamp": "2025-11-10T18:06:28.901598+00:00",
+  "coverage": {
+    "total_spots": 1135,
+    "unique_receivers": 1132,
+    "countries": [
+      "Antarctica",
+      "Argentina",
+      "Australia",
+      "Austria",
+      "Belgium",
+      "Belize",
+      "Brazil",
+      "Canada",
+      "Canary Islands",
+      "Cayman Islands",
+      "Ceuta & Melilla",
+      "Chile",
+      "Colombia",
+      "Costa Rica",
+      "Denmark",
+      "Dominican Republic",
+      "Ecuador",
+      "El Salvador",
+      "England",
+      "Fed. Rep. of Germany",
+      "France",
+      "Greenland",
+      "Hawaii",
+      "Ireland",
+      "Israel",
+      "Italy",
+      "Mexico",
+      "Netherlands",
+      "Northern Ireland",
+      "Norway",
+      "Portugal",
+      "Puerto Rico",
+      "Rodriguez Island",
+      "Romania",
+      "Scotland",
+      "Slovenia",
+      "South Africa",
+      "Spain",
+      "Sweden",
+      "Switzerland",
+      "Trinidad & Tobago",
+      "United States",
+      "Uruguay",
+      "Venezuela",
+      "Wales"
+    ],
+    "bands": [
+      [
+        "10m",
+        1129
+      ],
+      [
+        "Other",
+        3
+      ],
+      [
+        "12m",
+        2
+      ],
+      [
+        "15m",
+        1
+      ]
+    ],
+    "average_snr": -9.3,
+    "time_range_minutes": 60
+  },
+  "band_activity": {}
+}

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HF Propagation Dashboard - VE1ATM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #e0e0e0;
+            padding: 15px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .update-info {
+            text-align: center;
+            color: #b0c4de;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: #87ceeb;
+        }
+
+        .status-good {
+            border-left: 4px solid #4ade80;
+        }
+
+        .status-fair {
+            border-left: 4px solid #fbbf24;
+        }
+
+        .status-poor {
+            border-left: 4px solid #ef4444;
+        }
+
+        .status-confirmed {
+            border-left: 4px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .status-unexpected {
+            border-left: 4px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .status-unconfirmed {
+            border-left: 4px solid #6b7280;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .metric-label {
+            color: #b0c4de;
+        }
+
+        .metric-value {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin: 2px;
+        }
+
+        .badge-good {
+            background: #4ade80;
+            color: #000;
+        }
+
+        .badge-fair {
+            background: #fbbf24;
+            color: #000;
+        }
+
+        .badge-poor {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .badge-confirmed {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .badge-unexpected {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .badge-unconfirmed {
+            background: #6b7280;
+            color: #fff;
+        }
+
+        .dxcc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .dxcc-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid;
+        }
+
+        .pskreporter-section {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .spot-list {
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .spot {
+            padding: 4px;
+            margin: 2px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .validation-legend {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 HF Propagation Dashboard - VE1ATM</h1>
+        <div class="update-info" id="updateInfo">Loading...</div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('overview')">Overview</button>
+            <button class="tab" onclick="showTab('validation')">Real-Time Validation</button>
+            <button class="tab" onclick="showTab('bands')">Band Details</button>
+            <button class="tab" onclick="showTab('forecast')">72-Hour Forecast</button>
+            <button class="tab" onclick="showTab('dxcc')">DXCC Tracking</button>
+        </div>
+
+        <div id="overview" class="tab-content active">
+            <div class="card-grid" id="overviewGrid"></div>
+        </div>
+
+        <div id="validation" class="tab-content">
+            <div class="validation-legend">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #10b981;"></div>
+                    <span>Confirmed (Predicted & Received)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #3b82f6;"></div>
+                    <span>Unexpected (Received, Not Predicted)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #6b7280;"></div>
+                    <span>Unconfirmed (Predicted, Not Yet Received)</span>
+                </div>
+            </div>
+            <div id="validationContent"></div>
+        </div>
+
+        <div id="bands" class="tab-content">
+            <div class="card-grid" id="bandsGrid"></div>
+        </div>
+
+        <div id="forecast" class="tab-content">
+            <div id="forecastContent"></div>
+        </div>
+
+        <div id="dxcc" class="tab-content">
+            <div id="dxccContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let enhancedData = null;
+        let solarData = null;
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function loadData() {
+            try {
+                // Try to load enhanced predictions first
+                const enhancedResponse = await fetch('enhanced_predictions.json');
+                if (enhancedResponse.ok) {
+                    enhancedData = await enhancedResponse.json();
+                } else {
+                    // Fall back to regular predictions
+                    const predResponse = await fetch('propagation_data.json');
+                    enhancedData = {
+                        enhanced: false,
+                        predictions: await predResponse.json()
+                    };
+                }
+
+                // Load solar data
+                const solarResponse = await fetch('solar_data.json');
+                solarData = await solarResponse.json();
+
+                renderDashboard();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('updateInfo').innerHTML = 
+                    '⚠️ Error loading data. Make sure to run generate_enhanced_predictions.py first.';
+            }
+        }
+
+        function renderDashboard() {
+            renderUpdateInfo();
+            renderOverview();
+            renderValidation();
+            renderBands();
+            renderForecast();
+            renderDXCC();
+        }
+
+        function renderUpdateInfo() {
+            const timestamp = enhancedData.timestamp || enhancedData.predictions?.timestamp;
+            if (timestamp) {
+                const date = new Date(timestamp);
+                const enhanced = enhancedData.enhanced ? ' | ✓ Real-time validation active' : '';
+                document.getElementById('updateInfo').innerHTML = 
+                    `Last updated: ${date.toLocaleString()}${enhanced}`;
+            }
+        }
+
+        function renderOverview() {
+            const grid = document.getElementById('overviewGrid');
+            grid.innerHTML = '';
+
+            // Solar conditions card
+            if (solarData) {
+                const solarCard = document.createElement('div');
+                solarCard.className = 'card';
+                solarCard.innerHTML = `
+                    <h3>☀️ Solar Conditions</h3>
+                    <div class="metric">
+                        <span class="metric-label">SFI:</span>
+                        <span class="metric-value">${solarData.sfi || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">SSN:</span>
+                        <span class="metric-value">${solarData.ssn || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">A-index:</span>
+                        <span class="metric-value">${solarData.a_index || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">K-index:</span>
+                        <span class="metric-value">${solarData.k_index || 'N/A'}</span>
+                    </div>
+                `;
+                grid.appendChild(solarCard);
+            }
+
+            // PSKreporter coverage card
+            if (enhancedData.enhanced && enhancedData.pskreporter_coverage) {
+                const pskCard = document.createElement('div');
+                pskCard.className = 'card status-confirmed';
+                const coverage = enhancedData.pskreporter_coverage;
+                pskCard.innerHTML = `
+                    <h3>📡 Live Reception (Last Hour)</h3>
+                    <div class="metric">
+                        <span class="metric-label">Total Spots:</span>
+                        <span class="metric-value">${coverage.total_spots}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Unique Receivers:</span>
+                        <span class="metric-value">${coverage.unique_receivers}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Countries:</span>
+                        <span class="metric-value">${coverage.countries.length}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg SNR:</span>
+                        <span class="metric-value">${coverage.average_snr || 'N/A'} dB</span>
+                    </div>
+                `;
+                grid.appendChild(pskCard);
+            }
+
+            // Band summary cards
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const predictions = enhancedData.predictions?.predictions || {};
+
+            bands.forEach(bandName => {
+                let goodCount = 0;
+                let totalCount = 0;
+
+                Object.values(predictions).forEach(entity => {
+                    if (entity[bandName]) {
+                        totalCount++;
+                        if (entity[bandName].workable) {
+                            goodCount++;
+                        }
+                    }
+                });
+
+                const percentage = totalCount > 0 ? Math.round((goodCount / totalCount) * 100) : 0;
+                let statusClass = 'status-poor';
+                if (percentage > 60) statusClass = 'status-good';
+                else if (percentage > 30) statusClass = 'status-fair';
+
+                const bandCard = document.createElement('div');
+                bandCard.className = `card ${statusClass}`;
+                bandCard.innerHTML = `
+                    <h3>${bandName.toUpperCase()}</h3>
+                    <div class="metric">
+                        <span class="metric-label">Workable:</span>
+                        <span class="metric-value">${goodCount}/${totalCount}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate:</span>
+                        <span class="metric-value">${percentage}%</span>
+                    </div>
+                `;
+                grid.appendChild(bandCard);
+            });
+        }
+
+        function renderValidation() {
+            const container = document.getElementById('validationContent');
+            
+            if (!enhancedData.enhanced) {
+                container.innerHTML = `
+                    <div class="card">
+                        <h3>⚠️ Real-time validation not available</h3>
+                        <p>Run generate_enhanced_predictions.py to enable PSKreporter validation.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const validation = enhancedData.dxcc_validation || {};
+            const dxccData = enhancedData.predictions?.dxcc_entities || {};
+
+            // Group by validation status
+            const confirmed = [];
+            const unexpected = [];
+            const unconfirmed = [];
+
+            Object.entries(validation).forEach(([code, val]) => {
+                const entity = dxccData[code] || { name: code };
+                const item = { code, entity, ...val };
+
+                if (val.validation_status === 'confirmed') {
+                    confirmed.push(item);
+                } else if (val.validation_status === 'unexpected') {
+                    unexpected.push(item);
+                } else if (val.validation_status === 'unconfirmed') {
+                    unconfirmed.push(item);
+                }
+            });
+
+            container.innerHTML = '';
+
+            // Confirmed section
+            if (confirmed.length > 0) {
+                const section = document.createElement('div');
+                section.innerHTML = `<h3 style="color: #10b981; margin: 15px 0;">✓ Confirmed Propagation (${confirmed.length})</h3>`;
+                const list = document.createElement('div');
+                list.className = 'dxcc-list';
+
+                confirmed.forEach(item => {
+                    const card = createValidationCard(item, 'confirmed');
+                    list.appendChild(card);
+                });
+
+                section.appendChild(list);
+                container.appendChild(section);
+            }
+
+            // Unexpected section
+            if (unexpected.length > 0) {
+                const section = document.createElement('div');
+                section.innerHTML = `<h3 style="color: #3b82f6; margin: 15px 0;">⚡ Unexpected Propagation (${unexpected.length})</h3>`;
+                const list = document.createElement('div');
+                list.className = 'dxcc-list';
+
+                unexpected.forEach(item => {
+                    const card = createValidationCard(item, 'unexpected');
+                    list.appendChild(card);
+                });
+
+                section.appendChild(list);
+                container.appendChild(section);
+            }
+
+            // Unconfirmed section
+            if (unconfirmed.length > 0) {
+                const section = document.createElement('div');
+                section.innerHTML = `<h3 style="color: #6b7280; margin: 15px 0;">? Unconfirmed Predictions (${unconfirmed.length})</h3>`;
+                const list = document.createElement('div');
+                list.className = 'dxcc-list';
+
+                unconfirmed.slice(0, 20).forEach(item => {  // Limit to 20
+                    const card = createValidationCard(item, 'unconfirmed');
+                    list.appendChild(card);
+                });
+
+                section.appendChild(list);
+                container.appendChild(section);
+            }
+        }
+
+        function createValidationCard(item, status) {
+            const card = document.createElement('div');
+            card.className = `dxcc-item status-${status}`;
+
+            let content = `
+                <strong>${item.entity.name || item.code} (${item.code})</strong><br>
+            `;
+
+            if (item.predicted_bands.length > 0) {
+                content += `Predicted: ${item.predicted_bands.join(', ')}<br>`;
+            }
+
+            if (item.actual_bands.length > 0) {
+                content += `<strong style="color: #10b981;">Receiving: ${item.actual_bands.join(', ')}</strong><br>`;
+            }
+
+            if (item.reception_reports) {
+                content += `<div class="pskreporter-section">
+                    <strong>Recent Spots (${item.reception_reports.length}):</strong>
+                    <div class="spot-list">`;
+
+                item.reception_reports.slice(0, 5).forEach(report => {
+                    const time = new Date(report.time).toLocaleTimeString();
+                    content += `
+                        <div class="spot">
+                            ${time} | ${report.receiver} (${report.grid}) | 
+                            ${report.band} SNR: ${report.snr}dB
+                        </div>
+                    `;
+                });
+
+                content += `</div></div>`;
+            }
+
+            card.innerHTML = content;
+            card.style.borderLeftColor = 
+                status === 'confirmed' ? '#10b981' :
+                status === 'unexpected' ? '#3b82f6' : '#6b7280';
+
+            return card;
+        }
+
+        function renderBands() {
+            // Similar to existing implementation
+            const grid = document.getElementById('bandsGrid');
+            grid.innerHTML = '<div class="card"><h3>Band details coming soon...</h3></div>';
+        }
+
+        function renderForecast() {
+            // Similar to existing implementation
+            const content = document.getElementById('forecastContent');
+            content.innerHTML = '<div class="card"><h3>72-hour forecast coming soon...</h3></div>';
+        }
+
+        function renderDXCC() {
+            // Similar to existing implementation
+            const content = document.getElementById('dxccContent');
+            content.innerHTML = '<div class="card"><h3>DXCC tracking coming soon...</h3></div>';
+        }
+
+        // Load data on page load
+        loadData();
+
+        // Refresh every 5 minutes
+        setInterval(loadData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
