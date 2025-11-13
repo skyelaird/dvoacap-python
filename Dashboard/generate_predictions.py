@@ -186,7 +186,7 @@ def generate_prediction(
             'utc_hour': utc_hour,
             'distance_km': round(distance_km, 0),
             'azimuth': round(azimuth_deg, 1),
-            'muf': round(engine.muf_calculator.muf, 2) if hasattr(engine, 'muf_calculator') else 0,
+            'muf': round(engine.circuit_muf.muf, 2) if engine.circuit_muf else 0,
             'bands': band_predictions
         }
 
