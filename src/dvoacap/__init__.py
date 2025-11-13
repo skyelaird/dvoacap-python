@@ -8,7 +8,7 @@ Original DVOACAP by Alex Shovkoplyas, VE3NEA
 Python Port: 2025
 """
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __author__ = "Python Port Contributors"
 __license__ = "MIT"
 
@@ -91,15 +91,38 @@ try:
 except ImportError:
     __all_phase3__ = []
 
+# Phase 4: Raytracing
+try:
+    from .muf_calculator import (
+        MufCalculator,
+        MufInfo,
+        CircuitMuf,
+        select_profile,
+        calc_muf_prob,
+    )
+    from .reflectrix import (
+        Reflectrix,
+    )
+    __all_phase4__ = [
+        "MufCalculator",
+        "MufInfo",
+        "CircuitMuf",
+        "select_profile",
+        "calc_muf_prob",
+        "Reflectrix",
+    ]
+except ImportError:
+    __all_phase4__ = []
+
 # Combine all exports
-__all__ = __all_phase1__ + __all_phase2__ + __all_phase3__
+__all__ = __all_phase1__ + __all_phase2__ + __all_phase3__ + __all_phase4__
 
 # Module information
 _phase_status = {
     "Phase 1": "Complete - Path Geometry",
     "Phase 2": "Complete - Solar & Geomagnetic",
     "Phase 3": "Complete - Ionospheric Profiles",
-    "Phase 4": "Planned - Raytracing",
+    "Phase 4": "Complete - Raytracing",
     "Phase 5": "Planned - Signal Predictions",
 }
 
@@ -116,6 +139,6 @@ def get_version_info():
         "author": __author__,
         "license": __license__,
         "python_requires": ">=3.8",
-        "modules_complete": len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__),
-        "progress": "60%",
+        "modules_complete": len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__) + len(__all_phase4__),
+        "progress": "80%",
     }

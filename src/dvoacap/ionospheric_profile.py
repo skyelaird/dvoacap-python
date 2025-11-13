@@ -89,6 +89,7 @@ class LayerInfo:
 @dataclass
 class Reflection:
     """Reflection point information"""
+    elevation: float = 0.0       # Elevation angle (radians)
     true_height: float = 0.0     # True height (km)
     virt_height: float = 0.0     # Virtual height (km)
     vert_freq: float = 0.0       # Vertical frequency (MHz)
@@ -98,8 +99,15 @@ class Reflection:
 @dataclass
 class ModeInfo:
     """Propagation mode information"""
-    ref: Reflection
-    # Additional fields can be added as needed
+    ref: Reflection = None
+    hop_dist: float = 0.0  # Single hop ground distance (radians)
+    hop_cnt: int = 0  # Number of hops
+    layer: str = ''  # Layer name ('E', 'F1', or 'F2')
+
+    def __post_init__(self):
+        """Initialize ref if not provided"""
+        if self.ref is None:
+            self.ref = Reflection()
 
 
 # ============================================================================
@@ -547,7 +555,7 @@ class IonosphericProfile:
             self.igram_true_height[i] = self.get_true_height(self.igram_vert_freq[i])
             self.igram_virt_height[i] = self.get_virtual_height_gauss(self.igram_vert_freq[i])
 
-    def compute_penetration_angles(self, mhz: float) -> Tuple[float, float, float]:
+    def compute_penetration_angles(self, mhz: float) -> dict:
         """
         Compute penetration angles for each layer.
 
@@ -555,7 +563,7 @@ class IonosphericProfile:
             mhz: Frequency in MHz
 
         Returns:
-            Tuple of (E_angle, F1_angle, F2_angle) in radians
+            Dictionary mapping layer name to penetration angle in radians
         """
         if self.igram_vert_freq is None:
             self.compute_ionogram()
@@ -573,7 +581,7 @@ class IonosphericProfile:
             e_angle = compute_elev(self.igram_true_height[10], frat)
         else:
             # Cannot penetrate E layer
-            return JUST_BELOW_MAX_ELEV, HALF_PI, HALF_PI
+            return {'E': JUST_BELOW_MAX_ELEV, 'F1': HALF_PI, 'F2': HALF_PI}
 
         # F1 layer
         if self.f1.fo > 0:
@@ -582,13 +590,13 @@ class IonosphericProfile:
                 f1_angle = compute_elev(self.igram_true_height[20], frat)
             else:
                 # Cannot penetrate F1 layer
-                return e_angle, JUST_BELOW_MAX_ELEV, HALF_PI
+                return {'E': e_angle, 'F1': JUST_BELOW_MAX_ELEV, 'F2': HALF_PI}
         else:
             f1_angle = e_angle
 
         # F2 layer
         if mhz <= (self.igram_vert_freq[30] + 0.0001):
-            return e_angle, f1_angle, MAX_NON_POLE_LAT
+            return {'E': e_angle, 'F1': f1_angle, 'F2': MAX_NON_POLE_LAT}
 
         # Find maximum (R+H)*mu for F2
         xm28 = (EARTH_R + self.igram_true_height[28]) * math.sqrt(
@@ -612,7 +620,74 @@ class IonosphericProfile:
         else:
             f2_angle = math.acos(xm)
 
-        return e_angle, f1_angle, f2_angle
+        return {'E': e_angle, 'F1': f1_angle, 'F2': f2_angle}
+
+    def compute_oblique_frequencies(self):
+        """
+        Compute oblique reflection frequencies for all angles and heights.
+
+        This creates a 2D array oblique_freq[angle_idx, height_idx] that stores
+        the maximum frequency (in kHz) that can be reflected at each angle and height.
+        """
+        if self.igram_vert_freq is None:
+            self.compute_ionogram()
+
+        # Allocate oblique frequency table (40 angles x 31 heights)
+        self.oblique_freq = np.zeros((40, 31), dtype=np.int32)
+
+        # For each ionogram point, compute oblique frequencies at all angles
+        for h in range(1, 31):
+            vert_freq = self.igram_vert_freq[h]  # MHz
+            true_h = self.igram_true_height[h]  # km
+
+            # For each angle
+            for ang_idx in range(40):
+                angle = ANGLES[ang_idx]
+
+                # Oblique frequency using Snell's law
+                # f_oblique = f_vertical / cos(incidence_angle)
+                # where cos(incidence) = sqrt(1 - sin²(incidence))
+                # and sin(incidence) = R*cos(elev) / (R+h)
+
+                sin_i_sqr = (EARTH_R * math.cos(angle) / (EARTH_R + true_h)) ** 2
+
+                if sin_i_sqr >= 1.0:
+                    oblique_freq = 0  # Ray escapes
+                else:
+                    cos_i = math.sqrt(1 - sin_i_sqr)
+                    oblique_freq = int(vert_freq * 1000 / cos_i)  # Convert MHz to kHz
+
+                self.oblique_freq[ang_idx, h] = oblique_freq
+
+    def populate_mode_info(self, mode: ModeInfo, idx: int, r: float = 0.0):
+        """
+        Populate mode information from ionogram data.
+
+        Args:
+            mode: ModeInfo object to populate (modified in place)
+            idx: Index in ionogram arrays
+            r: Interpolation ratio (0.0 = use idx, 1.0 = use idx+1)
+        """
+        if self.igram_vert_freq is None:
+            self.compute_ionogram()
+
+        if r == 0.0:
+            # Exact index
+            mode.ref.true_height = self.igram_true_height[idx]
+            mode.ref.virt_height = self.igram_virt_height[idx]
+            mode.ref.vert_freq = self.igram_vert_freq[idx]
+        else:
+            # Interpolate between idx and idx+1
+            mode.ref.true_height = (self.igram_true_height[idx] * (1 - r) +
+                                   self.igram_true_height[idx + 1] * r)
+            mode.ref.virt_height = (self.igram_virt_height[idx] * (1 - r) +
+                                   self.igram_virt_height[idx + 1] * r)
+            mode.ref.vert_freq = (self.igram_vert_freq[idx] * (1 - r) +
+                                 self.igram_vert_freq[idx + 1] * r)
+
+        # Deviative loss (simplified - full calculation is more complex)
+        # This is a placeholder - the actual calculation involves layer parameters
+        mode.ref.dev_loss = 0.0
 
 
 # ============================================================================
