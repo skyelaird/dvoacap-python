@@ -20,7 +20,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     from src.dvoacap.path_geometry import GeoPoint
     from src.dvoacap.prediction_engine import PredictionEngine
-    from src.dvoacap.solar import get_solar_data
     import requests
 except ImportError as e:
     print(f"Error: Could not import DVOACAP modules: {e}")
