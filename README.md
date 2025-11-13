@@ -17,14 +17,46 @@ DVOACAP-Python is a modern Python port of the [DVOACAP](https://github.com/VE3NE
 
 ### Installation
 
+Choose the installation option that fits your needs:
+
+**Option 1: Core Library Only** (lightweight, for developers)
 ```bash
 # Clone the repository
 git clone https://github.com/skyelaird/dvoacap-python.git
 cd dvoacap-python
 
-# Install in development mode
+# Install just the propagation engine
 pip install -e .
 ```
+
+**Option 2: With Dashboard** (includes Flask server and web UI)
+```bash
+# Clone the repository
+git clone https://github.com/skyelaird/dvoacap-python.git
+cd dvoacap-python
+
+# Install library + dashboard dependencies
+pip install -e ".[dashboard]"
+```
+
+**Option 3: Development Setup** (includes testing tools)
+```bash
+# Clone the repository
+git clone https://github.com/skyelaird/dvoacap-python.git
+cd dvoacap-python
+
+# Install everything
+pip install -e ".[all]"
+```
+
+### What's Included
+
+| Installation | Core Library | Dashboard | Dev Tools |
+|-------------|--------------|-----------|-----------|
+| `pip install -e .` | ✅ | ❌ | ❌ |
+| `pip install -e ".[dashboard]"` | ✅ | ✅ | ❌ |
+| `pip install -e ".[dev]"` | ✅ | ❌ | ✅ |
+| `pip install -e ".[all]"` | ✅ | ✅ | ✅ |
 
 ### Basic Usage
 
