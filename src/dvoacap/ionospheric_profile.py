@@ -659,6 +659,24 @@ class IonosphericProfile:
 
                 self.oblique_freq[ang_idx, h] = oblique_freq
 
+    def compute_derivative_loss(self, muf_info: dict):
+        """
+        Compute derivative loss for the ionospheric profile.
+
+        This is a stub implementation. The full calculation is complex and
+        involves layer parameters and MUF information. Currently sets dev_loss
+        to a simple array of zeros.
+
+        Args:
+            muf_info: Dictionary of MUF information for each layer
+        """
+        # TODO: Implement full derivative loss calculation
+        # For now, initialize dev_loss array with zeros
+        if self.igram_vert_freq is not None:
+            self.dev_loss = np.zeros_like(self.igram_vert_freq)
+        else:
+            self.dev_loss = np.zeros(31, dtype=np.float32)
+
     def populate_mode_info(self, mode: ModeInfo, idx: int, r: float = 0.0):
         """
         Populate mode information from ionogram data.

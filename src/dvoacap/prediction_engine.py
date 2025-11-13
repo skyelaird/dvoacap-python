@@ -21,7 +21,7 @@ from .solar import compute_zenith_angle, compute_local_time
 from .fourier_maps import FourierMaps, FixedMapKind
 from .ionospheric_profile import IonosphericProfile, LayerInfo
 from .layer_parameters import compute_iono_params, ControlPoint, GeographicPoint
-from .muf_calculator import CircuitMuf, MufInfo, calc_muf_prob, select_profile
+from .muf_calculator import CircuitMuf, MufCalculator, MufInfo, calc_muf_prob, select_profile
 from .reflectrix import Reflectrix, Reflection
 from .noise_model import NoiseModel, TripleValue
 from .antenna_gain import AntennaFarm, IsotropicAntenna
@@ -177,7 +177,7 @@ class PredictionEngine:
         self.magnetic_field = GeomagneticField()
         self.fourier_maps = FourierMaps()
         self.noise_model = NoiseModel(self.fourier_maps)
-        self.muf_calculator = CircuitMuf(self.path, self.fourier_maps)
+        self.muf_calculator = MufCalculator(self.path, self.fourier_maps)
 
         # Antennas
         self.tx_antennas = AntennaFarm()
@@ -193,6 +193,7 @@ class PredictionEngine:
         self._control_points: List[ControlPoint] = []
         self._profiles: List[IonosphericProfile] = []
         self._current_profile: Optional[IonosphericProfile] = None
+        self.circuit_muf: Optional[CircuitMuf] = None
         self._modes: List[ModeInfo] = []
         self._avg_loss = TripleValue()
         self._best_mode: Optional[ModeInfo] = None
@@ -259,11 +260,11 @@ class PredictionEngine:
         self._create_iono_profiles()
 
         # Compute circuit MUF
-        self.muf_calculator.compute_circuit_muf(self._profiles)
+        self.circuit_muf = self.muf_calculator.compute_circuit_muf(self._profiles)
 
         # If last frequency is zero, replace with MUF
         if self.frequencies[-1] == 0:
-            self.frequencies[-1] = self.muf_calculator.muf
+            self.frequencies[-1] = self.circuit_muf.muf
 
         # Select profile for short model
         self._current_profile = self._select_profile()
@@ -271,8 +272,8 @@ class PredictionEngine:
         # Compute profile for short model
         angle_count = self._get_angle_count()
         self._current_profile.compute_ionogram()
-        self._current_profile.compute_oblique_frequencies(angle_count)
-        self._current_profile.compute_derivative_loss(self.muf_calculator.muf_info)
+        self._current_profile.compute_oblique_frequencies()
+        self._current_profile.compute_derivative_loss(self.circuit_muf.muf_info)
 
         # Adjust signal distribution tables
         self._adjust_signal_distribution_tables()
@@ -280,12 +281,12 @@ class PredictionEngine:
         # Compute profiles for long model if needed
         if self.path.dist >= self.RAD_7000_KM:
             self._profiles[0].compute_ionogram()
-            self._profiles[0].compute_oblique_frequencies(angle_count)
-            self._profiles[0].compute_derivative_loss(self.muf_calculator.muf_info)
+            self._profiles[0].compute_oblique_frequencies()
+            self._profiles[0].compute_derivative_loss(self.circuit_muf.muf_info)
 
             self._profiles[-1].compute_ionogram()
-            self._profiles[-1].compute_oblique_frequencies(angle_count)
-            self._profiles[-1].compute_derivative_loss(self.muf_calculator.muf_info)
+            self._profiles[-1].compute_oblique_frequencies()
+            self._profiles[-1].compute_derivative_loss(self.circuit_muf.muf_info)
 
         # Predict for each frequency
         for f, freq in enumerate(self.frequencies):
@@ -293,13 +294,13 @@ class PredictionEngine:
             self.rx_antennas.select_antenna(freq)
 
             # Compute noise distribution
-            fof2 = self._profiles[-1].f2_layer.fo
+            fof2 = self._profiles[-1].f2.fo
             self.noise_model.compute_distribution(freq, fof2)
 
             # Create reflectrix and evaluate
             reflectrix = Reflectrix(
                 min_angle=self.params.min_angle,
-                frequency=freq,
+                freq=freq,
                 profile=self._current_profile
             )
 
@@ -395,84 +396,84 @@ class PredictionEngine:
         # Assign control point parameters to profiles
         if num_profiles == 1:
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e
-            prof.f1_layer = self._control_points[0].f1
-            prof.f2_layer = self._control_points[0].f2
+            prof.e = self._control_points[0].e
+            prof.f1 = self._control_points[0].f1
+            prof.f2 = self._control_points[0].f2
             prof.latitude = self._control_points[0].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[0].local_time
-            prof.gyro_frequency = self._control_points[0].gyro_freq
+            prof.gyro_freq = self._control_points[0].gyro_freq
 
         elif num_profiles == 2:
             # First profile
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e
-            prof.f1_layer = self._control_points[0].f1
-            prof.f2_layer = self._control_points[1].f2
+            prof.e = self._control_points[0].e
+            prof.f1 = self._control_points[0].f1
+            prof.f2 = self._control_points[1].f2
             prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[1].local_time
-            prof.gyro_frequency = self._control_points[0].gyro_freq
+            prof.gyro_freq = self._control_points[0].gyro_freq
 
             # Second profile
             prof = self._profiles[1]
-            prof.e_layer = self._control_points[2].e
-            prof.f1_layer = self._control_points[2].f1
-            prof.f2_layer = self._control_points[1].f2
+            prof.e = self._control_points[2].e
+            prof.f1 = self._control_points[2].f1
+            prof.f2 = self._control_points[1].f2
             prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[2].mag_lat
             prof.local_time_e = self._control_points[2].local_time
             prof.local_time_f2 = self._control_points[1].local_time
-            prof.gyro_frequency = self._control_points[2].gyro_freq
+            prof.gyro_freq = self._control_points[2].gyro_freq
 
         elif num_profiles == 3:
             # Three profiles for long paths
             # Profile 0
             prof = self._profiles[0]
-            prof.e_layer = self._control_points[0].e
-            prof.f1_layer = self._control_points[0].f1
-            prof.f2_layer = self._control_points[1].f2
+            prof.e = self._control_points[0].e
+            prof.f1 = self._control_points[0].f1
+            prof.f2 = self._control_points[1].f2
             prof.latitude = self._control_points[1].location.latitude
             prof.mag_latitude = self._control_points[0].mag_lat
             prof.local_time_e = self._control_points[0].local_time
             prof.local_time_f2 = self._control_points[1].local_time
-            prof.gyro_frequency = self._control_points[0].gyro_freq
+            prof.gyro_freq = self._control_points[0].gyro_freq
 
             # Profile 1
             prof = self._profiles[1]
-            prof.e_layer = self._control_points[2].e
-            prof.f1_layer = self._control_points[2].f1
-            prof.f2_layer = self._control_points[2].f2
+            prof.e = self._control_points[2].e
+            prof.f1 = self._control_points[2].f1
+            prof.f2 = self._control_points[2].f2
             prof.latitude = self._control_points[2].location.latitude
             prof.mag_latitude = self._control_points[2].mag_lat
             prof.local_time_e = self._control_points[2].local_time
             prof.local_time_f2 = self._control_points[2].local_time
-            prof.gyro_frequency = self._control_points[2].gyro_freq
+            prof.gyro_freq = self._control_points[2].gyro_freq
 
             # Profile 2
             prof = self._profiles[2]
-            prof.e_layer = self._control_points[4].e
-            prof.f1_layer = self._control_points[4].f1
-            prof.f2_layer = self._control_points[3].f2
+            prof.e = self._control_points[4].e
+            prof.f1 = self._control_points[4].f1
+            prof.f2 = self._control_points[3].f2
             prof.latitude = self._control_points[3].location.latitude
             prof.mag_latitude = self._control_points[4].mag_lat
             prof.local_time_e = self._control_points[4].local_time
             prof.local_time_f2 = self._control_points[3].local_time
-            prof.gyro_frequency = self._control_points[4].gyro_freq
+            prof.gyro_freq = self._control_points[4].gyro_freq
 
         # Check consistency of ionospheric parameters
         for prof in self._profiles:
-            if prof.f1_layer.fo > 0:
-                if prof.f1_layer.fo <= (prof.e_layer.fo + 0.2):
-                    prof.f1_layer.fo = 0.0
-                elif prof.f2_layer.fo <= (prof.f1_layer.fo + 0.2):
-                    prof.f1_layer.fo = 0.0
+            if prof.f1.fo > 0:
+                if prof.f1.fo <= (prof.e.fo + 0.2):
+                    prof.f1.fo = 0.0
+                elif prof.f2.fo <= (prof.f1.fo + 0.2):
+                    prof.f1.fo = 0.0
                 else:
-                    prof.f1_layer.hm = min(prof.f1_layer.hm, prof.f2_layer.hm)
+                    prof.f1.hm = min(prof.f1.hm, prof.f2.hm)
 
-            prof.f2_layer.ym = min(prof.f2_layer.ym, prof.f2_layer.hm - prof.e_layer.hm - 2.0)
+            prof.f2.ym = min(prof.f2.ym, prof.f2.hm - prof.e.hm - 2.0)
 
     def _select_profile(self) -> IonosphericProfile:
         """Select profile for short model (middle profile)."""
@@ -494,11 +495,11 @@ class PredictionEngine:
         avg_loss_hi = 0.0
 
         for prof in self._profiles:
-            avg_foe += prof.e_layer.fo
+            avg_foe += prof.e.fo
             avg_mag_lat += abs(prof.mag_latitude)
 
             # Absorption index
-            absorp_idx = max(0.1, -0.04 + np.exp(-2.937 + 0.8445 * prof.e_layer.fo))
+            absorp_idx = max(0.1, -0.04 + np.exp(-2.937 + 0.8445 * prof.e.fo))
             self._absorption_index += absorp_idx
             prof.absorption_index = absorp_idx
 
@@ -509,9 +510,9 @@ class PredictionEngine:
             )
             prof.excessive_system_loss = excessive_loss
 
-            avg_loss_mdn += excessive_loss.value.median
-            avg_loss_lo += excessive_loss.value.lower
-            avg_loss_hi += excessive_loss.value.upper
+            avg_loss_mdn += excessive_loss.median
+            avg_loss_lo += excessive_loss.lo
+            avg_loss_hi += excessive_loss.hi
 
         n_prof = len(self._profiles)
         avg_foe /= n_prof
@@ -526,7 +527,7 @@ class PredictionEngine:
         self._adj_de_loss = (
             self._interpolate_table(90.0, self._current_profile.igram_true_height,
                                    self._current_profile.igram_vert_freq) /
-            self._current_profile.e_layer.fo
+            self._current_profile.e.fo
         )
 
         # Adjustment to CCIR 252 loss equation for E modes
@@ -541,7 +542,7 @@ class PredictionEngine:
             self._adj_ccir252_b = 0.0
 
         # Frequency table for adjustments
-        muf_f2 = self.muf_calculator.muf_info[IonosphericLayer.F2.value]
+        muf_f2 = self.circuit_muf.muf_info[IonosphericLayer.F2.name]
         if avg_mag_lat <= np.deg2rad(40):
             ftab = muf_f2.fot
         elif avg_mag_lat <= np.deg2rad(50):
@@ -581,12 +582,12 @@ class PredictionEngine:
 
         # Determine hop count range
         min_hops = min(
-            self.muf_calculator.muf_info[IonosphericLayer.E.value].hop_count,
-            self.muf_calculator.muf_info[IonosphericLayer.F2.value].hop_count
+            self.circuit_muf.muf_info[IonosphericLayer.E.name].hop_count,
+            self.circuit_muf.muf_info[IonosphericLayer.F2.name].hop_count
         )
-        if self._current_profile.f1_layer.fo > 0:
+        if self._current_profile.f1.fo > 0:
             min_hops = min(min_hops,
-                          self.muf_calculator.muf_info[IonosphericLayer.F1.value].hop_count)
+                          self.circuit_muf.muf_info[IonosphericLayer.F1.name].hop_count)
 
         if reflectrix.max_distance <= 0:
             # Only one over-the-MUF mode
@@ -606,7 +607,8 @@ class PredictionEngine:
         for hop_count in range(hops_begin, hops_end + 1):
             hop_dist = self.path.dist / hop_count
             modes = reflectrix.find_modes(hop_dist, hop_count)
-            self._modes.extend(modes)
+            if modes:
+                self._modes.extend(modes)
 
         # Compute signal strength for each mode
         for mode in self._modes:
@@ -630,12 +632,12 @@ class PredictionEngine:
 
     def _compute_signal(self, mode: ModeInfo, frequency: float):
         """Compute signal parameters for a mode (REGMOD)."""
-        layer_idx = mode.layer.value
-        muf_info = self.muf_calculator.muf_info[layer_idx]
+        layer_name = mode.layer.name
+        muf_info = self.circuit_muf.muf_info[layer_name]
 
         # Absorption parameters
         ac = 677.2 * self._absorption_index
-        bc = (frequency + self._current_profile.gyro_frequency) ** 1.98
+        bc = (frequency + self._current_profile.gyro_freq) ** 1.98
         hop_count = mode.hop_count
         hop_count2 = min(2, hop_count)
 
@@ -653,7 +655,7 @@ class PredictionEngine:
         mode.free_space_loss = 32.45 + 2 * self._to_db(path_length * frequency)
 
         # Absorption loss
-        if mode.reflection.vert_freq <= self._current_profile.e_layer.fo:
+        if mode.reflection.vert_freq <= self._current_profile.e.fo:
             # D-E mode
             if mode.reflection.true_height >= self.HTLOSS:
                 nsqr = 10.2
@@ -663,7 +665,7 @@ class PredictionEngine:
                 )
             h_eff = min(100.0, mode.reflection.true_height)
             adx = (self._adj_ccir252_a + self._adj_ccir252_b *
-                   np.log(max(mode.reflection.vert_freq / self._current_profile.e_layer.fo,
+                   np.log(max(mode.reflection.vert_freq / self._current_profile.e.fo,
                              self._adj_de_loss)))
         else:
             # F layer modes
@@ -685,7 +687,7 @@ class PredictionEngine:
         # Deviation term
         mode.deviation_term = (
             mode.reflection.dev_loss / (bc + nsqr) *
-            ((mode.reflection.vert_freq + self._current_profile.gyro_frequency) ** 1.98 + nsqr) /
+            ((mode.reflection.vert_freq + self._current_profile.gyro_freq) ** 1.98 + nsqr) /
             self._cos_of_incidence(mode.reflection.elevation, mode.reflection.virt_height) +
             adx
         )
