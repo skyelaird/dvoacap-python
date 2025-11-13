@@ -21,8 +21,38 @@ The dashboard provides **real-time HF propagation forecasts** with:
 
 ## 🚀 Quick Start
 
-### 1. Generate Predictions
+You have two options for running the dashboard:
 
+### Option A: Web Server with Refresh Button (Recommended)
+
+**1. Install dependencies:**
+```bash
+cd Dashboard
+pip install -r requirements.txt
+```
+
+**2. Start the server:**
+```bash
+python3 server.py
+```
+
+**3. Open in browser:**
+Visit `http://localhost:8000`
+
+**4. Use the refresh button:**
+Click the **⚡ Refresh Predictions** button in the dashboard to generate fresh predictions on demand!
+
+**Benefits:**
+- ✅ Refresh predictions with a button click
+- ✅ No need to manually run scripts
+- ✅ Progress indicator shows generation status
+- ✅ Dashboard auto-reloads when complete
+
+---
+
+### Option B: Static Files (Manual Updates)
+
+**1. Generate Predictions:**
 ```bash
 cd Dashboard
 python3 generate_predictions.py
@@ -34,7 +64,7 @@ This will:
 - Generate `propagation_data.json` with 24-hour forecasts
 - Takes ~30-60 seconds depending on your system
 
-### 2. View Dashboard
+**2. View Dashboard:**
 
 Open `dashboard.html` in your web browser:
 
@@ -48,13 +78,7 @@ start dashboard.html
 # Or just double-click the file
 ```
 
-The dashboard will:
-- Load the prediction data automatically
-- Display current band conditions
-- Show interactive map with propagation paths
-- Auto-refresh every 5 minutes (configurable)
-
-### 3. Update Regularly
+**3. Update Regularly:**
 
 For best results, regenerate predictions:
 - **Every 2-4 hours** for current conditions

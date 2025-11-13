@@ -379,6 +379,136 @@
             border-radius: 3px;
         }
         
+        /* Refresh Button */
+        .refresh-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #2d5a4f 0%, #3a8c6d 100%);
+            color: white;
+            border: 2px solid #4ade80;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.5);
+        }
+
+        .refresh-btn:disabled {
+            background: #2a3f5f;
+            border-color: #4a5f7f;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Notification Modal */
+        .notification-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #162236;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 2rem;
+            min-width: 400px;
+            max-width: 90vw;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .notification-modal.show {
+            display: block;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            display: none;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        .modal-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .modal-body {
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #0a0e1a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #4ade80);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .modal-message {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #8a9bb5;
+        }
+
+        .modal-close-btn {
+            background: #2a3f5f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .modal-close-btn:hover {
+            background: #3a5f8f;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(74, 144, 226, 0.3);
+            border-top-color: #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 1400px) {
             .grid-2col {
                 grid-template-columns: 1fr;
@@ -386,10 +516,39 @@
             .band-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+            .notification-modal {
+                min-width: 300px;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Refresh Button -->
+    <button class="refresh-btn" id="refreshBtn" onclick="triggerRefresh()">
+        ⚡ Refresh Predictions
+    </button>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- Notification Modal -->
+    <div class="notification-modal" id="notificationModal">
+        <div class="modal-header" id="modalHeader">Generating Predictions</div>
+        <div class="modal-body">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="modal-message" id="modalMessage">
+                <span class="spinner"></span>
+                <span id="statusText">Initializing...</span>
+            </div>
+            <button class="modal-close-btn" id="closeBtn" style="display: none;" onclick="closeModal()">
+                Close
+            </button>
+        </div>
+    </div>
+
     <div class="header">
         <h1>📡 VE1ATM HF Propagation Monitor</h1>
         <div class="station-info">
@@ -1005,7 +1164,127 @@
                 <em>72-hour forecast • Gray line updates every 5 minutes • Refresh after regenerating predictions</em>
             `;
         }
-        
+
+        // =================================================================
+        // API Integration for On-Demand Prediction Generation
+        // =================================================================
+
+        let statusCheckInterval = null;
+
+        function showModal() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('notificationModal').classList.add('show');
+            document.getElementById('refreshBtn').disabled = true;
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('notificationModal').classList.remove('show');
+            document.getElementById('refreshBtn').disabled = false;
+        }
+
+        function closeModal() {
+            hideModal();
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+        }
+
+        function updateModalProgress(progress, message, isComplete = false) {
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('statusText').textContent = message;
+
+            if (isComplete) {
+                document.querySelector('.spinner').style.display = 'none';
+                document.getElementById('closeBtn').style.display = 'inline-block';
+                document.getElementById('modalHeader').textContent = 'Complete!';
+            }
+        }
+
+        async function triggerRefresh() {
+            try {
+                showModal();
+                updateModalProgress(0, 'Starting prediction generation...');
+
+                // Call the generate API endpoint
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.status === 409) {
+                    // Already running
+                    updateModalProgress(50, 'Generation already in progress...', false);
+                } else if (result.status === 'started') {
+                    updateModalProgress(10, 'Prediction engine started...');
+                    // Start polling for status
+                    startStatusPolling();
+                } else {
+                    updateModalProgress(0, 'Error: ' + result.message, true);
+                }
+
+            } catch (error) {
+                console.error('Error triggering refresh:', error);
+                updateModalProgress(0, 'Error: ' + error.message, true);
+            }
+        }
+
+        function startStatusPolling() {
+            // Poll every 2 seconds
+            statusCheckInterval = setInterval(checkGenerationStatus, 2000);
+            checkGenerationStatus(); // Check immediately
+        }
+
+        async function checkGenerationStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const status = await response.json();
+
+                if (status.error) {
+                    updateModalProgress(0, 'Error: ' + status.error, true);
+                    if (statusCheckInterval) {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                    }
+                    return;
+                }
+
+                updateModalProgress(status.progress, status.message);
+
+                if (!status.running && status.progress >= 100) {
+                    // Generation complete!
+                    updateModalProgress(100, 'Predictions updated! Reloading dashboard...', true);
+
+                    if (statusCheckInterval) {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                    }
+
+                    // Reload data after a short delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+
+            } catch (error) {
+                console.error('Error checking status:', error);
+                updateModalProgress(0, 'Error checking status', true);
+                if (statusCheckInterval) {
+                    clearInterval(statusCheckInterval);
+                    statusCheckInterval = null;
+                }
+            }
+        }
+
+        // =================================================================
+        // Initialize Dashboard
+        // =================================================================
+
         loadPropagationData();
     </script>
 </body>
