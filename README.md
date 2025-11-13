@@ -61,7 +61,7 @@ See [examples/](examples/) for more detailed usage examples.
 
 ## 📊 Project Status
 
-**Current Phase: 4 of 5 Complete (80%)**
+**Current Phase: 5 of 5 In Progress (85%)**
 
 ### ✅ Completed Modules
 
@@ -99,15 +99,16 @@ See [examples/](examples/) for more detailed usage examples.
 
 ### 🚧 In Progress
 
-- None currently
+- **Phase 5: Signal Predictions** (Partial)
+  - ✓ Noise modeling (atmospheric, galactic, man-made)
+  - ✓ Antenna gain calculations
+  - ✓ Prediction engine framework
+  - ⚠ Full end-to-end integration (in progress)
+  - *Source: VoaCapEng.pas, AntGain.pas, NoiseMdl.pas*
 
 ### 📅 Planned
 
-- **Phase 5: Signal Predictions**
-  - MUF/FOT/LUF calculations
-  - Signal strength prediction
-  - Reliability estimates
-  - *Source: VoaCapEng.pas*
+- Complete Phase 5 integration and testing
 
 ## 📚 Documentation
 

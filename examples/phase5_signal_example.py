@@ -64,7 +64,7 @@ def main():
     print(f"TX: Philadelphia, PA (39.95°N, 75.17°W)")
     print(f"RX: London, UK (51.51°N, 0.13°W)")
     print(f"Great circle distance: {path.dist * 6370:.0f} km")
-    print(f"Azimuth (TX to RX): {np.rad2deg(path.azim_tx_to_rx):.1f}°")
+    print(f"Azimuth (TX to RX): {np.rad2deg(path.azim_tr):.1f}°")
     print()
 
     # =========================================================================
@@ -75,7 +75,7 @@ def main():
 
     # Create Fourier maps and noise model
     fourier_maps = FourierMaps()
-    fourier_maps.set_month_ssn_utc(month=1, ssn=100, utc_time=0.5)  # January, SSN=100, 12:00 UTC
+    fourier_maps.set_conditions(month=1, ssn=100, utc_fraction=0.5)  # January, SSN=100, 12:00 UTC
 
     noise_model = NoiseModel(fourier_maps)
 
