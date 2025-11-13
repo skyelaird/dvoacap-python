@@ -14,6 +14,18 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+
+# Custom JSON encoder to handle numpy types
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.integer, np.int64, np.int32)):
+            return int(obj)
+        elif isinstance(obj, (np.floating, np.float64, np.float32)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NumpyEncoder, self).default(obj)
+
 # Add parent directory to path to import dvoacap
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -257,9 +269,12 @@ def generate_24hour_forecast() -> Dict:
         print(f"[OK] {hour_count} regions")
 
     # Build output structure
+    # Create JSON-safe station info (exclude GeoPoint object)
+    station_info = {k: v for k, v in MY_QTH.items() if k != 'location'}
+
     output = {
         'generated': datetime.now(timezone.utc).isoformat(),
-        'station': MY_QTH,
+        'station': station_info,
         'solar_conditions': solar,
         'bands': list(BANDS.keys()),
         'regions': {code: info['name'] for code, info in TARGET_REGIONS.items()},
@@ -282,7 +297,7 @@ def main():
     # Save to JSON
     output_file = Path(__file__).parent / 'propagation_data.json'
     with open(output_file, 'w') as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, cls=NumpyEncoder)
 
     print()
     print("=" * 80)
