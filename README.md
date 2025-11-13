@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![Progress](https://img.shields.io/badge/progress-36%25-orange)
+![Progress](https://img.shields.io/badge/progress-60%25-yellow)
 
 ## 🎯 About
 
@@ -29,31 +29,39 @@ pip install -e .
 ### Basic Usage
 
 ```python
-from dvoacap.solar import SolarCalculator, GeographicPoint
-from dvoacap.geomagnetic import GeomagneticCalculator
-from datetime import datetime
+from dvoacap import FourierMaps, ControlPoint, GeographicPoint, compute_iono_params
+import math
 
-# Define location
-location = GeographicPoint.from_degrees(44.374, -64.300)  # Halifax, NS
+# Load CCIR/URSI ionospheric maps
+maps = FourierMaps()
+maps.set_conditions(month=6, ssn=100, utc_fraction=0.5)  # June, SSN=100, noon UTC
 
-# Calculate solar conditions
-solar_calc = SolarCalculator()
-time = datetime(2024, 6, 15, 12, 0)  # Noon UTC
-zenith = solar_calc.calculate_zenith_angle(location, time)
-print(f"Solar zenith angle: {math.degrees(zenith):.1f}°")
+# Create control point at Philadelphia
+pnt = ControlPoint(
+    location=GeographicPoint.from_degrees(40.0, -75.0),
+    east_lon=-75.0 * math.pi/180,
+    distance_rad=0.0,
+    local_time=0.5,  # Noon local
+    zen_angle=0.3,   # Solar zenith angle
+    zen_max=1.5,
+    mag_lat=50.0 * math.pi/180,
+    mag_dip=60.0 * math.pi/180,
+    gyro_freq=1.2
+)
 
-# Calculate geomagnetic parameters
-geo_calc = GeomagneticCalculator()
-params = geo_calc.calculate_parameters(location)
-print(f"Magnetic latitude: {math.degrees(params.magnetic_latitude):.1f}°")
-print(f"Gyrofrequency: {params.gyrofrequency:.3f} MHz")
+# Compute ionospheric parameters
+compute_iono_params(pnt, maps)
+
+print(f"E layer:  foE  = {pnt.e.fo:.2f} MHz at {pnt.e.hm:.0f} km")
+print(f"F1 layer: foF1 = {pnt.f1.fo:.2f} MHz at {pnt.f1.hm:.0f} km")
+print(f"F2 layer: foF2 = {pnt.f2.fo:.2f} MHz at {pnt.f2.hm:.0f} km")
 ```
 
 See [examples/](examples/) for more detailed usage examples.
 
 ## 📊 Project Status
 
-**Current Phase: 2 of 5 Complete (36%)**
+**Current Phase: 3 of 5 Complete (60%)**
 
 ### ✅ Completed Modules
 
@@ -71,13 +79,18 @@ See [examples/](examples/) for more detailed usage examples.
   - Gyrofrequency calculations
   - *Source: Sun.pas, MagFld.pas*
 
+- **Phase 3: Ionospheric Profiles** ✓
+  - CCIR/URSI coefficient models
+  - E/F/F1/Es layer critical frequencies
+  - Layer height modeling
+  - Electron density profiles
+  - Ionogram generation
+  - True and virtual height calculations
+  - *Source: IonoProf.pas, LayrParm.pas, FrMaps.pas*
+
 ### 🚧 In Progress
 
-- **Phase 3: Ionospheric Profiles**
-  - CCIR/URSI coefficient models
-  - E/F layer critical frequencies
-  - Layer height modeling
-  - *Source: IonoProf.pas, LayrParm.pas, FrMaps.pas*
+- None currently
 
 ### 📅 Planned
 
@@ -99,6 +112,7 @@ See [examples/](examples/) for more detailed usage examples.
 - **[Project Status](docs/PROJECT_STATUS.pdf)** - Detailed progress tracker
 - **[Phase 1 Summary](docs/PATHGEOMETRY_PORT_SUMMARY.pdf)** - Path geometry implementation
 - **[Phase 2 Summary](docs/PHASE2_COMPLETE.pdf)** - Solar & geomagnetic implementation
+- **[Phase 3 Summary](docs/PHASE3_COMPLETE.pdf)** - Ionospheric profiles implementation
 
 ## 🧪 Testing
 
@@ -118,22 +132,28 @@ pytest --cov=dvoacap tests/
 ```
 dvoacap-python/
 ├── src/
-│   ├── dvoacap/              # Main Python package
+│   ├── dvoacap/                    # Main Python package
 │   │   ├── __init__.py
-│   │   ├── path_geometry.py  # Phase 1
-│   │   ├── solar.py          # Phase 2
-│   │   └── geomagnetic.py    # Phase 2
-│   └── original/             # Reference Pascal source
+│   │   ├── path_geometry.py        # Phase 1
+│   │   ├── solar.py                # Phase 2
+│   │   ├── geomagnetic.py          # Phase 2
+│   │   ├── fourier_maps.py         # Phase 3
+│   │   ├── ionospheric_profile.py  # Phase 3
+│   │   └── layer_parameters.py     # Phase 3
+│   └── original/                   # Reference Pascal source
 │       └── *.pas
-├── tests/                    # Test suite
-│   └── test_*.py
-├── examples/                 # Usage examples
+├── tests/                          # Test suite
+│   ├── test_path_geometry.py
+│   ├── test_voacap_parser.py
+│   └── test_ionospheric.py
+├── examples/                       # Usage examples
 │   ├── integration_example.py
-│   └── phase2_integration_example.py
-├── docs/                     # Documentation
+│   ├── phase2_integration_example.py
+│   └── phase3_ionospheric_example.py
+├── docs/                           # Documentation
 │   └── *.pdf
-├── DVoaData/                 # CCIR/URSI coefficient data
-└── SampleIO/                 # Sample input/output files
+├── DVoaData/                       # CCIR/URSI coefficient data
+└── SampleIO/                       # Sample input/output files
 ```
 
 ## 🎓 Technical Background
@@ -164,6 +184,7 @@ All modules are validated against the original VOACAP/DVOACAP:
 - **Path Geometry:** < 0.01% distance error, < 0.01° bearing error
 - **Solar Calculations:** < 0.01° zenith angle error
 - **Geomagnetic Model:** < 0.1° magnetic latitude error
+- **Ionospheric Profiles:** CCIR/URSI maps verified against reference data
 
 ## 🤝 Contributing
 

@@ -8,7 +8,7 @@ Original DVOACAP by Alex Shovkoplyas, VE3NEA
 Python Port: 2025
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "Python Port Contributors"
 __license__ = "MIT"
 
@@ -54,14 +54,51 @@ try:
 except ImportError:
     __all_phase2__ = []
 
+# Phase 3: Ionospheric Profiles
+try:
+    from .fourier_maps import (
+        FourierMaps,
+        VarMapKind,
+        FixedMapKind,
+        Distribution,
+    )
+    from .ionospheric_profile import (
+        IonosphericProfile,
+        LayerInfo,
+        Reflection,
+        ModeInfo,
+    )
+    from .layer_parameters import (
+        ControlPoint,
+        GeographicPoint as IonoPoint,
+        compute_iono_params,
+        compute_f2_retardation,
+    )
+    __all_phase3__ = [
+        "FourierMaps",
+        "VarMapKind",
+        "FixedMapKind",
+        "Distribution",
+        "IonosphericProfile",
+        "LayerInfo",
+        "Reflection",
+        "ModeInfo",
+        "ControlPoint",
+        "IonoPoint",
+        "compute_iono_params",
+        "compute_f2_retardation",
+    ]
+except ImportError:
+    __all_phase3__ = []
+
 # Combine all exports
-__all__ = __all_phase1__ + __all_phase2__
+__all__ = __all_phase1__ + __all_phase2__ + __all_phase3__
 
 # Module information
 _phase_status = {
     "Phase 1": "Complete - Path Geometry",
     "Phase 2": "Complete - Solar & Geomagnetic",
-    "Phase 3": "Planned - Ionospheric Profiles",
+    "Phase 3": "Complete - Ionospheric Profiles",
     "Phase 4": "Planned - Raytracing",
     "Phase 5": "Planned - Signal Predictions",
 }
@@ -79,6 +116,6 @@ def get_version_info():
         "author": __author__,
         "license": __license__,
         "python_requires": ">=3.8",
-        "modules_complete": len(__all_phase1__) + len(__all_phase2__),
-        "progress": "36%",
+        "modules_complete": len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__),
+        "progress": "60%",
     }
