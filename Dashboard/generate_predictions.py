@@ -257,9 +257,12 @@ def generate_24hour_forecast() -> Dict:
         print(f"[OK] {hour_count} regions")
 
     # Build output structure
+    # Create JSON-safe station info (exclude GeoPoint object)
+    station_info = {k: v for k, v in MY_QTH.items() if k != 'location'}
+
     output = {
         'generated': datetime.now(timezone.utc).isoformat(),
-        'station': MY_QTH,
+        'station': station_info,
         'solar_conditions': solar,
         'bands': list(BANDS.keys()),
         'regions': {code: info['name'] for code, info in TARGET_REGIONS.items()},
