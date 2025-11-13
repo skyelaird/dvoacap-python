@@ -116,8 +116,8 @@ See [examples/](examples/) for more detailed usage examples.
 - **[Project Status](docs/PROJECT_STATUS.pdf)** - Detailed progress tracker
 - **[Phase 1 Summary](docs/PATHGEOMETRY_PORT_SUMMARY.pdf)** - Path geometry implementation
 - **[Phase 2 Summary](docs/PHASE2_COMPLETE.pdf)** - Solar & geomagnetic implementation
-- **[Phase 3 Summary](docs/PHASE3_COMPLETE.pdf)** - Ionospheric profiles implementation
-- **[Phase 4 Summary](docs/PHASE4_COMPLETE.pdf)** - Raytracing implementation (to be created)
+- **[Phase 3 Summary](docs/PHASE3_COMPLETE.md)** - Ionospheric profiles implementation
+- **[Phase 4 Summary](docs/PHASE4_SUMMARY.md)** - Raytracing implementation
 
 ## 🧪 Testing
 
@@ -205,7 +205,7 @@ Contributions are welcome! This is a large project with many modules still to po
 - Performance optimization
 - Validation against reference data
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines (coming soon).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📖 References
 
