@@ -15,6 +15,8 @@ This guide provides comprehensive examples and patterns for using DVOACAP-Python
 
 ## Quick Start
 
+> **Interactive Dashboard:** If you prefer a web-based interface, check out the [Dashboard](../Dashboard/README.md) which provides a complete visualization system with maps, charts, and DXCC tracking.
+
 ### Installation
 
 ```bash

@@ -59,6 +59,68 @@ print(f"F2 layer: foF2 = {pnt.f2.fo:.2f} MHz at {pnt.f2.hm:.0f} km")
 
 See [examples/](examples/) for more detailed usage examples.
 
+## 📊 Interactive Dashboard
+
+DVOACAP-Python includes a web-based dashboard for visualizing propagation predictions, DXCC tracking, and real-time band conditions.
+
+### Features
+
+- 🌍 **Interactive Propagation Map** - Visual display of MUF predictions across DX entities
+- 📈 **Band Condition Meters** - Real-time signal quality indicators for 160m-10m
+- 🏆 **DXCC Progress Tracking** - Monitor worked/confirmed entities by band and mode
+- ⚡ **On-Demand Predictions** - One-click refresh with Flask server backend
+- 📡 **Solar Data Integration** - Live solar flux, sunspot numbers, and geomagnetic indices
+- 🎨 **Responsive Design** - Works on desktop and mobile devices
+
+### Quick Start with Dashboard
+
+**Option A: Flask Server (Recommended)**
+
+```bash
+cd Dashboard
+pip install -r requirements.txt
+python3 server.py
+
+# Visit http://localhost:8000
+# Click "⚡ Refresh Predictions" button to generate new predictions
+```
+
+The Flask server provides:
+- API endpoints for prediction generation (`/api/generate`)
+- Real-time progress monitoring (`/api/status`)
+- Background processing (non-blocking)
+- Automatic dashboard reload when complete
+
+**Option B: Static Files**
+
+```bash
+cd Dashboard
+python3 generate_predictions.py
+open dashboard.html
+```
+
+### Configuration
+
+Edit `Dashboard/dvoacap_wrapper.py` to customize:
+- Your callsign and QTH coordinates
+- Station power and antenna characteristics
+- Target bands and DX entities
+- Update frequency
+
+### Dashboard Documentation
+
+See [Dashboard/README.md](Dashboard/README.md) for complete setup instructions, configuration options, and API documentation.
+
+### Future Plans
+
+See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.md) for the roadmap to expand the dashboard into a multi-user community service with:
+- User authentication and accounts
+- Per-user station configurations
+- Database backend for historical tracking
+- Public API endpoints
+- Mobile app integration
+- Community propagation reporting
+
 ## 📊 Project Status
 
 **Current Phase: 5 of 5 In Progress (85%)**
@@ -154,6 +216,14 @@ dvoacap-python/
 │   │   └── reflectrix.py           # Phase 4
 │   └── original/                   # Reference Pascal source
 │       └── *.pas
+├── Dashboard/                      # Web-based visualization dashboard
+│   ├── server.py                   # Flask API server
+│   ├── dashboard.html              # Interactive dashboard UI
+│   ├── generate_predictions.py     # Prediction generation script
+│   ├── dvoacap_wrapper.py          # DVOACAP integration wrapper
+│   ├── requirements.txt            # Server dependencies
+│   ├── README.md                   # Dashboard documentation
+│   └── ISSUE_MULTI_USER_WEB_APP.md # Multi-user service roadmap
 ├── tests/                          # Test suite
 │   ├── test_path_geometry.py
 │   ├── test_voacap_parser.py
@@ -164,6 +234,8 @@ dvoacap-python/
 │   ├── phase3_ionospheric_example.py
 │   └── phase4_raytracing_example.py
 ├── docs/                           # Documentation
+│   ├── USAGE.md
+│   ├── INTEGRATION.md
 │   └── *.pdf
 ├── DVoaData/                       # CCIR/URSI coefficient data
 └── SampleIO/                       # Sample input/output files
