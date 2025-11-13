@@ -303,6 +303,24 @@ def main():
     print("=" * 80)
     print(f"[OK] Predictions saved to: {output_file}")
     print("=" * 80)
+
+    # Transform data to dashboard-compatible format
+    print()
+    print("[OK] Transforming data for dashboard...")
+    try:
+        import subprocess
+        transform_script = Path(__file__).parent / 'transform_data.py'
+        result = subprocess.run(
+            [sys.executable, str(transform_script)],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(result.stdout)
+    except Exception as e:
+        print(f"[WARNING] Could not transform data: {e}")
+        print("Dashboard may not display correctly without enhanced_predictions.json")
+
     print()
     print("Summary:")
     print(f"  * Total predictions: {len(data['predictions'])}")
@@ -311,9 +329,9 @@ def main():
     print(f"  * Generated: {data['generated']}")
     print()
     print("Next steps:")
-    print("  1. Open Dashboard/dashboard.html in your browser")
-    print("  2. View the updated predictions")
-    print("  3. Re-run this script anytime to update with latest solar conditions")
+    print("  1. Start the server: python3 server.py")
+    print("  2. Open http://localhost:8000 in your browser")
+    print("  3. View the updated predictions with live refresh capability")
     print()
 
 
