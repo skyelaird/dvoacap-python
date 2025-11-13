@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![Progress](https://img.shields.io/badge/progress-60%25-yellow)
+![Progress](https://img.shields.io/badge/progress-80%25-green)
 
 ## 🎯 About
 
@@ -61,7 +61,7 @@ See [examples/](examples/) for more detailed usage examples.
 
 ## 📊 Project Status
 
-**Current Phase: 3 of 5 Complete (60%)**
+**Current Phase: 4 of 5 Complete (80%)**
 
 ### ✅ Completed Modules
 
@@ -88,17 +88,20 @@ See [examples/](examples/) for more detailed usage examples.
   - True and virtual height calculations
   - *Source: IonoProf.pas, LayrParm.pas, FrMaps.pas*
 
+- **Phase 4: Raytracing** ✓
+  - MUF (Maximum Usable Frequency) calculations
+  - FOT and HPF calculations
+  - Ray path calculations (reflectrix)
+  - Skip distance computation
+  - Multi-hop path finding
+  - Over-the-MUF mode handling
+  - *Source: Reflx.pas, MufCalc.pas*
+
 ### 🚧 In Progress
 
 - None currently
 
 ### 📅 Planned
-
-- **Phase 4: Raytracing**
-  - Ray path calculations
-  - Skip distance computation
-  - Multi-hop paths
-  - *Source: Reflx.pas, MufCalc.pas*
 
 - **Phase 5: Signal Predictions**
   - MUF/FOT/LUF calculations
@@ -113,6 +116,7 @@ See [examples/](examples/) for more detailed usage examples.
 - **[Phase 1 Summary](docs/PATHGEOMETRY_PORT_SUMMARY.pdf)** - Path geometry implementation
 - **[Phase 2 Summary](docs/PHASE2_COMPLETE.pdf)** - Solar & geomagnetic implementation
 - **[Phase 3 Summary](docs/PHASE3_COMPLETE.pdf)** - Ionospheric profiles implementation
+- **[Phase 4 Summary](docs/PHASE4_COMPLETE.pdf)** - Raytracing implementation (to be created)
 
 ## 🧪 Testing
 
@@ -139,7 +143,9 @@ dvoacap-python/
 │   │   ├── geomagnetic.py          # Phase 2
 │   │   ├── fourier_maps.py         # Phase 3
 │   │   ├── ionospheric_profile.py  # Phase 3
-│   │   └── layer_parameters.py     # Phase 3
+│   │   ├── layer_parameters.py     # Phase 3
+│   │   ├── muf_calculator.py       # Phase 4
+│   │   └── reflectrix.py           # Phase 4
 │   └── original/                   # Reference Pascal source
 │       └── *.pas
 ├── tests/                          # Test suite
@@ -149,7 +155,8 @@ dvoacap-python/
 ├── examples/                       # Usage examples
 │   ├── integration_example.py
 │   ├── phase2_integration_example.py
-│   └── phase3_ionospheric_example.py
+│   ├── phase3_ionospheric_example.py
+│   └── phase4_raytracing_example.py
 ├── docs/                           # Documentation
 │   └── *.pdf
 ├── DVoaData/                       # CCIR/URSI coefficient data
