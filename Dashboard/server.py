@@ -138,10 +138,13 @@ def get_prediction_data():
         JSON prediction data
     """
     try:
-        data_file = Path(__file__).parent / 'propagation_data.json'
+        data_file = Path(__file__).parent / 'enhanced_predictions.json'
         if data_file.exists():
             with open(data_file, 'r') as f:
-                return jsonify(json.load(f))
+                data = json.load(f)
+                # Extract predictions object from enhanced data structure
+                predictions = data.get('predictions', data)
+                return jsonify(predictions)
         else:
             return jsonify({'error': 'No prediction data available'}), 404
     except Exception as e:
