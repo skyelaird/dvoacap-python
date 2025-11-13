@@ -20,7 +20,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     from src.dvoacap.path_geometry import GeoPoint
     from src.dvoacap.prediction_engine import PredictionEngine
-    from src.dvoacap.solar import get_solar_data
     import requests
 except ImportError as e:
     print(f"Error: Could not import DVOACAP modules: {e}")
@@ -187,7 +186,7 @@ def generate_prediction(
             'utc_hour': utc_hour,
             'distance_km': round(distance_km, 0),
             'azimuth': round(azimuth_deg, 1),
-            'muf': round(engine.muf_calculator.muf, 2) if hasattr(engine, 'muf_calculator') else 0,
+            'muf': round(engine.circuit_muf.muf, 2) if engine.circuit_muf else 0,
             'bands': band_predictions
         }
 
