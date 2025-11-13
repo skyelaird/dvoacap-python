@@ -234,7 +234,7 @@ class MufCalculator:
             raise ValueError("No valid profile provided")
 
         # Calculate electron density profile
-        self._profile.compute_electron_density_profile()
+        self._profile.compute_el_density_profile()
 
         # Compute MUF for each layer
         muf_info = {}
