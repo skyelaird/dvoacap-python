@@ -1,7 +1,7 @@
 {
   "predictions": {
     "current_conditions": {
-      "generated": "2025-11-14T01:04:23.207953+00:00",
+      "generated": "2025-11-14T02:36:48.988688+00:00",
       "solar": {
         "sfi": 150.0,
         "ssn": 100.0,
@@ -12,98 +12,350 @@
         "40m": {
           "frequency": 7.15,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "GOOD",
+              "reliability": 73.4,
+              "snr_db": 18.9,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "GOOD",
+              "reliability": 77.3,
+              "snr_db": 20.7,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 143.0,
+              "snr_db": 143.1,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "FAIR",
+              "reliability": 31.1,
+              "snr_db": 5.4,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 82.2,
+              "snr_db": 19.6,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "30m": {
           "frequency": 10.125,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "GOOD",
+              "reliability": 73.5,
+              "snr_db": 23.1,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "GOOD",
+              "reliability": 78.5,
+              "snr_db": 25.3,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 149.1,
+              "snr_db": 150.8,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "GOOD",
+              "reliability": 66.0,
+              "snr_db": 14.0,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 93.3,
+              "snr_db": 25.4,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "20m": {
           "frequency": 14.15,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "POOR",
+              "reliability": 0.5,
+              "snr_db": -41.8,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "POOR",
+              "reliability": 9.9,
+              "snr_db": -15.8,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 155.6,
+              "snr_db": 158.9,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "GOOD",
+              "reliability": 87.0,
+              "snr_db": 20.8,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 97.8,
+              "snr_db": 30.6,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "17m": {
           "frequency": 18.118,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -169.4,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -113.7,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 161.8,
+              "snr_db": 164.3,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "GOOD",
+              "reliability": 90.3,
+              "snr_db": 26.1,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 98.8,
+              "snr_db": 34.8,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "15m": {
           "frequency": 21.2,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -268.9,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -214.2,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 166.1,
+              "snr_db": 167.2,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "GOOD",
+              "reliability": 83.0,
+              "snr_db": 28.0,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 99.0,
+              "snr_db": 37.3,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "12m": {
           "frequency": 24.94,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -268.0,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -246.9,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 169.8,
+              "snr_db": 169.6,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "GOOD",
+              "reliability": 66.0,
+              "snr_db": 18.6,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "GOOD",
+              "reliability": 90.6,
+              "snr_db": 36.8,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         },
         "10m": {
           "frequency": 28.5,
           "regions": {
+            "EU": {
+              "name": "Europe",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -267.4,
+              "distance_km": 5414,
+              "bearing": 55,
+              "muf": 10.95
+            },
+            "UK": {
+              "name": "United Kingdom",
+              "quality": "POOR",
+              "reliability": 0.0,
+              "snr_db": -246.3,
+              "distance_km": 4496,
+              "bearing": 53,
+              "muf": 11.75
+            },
             "AF": {
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 171.9,
+              "snr_db": 170.4,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 26.58
+              "muf": 19.7
+            },
+            "SA": {
+              "name": "South America",
+              "quality": "POOR",
+              "reliability": 8.2,
+              "snr_db": -17.9,
+              "distance_km": 6668,
+              "bearing": 169,
+              "muf": 29.09
+            },
+            "CA": {
+              "name": "Central America",
+              "quality": "FAIR",
+              "reliability": 46.7,
+              "snr_db": 8.3,
+              "distance_km": 4066,
+              "bearing": 224,
+              "muf": 25.86
             }
           }
         }
@@ -117,44 +369,57 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "17m": {
               "open": [
-                "AF"
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "15m": {
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "SA",
+                "CA"
+              ]
             },
             "12m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             },
             "10m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             }
           }
@@ -165,21 +430,34 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "20m": {
               "open": [
-                "AF"
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "17m": {
               "open": [
@@ -188,21 +466,15 @@
               "marginal": []
             },
             "15m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             },
             "12m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             },
             "10m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             }
           }
@@ -213,19 +485,29 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
-                "AF"
+                "AF",
+                "SA"
               ],
               "marginal": []
             },
@@ -242,15 +524,11 @@
               "marginal": []
             },
             "12m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             },
             "10m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             }
           }
@@ -261,27 +539,40 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "UK",
+                "SA"
+              ]
             },
             "20m": {
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "17m": {
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "15m": {
               "open": [
@@ -296,9 +587,7 @@
               "marginal": []
             },
             "10m": {
-              "open": [
-                "AF"
-              ],
+              "open": [],
               "marginal": []
             }
           }
@@ -309,21 +598,34 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "AF",
+                "SA",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "UK"
+              ]
             },
             "20m": {
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "SA",
+                "CA"
+              ]
             },
             "17m": {
               "open": [
@@ -357,27 +659,40 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "UK",
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA"
               ],
-              "marginal": []
+              "marginal": [
+                "CA"
+              ]
             },
             "20m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA"
               ],
               "marginal": []
             },
             "17m": {
               "open": [
+                "EU",
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "15m": {
               "open": [
@@ -405,43 +720,63 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "30m": {
               "open": [
-                "AF"
+                "UK",
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "17m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "15m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA"
               ],
               "marginal": []
             },
             "12m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA"
               ],
               "marginal": []
             },
             "10m": {
               "open": [
-                "AF"
+                "EU",
+                "AF",
+                "SA"
               ],
               "marginal": []
             }
@@ -461,35 +796,56 @@
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "CA"
+              ]
             },
             "20m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "17m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "15m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "12m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "10m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             }
@@ -509,37 +865,60 @@
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "UK"
+              ]
             },
             "20m": {
               "open": [
+                "EU",
+                "UK",
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "CA"
+              ]
             },
             "17m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
               "marginal": []
             },
             "15m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "12m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "10m": {
               "open": [
-                "AF"
+                "EU",
+                "AF",
+                "SA",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "UK"
+              ]
             }
           }
         },
@@ -551,41 +930,64 @@
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "UK"
+              ]
             },
             "30m": {
               "open": [
+                "EU",
+                "UK",
                 "AF"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
+                "EU",
+                "UK",
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "CA"
+              ]
             },
             "17m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "15m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "12m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "UK"
+              ]
             },
             "10m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             }
@@ -597,43 +999,60 @@
           "bands": {
             "40m": {
               "open": [
+                "EU",
+                "UK",
                 "AF"
               ],
               "marginal": []
             },
             "30m": {
               "open": [
+                "EU",
+                "UK",
                 "AF"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "17m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "15m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "12m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "10m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             }
@@ -645,37 +1064,54 @@
           "bands": {
             "40m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "CA"
               ],
-              "marginal": []
+              "marginal": [
+                "SA"
+              ]
             },
             "30m": {
               "open": [
-                "AF"
+                "EU",
+                "UK",
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "20m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "17m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "15m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
             "12m": {
               "open": [
-                "AF"
+                "AF",
+                "SA",
+                "CA"
               ],
               "marginal": []
             },
@@ -683,7 +1119,9 @@
               "open": [
                 "AF"
               ],
-              "marginal": []
+              "marginal": [
+                "CA"
+              ]
             }
           }
         }

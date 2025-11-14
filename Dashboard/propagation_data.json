@@ -1,5 +1,5 @@
 {
-  "generated": "2025-11-14T01:04:23.207953+00:00",
+  "generated": "2025-11-14T02:36:48.988688+00:00",
   "station": {
     "call": "VE1ATM",
     "lat": 44.374,
@@ -12,7 +12,7 @@
     "ssn": 100.0,
     "kp": 2.0,
     "a_index": 10.0,
-    "timestamp": "2025-11-14T01:04:22.205830+00:00"
+    "timestamp": "2025-11-14T02:36:47.742831+00:00"
   },
   "bands": [
     "40m",
@@ -45,60 +45,60 @@
       "muf": 10.12,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 76.7,
+          "snr": 20.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.5
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 67.4,
+          "snr": 19.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.7
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -108.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -258.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -257.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -256.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -256.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         }
       }
     },
@@ -111,60 +111,60 @@
       "muf": 10.01,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.0,
+          "snr": 24.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.9
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 69.7,
+          "snr": 20.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.1
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -101.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -232.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -232.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -231.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -230.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         }
       }
     },
@@ -377,7 +377,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 145.1,
+          "snr": 144.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -385,7 +385,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 154.2,
+          "snr": 153.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -393,7 +393,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 162.2,
+          "snr": 161.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -401,7 +401,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 166.2,
+          "snr": 165.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -409,23 +409,23 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.3,
+          "snr": 156.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "12m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 170.4,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -8.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "10m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 172.0,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -88.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -441,60 +441,60 @@
       "muf": 20.34,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 30.0,
+          "snr": 5.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 65.7,
+          "snr": 13.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.0
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 74.9,
+          "snr": 19.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.6
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 57.6,
+          "snr": 14.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.9
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 44.7,
+          "snr": 7.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.2
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 9.2,
+          "snr": -16.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.8
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -86.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.2
         }
       }
     },
@@ -507,60 +507,60 @@
       "muf": 19.05,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 93.2,
+          "snr": 24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 97.3,
+          "snr": 29.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.4
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 97.8,
+          "snr": 33.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.2
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.9,
+          "snr": 33.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 46.6,
+          "snr": 8.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.4
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 1.8,
+          "snr": -32.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.4
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -90.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.4
         }
       }
     },
@@ -705,60 +705,60 @@
       "muf": 10.94,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.2,
+          "snr": 22.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 75.4,
+          "snr": 24.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.0
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -62.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -239.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -260.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -259.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -258.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         }
       }
     },
@@ -771,60 +771,60 @@
       "muf": 10.4,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.6,
+          "snr": 25.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 75.6,
+          "snr": 24.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.6
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -78.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.0
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -232.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -231.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -230.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -229.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.0
         }
       }
     },
@@ -1037,7 +1037,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 146.5,
+          "snr": 145.8,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1045,7 +1045,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 155.3,
+          "snr": 154.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1053,7 +1053,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 162.7,
+          "snr": 162.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1061,31 +1061,31 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 166.4,
+          "snr": 165.7,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "15m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 168.4,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -41.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "12m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 170.4,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -87.7,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "10m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 172.0,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -87.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1101,60 +1101,60 @@
       "muf": 16.44,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 20.6,
+          "snr": 4.2,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 59.8,
+          "snr": 13.2,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.7
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 57.6,
+          "snr": 13.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.8
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 17.2,
+          "snr": -8.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.6,
+          "snr": -40.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.5
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -192.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -299.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         }
       }
     },
@@ -1167,60 +1167,60 @@
       "muf": 14.28,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 90.5,
+          "snr": 22.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.3
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 95.0,
+          "snr": 28.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 77.1,
+          "snr": 25.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 4.6,
+          "snr": -23.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -85.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -181.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -235.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         }
       }
     },
@@ -1365,60 +1365,60 @@
       "muf": 10.35,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 74.4,
+          "snr": 22.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 69.9,
+          "snr": 20.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 8.7,
+          "snr": -17.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.0
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -81.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -145.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -231.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -255.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.0
         }
       }
     },
@@ -1431,60 +1431,60 @@
       "muf": 10.65,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 79.1,
+          "snr": 25.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.9
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 76.1,
+          "snr": 24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 20.3,
+          "snr": -6.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.1
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -59.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.1
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -115.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.1
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -191.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.1
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -227.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.1
         }
       }
     },
@@ -1697,7 +1697,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 148.0,
+          "snr": 147.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1705,7 +1705,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 155.7,
+          "snr": 155.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1713,7 +1713,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 162.7,
+          "snr": 162.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1721,7 +1721,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 166.4,
+          "snr": 165.7,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1729,23 +1729,23 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.4,
+          "snr": 139.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "12m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 170.4,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -63.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "10m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 172.0,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -91.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -1761,60 +1761,60 @@
       "muf": 16.83,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 20.1,
+          "snr": 4.1,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.3
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 63.8,
+          "snr": 14.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.7
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 64.6,
+          "snr": 17.7,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 26.7,
+          "snr": -2.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -62.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -179.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -306.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         }
       }
     },
@@ -1827,60 +1827,60 @@
       "muf": 12.24,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 87.7,
+          "snr": 23.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.7
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.0,
+          "snr": 29.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.0
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 16.2,
+          "snr": -9.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -130.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -235.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -234.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -234.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.2
         }
       }
     },
@@ -2025,60 +2025,60 @@
       "muf": 7.9,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 74.0,
+          "snr": 23.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 21.6,
+          "snr": -5.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -87.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -201.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -254.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -253.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -252.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.2
         }
       }
     },
@@ -2091,60 +2091,60 @@
       "muf": 7.91,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 79.2,
+          "snr": 26.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 32.1,
+          "snr": 0.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -72.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -174.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -222.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -221.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -220.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.5
         }
       }
     },
@@ -2357,7 +2357,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 151.9,
+          "snr": 151.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2365,7 +2365,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 156.8,
+          "snr": 156.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2373,7 +2373,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 162.2,
+          "snr": 161.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2381,7 +2381,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 166.1,
+          "snr": 165.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2389,7 +2389,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.3,
+          "snr": 167.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2397,15 +2397,15 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 170.4,
+          "snr": 93.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
         },
         "10m": {
-          "status": "GOOD",
-          "reliability": 100.0,
-          "snr": 172.0,
+          "status": "POOR",
+          "reliability": 0.0,
+          "snr": -13.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -2421,60 +2421,60 @@
       "muf": 16.77,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 22.7,
+          "snr": 4.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.3
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 57.7,
+          "snr": 14.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.0
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 50.0,
+          "snr": 10.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.9
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 43.4,
+          "snr": 6.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 13.5,
+          "snr": -12.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.3,
+          "snr": -46.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -91.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         }
       }
     },
@@ -2487,60 +2487,60 @@
       "muf": 11.99,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 89.1,
+          "snr": 23.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.6
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.0,
+          "snr": 29.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 9.7,
+          "snr": -16.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -146.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -238.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -238.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -237.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.9
         }
       }
     },
@@ -2685,60 +2685,60 @@
       "muf": 10.51,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 70.4,
+          "snr": 19.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.3
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 67.8,
+          "snr": 19.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 7.8,
+          "snr": -18.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.1
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -82.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.1
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -147.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.1
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -235.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.1
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -269.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.1
         }
       }
     },
@@ -2751,60 +2751,60 @@
       "muf": 9.38,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 77.3,
+          "snr": 24.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 52.9,
+          "snr": 11.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 1.6,
+          "snr": -32.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -110.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -182.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -239.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -238.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.1
         }
       }
     },
@@ -3017,7 +3017,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 154.7,
+          "snr": 154.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3025,7 +3025,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 158.0,
+          "snr": 157.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3033,7 +3033,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 161.0,
+          "snr": 160.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3041,7 +3041,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 165.1,
+          "snr": 164.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3049,7 +3049,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.0,
+          "snr": 167.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3057,7 +3057,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 170.3,
+          "snr": 147.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3065,7 +3065,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 172.0,
+          "snr": 126.7,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3081,60 +3081,60 @@
       "muf": 13.54,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 35.5,
+          "snr": 6.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.2
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 65.4,
+          "snr": 18.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 3.5
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 42.7,
+          "snr": 6.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 4.2,
+          "snr": -24.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -64.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -130.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -200.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.9
         }
       }
     },
@@ -3147,60 +3147,60 @@
       "muf": 11.69,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.3,
+          "snr": 23.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.2
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 80.3,
+          "snr": 27.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.7
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 40.2,
+          "snr": 5.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.8
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 1.3,
+          "snr": -34.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.8
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -80.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.8
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -143.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.8
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -212.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 16.8
         }
       }
     },
@@ -3345,60 +3345,60 @@
       "muf": 18.07,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 21.5,
+          "snr": 2.2,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 13.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 71.9,
+          "snr": 18.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.8
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.8,
+          "snr": 25.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.2
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.4,
+          "snr": 26.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.9
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 4.1,
+          "snr": -24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.5
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -259.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.3
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -301.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.3
         }
       }
     },
@@ -3411,60 +3411,60 @@
       "muf": 16.05,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 69.3,
+          "snr": 17.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.6,
+          "snr": 23.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.7,
+          "snr": 28.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.2
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 1.4,
+          "snr": -33.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -178.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -269.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -269.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.0
         }
       }
     },
@@ -3677,7 +3677,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 154.8,
+          "snr": 139.7,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3685,7 +3685,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 157.8,
+          "snr": 157.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3693,7 +3693,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 159.6,
+          "snr": 158.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3701,7 +3701,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 163.3,
+          "snr": 162.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3709,7 +3709,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 167.1,
+          "snr": 166.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3717,7 +3717,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 170.2,
+          "snr": 169.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3725,7 +3725,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 172.0,
+          "snr": 171.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -3741,60 +3741,60 @@
       "muf": 18.37,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 20.4,
+          "snr": 2.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.1
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 66.0,
+          "snr": 13.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.4
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 80.9,
+          "snr": 22.7,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 59.1,
+          "snr": 14.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -61.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -248.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -317.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.0
         }
       }
     },
@@ -3807,60 +3807,60 @@
       "muf": 9.85,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.8,
+          "snr": 23.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.0
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 59.5,
+          "snr": 15.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 6.9,
+          "snr": -19.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -85.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -148.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -227.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -227.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 17.0
         }
       }
     },
@@ -4005,60 +4005,60 @@
       "muf": 28.08,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.2,
+          "snr": -19.7,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 20.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 22.1,
+          "snr": 2.3,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 12.2
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.9,
+          "snr": 19.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 85.2,
+          "snr": 25.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 3.5
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.4,
+          "snr": 28.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 3.7
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.6,
+          "snr": 30.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.3
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 76.9,
+          "snr": 25.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.6
         }
       }
     },
@@ -4071,60 +4071,60 @@
       "muf": 25.11,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 12.6,
+          "snr": -2.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 18.9
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 65.7,
+          "snr": 15.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 80.3,
+          "snr": 22.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 87.5,
+          "snr": 27.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.7
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 89.9,
+          "snr": 30.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.2
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.1,
+          "snr": 28.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.1
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.8,
+          "snr": -38.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.3
         }
       }
     },
@@ -4337,7 +4337,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 154.2,
+          "snr": 69.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4345,7 +4345,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 156.9,
+          "snr": 156.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4353,7 +4353,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 158.2,
+          "snr": 157.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4361,7 +4361,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 161.1,
+          "snr": 160.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4369,7 +4369,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 165.2,
+          "snr": 164.5,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4377,7 +4377,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 169.7,
+          "snr": 169.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4385,7 +4385,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 171.9,
+          "snr": 171.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -4401,60 +4401,60 @@
       "muf": 29.31,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -78.9,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 5.3
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -15.0,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 12.8
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 42.2,
+          "snr": 8.7,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 5.9
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.6,
+          "snr": 18.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 5.2
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 91.2,
+          "snr": 23.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 5.3
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 94.0,
+          "snr": 27.5,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 5.7
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 84.6,
+          "snr": 28.6,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.6
         }
       }
     },
@@ -4467,60 +4467,60 @@
       "muf": 18.25,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.2,
+          "snr": 17.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.1
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 95.1,
+          "snr": 26.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.7
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.5,
+          "snr": 32.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.3,
+          "snr": 30.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 12.1
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.3,
+          "snr": -45.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.9
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -205.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.9
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -253.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.9
         }
       }
     },
@@ -4665,60 +4665,60 @@
       "muf": 32.36,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -27.8,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 22.5
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 9.8,
+          "snr": -3.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 13.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 65.8,
+          "snr": 16.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.8,
+          "snr": 22.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.0
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 84.8,
+          "snr": 26.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 3.9
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.0,
+          "snr": 29.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.3
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.6,
+          "snr": 31.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.0
         }
       }
     },
@@ -4731,60 +4731,60 @@
       "muf": 29.09,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -41.3,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 3.9
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 19.2,
+          "snr": 1.1,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 15.8
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 70.2,
+          "snr": 18.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.8
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.0,
+          "snr": 24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.7
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.8,
+          "snr": 28.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.8
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 90.5,
+          "snr": 31.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.5
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 84.7,
+          "snr": 31.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.5
         }
       }
     },
@@ -4997,7 +4997,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 151.5,
+          "snr": 97.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5005,7 +5005,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 154.0,
+          "snr": 153.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5013,7 +5013,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 155.7,
+          "snr": 155.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5021,7 +5021,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 159.0,
+          "snr": 158.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5029,7 +5029,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 163.3,
+          "snr": 162.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5037,7 +5037,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.8,
+          "snr": 168.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5045,7 +5045,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 171.7,
+          "snr": 171.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5061,60 +5061,60 @@
       "muf": 33.78,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -259.3,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 4.9
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -127.6,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 5.3
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -48.2,
+          "mode": "4E",
+          "hops": 4,
+          "elevation": 3.1
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -444.8,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 6.4
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 36.9,
+          "snr": 7.7,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.3
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.3,
+          "snr": 15.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.0
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 87.7,
+          "snr": 21.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.6
         }
       }
     },
@@ -5127,60 +5127,60 @@
       "muf": 30.1,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -28.0,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 5.0
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 28.0,
+          "snr": 5.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 15.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 92.3,
+          "snr": 24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.6
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 97.8,
+          "snr": 31.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.0
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.8,
+          "snr": 34.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.1
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 99.3,
+          "snr": 36.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.7
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 96.1,
+          "snr": 37.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.0
         }
       }
     },
@@ -5325,60 +5325,60 @@
       "muf": 29.89,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.1,
+          "snr": -20.5,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 20.6
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 18.1,
+          "snr": 1.3,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 12.4
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 70.3,
+          "snr": 18.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.4
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.6,
+          "snr": 24.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.0
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 85.1,
+          "snr": 27.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.1
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 84.7,
+          "snr": 30.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.6
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 81.1,
+          "snr": 28.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.7
         }
       }
     },
@@ -5391,60 +5391,60 @@
       "muf": 28.09,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 4.7,
+          "snr": -6.1,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 20.4
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 58.4,
+          "snr": 13.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.9,
+          "snr": 20.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.2,
+          "snr": 26.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.1
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.4,
+          "snr": 29.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.3
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 84.8,
+          "snr": 31.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.2
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 59.9,
+          "snr": 15.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.0
         }
       }
     },
@@ -5657,7 +5657,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 146.1,
+          "snr": 145.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5665,7 +5665,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 149.3,
+          "snr": 148.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5673,7 +5673,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 152.6,
+          "snr": 151.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5681,7 +5681,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 156.9,
+          "snr": 156.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5689,7 +5689,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 161.7,
+          "snr": 161.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5697,7 +5697,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 167.8,
+          "snr": 167.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5705,7 +5705,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 171.5,
+          "snr": 170.8,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -5721,60 +5721,60 @@
       "muf": 37.91,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -311.8,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 4.9
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -155.6,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 5.3
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -27.3,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 18.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 2.2,
+          "snr": -3.1,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 11.8
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 22.1,
+          "snr": 4.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.4
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 65.4,
+          "snr": 13.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.6
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.6,
+          "snr": 19.6,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.5
         }
       }
     },
@@ -5787,60 +5787,60 @@
       "muf": 30.69,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -93.7,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 4.8
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -35.4,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 5.2
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 24.4,
+          "snr": 4.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 15.4
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 90.0,
+          "snr": 22.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.1
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 96.3,
+          "snr": 28.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.6
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.6,
+          "snr": 32.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.8
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 99.0,
+          "snr": 35.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.9
         }
       }
     },
@@ -5985,60 +5985,60 @@
       "muf": 22.23,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 15.8,
+          "snr": 0.5,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 12.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 66.2,
+          "snr": 16.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 80.7,
+          "snr": 24.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.5,
+          "snr": 28.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.4
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 80.4,
+          "snr": 27.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.2
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 17.4,
+          "snr": -8.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.3
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.1,
+          "snr": -56.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.3
         }
       }
     },
@@ -6051,60 +6051,60 @@
       "muf": 23.08,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 27.3,
+          "snr": 4.2,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 16.5
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 70.1,
+          "snr": 18.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.9
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.4,
+          "snr": 25.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.2
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 86.5,
+          "snr": 29.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.6
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.6,
+          "snr": 30.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.5
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 38.7,
+          "snr": 4.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.1
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 1.8,
+          "snr": -31.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.1
         }
       }
     },
@@ -6317,7 +6317,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 143.3,
+          "snr": 142.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6325,7 +6325,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 148.1,
+          "snr": 147.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6333,7 +6333,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 153.0,
+          "snr": 152.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6341,7 +6341,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 158.5,
+          "snr": 157.8,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6349,7 +6349,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 163.5,
+          "snr": 162.8,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6357,7 +6357,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 168.7,
+          "snr": 168.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6365,7 +6365,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 171.7,
+          "snr": 171.0,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6381,60 +6381,60 @@
       "muf": 37.07,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -188.8,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 5.0
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -92.9,
+          "mode": "5E",
+          "hops": 5,
+          "elevation": 5.4
         },
         "20m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -13.8,
+          "mode": "4F2",
+          "hops": 4,
+          "elevation": 17.0
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 19.6,
+          "snr": 4.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 10.5
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.6,
+          "snr": 18.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 3.5
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.8,
+          "snr": 18.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.1
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.3,
+          "snr": 22.5,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.3
         }
       }
     },
@@ -6447,60 +6447,60 @@
       "muf": 29.29,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -104.3,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 4.8
         },
         "30m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -41.1,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 5.2
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 26.3,
+          "snr": 5.5,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 18.7
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 89.5,
+          "snr": 23.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.7
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 95.3,
+          "snr": 27.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.4
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.2,
+          "snr": 32.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.7
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 94.6,
+          "snr": 34.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.6
         }
       }
     },
@@ -6645,60 +6645,60 @@
       "muf": 14.36,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 62.6,
+          "snr": 14.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.9
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 76.7,
+          "snr": 22.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 4.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 72.4,
+          "snr": 22.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.6
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.9,
+          "snr": -37.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -109.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -219.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -288.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 10.0
         }
       }
     },
@@ -6711,60 +6711,60 @@
       "muf": 16.09,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 68.7,
+          "snr": 17.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.1
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 79.8,
+          "snr": 23.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 7.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 79.7,
+          "snr": 27.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 26.6,
+          "snr": -2.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.5
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.3,
+          "snr": -45.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.5
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -124.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.5
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -213.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 13.5
         }
       }
     },
@@ -6977,7 +6977,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 143.0,
+          "snr": 142.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6985,7 +6985,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 149.1,
+          "snr": 148.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -6993,7 +6993,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 155.6,
+          "snr": 154.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7001,7 +7001,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 161.8,
+          "snr": 161.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7009,7 +7009,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 166.1,
+          "snr": 165.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7017,7 +7017,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 169.8,
+          "snr": 169.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7025,7 +7025,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 171.9,
+          "snr": 171.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7041,60 +7041,60 @@
       "muf": 35.11,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -36.8,
+          "mode": "5F2",
+          "hops": 5,
+          "elevation": 20.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 6.7,
+          "snr": -1.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 11.2
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 41.5,
+          "snr": 8.5,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 77.1,
+          "snr": 16.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.8
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.3,
+          "snr": 22.3,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.1
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.7,
+          "snr": 26.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 8.0
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 68.3,
+          "snr": 19.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 10.8
         }
       }
     },
@@ -7107,60 +7107,60 @@
       "muf": 29.05,
       "bands": {
         "40m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -41.8,
+          "mode": "3E",
+          "hops": 3,
+          "elevation": 5.0
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 14.2,
+          "snr": 2.3,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 17.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 85.6,
+          "snr": 20.5,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.1
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 95.9,
+          "snr": 27.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.5
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.0,
+          "snr": 32.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.7
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.3,
+          "snr": 35.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.4
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 88.1,
+          "snr": 34.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.6
         }
       }
     },
@@ -7305,60 +7305,60 @@
       "muf": 10.95,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.4,
+          "snr": 18.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 5.5
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 73.5,
+          "snr": 23.1,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 6.4
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 0.5,
+          "snr": -41.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -169.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -268.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -268.0,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -267.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.3
         }
       }
     },
@@ -7371,60 +7371,60 @@
       "muf": 11.75,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 77.3,
+          "snr": 20.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.6
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 78.5,
+          "snr": 25.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.5
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 9.9,
+          "snr": -15.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.8
         },
         "17m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -113.7,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.8
         },
         "15m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -214.2,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.8
         },
         "12m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -246.9,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.8
         },
         "10m": {
-          "status": "CLOSED",
+          "status": "POOR",
           "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "snr": -246.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 14.8
         }
       }
     },
@@ -7637,7 +7637,7 @@
         "40m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 143.8,
+          "snr": 143.1,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7645,7 +7645,7 @@
         "30m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 151.5,
+          "snr": 150.8,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7653,7 +7653,7 @@
         "20m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 159.6,
+          "snr": 158.9,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7661,7 +7661,7 @@
         "17m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 165.0,
+          "snr": 164.3,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7669,7 +7669,7 @@
         "15m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 167.9,
+          "snr": 167.2,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7677,7 +7677,7 @@
         "12m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 170.3,
+          "snr": 169.6,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7685,7 +7685,7 @@
         "10m": {
           "status": "GOOD",
           "reliability": 100.0,
-          "snr": 172.0,
+          "snr": 170.4,
           "mode": "F2F2",
           "hops": 0,
           "elevation": 0.0
@@ -7701,60 +7701,60 @@
       "muf": 29.09,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 31.1,
+          "snr": 5.4,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.6
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 66.0,
+          "snr": 14.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.6
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 87.0,
+          "snr": 20.8,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.5
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 90.3,
+          "snr": 26.1,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 6.9
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 83.0,
+          "snr": 28.0,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 7.6
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 66.0,
+          "snr": 18.6,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 9.6
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "POOR",
+          "reliability": 8.2,
+          "snr": -17.9,
+          "mode": "3F2",
+          "hops": 3,
+          "elevation": 11.0
         }
       }
     },
@@ -7767,60 +7767,60 @@
       "muf": 25.86,
       "bands": {
         "40m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 82.2,
+          "snr": 19.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.8
         },
         "30m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 93.3,
+          "snr": 25.4,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.5
         },
         "20m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 97.8,
+          "snr": 30.6,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.0
         },
         "17m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 98.8,
+          "snr": 34.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 8.3
         },
         "15m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 99.0,
+          "snr": 37.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 9.0
         },
         "12m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "GOOD",
+          "reliability": 90.6,
+          "snr": 36.8,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 11.0
         },
         "10m": {
-          "status": "CLOSED",
-          "reliability": 0.0,
-          "snr": 0.0,
-          "mode": "0F2",
-          "hops": 0,
-          "elevation": 0.0
+          "status": "FAIR",
+          "reliability": 46.7,
+          "snr": 8.3,
+          "mode": "2F2",
+          "hops": 2,
+          "elevation": 15.2
         }
       }
     },
