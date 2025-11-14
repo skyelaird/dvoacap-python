@@ -103,11 +103,13 @@ class ModeInfo:
     hop_dist: float = 0.0  # Single hop ground distance (radians)
     hop_cnt: int = 0  # Number of hops
     layer: str = ''  # Layer name ('E', 'F1', or 'F2')
+    signal: 'SignalInfo' = None  # Signal information (forward reference to avoid circular import)
 
     def __post_init__(self):
-        """Initialize ref if not provided"""
+        """Initialize ref and signal if not provided"""
         if self.ref is None:
             self.ref = Reflection()
+        # Signal will be initialized by prediction_engine when needed
 
 
 # ============================================================================
