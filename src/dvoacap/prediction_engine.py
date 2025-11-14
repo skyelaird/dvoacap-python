@@ -610,6 +610,10 @@ class PredictionEngine:
         for hop_count in range(hops_begin, hops_end + 1):
             hop_dist = self.path.dist / hop_count
             reflectrix.find_modes(hop_dist, hop_count)
+
+            # Add over-the-MUF modes if needed (e.g., freq > foF2)
+            reflectrix.add_over_the_muf_and_vert_modes(hop_dist, hop_count, self.circuit_muf)
+
             if reflectrix.modes:
                 self._modes.extend(reflectrix.modes)
 
@@ -1075,10 +1079,12 @@ class PredictionEngine:
     @staticmethod
     def _cos_of_incidence(elevation: float, height: float) -> float:
         """Calculate cosine of incidence angle."""
-        r_ratio = height / PredictionEngine.EARTH_RADIUS
-        sin_elev = np.sin(elevation)
+        # Correct formula: cos(i) = sqrt(1 - (R/(R+h))^2 * cos(elev)^2)
+        # where R = Earth radius, h = ionospheric height
+        r_ratio = PredictionEngine.EARTH_RADIUS / (PredictionEngine.EARTH_RADIUS + height)
+        cos_elev = np.cos(elevation)
         # Guard against negative values under sqrt
-        value = 1.0 - (1.0 + r_ratio) ** 2 * (1.0 - sin_elev ** 2)
+        value = 1.0 - (r_ratio ** 2) * (cos_elev ** 2)
         if value < 0:
             # Clamp to prevent division issues (sec = 1/cos will be max ~33)
             # This happens when ray geometry is at the edge of viability
