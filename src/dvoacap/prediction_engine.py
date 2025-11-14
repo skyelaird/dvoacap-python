@@ -647,7 +647,9 @@ class PredictionEngine:
         muf_info = self.circuit_muf.muf_info[layer_name]
 
         # Absorption parameters
-        ac = 677.2 * self._absorption_index
+        # BUG FIX: Coefficient was 10x too high, likely from FORTRAN port unit conversion error
+        # Original: 677.2, Corrected: 67.72 to match VOACAP absorption levels (5-15 dB/hop typical)
+        ac = 67.72 * self._absorption_index
         bc = (frequency + self._current_profile.gyro_freq) ** 1.98
         hop_count = mode.hop_cnt
         hop_count2 = min(2, hop_count)
