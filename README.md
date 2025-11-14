@@ -296,12 +296,34 @@ The original VOACAP is written in Fortran (1970s) and DVOACAP modernized it in D
 
 ## 🔬 Validation
 
-All modules are validated against the original VOACAP/DVOACAP:
+### Component-Level Validation ✅
+
+Individual modules validated against original VOACAP/DVOACAP:
 
 - **Path Geometry:** < 0.01% distance error, < 0.01° bearing error
 - **Solar Calculations:** < 0.01° zenith angle error
 - **Geomagnetic Model:** < 0.1° magnetic latitude error
 - **Ionospheric Profiles:** CCIR/URSI maps verified against reference data
+
+### End-to-End Accuracy Validation 🔬
+
+**Reference VOACAP Comparison:**
+```bash
+# Compare predictions against original VOACAP output
+python3 test_voacap_reference.py
+```
+
+Validates full propagation predictions (SNR, reliability, MUF) against reference files from the original VOACAP engine. This ensures the integrated system produces accurate results, not just plausible-looking numbers.
+
+**Functional Testing:**
+```bash
+# Verify engine produces valid output without crashing
+python3 validate_predictions.py
+```
+
+Tests that predictions execute successfully and produce values in reasonable ranges across representative propagation paths.
+
+**See [VALIDATION_STRATEGY.md](VALIDATION_STRATEGY.md)** for detailed validation methodology, test coverage status, and guidelines for interpreting results.
 
 ## 🤝 Contributing
 
