@@ -4,7 +4,28 @@ Welcome to the DVOACAP-Python documentation wiki! This wiki provides comprehensi
 
 ## What is DVOACAP-Python?
 
-DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction engine, originally written in Delphi/Pascal by Alex Shovkoplyas (VE3NEA). This project provides an accessible, well-documented, and maintainable Python implementation of the VOACAP ionospheric propagation model.
+DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction engine. This project provides an accessible, well-documented, and maintainable Python implementation for amateur radio operators and researchers.
+
+### Project Lineage
+
+This is a **port of a port** with a rich history:
+
+1. **VOACAP** (1970s-1990s) - Voice of America Coverage Analysis Program
+   - Original FORTRAN implementation by Voice of America / ITS
+   - Professional HF broadcast planning tool
+   - Industry standard for propagation prediction
+
+2. **DVOACAP** (2000s-2010s) - Digital VOACAP for Amateur Radio
+   - Delphi/Pascal port by **Alex Shovkoplyas (VE3NEA)**
+   - Modernized for ham radio operators
+   - Added user-friendly GUI and visualizations
+   - Made VOACAP accessible to amateur radio community
+
+3. **DVOACAP-Python** (2025) - This Project
+   - Python port of VE3NEA's DVOACAP
+   - Modern Python implementation
+   - Cross-platform, open-source
+   - Designed for integration with Python scientific ecosystem
 
 **Key Features:**
 - Predicts HF radio propagation conditions
@@ -54,19 +75,38 @@ See the [Architecture](Architecture) page for detailed module status.
 
 ## Repository Links
 
-- **Main Repository:** [github.com/skyelaird/dvoacap-python](https://github.com/skyelaird/dvoacap-python)
-- **Issues:** [github.com/skyelaird/dvoacap-python/issues](https://github.com/skyelaird/dvoacap-python/issues)
-- **Original DVOACAP:** [github.com/VE3NEA/DVOACAP](https://github.com/VE3NEA/DVOACAP)
+- **DVOACAP-Python (This Project):** [github.com/skyelaird/dvoacap-python](https://github.com/skyelaird/dvoacap-python)
+- **Issues & Discussions:** [github.com/skyelaird/dvoacap-python/issues](https://github.com/skyelaird/dvoacap-python/issues)
+- **DVOACAP (VE3NEA's Pascal):** [github.com/VE3NEA/DVOACAP](https://github.com/VE3NEA/DVOACAP)
+- **Original VOACAP:** [voacap.com](https://www.voacap.com/)
 
 ## License
 
 DVOACAP-Python is released under the MIT License. See the [LICENSE](https://github.com/skyelaird/dvoacap-python/blob/main/LICENSE) file for details.
 
+**Lineage Licenses:**
+- **VOACAP** - Public domain / US Government work
+- **DVOACAP** - Mozilla Public License Version 1.1
+- **DVOACAP-Python** - MIT License (clean-room reimplementation)
+
 ## Acknowledgments
 
-- **Alex Shovkoplyas (VE3NEA)** - Original DVOACAP implementation
-- **Voice of America / ITS** - Original VOACAP development
-- Amateur radio and propagation modeling community
+**Standing on the Shoulders of Giants:**
+
+- **Voice of America / ITS** - Original VOACAP development team
+  - Decades of ionospheric research and professional HF broadcast planning
+
+- **Alex Shovkoplyas (VE3NEA)** - DVOACAP creator
+  - Brought VOACAP to amateur radio operators
+  - Modernized the code in Delphi/Pascal
+  - Made propagation prediction accessible to hams worldwide
+
+- **Amateur Radio Community**
+  - Testing, feedback, and propagation data
+  - Keeping HF radio alive and thriving
+
+- **Python Scientific Community**
+  - NumPy, SciPy, and the amazing Python ecosystem
 
 ---
 
