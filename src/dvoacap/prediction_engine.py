@@ -12,8 +12,9 @@ Author: Ported from VOACAP Pascal source (VE3NEA)
 
 import numpy as np
 from typing import List, Optional, Tuple
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from enum import Enum
+from copy import deepcopy
 
 from .path_geometry import PathGeometry, GeoPoint
 from .geomagnetic import GeomagneticField
@@ -766,7 +767,11 @@ class PredictionEngine:
         xmuf = muf_info.ref.vert_freq * sec
         xls = calc_muf_prob(frequency, xmuf, muf_info.muf, muf_info.sig_lo, muf_info.sig_hi)
         xls = -self._to_db(max(1e-6, xls)) * sec
+        if debug_loss:
+            print(f"XLS additional loss: {xls:.2f} dB × {hop_count} hops = {hop_count * xls:.2f} dB", file=sys.stderr)
         mode.signal.total_loss_db += hop_count * xls
+        if debug_loss:
+            print(f"FINAL TOTAL LOSS: {mode.signal.total_loss_db:.2f} dB", file=sys.stderr)
 
         # Deciles
         cpr = muf_info.ref.vert_freq / muf_info.muf
@@ -798,6 +803,14 @@ class PredictionEngine:
 
         # SNR
         mode.signal.snr_db = mode.signal.power_dbw - self.noise_model.combined
+        if debug_loss:
+            print(f"TX power: {self.tx_antennas.current_antenna.tx_power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Signal power BEFORE field strength calc: {mode.signal.power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Field strength: {mode.signal.field_dbuv:.2f} dBµV/m", file=sys.stderr)
+            print(f"Signal power AFTER field strength calc: {mode.signal.power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Noise power: {self.noise_model.combined:.2f} dBW", file=sys.stderr)
+            print(f"SNR: {mode.signal.snr_db:.2f} dB", file=sys.stderr)
+            print("=" * 50, file=sys.stderr)
 
     def _analyze_reliability(self, frequency: float) -> Prediction:
         """Analyze reliability and select best mode."""
@@ -805,6 +818,14 @@ class PredictionEngine:
 
         if not self._modes:
             return prediction
+
+        # Debug: Print mode powers at start
+        import sys
+        if False:  # Enable for debugging
+            print(f"\n=== MODES AT START OF _analyze_reliability ===", file=sys.stderr)
+            for i, mode in enumerate(self._modes):
+                print(f"Mode {i}: power={mode.signal.power_dbw:.2f} dBW, snr={mode.signal.snr_db:.2f} dB", file=sys.stderr)
+            print("=" * 50, file=sys.stderr)
 
         # Calculate reliability for each mode
         for mode in self._modes:
@@ -820,18 +841,38 @@ class PredictionEngine:
         prediction.tx_elevation = self._best_mode.ref.elevation
         prediction.virt_height = self._best_mode.ref.virt_height
         prediction.hop_count = self._best_mode.hop_cnt
-        prediction.signal = self._best_mode.signal
+        # IMPORTANT: Deep copy the signal to avoid modifying best_mode.signal when combining modes
+        prediction.signal = deepcopy(self._best_mode.signal)
         prediction.noise_dbw = self.noise_model.combined_noise.value.median
         prediction.mode_tx = self._best_mode.layer
+
+        if False:  # Debug
+            print(f"\n=== AFTER BEST MODE SELECTION ===", file=sys.stderr)
+            print(f"Best mode power: {self._best_mode.signal.power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Best mode SNR: {self._best_mode.signal.snr_db:.2f} dB", file=sys.stderr)
+            print(f"Prediction power (before sum): {prediction.signal.power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Prediction SNR (before sum): {prediction.signal.snr_db:.2f} dB", file=sys.stderr)
+            print("=" * 50, file=sys.stderr)
 
         # Add signals from all modes (random phase)
         if len(self._modes) > 1:
             self._calc_sum_of_modes(prediction)
+            if False:  # Debug
+                print(f"\n=== AFTER _calc_sum_of_modes ===", file=sys.stderr)
+                print(f"Prediction power (after sum): {prediction.signal.power_dbw:.2f} dBW", file=sys.stderr)
+                print(f"Prediction SNR (before recalc): {prediction.signal.snr_db:.2f} dB", file=sys.stderr)
+                print(f"About to recalculate SNR...", file=sys.stderr)
+                print("=" * 50, file=sys.stderr)
             prediction.signal.snr_db = (
                 self._best_mode.signal.snr_db +
                 prediction.signal.power_dbw -
                 self._best_mode.signal.power_dbw
             )
+            if False:  # Debug
+                print(f"\n=== AFTER SNR RECALC ===", file=sys.stderr)
+                print(f"Prediction SNR (after recalc): {prediction.signal.snr_db:.2f} dB", file=sys.stderr)
+                print(f"Calculation: {self._best_mode.signal.snr_db:.2f} + {prediction.signal.power_dbw:.2f} - {self._best_mode.signal.power_dbw:.2f} = {prediction.signal.snr_db:.2f}", file=sys.stderr)
+                print("=" * 50, file=sys.stderr)
             self._calc_reliability(prediction.signal, clamp=True)
 
         # Required power for specified reliability
