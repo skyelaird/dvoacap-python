@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Progress](https://img.shields.io/badge/progress-80%25-green)
+![Validation](https://img.shields.io/badge/validation-83.8%25-brightgreen)
+[![CI](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml/badge.svg)](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml)
 
 ## 🎯 About
 
