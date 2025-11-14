@@ -86,8 +86,30 @@ def compare_predictions(local_pred: Dict, voacap_pred: Dict, tolerance: Dict) ->
     comparison = {
         'match': True,
         'differences': [],
-        'metrics': {}
+        'metrics': {},
+        'error': False
     }
+
+    # Check for error conditions first
+    local_snr = local_pred.get('snr', -999)
+    voacap_snr = voacap_pred.get('snr_db', -999)
+    local_mode = local_pred.get('mode', '')
+    voacap_quality = voacap_pred.get('quality', '')
+
+    # Detect if either prediction failed
+    local_failed = (local_snr <= -900 or local_mode in ['ERROR', 'N/A'])
+    voacap_failed = (voacap_snr <= -900 or voacap_quality == 'ERROR')
+
+    if local_failed or voacap_failed:
+        comparison['error'] = True
+        comparison['match'] = False
+        if local_failed and voacap_failed:
+            comparison['differences'].append("Both predictions failed - cannot compare")
+        elif local_failed:
+            comparison['differences'].append("Local prediction failed")
+        else:
+            comparison['differences'].append("VOACAP online prediction failed")
+        return comparison
 
     # Compare reliability
     local_rel = local_pred.get('reliability', 0)
@@ -107,26 +129,21 @@ def compare_predictions(local_pred: Dict, voacap_pred: Dict, tolerance: Dict) ->
             f"Reliability: local={local_rel:.1f}% vs VOACAP={voacap_rel:.1f}% (diff={rel_diff:.1f}%)"
         )
 
-    # Compare SNR
-    local_snr = local_pred.get('snr', -999)
-    voacap_snr = voacap_pred.get('snr_db', -999)
+    # Compare SNR (we already know both are valid from error check above)
+    snr_diff = abs(local_snr - voacap_snr)
 
-    # Only compare if both are valid
-    if local_snr > -900 and voacap_snr > -900:
-        snr_diff = abs(local_snr - voacap_snr)
+    comparison['metrics']['snr'] = {
+        'local': local_snr,
+        'voacap': voacap_snr,
+        'diff': snr_diff,
+        'match': snr_diff <= tolerance['snr']
+    }
 
-        comparison['metrics']['snr'] = {
-            'local': local_snr,
-            'voacap': voacap_snr,
-            'diff': snr_diff,
-            'match': snr_diff <= tolerance['snr']
-        }
-
-        if snr_diff > tolerance['snr']:
-            comparison['match'] = False
-            comparison['differences'].append(
-                f"SNR: local={local_snr:.1f}dB vs VOACAP={voacap_snr:.1f}dB (diff={snr_diff:.1f}dB)"
-            )
+    if snr_diff > tolerance['snr']:
+        comparison['match'] = False
+        comparison['differences'].append(
+            f"SNR: local={local_snr:.1f}dB vs VOACAP={voacap_snr:.1f}dB (diff={snr_diff:.1f}dB)"
+        )
 
     # Compare MUF (if available)
     local_muf = local_pred.get('muf', 0)
@@ -314,7 +331,15 @@ def validate_predictions(test_regions: List[str] = None,
 
                 total_tests += 1
 
-                if comparison['match']:
+                if comparison.get('error', False):
+                    failed_tests += 1
+                    print("⚠ ERROR")
+                    for diff in comparison['differences']:
+                        print(f"        → {diff}")
+                    if verbose:
+                        print(f"        Local:  Rel={local_result['reliability']:5.1f}% SNR={local_result['snr']:6.1f}dB Mode={local_result['mode']}")
+                        print(f"        VOACAP: Rel={voacap_result['reliability']:5.1f}% SNR={voacap_result.get('snr_db', -999):6.1f}dB")
+                elif comparison['match']:
                     passed_tests += 1
                     print("✓ MATCH")
                     if verbose:
