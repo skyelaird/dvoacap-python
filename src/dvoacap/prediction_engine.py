@@ -758,6 +758,17 @@ class PredictionEngine:
             muf_info.sig_lo, muf_info.sig_hi
         )
 
+        # Debug MUF calculation for high frequencies
+        import sys
+        if frequency > 25.0 and False:  # Enable for debugging
+            print(f"\n=== MUF PROB DEBUG (freq={frequency:.2f}) ===", file=sys.stderr)
+            print(f"Layer: {layer_name}", file=sys.stderr)
+            print(f"Mode MUF: {mode_muf:.2f} MHz", file=sys.stderr)
+            print(f"Circuit MUF median: {muf_info.muf:.2f} MHz", file=sys.stderr)
+            print(f"Sigma lo/hi: {muf_info.sig_lo:.3f} / {muf_info.sig_hi:.3f}", file=sys.stderr)
+            print(f"MUF probability: {mode.signal.muf_day:.6f}", file=sys.stderr)
+            print("=" * 50, file=sys.stderr)
+
         # Add more loss when MUF_DAY gets very low
         if mode.signal.muf_day < 1e-4:
             mode.signal.total_loss_db += -max(-24.0, 8.0 * np.log10(mode.signal.muf_day) + 32.0)
