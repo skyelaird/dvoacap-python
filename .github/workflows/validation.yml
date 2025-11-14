@@ -1,0 +1,212 @@
+name: DVOACAP Validation
+
+on:
+  push:
+    branches: [ main, develop, claude/** ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib pytest pytest-cov
+
+      - name: Run unit tests
+        run: |
+          pytest tests/ -v --cov=src/dvoacap --cov-report=xml --cov-report=term
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+
+  reference-validation:
+    name: Reference Validation
+    runs-on: ubuntu-latest
+    needs: unit-tests  # Run after unit tests pass
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib pytest
+
+      - name: Run reference validation
+        id: validation
+        run: |
+          python3 test_voacap_reference.py --quiet > validation_output.txt 2>&1
+          VALIDATION_EXIT=$?
+          cat validation_output.txt
+          exit $VALIDATION_EXIT
+        continue-on-error: true
+
+      - name: Parse validation results
+        id: parse_results
+        run: |
+          if [ -f validation_reference_results.json ]; then
+            PASS_RATE=$(python3 -c "import json; data=json.load(open('validation_reference_results.json')); print(f\"{data['summary']['pass_rate']:.1f}\")")
+            TOTAL=$(python3 -c "import json; data=json.load(open('validation_reference_results.json')); print(data['summary']['total'])")
+            PASSED=$(python3 -c "import json; data=json.load(open('validation_reference_results.json')); print(data['summary']['passed'])")
+            FAILED=$(python3 -c "import json; data=json.load(open('validation_reference_results.json')); print(data['summary']['failed'])")
+
+            echo "pass_rate=$PASS_RATE" >> $GITHUB_OUTPUT
+            echo "total=$TOTAL" >> $GITHUB_OUTPUT
+            echo "passed=$PASSED" >> $GITHUB_OUTPUT
+            echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          else
+            echo "pass_rate=0" >> $GITHUB_OUTPUT
+            echo "total=0" >> $GITHUB_OUTPUT
+            echo "passed=0" >> $GITHUB_OUTPUT
+            echo "failed=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check pass rate threshold
+        run: |
+          PASS_RATE=${{ steps.parse_results.outputs.pass_rate }}
+          echo "Validation pass rate: $PASS_RATE%"
+
+          if (( $(echo "$PASS_RATE < 70" | bc -l) )); then
+            echo "❌ CRITICAL: Validation pass rate below 70% threshold"
+            exit 1
+          elif (( $(echo "$PASS_RATE < 80" | bc -l) )); then
+            echo "⚠️  WARNING: Validation pass rate below 80% target (currently $PASS_RATE%)"
+            echo "This is a warning only. Work towards >80% pass rate."
+          else
+            echo "✅ Validation passed with $PASS_RATE% pass rate"
+          fi
+
+      - name: Upload validation results
+        uses: actions/upload-artifact@v3
+        with:
+          name: validation-results
+          path: |
+            validation_reference_results.json
+            validation_output.txt
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const passRate = '${{ steps.parse_results.outputs.pass_rate }}';
+            const passed = '${{ steps.parse_results.outputs.passed }}';
+            const failed = '${{ steps.parse_results.outputs.failed }}';
+            const total = '${{ steps.parse_results.outputs.total }}';
+
+            const status = parseFloat(passRate) >= 80 ? '✅' : parseFloat(passRate) >= 70 ? '⚠️' : '❌';
+
+            const comment = `## ${status} DVOACAP Validation Results
+
+            **Pass Rate:** ${passRate}%
+            **Tests:** ${passed}/${total} passed, ${failed} failed
+
+            ${parseFloat(passRate) >= 80 ? '✅ **Excellent!** Pass rate meets 80% target.' :
+              parseFloat(passRate) >= 70 ? '⚠️  **Warning:** Pass rate below 80% target but above 70% minimum.' :
+              '❌ **Critical:** Pass rate below 70% minimum threshold.'}
+
+            <details>
+            <summary>Details</summary>
+
+            - Reference validation compares DVOACAP-Python predictions against original VOACAP output
+            - Target: >80% pass rate
+            - Minimum: >70% pass rate
+            - Tolerances: SNR ±10 dB, Reliability ±20%, MUF day ±0.2
+
+            See [VALIDATION_STRATEGY.md](../blob/main/VALIDATION_STRATEGY.md) for details.
+            </details>
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  parametrized-tests:
+    name: Parametrized Reference Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib pytest
+
+      - name: Run parametrized tests
+        run: |
+          pytest tests/test_reference_validation.py -v
+        continue-on-error: true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: parametrized-test-results
+          path: |
+            test-results.xml
+            .coverage
+
+  validation-summary:
+    name: Validation Summary
+    runs-on: ubuntu-latest
+    needs: [unit-tests, reference-validation, parametrized-tests]
+    if: always()
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Generate summary
+        run: |
+          echo "# DVOACAP Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Results" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f validation-results/validation_reference_results.json ]; then
+            PASS_RATE=$(python3 -c "import json; data=json.load(open('validation-results/validation_reference_results.json')); print(f\"{data['summary']['pass_rate']:.1f}\")" 2>/dev/null || echo "N/A")
+            echo "- **Pass Rate:** $PASS_RATE%" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Pass Rate:** N/A" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Job Status" >> $GITHUB_STEP_SUMMARY
+          echo "- Unit Tests: ${{ needs.unit-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Reference Validation: ${{ needs.reference-validation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Parametrized Tests: ${{ needs.parametrized-tests.result }}" >> $GITHUB_STEP_SUMMARY
