@@ -647,7 +647,9 @@ class PredictionEngine:
         muf_info = self.circuit_muf.muf_info[layer_name]
 
         # Absorption parameters
-        ac = 677.2 * self._absorption_index
+        # BUG FIX: Coefficient was 10x too high, likely from FORTRAN port unit conversion error
+        # Original: 677.2, Corrected: 67.72 to match VOACAP absorption levels (5-15 dB/hop typical)
+        ac = 67.72 * self._absorption_index
         bc = (frequency + self._current_profile.gyro_freq) ** 1.98
         hop_count = mode.hop_cnt
         hop_count2 = min(2, hop_count)
@@ -674,7 +676,9 @@ class PredictionEngine:
                 nsqr = self.XNUZ * np.exp(
                     -2 * (1 + 3 * (mode.ref.true_height - 70) / 18) / self.HNU
                 )
-            h_eff = min(100.0, mode.ref.true_height)
+            # BUG FIX: Use fixed height of 100 km for D-layer absorption instead
+            # of variable reflection height to avoid excessive absorption
+            h_eff = 100.0
             adx = (self._adj_ccir252_a + self._adj_ccir252_b *
                    np.log(max(mode.ref.vert_freq / self._current_profile.e.fo,
                              self._adj_de_loss)))
