@@ -10,7 +10,7 @@ Author: Ported from VOACAP Pascal source (VE3NEA)
 """
 
 import numpy as np
-from typing import Tuple
+from typing import Dict, Tuple
 from dataclasses import dataclass
 
 from .path_geometry import GeoPoint
@@ -362,7 +362,7 @@ class NoiseModel:
 
         return result
 
-    def _calc_av(self, dist: Distribution) -> dict:
+    def _calc_av(self, dist: Distribution) -> Dict[str, float]:
         """
         Calculate noise factor distribution (average and variance).
 

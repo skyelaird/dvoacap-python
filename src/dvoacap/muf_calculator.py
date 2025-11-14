@@ -15,7 +15,7 @@ This module computes Maximum Usable Frequency (MUF) for HF propagation:
 
 import math
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Dict, List, Optional
 import numpy as np
 
 from .ionospheric_profile import (
@@ -77,7 +77,7 @@ class MufInfo:
 @dataclass
 class CircuitMuf:
     """Circuit MUF for all layers"""
-    muf_info: dict  # Dictionary mapping layer name to MufInfo
+    muf_info: Dict  # Dictionary mapping layer name to MufInfo
     fot: float = 0.0  # Circuit FOT (MHz)
     muf: float = 0.0  # Circuit MUF (MHz)
     hpf: float = 0.0  # Circuit HPF (MHz)

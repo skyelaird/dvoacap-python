@@ -16,7 +16,7 @@ This module models the electron density profile of the ionosphere:
 
 import math
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 
@@ -557,7 +557,7 @@ class IonosphericProfile:
             self.igram_true_height[i] = self.get_true_height(self.igram_vert_freq[i])
             self.igram_virt_height[i] = self.get_virtual_height_gauss(self.igram_vert_freq[i])
 
-    def compute_penetration_angles(self, mhz: float) -> dict:
+    def compute_penetration_angles(self, mhz: float) -> Dict[str, float]:
         """
         Compute penetration angles for each layer.
 
@@ -661,7 +661,7 @@ class IonosphericProfile:
 
                 self.oblique_freq[ang_idx, h] = oblique_freq
 
-    def compute_derivative_loss(self, muf_info: dict):
+    def compute_derivative_loss(self, muf_info: Dict):
         """
         Compute derivative loss for the ionospheric profile.
 
