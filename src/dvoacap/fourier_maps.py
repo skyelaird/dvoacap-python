@@ -544,7 +544,22 @@ class FourierMaps:
             s += 3
 
         # Get deviation from lookup table
-        result = abs((1 - self.f2d[t, s, l]) * muf) * (1 / NORM_DECILE)
+        f2d_value = self.f2d[t, s, l]
+        result = abs((1 - f2d_value) * muf) * (1 / NORM_DECILE)
+
+        # Debug F2 deviation calculation
+        import sys
+        if False:  # Enable for debugging
+            print(f"\n=== F2 DEVIATION DEBUG ===", file=sys.stderr)
+            print(f"MUF: {muf:.2f} MHz", file=sys.stderr)
+            print(f"Lat: {lat * 180 / np.pi:.2f}°", file=sys.stderr)
+            print(f"Local time: {local_time:.4f}", file=sys.stderr)
+            print(f"Above: {above}", file=sys.stderr)
+            print(f"Indices: T={t}, S={s}, L={l}", file=sys.stderr)
+            print(f"F2D value: {f2d_value:.6f}", file=sys.stderr)
+            print(f"Result: {result:.4f} MHz", file=sys.stderr)
+            print("=" * 50, file=sys.stderr)
+
         return max(0.001, result)
 
     def compute_excessive_system_loss(self, mag_lat: float, local_time: float,
