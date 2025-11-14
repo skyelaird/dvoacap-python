@@ -107,6 +107,7 @@ class VoacapReferenceParser:
             # Extract frequencies from the FREQ line
             freq_values = freq_str.split()
             prediction['frequencies'] = [float(f) for f in freq_values if f not in ['-', '0.0', '0.00'] and float(f) > 0.1]
+            num_freqs = len(prediction['frequencies'])
 
             # Extract metric lines
             metric_names = ['MODE', 'TANGLE', 'DELAY', 'V HITE', 'MUFday', 'LOSS',
@@ -117,23 +118,32 @@ class VoacapReferenceParser:
             for metric in metric_names:
                 # Pattern should match values BEFORE the metric name on same line
                 # Format: "  value1  value2  value3  -  - METRIC_NAME"
+                # Note: The first value corresponds to the MUF column, not the first frequency!
                 pattern = r'^\s*([\d.\sEFef-]+?)\s+' + re.escape(metric) + r'\s*$'
                 match = re.search(pattern, block, re.MULTILINE)
                 if match:
                     values_str = match.group(1).split()
                     if metric == 'MODE':
-                        # MODE is text like '1F2', contains letters
-                        # Need different pattern for MODE
+                        # MODE is text like '1F2', '2 E' (can contain spaces!)
+                        # Values are separated by 2+ spaces, but MODE like "2 E" has only 1 space
+                        # So we split on 2 or more spaces to preserve "2 E" as a single value
                         mode_pattern = r'^\s*([\dEFef\s-]+?)\s+MODE\s*$'
                         mode_match = re.search(mode_pattern, block, re.MULTILINE)
                         if mode_match:
-                            prediction['metrics'][metric] = [v if v != '-' else None for v in mode_match.group(1).split()]
+                            # Split on 2+ spaces instead of any whitespace to preserve values like "2 E"
+                            mode_values = re.split(r'\s{2,}', mode_match.group(1).strip())
+                            # Convert dashes to None
+                            mode_values = [v if v != '-' else None for v in mode_values]
+                            # Skip first value (MUF column) and take only num_freqs values
+                            prediction['metrics'][metric] = mode_values[1:1+num_freqs] if len(mode_values) > 1 else mode_values[:num_freqs]
                     else:
-                        # Numeric values
-                        prediction['metrics'][metric] = [
+                        # Numeric values - convert and align with frequencies
+                        numeric_values = [
                             float(v) if v not in ['-', ''] else None
                             for v in values_str
                         ]
+                        # Skip first value (MUF column) and take only num_freqs values
+                        prediction['metrics'][metric] = numeric_values[1:1+num_freqs] if len(numeric_values) > 1 else numeric_values[:num_freqs]
 
             results['predictions'].append(prediction)
 
