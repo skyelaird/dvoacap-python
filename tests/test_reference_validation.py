@@ -40,7 +40,7 @@ from src.dvoacap.prediction_engine import PredictionEngine
 # =============================================================================
 
 @dataclass
-class TestCase:
+class ValidationTestCase:
     """Definition of a validation test case"""
     name: str
     description: str
@@ -59,7 +59,7 @@ class TestCase:
 # Define all test cases
 # Each test case needs a corresponding reference file
 TEST_CASES = [
-    TestCase(
+    ValidationTestCase(
         name="tangier_belgrade_ssn100",
         description="Medium path (2440km), moderate solar activity",
         tx_lat=35.80, tx_lon=-5.90,
@@ -71,7 +71,7 @@ TEST_CASES = [
         enabled=True
     ),
     # Add more test cases here as reference files become available
-    # TestCase(
+    # ValidationTestCase(
     #     name="philadelphia_boston_ssn100",
     #     description="Short path (430km), NVIS/E-layer propagation",
     #     tx_lat=39.95, tx_lon=-75.17,

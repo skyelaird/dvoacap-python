@@ -5,8 +5,14 @@ Validates Python port against known values and edge cases
 """
 
 import math
-from path_geometry import (
-    PathGeometry, GeoPoint, 
+import sys
+from pathlib import Path
+
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from src.dvoacap.path_geometry import (
+    PathGeometry, GeoPoint,
     hop_distance, hop_length_3d, calc_elevation_angle,
     sin_of_incidence, cos_of_incidence,
     RinD, DinR, EarthR, HALF_PI

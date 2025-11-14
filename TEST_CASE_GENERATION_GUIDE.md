@@ -55,7 +55,7 @@ Run original Voacapwin.exe on Windows:
 For each new test case, define:
 
 ```python
-TestCase(
+ValidationTestCase(
     name="test_case_name",
     description="Brief description",
     tx_lat=<latitude>,      # Transmitter latitude (degrees, -90 to 90)
@@ -176,7 +176,7 @@ print(f\"Frequencies: {data['predictions'][0]['frequencies']}\")
 Edit `tests/test_reference_validation.py` and add to `TEST_CASES`:
 
 ```python
-TestCase(
+ValidationTestCase(
     name="<test_case_name>",
     description="<description>",
     tx_lat=<tx_lat>, tx_lon=<tx_lon>,
@@ -210,7 +210,7 @@ pytest tests/test_reference_validation.py -v -s
 
 #### Short Path (<1000 km)
 ```python
-TestCase(
+ValidationTestCase(
     name="philadelphia_boston_ssn100",
     description="Short path (430km), NVIS/E-layer",
     tx_lat=39.95, tx_lon=-75.17,  # Philadelphia
@@ -225,7 +225,7 @@ TestCase(
 
 #### Long Path (>10,000 km)
 ```python
-TestCase(
+ValidationTestCase(
     name="philadelphia_tokyo_ssn100",
     description="Long path (10,900km), multi-hop F2",
     tx_lat=39.95, tx_lon=-75.17,  # Philadelphia
@@ -240,7 +240,7 @@ TestCase(
 
 #### Very Long Path (Antipodal)
 ```python
-TestCase(
+ValidationTestCase(
     name="philadelphia_perth_ssn100",
     description="Very long path (18,700km), near-antipodal",
     tx_lat=39.95, tx_lon=-75.17,  # Philadelphia
@@ -257,7 +257,7 @@ TestCase(
 
 #### Solar Minimum
 ```python
-TestCase(
+ValidationTestCase(
     name="tangier_belgrade_ssn10",
     description="Medium path, solar minimum",
     tx_lat=35.80, tx_lon=-5.90,
@@ -272,7 +272,7 @@ TestCase(
 
 #### Solar Maximum
 ```python
-TestCase(
+ValidationTestCase(
     name="tangier_belgrade_ssn200",
     description="Medium path, solar maximum",
     tx_lat=35.80, tx_lon=-5.90,
@@ -289,7 +289,7 @@ TestCase(
 
 #### Winter
 ```python
-TestCase(
+ValidationTestCase(
     name="tangier_belgrade_december",
     description="Medium path, winter solstice",
     tx_lat=35.80, tx_lon=-5.90,
@@ -304,7 +304,7 @@ TestCase(
 
 #### Equinox
 ```python
-TestCase(
+ValidationTestCase(
     name="tangier_belgrade_march",
     description="Medium path, equinox",
     tx_lat=35.80, tx_lon=-5.90,
@@ -321,7 +321,7 @@ TestCase(
 
 #### Trans-Pacific
 ```python
-TestCase(
+ValidationTestCase(
     name="san_francisco_sydney_ssn100",
     description="Trans-Pacific (11,900km)",
     tx_lat=37.77, tx_lon=-122.42,  # San Francisco
@@ -336,7 +336,7 @@ TestCase(
 
 #### Trans-Atlantic
 ```python
-TestCase(
+ValidationTestCase(
     name="new_york_london_ssn100",
     description="Trans-Atlantic (5,570km)",
     tx_lat=40.71, tx_lon=-74.01,   # New York
