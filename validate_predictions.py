@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Validation Script - Compare DVOACAP-Python vs VOACAP Online
-Compares local predictions against proppy.net (VOACAP reference) to identify discrepancies
+Validation Script - DVOACAP-Python Functionality Test
+Tests that the local DVOACAP engine produces valid predictions across representative paths
+
+Note: Online VOACAP API comparison removed as proppy.net is no longer operational.
+For comparison against reference VOACAP data, see test_voacap_reference.py
 """
 
 import json
@@ -17,7 +20,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from src.dvoacap.path_geometry import GeoPoint
 from src.dvoacap.prediction_engine import PredictionEngine
-from Dashboard.proppy_net_api import ProppyNetAPI
 
 
 # =============================================================================
@@ -74,81 +76,55 @@ MY_QTH = {
 
 
 # =============================================================================
-# Comparison Functions
+# Validation Functions
 # =============================================================================
 
-def compare_predictions(local_pred: Dict, voacap_pred: Dict, tolerance: Dict) -> Dict:
+def validate_prediction(pred: Dict) -> Dict:
     """
-    Compare local prediction against VOACAP online
+    Validate that a local prediction produced reasonable results
 
-    Returns dict with comparison results and flags for significant differences
+    Returns dict with validation results
     """
-    comparison = {
-        'match': True,
-        'differences': [],
+    validation = {
+        'valid': True,
+        'issues': [],
         'metrics': {}
     }
 
-    # Compare reliability
-    local_rel = local_pred.get('reliability', 0)
-    voacap_rel = voacap_pred.get('reliability', 0)
-    rel_diff = abs(local_rel - voacap_rel)
+    # Check for error conditions
+    snr = pred.get('snr', -999)
+    mode = pred.get('mode', '')
+    reliability = pred.get('reliability', 0)
+    muf = pred.get('muf', 0)
 
-    comparison['metrics']['reliability'] = {
-        'local': local_rel,
-        'voacap': voacap_rel,
-        'diff': rel_diff,
-        'match': rel_diff <= tolerance['reliability']
+    # Detect if prediction failed
+    if snr <= -900 or mode in ['ERROR', 'N/A']:
+        validation['valid'] = False
+        validation['issues'].append("Prediction failed or returned error")
+        return validation
+
+    # Sanity check values
+    if not (0 <= reliability <= 100):
+        validation['valid'] = False
+        validation['issues'].append(f"Reliability out of range: {reliability}%")
+
+    if not (-50 <= snr <= 100):
+        validation['valid'] = False
+        validation['issues'].append(f"SNR out of reasonable range: {snr:.1f}dB")
+
+    if muf < 0 or muf > 100:
+        validation['valid'] = False
+        validation['issues'].append(f"MUF out of reasonable range: {muf:.1f}MHz")
+
+    validation['metrics'] = {
+        'reliability': reliability,
+        'snr': snr,
+        'muf': muf,
+        'mode': mode,
+        'hops': pred.get('hops', 0)
     }
 
-    if rel_diff > tolerance['reliability']:
-        comparison['match'] = False
-        comparison['differences'].append(
-            f"Reliability: local={local_rel:.1f}% vs VOACAP={voacap_rel:.1f}% (diff={rel_diff:.1f}%)"
-        )
-
-    # Compare SNR
-    local_snr = local_pred.get('snr', -999)
-    voacap_snr = voacap_pred.get('snr_db', -999)
-
-    # Only compare if both are valid
-    if local_snr > -900 and voacap_snr > -900:
-        snr_diff = abs(local_snr - voacap_snr)
-
-        comparison['metrics']['snr'] = {
-            'local': local_snr,
-            'voacap': voacap_snr,
-            'diff': snr_diff,
-            'match': snr_diff <= tolerance['snr']
-        }
-
-        if snr_diff > tolerance['snr']:
-            comparison['match'] = False
-            comparison['differences'].append(
-                f"SNR: local={local_snr:.1f}dB vs VOACAP={voacap_snr:.1f}dB (diff={snr_diff:.1f}dB)"
-            )
-
-    # Compare MUF (if available)
-    local_muf = local_pred.get('muf', 0)
-    voacap_muf = voacap_pred.get('muf', 0)
-
-    if local_muf > 0 and voacap_muf > 0:
-        muf_diff = abs(local_muf - voacap_muf)
-
-        comparison['metrics']['muf'] = {
-            'local': local_muf,
-            'voacap': voacap_muf,
-            'diff': muf_diff,
-            'match': muf_diff <= tolerance['muf']
-        }
-
-        if muf_diff > tolerance['muf']:
-            comparison['match'] = False
-            comparison['differences'].append(
-                f"MUF: local={local_muf:.1f}MHz vs VOACAP={voacap_muf:.1f}MHz (diff={muf_diff:.1f}MHz)"
-            )
-
-    return comparison
+    return validation
 
 
 def run_local_prediction(engine: PredictionEngine, rx_lat: float, rx_lon: float,
@@ -186,28 +162,6 @@ def run_local_prediction(engine: PredictionEngine, rx_lat: float, rx_lon: float,
         return {'reliability': 0, 'snr': -999, 'muf': 0, 'mode': 'ERROR', 'hops': 0, 'elevation': 0}
 
 
-def run_voacap_online(api: ProppyNetAPI, rx_lat: float, rx_lon: float,
-                     freq_mhz: float, utc_hour: int, month: int, ssn: int) -> Dict:
-    """Run VOACAP online prediction via proppy.net"""
-
-    try:
-        result = api.get_prediction(
-            rx_lat=rx_lat,
-            rx_lon=rx_lon,
-            freq_mhz=freq_mhz,
-            hour_utc=utc_hour,
-            month=month,
-            ssn=ssn
-        )
-
-        if result:
-            return result
-        else:
-            return {'reliability': 0, 'snr_db': -999, 'muf': 0, 'quality': 'ERROR'}
-
-    except Exception as e:
-        print(f"    [ERROR] VOACAP online failed: {e}")
-        return {'reliability': 0, 'snr_db': -999, 'muf': 0, 'quality': 'ERROR'}
 
 
 # =============================================================================
@@ -219,7 +173,10 @@ def validate_predictions(test_regions: List[str] = None,
                         utc_hours: List[int] = None,
                         verbose: bool = True):
     """
-    Run comprehensive validation comparing local vs VOACAP online
+    Run comprehensive validation of local DVOACAP engine
+
+    Tests that predictions are generated successfully and produce
+    reasonable values across representative propagation paths.
 
     Args:
         test_regions: List of region codes to test (default: all)
@@ -236,40 +193,29 @@ def validate_predictions(test_regions: List[str] = None,
     if utc_hours is None:
         utc_hours = [datetime.now(timezone.utc).hour]
 
-    # Tolerance thresholds
-    tolerance = {
-        'reliability': 15.0,  # ±15% for reliability
-        'snr': 5.0,           # ±5 dB for SNR
-        'muf': 2.0            # ±2 MHz for MUF
-    }
-
     print("=" * 80)
-    print("DVOACAP VALIDATION - Compare Local vs VOACAP Online")
+    print("DVOACAP VALIDATION - Local Engine Functionality Test")
     print("=" * 80)
     print()
     print(f"Station: {MY_QTH['call']} @ {MY_QTH['lat']:.3f}°N, {MY_QTH['lon']:.3f}°W")
     print(f"Power: {MY_QTH['power']}W")
-    print(f"Tolerance: ±{tolerance['reliability']:.0f}% reliability, ±{tolerance['snr']:.0f}dB SNR, ±{tolerance['muf']:.0f}MHz MUF")
     print()
-    print(f"Testing: {len(test_regions)} regions × {len(test_bands_list)} bands × {len(utc_hours)} hours = {len(test_regions) * len(test_bands_list) * len(utc_hours)} comparisons")
+    print(f"Testing: {len(test_regions)} regions × {len(test_bands_list)} bands × {len(utc_hours)} hours = {len(test_regions) * len(test_bands_list) * len(utc_hours)} predictions")
     print()
 
-    # Initialize engines
-    print("[1/3] Initializing local DVOACAP engine...")
+    # Initialize engine
+    print("[1/2] Initializing local DVOACAP engine...")
     engine = PredictionEngine()
     now = datetime.now(timezone.utc)
-    engine.params.ssn = 100.0  # Use fixed SSN for comparison
+    engine.params.ssn = 100.0
     engine.params.month = now.month
     engine.params.tx_power = MY_QTH['power']
     engine.params.tx_location = GeoPoint.from_degrees(MY_QTH['lat'], MY_QTH['lon'])
     engine.params.min_angle = np.deg2rad(3.0)
     print(f"      Configuration: Month={now.month}, SSN=100, Power={MY_QTH['power']}W")
-
-    print("[2/3] Initializing VOACAP online API (proppy.net)...")
-    api = ProppyNetAPI(tx_lat=MY_QTH['lat'], tx_lon=MY_QTH['lon'], tx_power=MY_QTH['power'])
     print("      Ready")
 
-    print("[3/3] Running comparisons...")
+    print("[2/2] Running predictions...")
     print()
 
     # Track results
@@ -301,32 +247,23 @@ def validate_predictions(test_regions: List[str] = None,
                     engine, region['rx_lat'], region['rx_lon'], freq_mhz, utc_hour
                 )
 
-                # Wait to be nice to proppy.net
-                time.sleep(2)
-
-                # Run VOACAP online
-                voacap_result = run_voacap_online(
-                    api, region['rx_lat'], region['rx_lon'], freq_mhz, utc_hour, now.month, 100
-                )
-
-                # Compare
-                comparison = compare_predictions(local_result, voacap_result, tolerance)
+                # Validate result
+                validation = validate_prediction(local_result)
 
                 total_tests += 1
 
-                if comparison['match']:
-                    passed_tests += 1
-                    print("✓ MATCH")
-                    if verbose:
-                        print(f"        Local:  Rel={local_result['reliability']:5.1f}% SNR={local_result['snr']:6.1f}dB Mode={local_result['mode']}")
-                        print(f"        VOACAP: Rel={voacap_result['reliability']:5.1f}% SNR={voacap_result.get('snr_db', -999):6.1f}dB")
-                else:
+                if not validation['valid']:
                     failed_tests += 1
-                    print("✗ MISMATCH")
-                    print(f"        Local:  Rel={local_result['reliability']:5.1f}% SNR={local_result['snr']:6.1f}dB MUF={local_result['muf']:5.1f}MHz Mode={local_result['mode']}")
-                    print(f"        VOACAP: Rel={voacap_result['reliability']:5.1f}% SNR={voacap_result.get('snr_db', -999):6.1f}dB MUF={voacap_result.get('muf', 0):5.1f}MHz")
-                    for diff in comparison['differences']:
-                        print(f"        → {diff}")
+                    print("✗ FAILED")
+                    for issue in validation['issues']:
+                        print(f"        → {issue}")
+                    if verbose:
+                        print(f"        Rel={local_result.get('reliability', 0):5.1f}% SNR={local_result.get('snr', -999):6.1f}dB Mode={local_result.get('mode', 'N/A')}")
+                else:
+                    passed_tests += 1
+                    print("✓ PASS")
+                    if verbose:
+                        print(f"        Rel={local_result['reliability']:5.1f}% SNR={local_result['snr']:6.1f}dB MUF={local_result['muf']:5.1f}MHz Mode={local_result['mode']} ({local_result['hops']} hop)")
 
                 # Store result
                 all_results.append({
@@ -334,10 +271,9 @@ def validate_predictions(test_regions: List[str] = None,
                     'band': band_name,
                     'freq_mhz': freq_mhz,
                     'utc_hour': utc_hour,
-                    'local': local_result,
-                    'voacap': voacap_result,
-                    'comparison': comparison,
-                    'match': comparison['match']
+                    'prediction': local_result,
+                    'validation': validation,
+                    'passed': validation['valid']
                 })
 
     # Summary
@@ -355,20 +291,10 @@ def validate_predictions(test_regions: List[str] = None,
         print("FAILURE ANALYSIS:")
         print()
 
-        # By metric
-        rel_failures = sum(1 for r in all_results if not r['comparison']['metrics'].get('reliability', {}).get('match', True))
-        snr_failures = sum(1 for r in all_results if not r['comparison']['metrics'].get('snr', {}).get('match', True))
-        muf_failures = sum(1 for r in all_results if not r['comparison']['metrics'].get('muf', {}).get('match', True))
-
-        print(f"  Reliability mismatches: {rel_failures}")
-        print(f"  SNR mismatches:         {snr_failures}")
-        print(f"  MUF mismatches:         {muf_failures}")
-        print()
-
         # By band
         print("  By band:")
         for band in test_bands_list:
-            band_failures = sum(1 for r in all_results if r['band'] == band and not r['match'])
+            band_failures = sum(1 for r in all_results if r['band'] == band and not r['passed'])
             band_total = sum(1 for r in all_results if r['band'] == band)
             if band_total > 0:
                 print(f"    {band}: {band_failures}/{band_total} failures ({100*band_failures/band_total:.0f}%)")
@@ -377,10 +303,21 @@ def validate_predictions(test_regions: List[str] = None,
         # By region
         print("  By region:")
         for region_code in test_regions:
-            region_failures = sum(1 for r in all_results if r['region'] == region_code and not r['match'])
+            region_failures = sum(1 for r in all_results if r['region'] == region_code and not r['passed'])
             region_total = sum(1 for r in all_results if r['region'] == region_code)
             if region_total > 0:
                 print(f"    {region_code}: {region_failures}/{region_total} failures ({100*region_failures/region_total:.0f}%)")
+
+        # Common issues
+        print()
+        print("  Common issues:")
+        all_issues = {}
+        for r in all_results:
+            if not r['passed']:
+                for issue in r['validation']['issues']:
+                    all_issues[issue] = all_issues.get(issue, 0) + 1
+        for issue, count in sorted(all_issues.items(), key=lambda x: x[1], reverse=True):
+            print(f"    {issue}: {count} occurrences")
 
     # Save detailed results
     output_file = Path(__file__).parent / 'validation_results.json'
@@ -389,8 +326,8 @@ def validate_predictions(test_regions: List[str] = None,
         results_for_json = []
         for r in all_results:
             r_copy = r.copy()
-            if 'raw' in r_copy['local']:
-                del r_copy['local']['raw']
+            if 'raw' in r_copy.get('prediction', {}):
+                del r_copy['prediction']['raw']
             results_for_json.append(r_copy)
 
         json.dump({
@@ -401,7 +338,6 @@ def validate_predictions(test_regions: List[str] = None,
                 'failed': failed_tests,
                 'pass_rate': 100 * passed_tests / total_tests if total_tests > 0 else 0
             },
-            'tolerance': tolerance,
             'results': results_for_json
         }, f, indent=2)
 
@@ -486,39 +422,9 @@ def debug_single_prediction(region_code: str, band: str, utc_hour: int = None):
         import traceback
         traceback.print_exc()
 
-    # Now get VOACAP online
-    print()
-    print("[VOACAP ONLINE (proppy.net)]")
-    print()
-
-    api = ProppyNetAPI(tx_lat=MY_QTH['lat'], tx_lon=MY_QTH['lon'], tx_power=MY_QTH['power'])
-
-    result = api.get_prediction(
-        rx_lat=region['rx_lat'],
-        rx_lon=region['rx_lon'],
-        freq_mhz=freq_mhz,
-        hour_utc=utc_hour,
-        month=now.month,
-        ssn=100
-    )
-
-    if result:
-        print(f"  Reliability:   {result['reliability']}%")
-        print(f"  SNR:           {result.get('snr_db', 'N/A')} dB")
-        print(f"  MUF:           {result.get('muf', 'N/A')} MHz")
-        print(f"  Quality:       {result.get('quality', 'N/A')}")
-        print()
-        print("  Raw response (first 500 chars):")
-        print("  " + "-" * 76)
-        raw = result.get('raw_response', '')
-        for line in raw[:500].split('\n'):
-            print(f"  {line}")
-        print()
-    else:
-        print("  FAILED - Could not get VOACAP online prediction")
-        print()
-
     print("=" * 80)
+    print()
+    print("Note: Online VOACAP API comparison removed as proppy.net is no longer operational.")
 
 
 # =============================================================================
@@ -528,7 +434,7 @@ def debug_single_prediction(region_code: str, band: str, utc_hour: int = None):
 if __name__ == '__main__':
     import argparse
 
-    parser = argparse.ArgumentParser(description='Validate DVOACAP predictions against VOACAP online')
+    parser = argparse.ArgumentParser(description='Validate DVOACAP local engine functionality')
     parser.add_argument('--regions', nargs='+', choices=list(TEST_CASES.keys()),
                        help='Regions to test (default: all)')
     parser.add_argument('--bands', nargs='+', choices=list(TEST_BANDS.keys()),
@@ -536,7 +442,7 @@ if __name__ == '__main__':
     parser.add_argument('--hours', nargs='+', type=int,
                        help='UTC hours to test (default: current hour)')
     parser.add_argument('--debug', nargs=2, metavar=('REGION', 'BAND'),
-                       help='Debug single prediction in detail')
+                       help='Debug single prediction in detail (local engine only)')
     parser.add_argument('--quiet', action='store_true',
                        help='Less verbose output')
 

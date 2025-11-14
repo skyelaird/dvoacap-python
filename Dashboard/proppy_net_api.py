@@ -2,6 +2,19 @@
 """
 Proppy.net API Integration - Professional VOACAP Predictions
 Uses the proppy.net web service by G4FUI for accurate HF propagation predictions
+
+⚠️ DEPRECATED - This module is no longer functional ⚠️
+
+As of 2025, proppy.net is no longer operational (domain for sale).
+This code is preserved for reference only.
+
+Alternative VOACAP services:
+- voacap.com - Active but prohibits automated API access without permission
+- soundbytes.asia/proppy/ - Active web interface (ITU P.533-14), no documented API
+- Local VOACAP engines - Use DVOACAP-Python local prediction engine instead
+
+This repository already has a fully functional local VOACAP engine.
+See validate_predictions.py for local engine validation.
 """
 
 import requests
