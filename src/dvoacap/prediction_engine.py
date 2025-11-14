@@ -679,9 +679,11 @@ class PredictionEngine:
             # BUG FIX: Use fixed height of 100 km for D-layer absorption instead
             # of variable reflection height to avoid excessive absorption
             h_eff = 100.0
-            adx = (self._adj_ccir252_a + self._adj_ccir252_b *
-                   np.log(max(mode.ref.vert_freq / self._current_profile.e.fo,
-                             self._adj_de_loss)))
+            # CCIR 252 adjustment for E-layer modes (ADX term)
+            # Ensure argument to ln() is >= 1.0 to prevent negative ADX
+            xv = max(mode.ref.vert_freq / self._current_profile.e.fo, self._adj_de_loss)
+            xv = max(1.0, xv)  # Clamp to 1.0 minimum to prevent negative logarithm
+            adx = self._adj_ccir252_a + self._adj_ccir252_b * np.log(xv)
         else:
             # F layer modes
             nsqr = 10.2

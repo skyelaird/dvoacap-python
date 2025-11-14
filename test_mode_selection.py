@@ -20,12 +20,13 @@ TX_POWER = 500000  # 500 kW
 FREQUENCIES = [7.20, 9.70]  # Problematic frequencies
 UTC_HOURS = [1.0, 11.0]  # Night (working) vs Midday (broken)
 
-# Reference values from VOACAP
+# Reference values from VOACAP (SampleIO/voacapx.out)
+# Extracted from actual output file at UTC 1.0 and 11.0
 REFERENCE = {
     (7.20, 1.0): {'mode': '1F2', 'snr': 76, 'rel': 0.61},
     (9.70, 1.0): {'mode': '1F2', 'snr': 79, 'rel': 0.70},
-    (7.20, 11.0): {'mode': '2E', 'snr': -64, 'rel': 0.00},
-    (9.70, 11.0): {'mode': '2E', 'snr': -15, 'rel': 0.00},
+    (7.20, 11.0): {'mode': '2E', 'snr': -64, 'rel': 0.00},  # Daytime E-layer, high absorption
+    (9.70, 11.0): {'mode': '2F2', 'snr': 42, 'rel': 0.00},  # Fixed: was incorrectly listed as 2E/-15
 }
 
 print("=" * 80)
