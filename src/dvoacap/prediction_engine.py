@@ -674,7 +674,9 @@ class PredictionEngine:
                 nsqr = self.XNUZ * np.exp(
                     -2 * (1 + 3 * (mode.ref.true_height - 70) / 18) / self.HNU
                 )
-            h_eff = min(100.0, mode.ref.true_height)
+            # BUG FIX: Use fixed height of 100 km for D-layer absorption instead
+            # of variable reflection height to avoid excessive absorption
+            h_eff = 100.0
             adx = (self._adj_ccir252_a + self._adj_ccir252_b *
                    np.log(max(mode.ref.vert_freq / self._current_profile.e.fo,
                              self._adj_de_loss)))
