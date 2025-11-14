@@ -731,6 +731,22 @@ class PredictionEngine:
             mode.signal.tx_gain_db
         )
 
+        # Debug loss components
+        import sys
+        debug_loss = False  # Set to True to debug loss calculations
+        if debug_loss:
+            print(f"\n=== LOSS CALCULATION DEBUG (freq={frequency:.2f} MHz) ===", file=sys.stderr)
+            print(f"Free space loss: {mode.free_space_loss:.2f} dB", file=sys.stderr)
+            print(f"Absorption loss: {mode.absorption_loss:.2f} dB × {hop_count} hops = {hop_count * mode.absorption_loss:.2f} dB", file=sys.stderr)
+            print(f"Deviation term: {mode.deviation_term:.2f} dB × {hop_count} hops = {hop_count * mode.deviation_term:.2f} dB", file=sys.stderr)
+            print(f"Ground loss: {mode.ground_loss:.2f} dB × {hop_count-1} = {mode.ground_loss * (hop_count-1):.2f} dB", file=sys.stderr)
+            print(f"Obscuration: {mode.obscuration:.2f} dB × {hop_count2} = {hop_count2 * mode.obscuration:.2f} dB", file=sys.stderr)
+            print(f"Auroral adj: {self._adj_auroral:.2f} dB", file=sys.stderr)
+            print(f"TX gain: -{mode.signal.tx_gain_db:.2f} dB", file=sys.stderr)
+            print(f"RX gain: -{mode.signal.rx_gain_db:.2f} dB", file=sys.stderr)
+            print(f"TOTAL LOSS: {mode.signal.total_loss_db:.2f} dB", file=sys.stderr)
+            print(f"=== END LOSS DEBUG ===\n", file=sys.stderr)
+
         # MUF probability for this mode
         from .muf_calculator import calc_muf_prob
         mode_muf_elev = self._calc_elevation_angle(mode.hop_dist, muf_info.ref.virt_height)
@@ -826,6 +842,20 @@ class PredictionEngine:
 
     def _calc_reliability(self, signal: SignalInfo, clamp: bool = False):
         """Calculate circuit reliability."""
+        # Debug logging
+        import sys
+        debug = False  # Enable detailed logging for debugging
+
+        if debug:
+            print(f"\n=== RELIABILITY CALCULATION DEBUG ===", file=sys.stderr)
+            print(f"Input signal.power_dbw: {signal.power_dbw:.2f} dBW", file=sys.stderr)
+            print(f"Input signal.snr_db: {signal.snr_db:.2f} dB", file=sys.stderr)
+            print(f"Input signal.power10: {signal.power10:.2f} (lower decile deviation)", file=sys.stderr)
+            print(f"Input signal.power90: {signal.power90:.2f} (upper decile deviation)", file=sys.stderr)
+            print(f"Noise upper (high): {self.noise_model.combined_noise.value.upper:.2f}", file=sys.stderr)
+            print(f"Noise lower (low): {self.noise_model.combined_noise.value.lower:.2f}", file=sys.stderr)
+            print(f"Required SNR: {self.params.required_snr:.2f} dB", file=sys.stderr)
+
         # SNR distribution variables
         signal.snr10 = np.sqrt(
             self.noise_model.combined_noise.value.upper ** 2 + signal.power10 ** 2
@@ -834,18 +864,36 @@ class PredictionEngine:
             self.noise_model.combined_noise.value.lower ** 2 + signal.power90 ** 2
         )
 
+        if debug:
+            print(f"\nCalculated snr10 (10th percentile, worst): {signal.snr10:.2f}", file=sys.stderr)
+            print(f"Calculated snr90 (90th percentile, best): {signal.snr90:.2f}", file=sys.stderr)
+
         if clamp:
             signal.snr10 = max(0.2, signal.snr10)
             signal.snr90 = min(30.0, signal.snr90)
+            if debug:
+                print(f"After clamping snr10: {signal.snr10:.2f}", file=sys.stderr)
+                print(f"After clamping snr90: {signal.snr90:.2f}", file=sys.stderr)
 
         # Reliability calculation
         z = self.params.required_snr - signal.snr_db
+        if debug:
+            print(f"\nZ calculation: {self.params.required_snr:.2f} - {signal.snr_db:.2f} = {z:.2f}", file=sys.stderr)
+
         if z <= 0:
             z = z / (signal.snr10 / self.NORM_DECILE)
+            if debug:
+                print(f"Z <= 0: z = {z:.4f} / ({signal.snr10:.2f} / {self.NORM_DECILE:.2f}) = {z:.4f}", file=sys.stderr)
         else:
             z = z / (signal.snr90 / self.NORM_DECILE)
+            if debug:
+                print(f"Z > 0: z = {z:.4f} / ({signal.snr90:.2f} / {self.NORM_DECILE:.2f}) = {z:.4f}", file=sys.stderr)
 
         signal.reliability = 1.0 - self._cumulative_normal(z)
+
+        if debug:
+            print(f"\nFinal reliability: {signal.reliability:.4f} ({signal.reliability*100:.2f}%)", file=sys.stderr)
+            print(f"=== END DEBUG ===\n", file=sys.stderr)
 
     def _find_best_mode(self) -> ModeInfo:
         """Find best propagation mode based on reliability, hops, and SNR."""
