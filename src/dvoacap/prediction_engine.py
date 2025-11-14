@@ -100,11 +100,14 @@ class Prediction:
 
     def get_mode_name(self, distance_rad: float) -> str:
         """Get mode name string (e.g., '2F2', 'F2F1')."""
+        # mode_tx/mode_rx can be either enum or string
+        tx_name = self.mode_tx.name if hasattr(self.mode_tx, 'name') else str(self.mode_tx)
+        rx_name = self.mode_rx.name if hasattr(self.mode_rx, 'name') else str(self.mode_rx)
+
         if distance_rad < 7000.0 / 6370.0:  # < 7000 km
-            layer_name = self.mode_tx.name
-            return f"{self.hop_count}{layer_name}"
+            return f"{self.hop_count}{tx_name}"
         else:
-            return f"{self.mode_tx.name}{self.mode_rx.name}"
+            return f"{tx_name}{rx_name}"
 
 
 @dataclass
@@ -606,9 +609,9 @@ class PredictionEngine:
         # Find all rays for all hop counts
         for hop_count in range(hops_begin, hops_end + 1):
             hop_dist = self.path.dist / hop_count
-            modes = reflectrix.find_modes(hop_dist, hop_count)
-            if modes:
-                self._modes.extend(modes)
+            reflectrix.find_modes(hop_dist, hop_count)
+            if reflectrix.modes:
+                self._modes.extend(reflectrix.modes)
 
         # Compute signal strength for each mode
         for mode in self._modes:
@@ -632,20 +635,24 @@ class PredictionEngine:
 
     def _compute_signal(self, mode: ModeInfo, frequency: float):
         """Compute signal parameters for a mode (REGMOD)."""
-        layer_name = mode.layer.name
+        # Initialize signal info if not already present
+        if mode.signal is None:
+            mode.signal = SignalInfo()
+
+        layer_name = mode.layer
         muf_info = self.circuit_muf.muf_info[layer_name]
 
         # Absorption parameters
         ac = 677.2 * self._absorption_index
         bc = (frequency + self._current_profile.gyro_freq) ** 1.98
-        hop_count = mode.hop_count
+        hop_count = mode.hop_cnt
         hop_count2 = min(2, hop_count)
 
         # Path length
         path_length = hop_count * self._hop_length_3d(
-            mode.reflection.elevation,
-            mode.hop_distance,
-            mode.reflection.virt_height
+            mode.ref.elevation,
+            mode.hop_dist,
+            mode.ref.virt_height
         )
 
         # Time delay
@@ -655,17 +662,17 @@ class PredictionEngine:
         mode.free_space_loss = 32.45 + 2 * self._to_db(path_length * frequency)
 
         # Absorption loss
-        if mode.reflection.vert_freq <= self._current_profile.e.fo:
+        if mode.ref.vert_freq <= self._current_profile.e.fo:
             # D-E mode
-            if mode.reflection.true_height >= self.HTLOSS:
+            if mode.ref.true_height >= self.HTLOSS:
                 nsqr = 10.2
             else:
                 nsqr = self.XNUZ * np.exp(
-                    -2 * (1 + 3 * (mode.reflection.true_height - 70) / 18) / self.HNU
+                    -2 * (1 + 3 * (mode.ref.true_height - 70) / 18) / self.HNU
                 )
-            h_eff = min(100.0, mode.reflection.true_height)
+            h_eff = min(100.0, mode.ref.true_height)
             adx = (self._adj_ccir252_a + self._adj_ccir252_b *
-                   np.log(max(mode.reflection.vert_freq / self._current_profile.e.fo,
+                   np.log(max(mode.ref.vert_freq / self._current_profile.e.fo,
                              self._adj_de_loss)))
         else:
             # F layer modes
@@ -675,20 +682,20 @@ class PredictionEngine:
 
         mode.absorption_loss = (
             ac / (bc + nsqr) /
-            self._cos_of_incidence(mode.reflection.elevation, h_eff)
+            self._cos_of_incidence(mode.ref.elevation, h_eff)
         )
 
         # Ground reflection loss
         mode.ground_loss = sum(
-            self._compute_ground_reflection_loss(i, mode.reflection.elevation, frequency)
+            self._compute_ground_reflection_loss(i, mode.ref.elevation, frequency)
             for i in range(len(self._control_points))
         ) / len(self._control_points)
 
         # Deviation term
         mode.deviation_term = (
-            mode.reflection.dev_loss / (bc + nsqr) *
-            ((mode.reflection.vert_freq + self._current_profile.gyro_freq) ** 1.98 + nsqr) /
-            self._cos_of_incidence(mode.reflection.elevation, mode.reflection.virt_height) +
+            mode.ref.dev_loss / (bc + nsqr) *
+            ((mode.ref.vert_freq + self._current_profile.gyro_freq) ** 1.98 + nsqr) /
+            self._cos_of_incidence(mode.ref.elevation, mode.ref.virt_height) +
             adx
         )
 
@@ -697,10 +704,10 @@ class PredictionEngine:
 
         # Antenna gains
         mode.signal.tx_gain_db = self.tx_antennas.current_antenna.get_gain_db(
-            mode.reflection.elevation
+            mode.ref.elevation
         )
         mode.signal.rx_gain_db = self.rx_antennas.current_antenna.get_gain_db(
-            mode.reflection.elevation
+            mode.ref.elevation
         )
 
         # Total transmission loss
@@ -716,9 +723,9 @@ class PredictionEngine:
 
         # MUF probability for this mode
         from .muf_calculator import calc_muf_prob
-        mode_muf_elev = self._calc_elevation_angle(mode.hop_distance, muf_info.reflection.virt_height)
-        mode_muf = (muf_info.reflection.vert_freq /
-                   self._cos_of_incidence(mode_muf_elev, muf_info.reflection.true_height))
+        mode_muf_elev = self._calc_elevation_angle(mode.hop_dist, muf_info.ref.virt_height)
+        mode_muf = (muf_info.ref.vert_freq /
+                   self._cos_of_incidence(mode_muf_elev, muf_info.ref.true_height))
         mode.signal.muf_day = calc_muf_prob(
             frequency, mode_muf, muf_info.muf,
             muf_info.sig_lo, muf_info.sig_hi
@@ -729,14 +736,14 @@ class PredictionEngine:
             mode.signal.total_loss_db += -max(-24.0, 8.0 * np.log10(mode.signal.muf_day) + 32.0)
 
         # Additional losses
-        sec = 1.0 / self._cos_of_incidence(mode.reflection.elevation, mode.reflection.true_height)
-        xmuf = muf_info.reflection.vert_freq * sec
+        sec = 1.0 / self._cos_of_incidence(mode.ref.elevation, mode.ref.true_height)
+        xmuf = muf_info.ref.vert_freq * sec
         xls = calc_muf_prob(frequency, xmuf, muf_info.muf, muf_info.sig_lo, muf_info.sig_hi)
         xls = -self._to_db(max(1e-6, xls)) * sec
         mode.signal.total_loss_db += hop_count * xls
 
         # Deciles
-        cpr = muf_info.reflection.vert_freq / muf_info.muf
+        cpr = muf_info.ref.vert_freq / muf_info.muf
         xls_lo = calc_muf_prob(
             frequency, muf_info.fot * sec * cpr, muf_info.fot,
             muf_info.sig_lo, muf_info.sig_hi
@@ -775,7 +782,7 @@ class PredictionEngine:
 
         # Calculate reliability for each mode
         for mode in self._modes:
-            if mode.reflection.virt_height <= 70:
+            if mode.ref.virt_height <= 70:
                 mode.signal.reliability = 0.001
             else:
                 self._calc_reliability(mode.signal)
@@ -784,9 +791,9 @@ class PredictionEngine:
         self._best_mode = self._find_best_mode()
 
         # Fill prediction from best mode
-        prediction.tx_elevation = self._best_mode.reflection.elevation
-        prediction.virt_height = self._best_mode.reflection.virt_height
-        prediction.hop_count = self._best_mode.hop_count
+        prediction.tx_elevation = self._best_mode.ref.elevation
+        prediction.virt_height = self._best_mode.ref.virt_height
+        prediction.hop_count = self._best_mode.hop_cnt
         prediction.signal = self._best_mode.signal
         prediction.noise_dbw = self.noise_model.combined_noise.value.median
         prediction.mode_tx = self._best_mode.layer
@@ -839,9 +846,9 @@ class PredictionEngine:
                 best = mode
             elif mode.signal.reliability < (best.signal.reliability - 0.05):
                 continue
-            elif mode.hop_count < best.hop_count:
+            elif mode.hop_cnt < best.hop_cnt:
                 best = mode
-            elif mode.hop_count > best.hop_count:
+            elif mode.hop_cnt > best.hop_cnt:
                 continue
             elif mode.signal.snr_db > best.signal.snr_db:
                 best = mode
@@ -944,7 +951,7 @@ class PredictionEngine:
         max_prob = 0.001
 
         for mode in self._modes:
-            if mode.reflection.virt_height > 70:
+            if mode.ref.virt_height > 70:
                 if self.params.required_reliability >= 0.5:
                     signal_pwr = tmx * mode.signal.power10 / self.NORM_DECILE
                 else:
