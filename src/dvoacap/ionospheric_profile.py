@@ -746,9 +746,9 @@ if __name__ == "__main__":
         test_freq = 10.0  # MHz
         angles = profile.compute_penetration_angles(test_freq)
         print(f"✓ Penetration angles at {test_freq} MHz:")
-        print(f"  E layer: {angles[0] * DinR:.1f}°")
-        print(f"  F1 layer: {angles[1] * DinR:.1f}°")
-        print(f"  F2 layer: {angles[2] * DinR:.1f}°")
+        print(f"  E layer: {angles['E'] * DinR:.1f}°")
+        print(f"  F1 layer: {angles['F1'] * DinR:.1f}°")
+        print(f"  F2 layer: {angles['F2'] * DinR:.1f}°")
 
         print("\nAll basic tests passed!")
 

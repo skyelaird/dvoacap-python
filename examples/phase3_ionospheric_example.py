@@ -168,7 +168,9 @@ def main():
     test_freq = 15.0  # MHz
     if test_freq <= pnt.f2.fo:
         angles = profile.compute_penetration_angles(test_freq)
-        e_angle, f1_angle, f2_angle = angles
+        e_angle = angles['E']
+        f1_angle = angles['F1']
+        f2_angle = angles['F2']
 
         print(f"\n   At {test_freq:.1f} MHz:")
         print(f"     E layer:  Maximum elevation = {e_angle * DinR:.1f}°")
