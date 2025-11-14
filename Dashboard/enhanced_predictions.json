@@ -16,10 +16,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 146.1,
+              "snr_db": 145.1,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -30,10 +30,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 149.3,
+              "snr_db": 154.2,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -44,10 +44,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 152.6,
+              "snr_db": 162.2,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -58,10 +58,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 156.9,
+              "snr_db": 166.2,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -72,10 +72,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 161.7,
+              "snr_db": 168.3,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -86,10 +86,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 167.8,
+              "snr_db": 170.4,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         },
@@ -100,10 +100,10 @@
               "name": "Africa",
               "quality": "GOOD",
               "reliability": 100.0,
-              "snr_db": 171.5,
+              "snr_db": 172.0,
               "distance_km": 9553,
               "bearing": 94,
-              "muf": 35.81
+              "muf": 14.28
             }
           }
         }
