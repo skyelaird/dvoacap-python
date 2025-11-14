@@ -215,14 +215,23 @@ def test_compute_penetration_angles():
     # Test at frequency above all layers
     freq = 10.0
     angles = profile.compute_penetration_angles(freq)
-    e_angle, f1_angle, f2_angle = angles
+
+    # Function returns a dictionary
+    assert isinstance(angles, dict)
+    assert 'E' in angles
+    assert 'F1' in angles
+    assert 'F2' in angles
+
+    e_angle = angles['E']
+    f1_angle = angles['F1']
+    f2_angle = angles['F2']
 
     # All angles should be valid
     assert 0 <= e_angle <= math.pi/2
     assert 0 <= f1_angle <= math.pi/2
     assert 0 <= f2_angle <= math.pi/2
 
-    # Angles should increase: E < F1 < F2
+    # Angles should increase: E <= F1 <= F2
     assert e_angle <= f1_angle
     assert f1_angle <= f2_angle
 
