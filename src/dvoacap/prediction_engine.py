@@ -1077,7 +1077,13 @@ class PredictionEngine:
         """Calculate cosine of incidence angle."""
         r_ratio = height / PredictionEngine.EARTH_RADIUS
         sin_elev = np.sin(elevation)
-        return np.sqrt(1.0 - (1.0 + r_ratio) ** 2 * (1.0 - sin_elev ** 2))
+        # Guard against negative values under sqrt
+        value = 1.0 - (1.0 + r_ratio) ** 2 * (1.0 - sin_elev ** 2)
+        if value < 0:
+            # Clamp to prevent division issues (sec = 1/cos will be max ~33)
+            # This happens when ray geometry is at the edge of viability
+            return 0.03
+        return np.sqrt(value)
 
     @staticmethod
     def _calc_elevation_angle(distance: float, virt_height: float) -> float:
@@ -1110,13 +1116,12 @@ class PredictionEngine:
         v = np.sqrt(u)
         asxv = np.arcsin(x / v) if v != 0 else 0
 
-        cv = np.sqrt(
-            rho ** 2 + u * s - 2.0 * rho * u * r * np.cos(a + 2.0 * asxv)
-        ) / (rho + u * r + 2.0 * np.sqrt(rho) * v * q * np.cos(0.5 * a + asxv))
+        # Guard against negative values under sqrt
+        cv_arg = rho ** 2 + u * s - 2.0 * rho * u * r * np.cos(a + 2.0 * asxv)
+        cv = np.sqrt(max(0.0, cv_arg)) / (rho + u * r + 2.0 * np.sqrt(rho) * v * q * np.cos(0.5 * a + asxv))
 
-        ch = np.sqrt(
-            rho ** 2 + s - 2.0 * rho * r * np.cos(a)
-        ) / (rho + r + 2.0 * np.sqrt(rho) * q * np.cos(0.5 * a))
+        ch_arg = rho ** 2 + s - 2.0 * rho * r * np.cos(a)
+        ch = np.sqrt(max(0.0, ch_arg)) / (rho + r + 2.0 * np.sqrt(rho) * q * np.cos(0.5 * a))
 
         return abs(4.3429 * np.log(0.5 * (ch ** 2 + cv ** 2)))
 

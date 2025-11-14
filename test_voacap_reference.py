@@ -115,13 +115,19 @@ class VoacapReferenceParser:
                            'TGAIN', 'RGAIN', 'SNRxx']
 
             for metric in metric_names:
-                pattern = re.escape(metric) + r'\s+([\d.\s-]+)'
-                match = re.search(pattern, block)
+                # Pattern should match values BEFORE the metric name on same line
+                # Format: "  value1  value2  value3  -  - METRIC_NAME"
+                pattern = r'^\s*([\d.\sEFef-]+?)\s+' + re.escape(metric) + r'\s*$'
+                match = re.search(pattern, block, re.MULTILINE)
                 if match:
                     values_str = match.group(1).split()
                     if metric == 'MODE':
-                        # MODE is text like '1F2', keep as strings
-                        prediction['metrics'][metric] = [v if v != '-' else None for v in values_str]
+                        # MODE is text like '1F2', contains letters
+                        # Need different pattern for MODE
+                        mode_pattern = r'^\s*([\dEFef\s-]+?)\s+MODE\s*$'
+                        mode_match = re.search(mode_pattern, block, re.MULTILINE)
+                        if mode_match:
+                            prediction['metrics'][metric] = [v if v != '-' else None for v in mode_match.group(1).split()]
                     else:
                         # Numeric values
                         prediction['metrics'][metric] = [
