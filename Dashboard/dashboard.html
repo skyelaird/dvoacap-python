@@ -666,7 +666,7 @@
         
         async function loadPropagationData() {
             try {
-                const response = await fetch('propagation_data.json');
+                const response = await fetch('enhanced_predictions.json');
                 const data = await response.json();
                 // Extract the predictions object from the data structure
                 propData = data.predictions || data;
