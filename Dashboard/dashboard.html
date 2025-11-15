@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VE1ATM HF Propagation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="prop_charts.css" />
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
     <style>
         * {
             margin: 0;
@@ -568,6 +570,7 @@
         
         <div class="tab-nav">
             <button class="tab-button active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="tab-button" onclick="showTab('propcharts')">📈 Prop Charts</button>
             <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
             <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
             <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
@@ -593,7 +596,50 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- PROPAGATION CHARTS TAB -->
+        <div id="tab-propcharts" class="tab-content">
+            <div class="prop-chart-info">
+                <h3>📈 Interactive Propagation Analysis</h3>
+                <p>Detailed 24-hour charts showing REL (Reliability), SNR (Signal-to-Noise), SDBW (Signal Power), and MUFday (MUF percentage) for each band.</p>
+                <div class="prop-chart-legend">
+                    <div class="prop-chart-legend-item">
+                        <div class="prop-chart-legend-color" style="background: #4a90e2;"></div>
+                        <span class="prop-chart-legend-text"><b>Reliability</b> - Circuit reliability (%)</span>
+                    </div>
+                    <div class="prop-chart-legend-item">
+                        <div class="prop-chart-legend-color" style="background: #f59e0b;"></div>
+                        <span class="prop-chart-legend-text"><b>SNR</b> - Signal-to-Noise Ratio (dB)</span>
+                    </div>
+                    <div class="prop-chart-legend-item">
+                        <div class="prop-chart-legend-color" style="background: #10b981;"></div>
+                        <span class="prop-chart-legend-text"><b>Signal</b> - Received power (dBW) with S-meter</span>
+                    </div>
+                    <div class="prop-chart-legend-item">
+                        <div class="prop-chart-legend-color" style="background: #ef4444; height: 2px;"></div>
+                        <span class="prop-chart-legend-text"><b>MUFday</b> - Percentage below MUF (%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prop-chart-controls">
+                <div class="prop-chart-control">
+                    <label for="propChartBandSelect">Band</label>
+                    <select id="propChartBandSelect">
+                        <option value="20m">20m</option>
+                    </select>
+                </div>
+                <div class="prop-chart-control">
+                    <label for="propChartRegionSelect">Region</label>
+                    <select id="propChartRegionSelect">
+                        <option value="EU">Europe</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="propChartContainer"></div>
+        </div>
+
         <!-- BANDS TAB -->
         <div id="tab-bands" class="tab-content">
             <div class="card">
@@ -670,6 +716,11 @@
                 const data = await response.json();
                 // Extract the predictions object from the data structure
                 propData = data.predictions || data;
+
+                // Load original data for prop charts (has bands/regions structure)
+                const propResponse = await fetch('propagation_data.json');
+                window.rawPropData = await propResponse.json();
+
                 initializeDashboard();
             } catch (error) {
                 console.error('Error:', error);
@@ -687,7 +738,12 @@
             renderDXCC();
             renderUpdateInfo();
             checkDXCCAlerts();
-            
+
+            // Initialize propagation charts (v1.0 feature)
+            if (typeof initPropCharts === 'function' && window.rawPropData) {
+                initPropCharts(window.rawPropData);
+            }
+
             // Update gray line every 5 minutes
             setInterval(updateGrayLine, 300000);
         }
@@ -1289,5 +1345,8 @@
 
         loadPropagationData();
     </script>
+
+    <!-- Propagation Charts Module (v1.0) -->
+    <script src="prop_charts.js"></script>
 </body>
 </html>
