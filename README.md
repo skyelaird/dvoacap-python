@@ -220,6 +220,45 @@ See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.m
 - **[Phase 3 Summary](docs/PHASE3_COMPLETE.md)** - Ionospheric profiles implementation
 - **[Phase 4 Summary](docs/PHASE4_SUMMARY.md)** - Raytracing implementation
 
+### Building Sphinx Documentation
+
+The project includes comprehensive Sphinx documentation with API references. To build it:
+
+**Prerequisites:**
+```bash
+pip install sphinx sphinx-rtd-theme
+```
+
+**Build on Linux/macOS:**
+```bash
+cd docs
+make html
+```
+
+**Build on Windows:**
+
+Option 1 - Using the batch file (PowerShell or CMD):
+```powershell
+cd docs
+.\make.bat html
+```
+
+Option 2 - Using the PowerShell script:
+```powershell
+cd docs
+.\make.ps1 html
+```
+
+Option 3 - Using sphinx-build directly:
+```powershell
+cd docs
+sphinx-build -M html source build
+```
+
+The built documentation will be in `docs/build/html/index.html`.
+
+See [docs/README.md](docs/README.md) for more details.
+
 ## 🧪 Testing
 
 ```bash
