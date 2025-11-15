@@ -1,0 +1,3738 @@
+{
+  "generated": "2025-11-15T13:45:05.735641+00:00",
+  "tx_location": {
+    "grid": "FN74ui",
+    "latitude": 44.374,
+    "longitude": -64.3
+  },
+  "analysis": {
+    "dividing_line": "45\u00b0N latitude (GN55-IN25)",
+    "description": "Comparison of propagation characteristics north vs south of 45\u00b0N"
+  },
+  "north_of_45n": {
+    "grids": [
+      {
+        "grid": "IO55",
+        "name": "British Isles/North Sea",
+        "latitude": 55.5,
+        "longitude": -10.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 85.9,
+                "snr_db": 27.0,
+                "signal_power_dbw": -127.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 12.3
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 62.0,
+                "snr_db": 16.4,
+                "signal_power_dbw": -142.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.1,
+                "snr_db": -56.9,
+                "signal_power_dbw": -220.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -188.4,
+                "signal_power_dbw": -355.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -215.2,
+                "signal_power_dbw": -383.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -214.4,
+                "signal_power_dbw": -384.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -213.9,
+                "signal_power_dbw": -385.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 18.6
+              }
+            },
+            "path": {
+              "distance_km": 3963.0,
+              "azimuth_deg": 52.1,
+              "circuit_muf_mhz": 10.01
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 82.1,
+                "snr_db": 29.2,
+                "signal_power_dbw": -125.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 46.1,
+                "snr_db": 8.0,
+                "signal_power_dbw": -151.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.1,
+                "snr_db": -52.4,
+                "signal_power_dbw": -216.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -141.4,
+                "signal_power_dbw": -307.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -204.3,
+                "signal_power_dbw": -372.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -203.6,
+                "signal_power_dbw": -374.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -203.0,
+                "signal_power_dbw": -375.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 19.3
+              }
+            },
+            "path": {
+              "distance_km": 3963.0,
+              "azimuth_deg": 52.1,
+              "circuit_muf_mhz": 8.22
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 26.6,
+                "snr_db": 3.5,
+                "signal_power_dbw": -151.9,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 20.7
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 75.9,
+                "snr_db": 20.1,
+                "signal_power_dbw": -139.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 88.2,
+                "snr_db": 27.4,
+                "signal_power_dbw": -135.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 91.4,
+                "snr_db": 30.2,
+                "signal_power_dbw": -136.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 87.9,
+                "snr_db": 32.1,
+                "signal_power_dbw": -136.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.3
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 20.6,
+                "snr_db": -6.5,
+                "signal_power_dbw": -176.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -98.8,
+                "signal_power_dbw": -270.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.9
+              }
+            },
+            "path": {
+              "distance_km": 3963.0,
+              "azimuth_deg": 52.1,
+              "circuit_muf_mhz": 23.08
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 54.0,
+                "snr_db": 11.7,
+                "signal_power_dbw": -143.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.9
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 75.6,
+                "snr_db": 21.5,
+                "signal_power_dbw": -137.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 86.6,
+                "snr_db": 28.9,
+                "signal_power_dbw": -134.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.0
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 88.4,
+                "snr_db": 31.0,
+                "signal_power_dbw": -135.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 85.5,
+                "snr_db": 32.2,
+                "signal_power_dbw": -136.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 44.6,
+                "snr_db": 7.3,
+                "signal_power_dbw": -163.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 3.4,
+                "snr_db": -26.6,
+                "signal_power_dbw": -198.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.8
+              }
+            },
+            "path": {
+              "distance_km": 3963.0,
+              "azimuth_deg": 52.1,
+              "circuit_muf_mhz": 23.03
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "JP50",
+        "name": "Southern Scandinavia",
+        "latitude": 60.5,
+        "longitude": 10.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 68.1,
+                "snr_db": 18.9,
+                "signal_power_dbw": -135.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.7
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 65.1,
+                "snr_db": 18.1,
+                "signal_power_dbw": -141.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.7
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -90.3,
+                "signal_power_dbw": -253.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -253.7,
+                "signal_power_dbw": -420.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -252.9,
+                "signal_power_dbw": -421.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -252.1,
+                "signal_power_dbw": -422.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -251.5,
+                "signal_power_dbw": -423.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              }
+            },
+            "path": {
+              "distance_km": 5032.0,
+              "azimuth_deg": 41.9,
+              "circuit_muf_mhz": 10.42
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 70.6,
+                "snr_db": 21.3,
+                "signal_power_dbw": -133.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 17.8,
+                "snr_db": -8.5,
+                "signal_power_dbw": -167.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -88.9,
+                "signal_power_dbw": -252.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -199.9,
+                "signal_power_dbw": -366.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -243.1,
+                "signal_power_dbw": -411.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -242.3,
+                "signal_power_dbw": -412.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -241.7,
+                "signal_power_dbw": -413.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.1
+              }
+            },
+            "path": {
+              "distance_km": 5032.0,
+              "azimuth_deg": 41.9,
+              "circuit_muf_mhz": 7.81
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 16.3,
+                "snr_db": -4.7,
+                "signal_power_dbw": -160.0,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 17.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 38.9,
+                "snr_db": 5.8,
+                "signal_power_dbw": -153.5,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 12.8
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 68.6,
+                "snr_db": 20.1,
+                "signal_power_dbw": -143.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 75.7,
+                "snr_db": 24.6,
+                "signal_power_dbw": -141.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 77.3,
+                "snr_db": 25.7,
+                "signal_power_dbw": -142.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 66.6,
+                "snr_db": 19.0,
+                "signal_power_dbw": -151.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -67.6,
+                "signal_power_dbw": -239.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.4
+              }
+            },
+            "path": {
+              "distance_km": 5032.0,
+              "azimuth_deg": 41.9,
+              "circuit_muf_mhz": 24.45
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 19.3,
+                "snr_db": -0.3,
+                "signal_power_dbw": -154.4,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.4
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 61.4,
+                "snr_db": 15.5,
+                "signal_power_dbw": -143.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 74.2,
+                "snr_db": 22.6,
+                "signal_power_dbw": -140.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.5
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 76.1,
+                "snr_db": 24.8,
+                "signal_power_dbw": -141.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 72.5,
+                "snr_db": 22.5,
+                "signal_power_dbw": -145.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 5.0,
+                "snr_db": -23.1,
+                "signal_power_dbw": -193.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.0
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -79.1,
+                "signal_power_dbw": -251.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.0
+              }
+            },
+            "path": {
+              "distance_km": 5032.0,
+              "azimuth_deg": 41.9,
+              "circuit_muf_mhz": 21.27
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "IO72",
+        "name": "Ireland/UK",
+        "latitude": 52.5,
+        "longitude": -5.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 82.9,
+                "snr_db": 25.8,
+                "signal_power_dbw": -128.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.6
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 71.8,
+                "snr_db": 22.0,
+                "signal_power_dbw": -137.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -62.0,
+                "signal_power_dbw": -225.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -199.5,
+                "signal_power_dbw": -366.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -227.3,
+                "signal_power_dbw": -395.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -226.5,
+                "signal_power_dbw": -396.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.7
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -225.9,
+                "signal_power_dbw": -397.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.7
+              }
+            },
+            "path": {
+              "distance_km": 4338.0,
+              "azimuth_deg": 56.3,
+              "circuit_muf_mhz": 10.01
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 79.9,
+                "snr_db": 27.5,
+                "signal_power_dbw": -127.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 12.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 36.8,
+                "snr_db": 3.3,
+                "signal_power_dbw": -156.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -65.0,
+                "signal_power_dbw": -228.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -162.9,
+                "signal_power_dbw": -329.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -217.2,
+                "signal_power_dbw": -385.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -216.5,
+                "signal_power_dbw": -386.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -215.9,
+                "signal_power_dbw": -387.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 17.2
+              }
+            },
+            "path": {
+              "distance_km": 4338.0,
+              "azimuth_deg": 56.3,
+              "circuit_muf_mhz": 8.04
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 13.7,
+                "snr_db": -1.5,
+                "signal_power_dbw": -156.8,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 19.3
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 68.2,
+                "snr_db": 16.9,
+                "signal_power_dbw": -142.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.9
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 84.0,
+                "snr_db": 24.7,
+                "signal_power_dbw": -138.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.3
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 89.6,
+                "snr_db": 29.6,
+                "signal_power_dbw": -136.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 90.3,
+                "snr_db": 30.7,
+                "signal_power_dbw": -137.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 81.4,
+                "snr_db": 28.7,
+                "signal_power_dbw": -141.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.9,
+                "snr_db": -37.8,
+                "signal_power_dbw": -209.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.0
+              }
+            },
+            "path": {
+              "distance_km": 4338.0,
+              "azimuth_deg": 56.3,
+              "circuit_muf_mhz": 25.07
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 33.8,
+                "snr_db": 6.1,
+                "signal_power_dbw": -148.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 17.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 74.6,
+                "snr_db": 20.7,
+                "signal_power_dbw": -137.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 85.7,
+                "snr_db": 27.9,
+                "signal_power_dbw": -135.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.8
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 87.8,
+                "snr_db": 30.4,
+                "signal_power_dbw": -136.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 84.2,
+                "snr_db": 31.0,
+                "signal_power_dbw": -137.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 45.1,
+                "snr_db": 7.5,
+                "signal_power_dbw": -162.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 3.8,
+                "snr_db": -25.6,
+                "signal_power_dbw": -197.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.8
+              }
+            },
+            "path": {
+              "distance_km": 4338.0,
+              "azimuth_deg": 56.3,
+              "circuit_muf_mhz": 23.39
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "JN18",
+        "name": "Northern France",
+        "latitude": 48.5,
+        "longitude": 2.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 81.7,
+                "snr_db": 23.7,
+                "signal_power_dbw": -129.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 69.4,
+                "snr_db": 20.6,
+                "signal_power_dbw": -138.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.7
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -105.8,
+                "signal_power_dbw": -269.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.9
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -245.8,
+                "signal_power_dbw": -412.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -245.0,
+                "signal_power_dbw": -413.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.9
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -244.2,
+                "signal_power_dbw": -414.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -243.6,
+                "signal_power_dbw": -415.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.9
+              }
+            },
+            "path": {
+              "distance_km": 4939.0,
+              "azimuth_deg": 60.1,
+              "circuit_muf_mhz": 10.05
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 76.6,
+                "snr_db": 25.1,
+                "signal_power_dbw": -129.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.5
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 27.8,
+                "snr_db": -1.8,
+                "signal_power_dbw": -161.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -78.1,
+                "signal_power_dbw": -241.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -185.8,
+                "signal_power_dbw": -352.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -238.4,
+                "signal_power_dbw": -406.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -237.6,
+                "signal_power_dbw": -408.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -237.0,
+                "signal_power_dbw": -409.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              }
+            },
+            "path": {
+              "distance_km": 4939.0,
+              "azimuth_deg": 60.1,
+              "circuit_muf_mhz": 7.95
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.4,
+                "snr_db": -16.7,
+                "signal_power_dbw": -172.0,
+                "mode": "4F2",
+                "hops": 4,
+                "elevation_deg": 21.6
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 31.6,
+                "snr_db": 5.2,
+                "signal_power_dbw": -154.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 13.4
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 78.6,
+                "snr_db": 21.5,
+                "signal_power_dbw": -141.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.4
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 88.2,
+                "snr_db": 27.6,
+                "signal_power_dbw": -138.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 90.3,
+                "snr_db": 30.2,
+                "signal_power_dbw": -138.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.1
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 86.9,
+                "snr_db": 31.1,
+                "signal_power_dbw": -139.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 72.6,
+                "snr_db": 22.6,
+                "signal_power_dbw": -149.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.0
+              }
+            },
+            "path": {
+              "distance_km": 4939.0,
+              "azimuth_deg": 60.1,
+              "circuit_muf_mhz": 27.57
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 25.3,
+                "snr_db": 3.7,
+                "signal_power_dbw": -149.7,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.6
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 71.3,
+                "snr_db": 19.0,
+                "signal_power_dbw": -138.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 84.3,
+                "snr_db": 26.8,
+                "signal_power_dbw": -135.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.6
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 86.8,
+                "snr_db": 29.9,
+                "signal_power_dbw": -136.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 83.2,
+                "snr_db": 30.2,
+                "signal_power_dbw": -138.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 58.7,
+                "snr_db": 14.6,
+                "signal_power_dbw": -155.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 2.5,
+                "snr_db": -29.4,
+                "signal_power_dbw": -201.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.1
+              }
+            },
+            "path": {
+              "distance_km": 4939.0,
+              "azimuth_deg": 60.1,
+              "circuit_muf_mhz": 23.49
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "JO20",
+        "name": "Belgium/Netherlands",
+        "latitude": 50.5,
+        "longitude": 4.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 81.5,
+                "snr_db": 23.6,
+                "signal_power_dbw": -129.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 69.3,
+                "snr_db": 20.5,
+                "signal_power_dbw": -138.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.5
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -108.2,
+                "signal_power_dbw": -271.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -247.1,
+                "signal_power_dbw": -413.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -246.2,
+                "signal_power_dbw": -414.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -245.5,
+                "signal_power_dbw": -415.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -244.9,
+                "signal_power_dbw": -416.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.7
+              }
+            },
+            "path": {
+              "distance_km": 4997.0,
+              "azimuth_deg": 56.8,
+              "circuit_muf_mhz": 10.02
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 76.5,
+                "snr_db": 25.1,
+                "signal_power_dbw": -129.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.3
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 24.3,
+                "snr_db": -4.0,
+                "signal_power_dbw": -163.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -84.5,
+                "signal_power_dbw": -248.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -195.8,
+                "signal_power_dbw": -362.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -239.3,
+                "signal_power_dbw": -407.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -238.5,
+                "signal_power_dbw": -408.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -237.9,
+                "signal_power_dbw": -409.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              }
+            },
+            "path": {
+              "distance_km": 4997.0,
+              "azimuth_deg": 56.8,
+              "circuit_muf_mhz": 7.81
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.7,
+                "snr_db": -15.1,
+                "signal_power_dbw": -170.4,
+                "mode": "4F2",
+                "hops": 4,
+                "elevation_deg": 21.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 35.1,
+                "snr_db": 6.1,
+                "signal_power_dbw": -153.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 13.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 79.7,
+                "snr_db": 22.0,
+                "signal_power_dbw": -141.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 88.6,
+                "snr_db": 27.9,
+                "signal_power_dbw": -138.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.8
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 90.4,
+                "snr_db": 30.3,
+                "signal_power_dbw": -138.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 85.6,
+                "snr_db": 31.1,
+                "signal_power_dbw": -139.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 46.2,
+                "snr_db": 8.1,
+                "signal_power_dbw": -163.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.7
+              }
+            },
+            "path": {
+              "distance_km": 4997.0,
+              "azimuth_deg": 56.8,
+              "circuit_muf_mhz": 27.2
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 25.8,
+                "snr_db": 3.9,
+                "signal_power_dbw": -149.6,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.4
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 71.5,
+                "snr_db": 19.2,
+                "signal_power_dbw": -138.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 84.3,
+                "snr_db": 26.9,
+                "signal_power_dbw": -136.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.4
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 86.2,
+                "snr_db": 29.7,
+                "signal_power_dbw": -136.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 82.7,
+                "snr_db": 29.7,
+                "signal_power_dbw": -138.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 33.1,
+                "snr_db": 1.2,
+                "signal_power_dbw": -169.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.9,
+                "snr_db": -37.9,
+                "signal_power_dbw": -209.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.9
+              }
+            },
+            "path": {
+              "distance_km": 4997.0,
+              "azimuth_deg": 56.8,
+              "circuit_muf_mhz": 22.99
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "JO60",
+        "name": "Southern Finland",
+        "latitude": 60.5,
+        "longitude": 20.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 68.0,
+                "snr_db": 18.4,
+                "signal_power_dbw": -135.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.9
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 66.4,
+                "snr_db": 18.9,
+                "signal_power_dbw": -140.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.5
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -74.9,
+                "signal_power_dbw": -238.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -255.1,
+                "signal_power_dbw": -421.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -265.3,
+                "signal_power_dbw": -433.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -264.5,
+                "signal_power_dbw": -434.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -263.9,
+                "signal_power_dbw": -435.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.7
+              }
+            },
+            "path": {
+              "distance_km": 5552.0,
+              "azimuth_deg": 39.8,
+              "circuit_muf_mhz": 10.8
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 67.1,
+                "snr_db": 19.3,
+                "signal_power_dbw": -135.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 15.4,
+                "snr_db": -10.4,
+                "signal_power_dbw": -169.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -93.1,
+                "signal_power_dbw": -256.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -208.1,
+                "signal_power_dbw": -374.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -260.1,
+                "signal_power_dbw": -428.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -259.3,
+                "signal_power_dbw": -429.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -258.6,
+                "signal_power_dbw": -430.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.9
+              }
+            },
+            "path": {
+              "distance_km": 5552.0,
+              "azimuth_deg": 39.8,
+              "circuit_muf_mhz": 7.9
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 6.0,
+                "snr_db": -13.1,
+                "signal_power_dbw": -168.5,
+                "mode": "4F2",
+                "hops": 4,
+                "elevation_deg": 18.8
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 36.8,
+                "snr_db": 5.0,
+                "signal_power_dbw": -154.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 11.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 66.7,
+                "snr_db": 19.0,
+                "signal_power_dbw": -144.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 74.3,
+                "snr_db": 23.6,
+                "signal_power_dbw": -142.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.6
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 75.8,
+                "snr_db": 24.6,
+                "signal_power_dbw": -143.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 71.2,
+                "snr_db": 21.7,
+                "signal_power_dbw": -148.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.3
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.2,
+                "snr_db": -48.1,
+                "signal_power_dbw": -220.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              }
+            },
+            "path": {
+              "distance_km": 5552.0,
+              "azimuth_deg": 39.8,
+              "circuit_muf_mhz": 25.22
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 17.2,
+                "snr_db": -1.2,
+                "signal_power_dbw": -155.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 12.5
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 59.3,
+                "snr_db": 14.5,
+                "signal_power_dbw": -144.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 72.2,
+                "snr_db": 21.6,
+                "signal_power_dbw": -141.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.9
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 73.1,
+                "snr_db": 22.9,
+                "signal_power_dbw": -143.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.4
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 56.2,
+                "snr_db": 13.3,
+                "signal_power_dbw": -155.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.1,
+                "snr_db": -55.2,
+                "signal_power_dbw": -225.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -132.5,
+                "signal_power_dbw": -304.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              }
+            },
+            "path": {
+              "distance_km": 5552.0,
+              "azimuth_deg": 39.8,
+              "circuit_muf_mhz": 19.73
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      }
+    ],
+    "statistics": {
+      "overall": {
+        "mean_reliability_pct": 57.5,
+        "median_reliability_pct": 70.0,
+        "mean_snr_db": 3.4,
+        "median_snr_db": 19.0
+      },
+      "by_band": {
+        "40m": {
+          "mean_reliability_pct": 48.3,
+          "median_reliability_pct": 60.6,
+          "mean_snr_db": 10.9,
+          "median_snr_db": 15.0,
+          "samples": 24
+        },
+        "30m": {
+          "mean_reliability_pct": 53.0,
+          "median_reliability_pct": 61.7,
+          "mean_snr_db": 11.4,
+          "median_snr_db": 16.0,
+          "samples": 24
+        },
+        "20m": {
+          "mean_reliability_pct": 68.1,
+          "median_reliability_pct": 79.2,
+          "mean_snr_db": -20.8,
+          "median_snr_db": 19.6,
+          "samples": 14
+        },
+        "17m": {
+          "mean_reliability_pct": 83.9,
+          "median_reliability_pct": 87.3,
+          "mean_snr_db": 27.7,
+          "median_snr_db": 28.8,
+          "samples": 12
+        },
+        "15m": {
+          "mean_reliability_pct": 81.4,
+          "median_reliability_pct": 83.7,
+          "mean_snr_db": 27.7,
+          "median_snr_db": 30.2,
+          "samples": 12
+        },
+        "12m": {
+          "mean_reliability_pct": 49.9,
+          "median_reliability_pct": 51.9,
+          "mean_snr_db": 6.5,
+          "median_snr_db": 11.0,
+          "samples": 12
+        },
+        "10m": {
+          "mean_reliability_pct": 16.3,
+          "median_reliability_pct": 3.0,
+          "mean_snr_db": -38.2,
+          "median_snr_db": -37.8,
+          "samples": 8
+        }
+      }
+    }
+  },
+  "south_of_45n": {
+    "grids": [
+      {
+        "grid": "IN62",
+        "name": "Northern Spain/Portugal",
+        "latitude": 42.5,
+        "longitude": -8.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 91.2,
+                "snr_db": 26.8,
+                "signal_power_dbw": -126.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 77.2,
+                "snr_db": 25.6,
+                "signal_power_dbw": -133.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 12.5
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -79.9,
+                "signal_power_dbw": -243.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.9
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -231.4,
+                "signal_power_dbw": -398.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -230.6,
+                "signal_power_dbw": -399.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.9
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -229.9,
+                "signal_power_dbw": -400.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -229.3,
+                "signal_power_dbw": -401.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 15.9
+              }
+            },
+            "path": {
+              "distance_km": 4459.0,
+              "azimuth_deg": 72.2,
+              "circuit_muf_mhz": 10.35
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 80.1,
+                "snr_db": 27.6,
+                "signal_power_dbw": -126.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 48.5,
+                "snr_db": 9.2,
+                "signal_power_dbw": -149.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.2,
+                "snr_db": -47.7,
+                "signal_power_dbw": -211.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -135.5,
+                "signal_power_dbw": -302.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -214.3,
+                "signal_power_dbw": -382.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -223.9,
+                "signal_power_dbw": -394.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -223.3,
+                "signal_power_dbw": -395.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 16.2
+              }
+            },
+            "path": {
+              "distance_km": 4459.0,
+              "azimuth_deg": 72.2,
+              "circuit_muf_mhz": 8.59
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.2,
+                "snr_db": -16.7,
+                "signal_power_dbw": -172.0,
+                "mode": "3E",
+                "hops": 3,
+                "elevation_deg": 4.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 35.2,
+                "snr_db": 6.6,
+                "signal_power_dbw": -152.7,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.8
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 84.0,
+                "snr_db": 23.6,
+                "signal_power_dbw": -139.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 92.3,
+                "snr_db": 29.8,
+                "signal_power_dbw": -136.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.3
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 93.9,
+                "snr_db": 32.5,
+                "signal_power_dbw": -135.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 91.9,
+                "snr_db": 33.8,
+                "signal_power_dbw": -136.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.4
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 49.7,
+                "snr_db": 9.9,
+                "signal_power_dbw": -162.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 12.2
+              }
+            },
+            "path": {
+              "distance_km": 4459.0,
+              "azimuth_deg": 72.2,
+              "circuit_muf_mhz": 27.64
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 33.4,
+                "snr_db": 6.2,
+                "signal_power_dbw": -147.9,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 16.9
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 77.0,
+                "snr_db": 21.3,
+                "signal_power_dbw": -137.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 88.6,
+                "snr_db": 29.0,
+                "signal_power_dbw": -133.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 91.3,
+                "snr_db": 32.6,
+                "signal_power_dbw": -133.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.4
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 89.5,
+                "snr_db": 33.2,
+                "signal_power_dbw": -135.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 81.3,
+                "snr_db": 28.7,
+                "signal_power_dbw": -141.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.2
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 21.9,
+                "snr_db": -5.6,
+                "signal_power_dbw": -177.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.1
+              }
+            },
+            "path": {
+              "distance_km": 4459.0,
+              "azimuth_deg": 72.2,
+              "circuit_muf_mhz": 24.93
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "JN70",
+        "name": "Southern Italy",
+        "latitude": 40.5,
+        "longitude": 14.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 77.0,
+                "snr_db": 19.8,
+                "signal_power_dbw": -132.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 70.9,
+                "snr_db": 21.5,
+                "signal_power_dbw": -137.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -61.4,
+                "signal_power_dbw": -224.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -242.4,
+                "signal_power_dbw": -408.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -277.7,
+                "signal_power_dbw": -446.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -276.8,
+                "signal_power_dbw": -447.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -276.2,
+                "signal_power_dbw": -448.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.1
+              }
+            },
+            "path": {
+              "distance_km": 6186.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 11.11
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 71.9,
+                "snr_db": 21.7,
+                "signal_power_dbw": -132.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.9
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 54.6,
+                "snr_db": 12.4,
+                "signal_power_dbw": -146.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 3.9,
+                "snr_db": -25.3,
+                "signal_power_dbw": -188.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -97.9,
+                "signal_power_dbw": -264.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -169.7,
+                "signal_power_dbw": -338.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -265.3,
+                "signal_power_dbw": -435.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -287.5,
+                "signal_power_dbw": -459.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.6
+              }
+            },
+            "path": {
+              "distance_km": 6186.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 10.27
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.0,
+                "snr_db": -43.5,
+                "signal_power_dbw": -198.8,
+                "mode": "4E",
+                "hops": 4,
+                "elevation_deg": 3.6
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 0.4,
+                "snr_db": -13.8,
+                "signal_power_dbw": -173.0,
+                "mode": "4F2",
+                "hops": 4,
+                "elevation_deg": 14.8
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 43.6,
+                "snr_db": 8.6,
+                "signal_power_dbw": -154.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 8.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 72.0,
+                "snr_db": 17.9,
+                "signal_power_dbw": -148.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 7.7
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 79.2,
+                "snr_db": 22.0,
+                "signal_power_dbw": -146.4,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 7.9
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 73.5,
+                "snr_db": 23.1,
+                "signal_power_dbw": -147.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 8.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 10.5,
+                "snr_db": -15.2,
+                "signal_power_dbw": -187.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 11.2
+              }
+            },
+            "path": {
+              "distance_km": 6186.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 31.3
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 10.4,
+                "snr_db": -1.2,
+                "signal_power_dbw": -153.0,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 10.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 53.6,
+                "snr_db": 11.3,
+                "signal_power_dbw": -145.5,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 8.6
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 74.3,
+                "snr_db": 20.7,
+                "signal_power_dbw": -141.5,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 8.6
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 72.5,
+                "snr_db": 22.5,
+                "signal_power_dbw": -143.6,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 9.5
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 19.9,
+                "snr_db": -6.9,
+                "signal_power_dbw": -175.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 12.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 54.0,
+                "snr_db": 12.1,
+                "signal_power_dbw": -158.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.3
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.6,
+                "snr_db": -41.0,
+                "signal_power_dbw": -213.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.7
+              }
+            },
+            "path": {
+              "distance_km": 6186.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 23.22
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "KM18",
+        "name": "Greece",
+        "latitude": 38.5,
+        "longitude": 23.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 55.2,
+                "snr_db": 12.1,
+                "signal_power_dbw": -140.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 10.1
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 71.9,
+                "snr_db": 22.1,
+                "signal_power_dbw": -136.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.7
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 4.3,
+                "snr_db": -24.3,
+                "signal_power_dbw": -187.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.6
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -169.7,
+                "signal_power_dbw": -336.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.6
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -292.9,
+                "signal_power_dbw": -461.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.6
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -292.0,
+                "signal_power_dbw": -462.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.6
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -291.4,
+                "signal_power_dbw": -463.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.6
+              }
+            },
+            "path": {
+              "distance_km": 6949.0,
+              "azimuth_deg": 61.8,
+              "circuit_muf_mhz": 12.23
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 54.9,
+                "snr_db": 12.6,
+                "signal_power_dbw": -142.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 11.4
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 0.0,
+                "snr_db": 0.0,
+                "signal_power_dbw": 0.0,
+                "mode": "0F2",
+                "hops": 0,
+                "elevation_deg": 0.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 10.4,
+                "snr_db": -15.2,
+                "signal_power_dbw": -178.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -74.5,
+                "signal_power_dbw": -241.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -138.5,
+                "signal_power_dbw": -306.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -224.6,
+                "signal_power_dbw": -395.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -289.5,
+                "signal_power_dbw": -461.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              }
+            },
+            "path": {
+              "distance_km": 6949.0,
+              "azimuth_deg": 61.8,
+              "circuit_muf_mhz": 10.99
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.0,
+                "snr_db": -61.5,
+                "signal_power_dbw": -216.8,
+                "mode": "5E",
+                "hops": 5,
+                "elevation_deg": 4.7
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 0.1,
+                "snr_db": -17.7,
+                "signal_power_dbw": -176.8,
+                "mode": "4F2",
+                "hops": 4,
+                "elevation_deg": 13.8
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 32.2,
+                "snr_db": 5.9,
+                "signal_power_dbw": -156.7,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 6.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 66.8,
+                "snr_db": 15.9,
+                "signal_power_dbw": -150.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 5.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 76.9,
+                "snr_db": 20.7,
+                "signal_power_dbw": -147.6,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 5.9
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 74.4,
+                "snr_db": 22.9,
+                "signal_power_dbw": -147.4,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 6.5
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 57.8,
+                "snr_db": 14.1,
+                "signal_power_dbw": -157.9,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 7.8
+              }
+            },
+            "path": {
+              "distance_km": 6949.0,
+              "azimuth_deg": 61.8,
+              "circuit_muf_mhz": 26.88
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 5.6,
+                "snr_db": -3.9,
+                "signal_power_dbw": -155.5,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 8.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 49.2,
+                "snr_db": 9.8,
+                "signal_power_dbw": -147.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 6.6
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 68.4,
+                "snr_db": 19.2,
+                "signal_power_dbw": -143.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 6.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 64.3,
+                "snr_db": 17.7,
+                "signal_power_dbw": -148.5,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 7.6
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 8.9,
+                "snr_db": -17.0,
+                "signal_power_dbw": -185.3,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 10.6
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 25.0,
+                "snr_db": -3.5,
+                "signal_power_dbw": -173.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.3
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.1,
+                "snr_db": -55.9,
+                "signal_power_dbw": -227.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.6
+              }
+            },
+            "path": {
+              "distance_km": 6949.0,
+              "azimuth_deg": 61.8,
+              "circuit_muf_mhz": 21.95
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "IM76",
+        "name": "Southern Spain",
+        "latitude": 36.5,
+        "longitude": -5.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 88.2,
+                "snr_db": 24.6,
+                "signal_power_dbw": -128.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.8
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 77.9,
+                "snr_db": 26.1,
+                "signal_power_dbw": -132.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.4
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.1,
+                "snr_db": -56.3,
+                "signal_power_dbw": -219.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -227.4,
+                "signal_power_dbw": -393.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -248.4,
+                "signal_power_dbw": -416.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -247.6,
+                "signal_power_dbw": -418.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -247.0,
+                "signal_power_dbw": -419.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              }
+            },
+            "path": {
+              "distance_km": 4983.0,
+              "azimuth_deg": 78.7,
+              "circuit_muf_mhz": 10.97
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 79.1,
+                "snr_db": 25.4,
+                "signal_power_dbw": -128.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.5
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 53.5,
+                "snr_db": 11.9,
+                "signal_power_dbw": -147.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 1.2,
+                "snr_db": -35.5,
+                "signal_power_dbw": -199.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -117.7,
+                "signal_power_dbw": -284.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -193.4,
+                "signal_power_dbw": -361.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -246.4,
+                "signal_power_dbw": -416.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -245.8,
+                "signal_power_dbw": -417.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 13.4
+              }
+            },
+            "path": {
+              "distance_km": 4983.0,
+              "azimuth_deg": 78.7,
+              "circuit_muf_mhz": 9.28
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.0,
+                "snr_db": -37.3,
+                "signal_power_dbw": -192.6,
+                "mode": "4E",
+                "hops": 4,
+                "elevation_deg": 6.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 11.3,
+                "snr_db": -0.2,
+                "signal_power_dbw": -159.4,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 78.6,
+                "snr_db": 19.9,
+                "signal_power_dbw": -143.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.8
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 90.8,
+                "snr_db": 27.0,
+                "signal_power_dbw": -139.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.5
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 94.2,
+                "snr_db": 30.5,
+                "signal_power_dbw": -137.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 94.8,
+                "snr_db": 32.2,
+                "signal_power_dbw": -138.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.9
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 87.2,
+                "snr_db": 33.1,
+                "signal_power_dbw": -138.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              }
+            },
+            "path": {
+              "distance_km": 4983.0,
+              "azimuth_deg": 78.7,
+              "circuit_muf_mhz": 30.09
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 23.6,
+                "snr_db": 3.8,
+                "signal_power_dbw": -149.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 15.0
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 75.5,
+                "snr_db": 19.7,
+                "signal_power_dbw": -137.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 89.6,
+                "snr_db": 28.2,
+                "signal_power_dbw": -134.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 92.9,
+                "snr_db": 32.5,
+                "signal_power_dbw": -133.5,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.3
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 92.2,
+                "snr_db": 33.4,
+                "signal_power_dbw": -134.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.8
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 85.8,
+                "snr_db": 32.4,
+                "signal_power_dbw": -137.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.0
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 38.2,
+                "snr_db": 4.0,
+                "signal_power_dbw": -168.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.8
+              }
+            },
+            "path": {
+              "distance_km": 4983.0,
+              "azimuth_deg": 78.7,
+              "circuit_muf_mhz": 26.19
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "IN80",
+        "name": "Central Spain",
+        "latitude": 40.5,
+        "longitude": -4.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 88.1,
+                "snr_db": 25.1,
+                "signal_power_dbw": -127.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.4
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 76.3,
+                "snr_db": 24.9,
+                "signal_power_dbw": -133.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 10.4
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -77.0,
+                "signal_power_dbw": -240.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -244.1,
+                "signal_power_dbw": -410.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -243.3,
+                "signal_power_dbw": -411.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -242.5,
+                "signal_power_dbw": -412.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -241.9,
+                "signal_power_dbw": -413.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.0
+              }
+            },
+            "path": {
+              "distance_km": 4854.0,
+              "azimuth_deg": 73.1,
+              "circuit_muf_mhz": 10.51
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 77.7,
+                "snr_db": 25.8,
+                "signal_power_dbw": -127.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 9.3
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 46.3,
+                "snr_db": 8.2,
+                "signal_power_dbw": -150.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.2,
+                "snr_db": -48.6,
+                "signal_power_dbw": -212.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -138.7,
+                "signal_power_dbw": -305.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -220.2,
+                "signal_power_dbw": -388.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -239.0,
+                "signal_power_dbw": -409.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -238.4,
+                "signal_power_dbw": -410.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 14.2
+              }
+            },
+            "path": {
+              "distance_km": 4854.0,
+              "azimuth_deg": 73.1,
+              "circuit_muf_mhz": 8.74
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.0,
+                "snr_db": -22.1,
+                "signal_power_dbw": -177.5,
+                "mode": "3E",
+                "hops": 3,
+                "elevation_deg": 3.1
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 20.3,
+                "snr_db": 2.4,
+                "signal_power_dbw": -156.8,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 14.0
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 78.7,
+                "snr_db": 20.8,
+                "signal_power_dbw": -142.2,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.0
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 90.0,
+                "snr_db": 27.9,
+                "signal_power_dbw": -138.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 92.8,
+                "snr_db": 31.1,
+                "signal_power_dbw": -137.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.0
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 92.7,
+                "snr_db": 32.5,
+                "signal_power_dbw": -137.9,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.5
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 84.9,
+                "snr_db": 31.6,
+                "signal_power_dbw": -140.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.9
+              }
+            },
+            "path": {
+              "distance_km": 4854.0,
+              "azimuth_deg": 73.1,
+              "circuit_muf_mhz": 29.07
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 26.0,
+                "snr_db": 4.2,
+                "signal_power_dbw": -149.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 15.3
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 73.8,
+                "snr_db": 19.7,
+                "signal_power_dbw": -138.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.7
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 87.2,
+                "snr_db": 27.9,
+                "signal_power_dbw": -134.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 90.4,
+                "snr_db": 31.8,
+                "signal_power_dbw": -134.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 88.7,
+                "snr_db": 32.3,
+                "signal_power_dbw": -136.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.4
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 82.3,
+                "snr_db": 29.4,
+                "signal_power_dbw": -141.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.0
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 23.3,
+                "snr_db": -4.6,
+                "signal_power_dbw": -176.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.3
+              }
+            },
+            "path": {
+              "distance_km": 4854.0,
+              "azimuth_deg": 73.1,
+              "circuit_muf_mhz": 25.29
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      },
+      {
+        "grid": "KN23",
+        "name": "Southern France/Riviera",
+        "latitude": 43.5,
+        "longitude": 7.0,
+        "predictions": [
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 81.9,
+                "snr_db": 22.0,
+                "signal_power_dbw": -130.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.2
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 70.2,
+                "snr_db": 21.0,
+                "signal_power_dbw": -137.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.1
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -92.1,
+                "signal_power_dbw": -255.6,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.5
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -262.1,
+                "signal_power_dbw": -428.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.5
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -261.2,
+                "signal_power_dbw": -429.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -260.4,
+                "signal_power_dbw": -430.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.5
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -259.8,
+                "signal_power_dbw": -431.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.5
+              }
+            },
+            "path": {
+              "distance_km": 5519.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 10.4
+            },
+            "utc_time": "00:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 74.1,
+                "snr_db": 23.5,
+                "signal_power_dbw": -130.7,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 7.1
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 36.5,
+                "snr_db": 3.1,
+                "signal_power_dbw": -156.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 0.0,
+                "snr_db": -60.5,
+                "signal_power_dbw": -224.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 0.0,
+                "snr_db": -159.5,
+                "signal_power_dbw": -326.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 0.0,
+                "snr_db": -247.4,
+                "signal_power_dbw": -415.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 0.0,
+                "snr_db": -261.0,
+                "signal_power_dbw": -431.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 0.0,
+                "snr_db": -260.4,
+                "signal_power_dbw": -432.4,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 11.4
+              }
+            },
+            "path": {
+              "distance_km": 5519.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 8.64
+            },
+            "utc_time": "06:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 0.0,
+                "snr_db": -36.7,
+                "signal_power_dbw": -192.0,
+                "mode": "4E",
+                "hops": 4,
+                "elevation_deg": 4.8
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 14.4,
+                "snr_db": 0.0,
+                "signal_power_dbw": -159.2,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 13.1
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 74.8,
+                "snr_db": 19.1,
+                "signal_power_dbw": -143.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 5.5
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 87.4,
+                "snr_db": 26.0,
+                "signal_power_dbw": -140.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.1
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 91.2,
+                "snr_db": 29.3,
+                "signal_power_dbw": -139.0,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.1
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 91.1,
+                "snr_db": 31.0,
+                "signal_power_dbw": -139.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.5
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 83.9,
+                "snr_db": 30.7,
+                "signal_power_dbw": -141.3,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.4
+              }
+            },
+            "path": {
+              "distance_km": 5519.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 29.81
+            },
+            "utc_time": "12:00"
+          },
+          {
+            "bands": {
+              "40m": {
+                "frequency_mhz": 7.15,
+                "reliability_pct": 17.5,
+                "snr_db": 1.4,
+                "signal_power_dbw": -151.1,
+                "mode": "3F2",
+                "hops": 3,
+                "elevation_deg": 12.6
+              },
+              "30m": {
+                "frequency_mhz": 10.125,
+                "reliability_pct": 70.5,
+                "snr_db": 18.3,
+                "signal_power_dbw": -139.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.3
+              },
+              "20m": {
+                "frequency_mhz": 14.15,
+                "reliability_pct": 85.2,
+                "snr_db": 26.6,
+                "signal_power_dbw": -135.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.7
+              },
+              "17m": {
+                "frequency_mhz": 18.118,
+                "reliability_pct": 87.8,
+                "snr_db": 30.3,
+                "signal_power_dbw": -135.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 3.9
+              },
+              "15m": {
+                "frequency_mhz": 21.2,
+                "reliability_pct": 83.6,
+                "snr_db": 30.5,
+                "signal_power_dbw": -137.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 4.5
+              },
+              "12m": {
+                "frequency_mhz": 24.94,
+                "reliability_pct": 65.9,
+                "snr_db": 18.6,
+                "signal_power_dbw": -151.8,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 6.3
+              },
+              "10m": {
+                "frequency_mhz": 28.5,
+                "reliability_pct": 2.5,
+                "snr_db": -29.1,
+                "signal_power_dbw": -201.1,
+                "mode": "2F2",
+                "hops": 2,
+                "elevation_deg": 8.8
+              }
+            },
+            "path": {
+              "distance_km": 5519.0,
+              "azimuth_deg": 64.4,
+              "circuit_muf_mhz": 23.72
+            },
+            "utc_time": "18:00"
+          }
+        ]
+      }
+    ],
+    "statistics": {
+      "overall": {
+        "mean_reliability_pct": 58.6,
+        "median_reliability_pct": 72.5,
+        "mean_snr_db": 5.1,
+        "median_snr_db": 18.5
+      },
+      "by_band": {
+        "40m": {
+          "mean_reliability_pct": 54.5,
+          "median_reliability_pct": 71.9,
+          "mean_snr_db": 2.5,
+          "median_snr_db": 9.2,
+          "samples": 19
+        },
+        "30m": {
+          "mean_reliability_pct": 50.7,
+          "median_reliability_pct": 53.6,
+          "mean_snr_db": 11.0,
+          "median_snr_db": 11.6,
+          "samples": 23
+        },
+        "20m": {
+          "mean_reliability_pct": 47.7,
+          "median_reliability_pct": 68.4,
+          "mean_snr_db": -15.6,
+          "median_snr_db": -4.6,
+          "samples": 19
+        },
+        "17m": {
+          "mean_reliability_pct": 83.2,
+          "median_reliability_pct": 88.9,
+          "mean_snr_db": 10.0,
+          "median_snr_db": 26.5,
+          "samples": 12
+        },
+        "15m": {
+          "mean_reliability_pct": 75.9,
+          "median_reliability_pct": 89.1,
+          "mean_snr_db": 22.6,
+          "median_snr_db": 30.5,
+          "samples": 12
+        },
+        "12m": {
+          "mean_reliability_pct": 76.1,
+          "median_reliability_pct": 81.8,
+          "mean_snr_db": 24.4,
+          "median_snr_db": 29.0,
+          "samples": 12
+        },
+        "10m": {
+          "mean_reliability_pct": 38.4,
+          "median_reliability_pct": 30.8,
+          "mean_snr_db": -2.3,
+          "median_snr_db": -0.3,
+          "samples": 12
+        }
+      }
+    }
+  }
+}
