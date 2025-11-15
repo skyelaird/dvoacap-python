@@ -23,10 +23,6 @@ class AntennaModel:
     Attributes:
         extra_gain_db: Additional gain to add to computed gain (dB)
         tx_power_dbw: Transmit power in dBW
-        frequency: Operating frequency in MHz
-        azimuth: Antenna azimuth angle in radians
-        low_frequency: Lower frequency limit in MHz
-        high_frequency: Upper frequency limit in MHz
     """
 
     def __init__(
@@ -163,7 +159,6 @@ class AntennaFarm:
 
     Attributes:
         antennas: List of available antenna models
-        current_antenna: Currently selected antenna
     """
 
     def __init__(self):
