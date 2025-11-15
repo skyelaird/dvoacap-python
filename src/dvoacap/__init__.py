@@ -8,6 +8,8 @@ Original DVOACAP by Alex Shovkoplyas, VE3NEA
 Python Port: 2025
 """
 
+from typing import Dict, Any
+
 __version__ = "0.5.0"
 __author__ = "Python Port Contributors"
 __license__ = "MIT"
@@ -154,12 +156,12 @@ _phase_status = {
 }
 
 
-def get_phase_status():
+def get_phase_status() -> Dict[str, str]:
     """Return the current development phase status"""
     return _phase_status.copy()
 
 
-def get_version_info():
+def get_version_info() -> Dict[str, Any]:
     """Return version and build information"""
     total_modules = (len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__) +
                     len(__all_phase4__) + len(__all_phase5__))
