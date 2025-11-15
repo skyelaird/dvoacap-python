@@ -169,3 +169,6 @@ Dashboard/enhanced_predictions.json
 Dashboard/dxcc_entities.json
 Dashboard/dxcc_summary.json
 Dashboard/pskreporter_data.json
+
+# GitHub Wiki repository (managed separately)
+dvoacap-python.wiki/
