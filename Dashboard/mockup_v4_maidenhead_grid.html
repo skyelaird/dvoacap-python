@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V4: Maidenhead Grid - Coverage Map Mockup</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0e1a;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            padding: 12px 20px;
+            border-bottom: 3px solid #4a90e2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .control-group label.group-label {
+            font-weight: 600;
+            color: #4a90e2;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .control-group input[type="radio"] {
+            display: none;
+        }
+
+        .control-group label.radio-label {
+            padding: 5px 12px;
+            background-color: #162236;
+            border: 2px solid #2a3f5f;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .control-group label.radio-label:hover {
+            background-color: #1a2738;
+            border-color: #4a90e2;
+        }
+
+        .control-group input[type="radio"]:checked + label.radio-label {
+            background-color: #4a90e2;
+            border-color: #4a90e2;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 130px);
+        }
+
+        /* Map Container */
+        #map {
+            flex: 1;
+            background-color: #0a0e1a;
+        }
+
+        /* Quick Summary Bar */
+        .quick-summary {
+            background: linear-gradient(135deg, #162236 0%, #0d1520 100%);
+            padding: 10px 20px;
+            border-top: 2px solid #2a3f5f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 13px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-label {
+            color: #8a9bb5;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            color: #4aed88;
+            font-weight: 600;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            background: rgba(22, 34, 54, 0.95);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3f5f;
+            z-index: 1000;
+            min-width: 180px;
+        }
+
+        .legend h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #4a90e2;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 5px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 18px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .legend-label {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tx-location-marker {
+            background: radial-gradient(circle, #ff4444 0%, #cc0000 100%);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📡 VOACAP Coverage Map - Maidenhead Grid Visualization</h1>
+        <div class="control-panel">
+            <!-- Band Selection -->
+            <div class="control-group">
+                <label class="group-label">Band:</label>
+                <input type="radio" name="band" id="band-40m" value="40m">
+                <label for="band-40m" class="radio-label">40m</label>
+                <input type="radio" name="band" id="band-30m" value="30m">
+                <label for="band-30m" class="radio-label">30m</label>
+                <input type="radio" name="band" id="band-20m" value="20m" checked>
+                <label for="band-20m" class="radio-label">20m</label>
+                <input type="radio" name="band" id="band-17m" value="17m">
+                <label for="band-17m" class="radio-label">17m</label>
+                <input type="radio" name="band" id="band-15m" value="15m">
+                <label for="band-15m" class="radio-label">15m</label>
+                <input type="radio" name="band" id="band-12m" value="12m">
+                <label for="band-12m" class="radio-label">12m</label>
+                <input type="radio" name="band" id="band-10m" value="10m">
+                <label for="band-10m" class="radio-label">10m</label>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="control-group">
+                <label class="group-label">Mode:</label>
+                <input type="radio" name="mode" id="mode-ft8" value="FT8" checked>
+                <label for="mode-ft8" class="radio-label">FT8</label>
+                <input type="radio" name="mode" id="mode-ft4" value="FT4">
+                <label for="mode-ft4" class="radio-label">FT4</label>
+                <input type="radio" name="mode" id="mode-ssb" value="SSB">
+                <label for="mode-ssb" class="radio-label">SSB</label>
+                <input type="radio" name="mode" id="mode-cw" value="CW">
+                <label for="mode-cw" class="radio-label">CW</label>
+            </div>
+
+            <!-- TX Power -->
+            <div class="control-group">
+                <label class="group-label">TX Power:</label>
+                <input type="radio" name="power" id="power-5w" value="5">
+                <label for="power-5w" class="radio-label">5W</label>
+                <input type="radio" name="power" id="power-25w" value="25">
+                <label for="power-25w" class="radio-label">25W</label>
+                <input type="radio" name="power" id="power-50w" value="50">
+                <label for="power-50w" class="radio-label">50W</label>
+                <input type="radio" name="power" id="power-100w" value="100" checked>
+                <label for="power-100w" class="radio-label">100W</label>
+                <input type="radio" name="power" id="power-500w" value="500">
+                <label for="power-500w" class="radio-label">500W</label>
+                <input type="radio" name="power" id="power-1kw" value="1000">
+                <label for="power-1kw" class="radio-label">1000W</label>
+                <input type="radio" name="power" id="power-1.5kw" value="1500">
+                <label for="power-1.5kw" class="radio-label">1500W</label>
+            </div>
+
+            <!-- Time Offset -->
+            <div class="control-group">
+                <label class="group-label">Time:</label>
+                <input type="radio" name="time" id="time-now" value="0" checked>
+                <label for="time-now" class="radio-label">Now</label>
+                <input type="radio" name="time" id="time-3h" value="3">
+                <label for="time-3h" class="radio-label">+3h</label>
+                <input type="radio" name="time" id="time-6h" value="6">
+                <label for="time-6h" class="radio-label">+6h</label>
+                <input type="radio" name="time" id="time-12h" value="12">
+                <label for="time-12h" class="radio-label">+12h</label>
+                <input type="radio" name="time" id="time-24h" value="24">
+                <label for="time-24h" class="radio-label">+24h</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div id="map"></div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3>Propagation Likelihood</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: rgba(74, 222, 128, 0.7);"></div>
+                <div class="legend-label">
+                    <span>Good</span>
+                    <span>70-100%</span>
+                </div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: rgba(251, 191, 36, 0.7);"></div>
+                <div class="legend-label">
+                    <span>Fair</span>
+                    <span>45-70%</span>
+                </div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: rgba(248, 113, 113, 0.7);"></div>
+                <div class="legend-label">
+                    <span>Poor</span>
+                    <span>30-45%</span>
+                </div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: rgba(138, 155, 181, 0.4);"></div>
+                <div class="legend-label">
+                    <span>Closed</span>
+                    <span>0-30%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Summary Bar -->
+    <div class="quick-summary">
+        <div class="summary-item">
+            <span class="summary-label">UTC:</span>
+            <span class="summary-value" id="current-utc">--:--</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">TX Location:</span>
+            <span class="summary-value" id="tx-location">FN20 (Halifax, NS)</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Frequency:</span>
+            <span class="summary-value" id="current-freq">14.074</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Best Opening:</span>
+            <span class="summary-value" id="best-opening">EU (IO91) - S9+15dB</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Grids Calculated:</span>
+            <span class="summary-value" id="grid-count">3240</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Next Band Opening:</span>
+            <span class="summary-value" id="next-opening">15m to JA in 2.5h</span>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Maidenhead Grid Calculation Functions
+        const MAIDENHEAD = {
+            // Convert lat/lon to 4-character Maidenhead grid
+            toGrid: function(lat, lon) {
+                // Normalize longitude to 0-360
+                const adjLon = lon + 180;
+                const adjLat = lat + 90;
+
+                // Field (first 2 chars)
+                const fieldLon = String.fromCharCode(65 + Math.floor(adjLon / 20));
+                const fieldLat = String.fromCharCode(65 + Math.floor(adjLat / 10));
+
+                // Square (next 2 chars)
+                const squareLon = Math.floor((adjLon % 20) / 2);
+                const squareLat = Math.floor((adjLat % 10) / 1);
+
+                return fieldLon + fieldLat + squareLon + squareLat;
+            },
+
+            // Convert 4-character Maidenhead grid to lat/lon bounds
+            toBounds: function(grid) {
+                if (grid.length !== 4) return null;
+
+                const field1 = grid.charCodeAt(0) - 65;
+                const field2 = grid.charCodeAt(1) - 65;
+                const square1 = parseInt(grid.charAt(2));
+                const square2 = parseInt(grid.charAt(3));
+
+                const lonMin = field1 * 20 + square1 * 2 - 180;
+                const lonMax = lonMin + 2;
+                const latMin = field2 * 10 + square2 * 1 - 90;
+                const latMax = latMin + 1;
+
+                return {
+                    south: latMin,
+                    north: latMax,
+                    west: lonMin,
+                    east: lonMax,
+                    center: {
+                        lat: (latMin + latMax) / 2,
+                        lon: (lonMin + lonMax) / 2
+                    }
+                };
+            },
+
+            // Generate all 4-character grids within a lat/lon range
+            generateGrids: function(latMin, latMax, lonMin, lonMax) {
+                const grids = new Set();
+
+                // Sample at 0.5 degree intervals to catch all grids
+                for (let lat = latMin; lat <= latMax; lat += 0.5) {
+                    for (let lon = lonMin; lon <= lonMax; lon += 1) {
+                        const grid = this.toGrid(lat, lon);
+                        grids.add(grid);
+                    }
+                }
+
+                return Array.from(grids);
+            }
+        };
+
+        // Initialize map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 3,
+            minZoom: 2,
+            maxZoom: 8,
+            zoomControl: true
+        });
+
+        // Dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        // TX Location (Halifax, NS - FN20)
+        const txLocation = {
+            lat: 44.6488,
+            lon: -63.5752,
+            grid: 'FN44'
+        };
+
+        // Add TX marker
+        const txMarker = L.circleMarker([txLocation.lat, txLocation.lon], {
+            radius: 8,
+            className: 'tx-location-marker',
+            pane: 'markerPane'
+        }).addTo(map);
+
+        txMarker.bindPopup(`
+            <div style="color: #000; font-weight: bold;">
+                <strong>📍 TX Location</strong><br>
+                Grid: ${txLocation.grid}<br>
+                Halifax, NS<br>
+                ${txLocation.lat.toFixed(4)}°N, ${Math.abs(txLocation.lon).toFixed(4)}°W
+            </div>
+        `);
+
+        // Layer group for grid squares
+        let gridLayer = L.layerGroup().addTo(map);
+
+        // Simulate propagation calculation
+        function calculatePropagation(targetLat, targetLon, band, mode, power, timeOffset) {
+            // Distance from TX
+            const dx = targetLon - txLocation.lon;
+            const dy = targetLat - txLocation.lat;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Bearing
+            const bearing = Math.atan2(dx, dy) * 180 / Math.PI;
+
+            // Simulate propagation based on distance, band, time, and bearing
+            // This is MOCKUP data - real implementation would call VOACAP
+            const hour = (new Date().getUTCHours() + timeOffset) % 24;
+
+            // Distance factor (0-1, optimal at different distances for different bands)
+            let distanceFactor;
+            if (band === '40m') {
+                distanceFactor = 1 - Math.abs(distance - 30) / 60;
+            } else if (band === '20m') {
+                distanceFactor = 1 - Math.abs(distance - 70) / 70;
+            } else if (band === '15m') {
+                distanceFactor = 1 - Math.abs(distance - 90) / 90;
+            } else if (band === '10m') {
+                distanceFactor = 1 - Math.abs(distance - 100) / 100;
+            } else {
+                distanceFactor = 1 - Math.abs(distance - 50) / 50;
+            }
+            distanceFactor = Math.max(0, Math.min(1, distanceFactor));
+
+            // Time factor (day/night propagation)
+            const timeFactor = (Math.sin((hour - 12) * Math.PI / 12) + 1) / 2;
+
+            // Direction bias (better to Europe from North America)
+            const directionFactor = bearing > 0 && bearing < 90 ? 1.2 : 1.0;
+
+            // Power factor
+            const powerFactor = Math.log10(power / 5) / Math.log10(300);
+
+            // Combined reliability (0-100%)
+            let reliability = (distanceFactor * 0.5 + timeFactor * 0.3 + powerFactor * 0.2) * directionFactor * 100;
+            reliability = Math.max(0, Math.min(100, reliability));
+
+            // Add some randomness for realism
+            reliability += (Math.random() - 0.5) * 15;
+            reliability = Math.max(0, Math.min(100, reliability));
+
+            return {
+                reliability: Math.round(reliability),
+                distance: Math.round(distance * 111), // Convert to km
+                bearing: Math.round((bearing + 360) % 360)
+            };
+        }
+
+        // Get color for reliability value
+        function getColor(reliability) {
+            if (reliability >= 70) return 'rgba(74, 222, 128, 0.7)';      // Good - Green
+            if (reliability >= 45) return 'rgba(251, 191, 36, 0.7)';      // Fair - Yellow
+            if (reliability >= 30) return 'rgba(248, 113, 113, 0.7)';     // Poor - Red
+            return 'rgba(138, 155, 181, 0.4)';                            // Closed - Gray
+        }
+
+        function getLabel(reliability) {
+            if (reliability >= 70) return 'Good';
+            if (reliability >= 45) return 'Fair';
+            if (reliability >= 30) return 'Poor';
+            return 'Closed';
+        }
+
+        // Render grid squares
+        function renderGrids() {
+            // Clear existing grids
+            gridLayer.clearLayers();
+
+            // Get current settings
+            const band = document.querySelector('input[name="band"]:checked').value;
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const power = parseInt(document.querySelector('input[name="power"]:checked').value);
+            const timeOffset = parseInt(document.querySelector('input[name="time"]:checked').value);
+
+            // Generate global grids (optimize by only generating visible grids)
+            const grids = MAIDENHEAD.generateGrids(-90, 90, -180, 180);
+
+            let goodCount = 0;
+            let fairCount = 0;
+            let poorCount = 0;
+            let closedCount = 0;
+            let bestGrid = null;
+            let bestReliability = 0;
+
+            grids.forEach(gridId => {
+                const bounds = MAIDENHEAD.toBounds(gridId);
+                if (!bounds) return;
+
+                // Calculate propagation to grid center
+                const prop = calculatePropagation(
+                    bounds.center.lat,
+                    bounds.center.lon,
+                    band,
+                    mode,
+                    power,
+                    timeOffset
+                );
+
+                // Track statistics
+                if (prop.reliability >= 70) goodCount++;
+                else if (prop.reliability >= 45) fairCount++;
+                else if (prop.reliability >= 30) poorCount++;
+                else closedCount++;
+
+                if (prop.reliability > bestReliability) {
+                    bestReliability = prop.reliability;
+                    bestGrid = { id: gridId, ...prop, ...bounds.center };
+                }
+
+                // Create rectangle for grid
+                const rectangle = L.rectangle(
+                    [[bounds.south, bounds.west], [bounds.north, bounds.east]],
+                    {
+                        color: getColor(prop.reliability),
+                        fillColor: getColor(prop.reliability),
+                        fillOpacity: 0.6,
+                        weight: 0.5,
+                        opacity: 0.3
+                    }
+                );
+
+                // Add popup with detailed info
+                rectangle.bindPopup(`
+                    <div style="color: #000;">
+                        <strong>Grid: ${gridId}</strong><br>
+                        <strong>Propagation: ${getLabel(prop.reliability)}</strong><br>
+                        Likelihood: ${prop.reliability}%<br>
+                        Distance: ${prop.distance} km<br>
+                        Bearing: ${prop.bearing}°<br>
+                        <hr style="margin: 5px 0;">
+                        Band: ${band}<br>
+                        Mode: ${mode}<br>
+                        Power: ${power}W
+                    </div>
+                `);
+
+                // Highlight on hover
+                rectangle.on('mouseover', function() {
+                    this.setStyle({ weight: 2, opacity: 1 });
+                });
+                rectangle.on('mouseout', function() {
+                    this.setStyle({ weight: 0.5, opacity: 0.3 });
+                });
+
+                gridLayer.addLayer(rectangle);
+            });
+
+            // Update summary
+            document.getElementById('grid-count').textContent = grids.length;
+            if (bestGrid) {
+                document.getElementById('best-opening').textContent =
+                    `${bestGrid.id} - ${bestReliability}% (${bestGrid.distance}km @ ${bestGrid.bearing}°)`;
+            }
+
+            console.log(`Rendered ${grids.length} grids: ${goodCount} good, ${fairCount} fair, ${poorCount} poor, ${closedCount} closed`);
+        }
+
+        // Mode-specific calling frequencies
+        const callingFrequencies = {
+            '40m': { FT8: '7.074', FT4: '7.047', SSB: '7.200', CW: '7.030' },
+            '30m': { FT8: '10.136', FT4: '10.140', SSB: null, CW: '10.120' },
+            '20m': { FT8: '14.074', FT4: '14.080', SSB: '14.200', CW: '14.040' },
+            '17m': { FT8: '18.100', FT4: '18.104', SSB: '18.150', CW: '18.080' },
+            '15m': { FT8: '21.074', FT4: '21.140', SSB: '21.300', CW: '21.040' },
+            '12m': { FT8: '24.915', FT4: '24.919', SSB: '24.950', CW: '24.900' },
+            '10m': { FT8: '28.074', FT4: '28.180', SSB: '28.400', CW: '28.040' }
+        };
+
+        function updateFrequency() {
+            const band = document.querySelector('input[name="band"]:checked').value;
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const freq = callingFrequencies[band][mode];
+
+            if (freq) {
+                document.getElementById('current-freq').textContent = freq;
+                // Enable mode if it has a frequency
+                document.querySelector(`input[name="mode"][value="${mode}"]`).disabled = false;
+            } else {
+                document.getElementById('current-freq').textContent = 'N/A';
+            }
+
+            // Disable SSB on 30m
+            if (band === '30m') {
+                const ssbRadio = document.querySelector('input[name="mode"][value="SSB"]');
+                ssbRadio.disabled = true;
+                if (mode === 'SSB') {
+                    document.querySelector('input[name="mode"][value="FT8"]').checked = true;
+                    updateFrequency();
+                }
+            }
+        }
+
+        // Update UTC time
+        function updateUTC() {
+            const now = new Date();
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            document.getElementById('current-utc').textContent = `${hours}:${minutes}`;
+        }
+
+        // Event listeners
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                updateFrequency();
+                renderGrids();
+            });
+        });
+
+        // Initial render
+        updateUTC();
+        setInterval(updateUTC, 1000);
+        updateFrequency();
+        renderGrids();
+
+        console.log('Maidenhead Grid Visualization initialized');
+        console.log(`TX Location: ${txLocation.grid} (${txLocation.lat}, ${txLocation.lon})`);
+    </script>
+</body>
+</html>
