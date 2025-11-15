@@ -162,3 +162,10 @@ Desktop.ini
 validation_results.json
 validation_reference_results.json
 reference/voacap_original/VOACAPW/
+
+# Dashboard generated prediction data (updated by server)
+Dashboard/propagation_data.json
+Dashboard/enhanced_predictions.json
+Dashboard/dxcc_entities.json
+Dashboard/dxcc_summary.json
+Dashboard/pskreporter_data.json
