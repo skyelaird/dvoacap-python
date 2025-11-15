@@ -14,26 +14,56 @@ pip install sphinx sphinx-rtd-theme
 
 ### Build HTML Documentation
 
+#### On Linux/macOS:
+
 From the `docs/` directory:
 
 ```bash
 make html
 ```
 
+#### On Windows (PowerShell or CMD):
+
+From the `docs/` directory:
+
+```powershell
+.\make.bat html
+```
+
+Or use `sphinx-build` directly:
+
+```powershell
+sphinx-build -M html source build
+```
+
 The built documentation will be in `docs/build/html/`. Open `docs/build/html/index.html` in your browser.
 
 ### Build Other Formats
 
+#### Linux/macOS:
 ```bash
 make latexpdf  # PDF via LaTeX
 make epub      # EPUB format
 make man       # Man pages
 ```
 
+#### Windows:
+```powershell
+.\make.bat latexpdf  # PDF via LaTeX
+.\make.bat epub      # EPUB format
+.\make.bat man       # Man pages
+```
+
 ### Clean Build
 
+#### Linux/macOS:
 ```bash
 make clean
+```
+
+#### Windows:
+```powershell
+.\make.bat clean
 ```
 
 ## Documentation Structure
