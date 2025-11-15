@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-14T20:54:44.387944+00:00",
+  "timestamp": "2025-11-15T14:40:01.520412+00:00",
   "summary": {
     "total": 1,
     "passed": 1,
@@ -11,23 +11,23 @@
       "region": "UK",
       "band": "20m",
       "freq_mhz": 14.15,
-      "utc_hour": 20,
+      "utc_hour": 14,
       "prediction": {
-        "reliability": 78.76327246980156,
-        "snr": 26.68904333567704,
-        "muf": 15.950184402825473,
+        "reliability": 70.6161036515077,
+        "snr": 18.560849585424705,
+        "muf": 30.100985427462188,
         "mode": "2F2",
         "hops": 2,
-        "elevation": 7.659689911231084,
+        "elevation": 7.636909231346337,
         "method": "short"
       },
       "validation": {
         "valid": true,
         "issues": [],
         "metrics": {
-          "reliability": 78.76327246980156,
-          "snr": 26.68904333567704,
-          "muf": 15.950184402825473,
+          "reliability": 70.6161036515077,
+          "snr": 18.560849585424705,
+          "muf": 30.100985427462188,
           "mode": "2F2",
           "hops": 2
         }
