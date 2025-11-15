@@ -22,12 +22,16 @@ if (Test-Path $WIKI_DIR) {
 }
 
 try {
-    git clone $WIKI_URL $WIKI_DIR 2>&1 | Out-Null
+    $cloneOutput = git clone $WIKI_URL $WIKI_DIR 2>&1
     if ($LASTEXITCODE -ne 0) {
-        throw "Git clone failed"
+        Write-Host "❌ Error: Could not clone wiki repository" -ForegroundColor Red
+        Write-Host "Git output: $cloneOutput" -ForegroundColor Yellow
+        Write-Host "Make sure the Wiki is enabled in repository settings and at least one page exists" -ForegroundColor Yellow
+        exit 1
     }
 } catch {
     Write-Host "❌ Error: Could not clone wiki repository" -ForegroundColor Red
+    Write-Host "Exception: $_" -ForegroundColor Yellow
     Write-Host "Make sure the Wiki is enabled in repository settings and at least one page exists" -ForegroundColor Yellow
     exit 1
 }
@@ -45,7 +49,13 @@ git config user.name $userName
 git config user.email $userEmail
 
 # Check for changes
-git add *.md 2>&1 | Out-Null
+$addOutput = git add *.md 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Error: Failed to add markdown files" -ForegroundColor Red
+    Write-Host "Git output: $addOutput" -ForegroundColor Yellow
+    Pop-Location
+    exit 1
+}
 $status = git status --porcelain
 if ([string]::IsNullOrWhiteSpace($status)) {
     Write-Host "✅ No changes to sync" -ForegroundColor Green
@@ -58,13 +68,21 @@ Write-Host "💾 Committing changes..." -ForegroundColor Cyan
 Push-Location ..
 $COMMIT_HASH = git rev-parse --short HEAD
 Pop-Location
-git commit -m "Manual wiki sync from repository (commit: $COMMIT_HASH)" 2>&1 | Out-Null
+$commitOutput = git commit -m "Manual wiki sync from repository (commit: $COMMIT_HASH)" 2>&1
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Error: Failed to commit changes" -ForegroundColor Red
+    Write-Host "Git output: $commitOutput" -ForegroundColor Yellow
+    Pop-Location
+    exit 1
+}
 
 Write-Host "⬆️  Pushing to GitHub Wiki..." -ForegroundColor Cyan
-git push origin master 2>&1 | Out-Null
+$pushOutput = git push origin master 2>&1
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "❌ Error: Failed to push to wiki repository" -ForegroundColor Red
+    Write-Host "Git output: $pushOutput" -ForegroundColor Yellow
     Pop-Location
     exit 1
 }
