@@ -117,6 +117,43 @@ git checkout -b fix/your-bug-fix
 - Include type hints where appropriate
 - Update documentation if needed
 
+### 3a. Update Documentation (Critical!)
+
+**Documentation must be updated BEFORE every commit** to avoid having to rethink context in every chat session.
+
+The repository includes a **pre-commit hook** that checks for documentation updates. When you commit code changes without documentation, you'll be prompted to confirm documentation is current.
+
+**Documentation Workflow**:
+
+1. **Make code changes**
+2. **Update relevant documentation immediately** (don't defer!)
+3. **Review the checklist** in `DOCUMENTATION_CHECKLIST.md`
+4. **Stage both code AND documentation** together
+5. **Commit** (pre-commit hook will verify)
+
+**Quick Documentation Checklist**:
+
+```bash
+# Did you change the API? Update:
+git add docs/USAGE.md
+
+# Did you complete a task? Update:
+git add NEXT_STEPS.md
+
+# Did you add a feature? Update:
+git add README.md
+
+# Did you fix a validation bug? Update:
+git add VALIDATION_SUMMARY.md
+
+# Did you change the dashboard? Update:
+git add Dashboard/README.md
+```
+
+**See [DOCUMENTATION_CHECKLIST.md](DOCUMENTATION_CHECKLIST.md)** for the complete checklist and decision tree.
+
+**Why This Matters**: Outdated documentation forces developers (and AI assistants) to re-discover context, architecture decisions, and current status in every conversation. This wastes time and introduces errors. Keeping documentation current is not optional—it's a core part of the development workflow.
+
 ### 4. Add Tests
 
 ```bash
