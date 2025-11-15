@@ -16,7 +16,6 @@ This module performs ray path calculations through the ionosphere:
 
 import math
 from dataclasses import dataclass, field
-from typing import List, Optional
 import numpy as np
 
 from .ionospheric_profile import (
@@ -75,15 +74,15 @@ class Reflectrix:
         self.min_angle = min_angle
         self.fmhz = 0.0  # Frequency in MHz
         self.fkhz = 0  # Frequency in kHz
-        self.profile: Optional[IonosphericProfile] = None
+        self.profile: IonosphericProfile | None = None
 
         # Reflection points (reflectrix)
-        self.refl: List[ModeInfo] = []
+        self.refl: list[ModeInfo] = []
         self.skip_distance = 0.0  # Minimum ground distance (radians)
         self.max_distance = 0.0  # Maximum ground distance (radians)
 
         # Modes for a specific hop distance
-        self.modes: List[ModeInfo] = []
+        self.modes: list[ModeInfo] = []
 
         # Working variables
         self._layer = 'F2'  # Current layer being processed

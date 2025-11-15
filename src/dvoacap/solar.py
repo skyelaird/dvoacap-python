@@ -11,7 +11,6 @@ This module calculates solar position and local time for HF propagation modeling
 
 import math
 from dataclasses import dataclass
-from typing import Tuple
 from datetime import datetime
 
 

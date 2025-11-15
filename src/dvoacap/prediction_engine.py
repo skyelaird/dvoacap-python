@@ -11,7 +11,6 @@ Author: Ported from VOACAP Pascal source (VE3NEA)
 """
 
 import numpy as np
-from typing import List, Optional, Tuple
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from copy import deepcopy
@@ -190,17 +189,17 @@ class PredictionEngine:
         # Input/output
         self.rx_location = GeoPoint(lat=0.0, lon=0.0)
         self.utc_time = 0.0
-        self.frequencies: List[float] = []
-        self.predictions: List[Prediction] = []
+        self.frequencies: list[float] = []
+        self.predictions: list[Prediction] = []
 
         # Internal state
-        self._control_points: List[ControlPoint] = []
-        self._profiles: List[IonosphericProfile] = []
-        self._current_profile: Optional[IonosphericProfile] = None
-        self.circuit_muf: Optional[CircuitMuf] = None
-        self._modes: List[ModeInfo] = []
+        self._control_points: list[ControlPoint] = []
+        self._profiles: list[IonosphericProfile] = []
+        self._current_profile: IonosphericProfile | None = None
+        self.circuit_muf: CircuitMuf | None = None
+        self._modes: list[ModeInfo] = []
         self._avg_loss = TripleValue()
-        self._best_mode: Optional[ModeInfo] = None
+        self._best_mode: ModeInfo | None = None
         self._absorption_index = 0.0
         self._adj_de_loss = 0.0
         self._adj_ccir252_a = 0.0
@@ -213,7 +212,7 @@ class PredictionEngine:
         self,
         rx_location: GeoPoint,
         utc_time: float,
-        frequencies: List[float]
+        frequencies: list[float]
     ):
         """
         Perform complete propagation prediction.

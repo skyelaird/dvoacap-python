@@ -15,7 +15,6 @@ This module handles 2D and 3D path geometry calculations for HF propagation:
 
 import math
 from dataclasses import dataclass
-from typing import Optional, Tuple
 
 
 # ============================================================================
@@ -57,7 +56,7 @@ class GeoPoint:
         """Create GeoPoint from degrees"""
         return cls(lat=lat_deg * RinD, lon=lon_deg * RinD)
     
-    def to_degrees(self) -> Tuple[float, float]:
+    def to_degrees(self) -> tuple[float, float]:
         """Convert to degrees (lat, lon)"""
         return (self.lat * DinR, self.lon * DinR)
     
@@ -98,8 +97,8 @@ class PathGeometry:
     """
     
     def __init__(self):
-        self.tx: Optional[GeoPoint] = None
-        self.rx: Optional[GeoPoint] = None
+        self.tx: GeoPoint | None = None
+        self.rx: GeoPoint | None = None
         self.dist: float = 0.0  # Great circle distance in radians
         self.azim_tr: float = 0.0  # Azimuth from Tx to Rx in radians
         self.azim_rt: float = 0.0  # Azimuth from Rx to Tx in radians

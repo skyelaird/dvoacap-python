@@ -16,7 +16,6 @@ This module models the electron density profile of the ionosphere:
 
 import math
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
 import numpy as np
 
 
@@ -225,17 +224,17 @@ class IonosphericProfile:
         self.local_time_f2: float = 0.0
 
         # Electron density profile arrays
-        self.dens_true_height: Optional[np.ndarray] = None  # Height values (km)
-        self.el_density: Optional[np.ndarray] = None        # Density values (MHz^2)
+        self.dens_true_height: np.ndarray | None = None  # Height values (km)
+        self.el_density: np.ndarray | None = None        # Density values (MHz^2)
 
         # Ionogram arrays
-        self.igram_vert_freq: Optional[np.ndarray] = None    # Vertical frequency (MHz)
-        self.igram_true_height: Optional[np.ndarray] = None  # True height (km)
-        self.igram_virt_height: Optional[np.ndarray] = None  # Virtual height (km)
-        self.dev_loss: Optional[np.ndarray] = None           # Deviative loss (dB)
+        self.igram_vert_freq: np.ndarray | None = None    # Vertical frequency (MHz)
+        self.igram_true_height: np.ndarray | None = None  # True height (km)
+        self.igram_virt_height: np.ndarray | None = None  # Virtual height (km)
+        self.dev_loss: np.ndarray | None = None           # Deviative loss (dB)
 
         # Oblique frequency array (angle_idx, height_idx)
-        self.oblique_freq: Optional[np.ndarray] = None
+        self.oblique_freq: np.ndarray | None = None
 
         # Parameters computed elsewhere
         self.absorption_index: float = 0.0

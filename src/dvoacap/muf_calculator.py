@@ -15,7 +15,6 @@ This module computes Maximum Usable Frequency (MUF) for HF propagation:
 
 import math
 from dataclasses import dataclass
-from typing import List, Optional
 import numpy as np
 
 from .ionospheric_profile import (
@@ -89,7 +88,7 @@ class CircuitMuf:
 # Helper Functions
 # ============================================================================
 
-def select_profile(profiles: List[IonosphericProfile]) -> Optional[IonosphericProfile]:
+def select_profile(profiles: list[IonosphericProfile]) -> IonosphericProfile | None:
     """
     Select the controlling profile from multiple sample areas.
 
@@ -213,11 +212,11 @@ class MufCalculator:
         self.min_angle = min_angle
 
         # Working variables (used across methods)
-        self._profile: Optional[IonosphericProfile] = None
+        self._profile: IonosphericProfile | None = None
         self._hop_dist: float = 0.0
         self._sin_i_sqr: float = 0.0
 
-    def compute_circuit_muf(self, profiles: List[IonosphericProfile]) -> CircuitMuf:
+    def compute_circuit_muf(self, profiles: list[IonosphericProfile]) -> CircuitMuf:
         """
         Compute circuit MUF for all layers.
 

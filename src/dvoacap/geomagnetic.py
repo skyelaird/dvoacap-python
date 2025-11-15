@@ -14,7 +14,7 @@ This module calculates geomagnetic field parameters for HF propagation modeling:
 
 import math
 from dataclasses import dataclass
-from typing import List, Tuple
+from functools import cache
 import numpy as np
 
 
@@ -118,42 +118,45 @@ class SinCos:
     cos: float
 
 
-def make_sincos_array(x: float, length: int) -> List[SinCos]:
+@cache
+def make_sincos_array(x: float, length: int) -> tuple[SinCos, ...]:
     """
     Generate array of sin/cos pairs for multiple angles.
-    
+
     This uses angle addition formulas to efficiently compute sin(n*x) and
     cos(n*x) for n = 0, 1, 2, ..., length-1
-    
+
     Args:
         x: Base angle in radians
         length: Number of terms to generate
-        
+
     Returns:
-        List of SinCos objects containing sin(n*x) and cos(n*x)
-        
+        Tuple of SinCos objects containing sin(n*x) and cos(n*x)
+
     Note:
         Uses recurrence relation:
         sin((n+1)x) = sin(x)*cos(nx) + cos(x)*sin(nx)
         cos((n+1)x) = cos(x)*cos(nx) - sin(x)*sin(nx)
+
+        Cached with @cache decorator for performance (Python 3.11+)
     """
     assert length > 1, "Length must be greater than 1"
-    
+
     result = []
-    
+
     # n = 0: sin(0) = 0, cos(0) = 1
     result.append(SinCos(sin=0.0, cos=1.0))
-    
+
     # n = 1: sin(x), cos(x)
     result.append(SinCos(sin=math.sin(x), cos=math.cos(x)))
-    
+
     # n >= 2: use recurrence relation
     for i in range(2, length):
         sin_val = result[1].sin * result[i-1].cos + result[1].cos * result[i-1].sin
         cos_val = result[1].cos * result[i-1].cos - result[1].sin * result[i-1].sin
         result.append(SinCos(sin=sin_val, cos=cos_val))
-    
-    return result
+
+    return tuple(result)
 
 
 # ============================================================================
@@ -182,7 +185,7 @@ class GeomagneticField:
         self.Y = 0.0  # North component
         self.Z = 0.0  # Vertical component (positive down)
     
-    def compute_xyz(self, lat: float, lon: float) -> Tuple[float, float, float]:
+    def compute_xyz(self, lat: float, lon: float) -> tuple[float, float, float]:
         """
         Compute X, Y, Z components of magnetic field vector.
         
