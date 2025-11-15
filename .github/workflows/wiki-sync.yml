@@ -1,0 +1,58 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wiki/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clone wiki repository
+        run: |
+          git clone https://github.com/${{ github.repository }}.wiki.git wiki-repo
+        continue-on-error: true
+
+      - name: Initialize wiki if it doesn't exist
+        run: |
+          if [ ! -d "wiki-repo" ]; then
+            echo "Wiki repository doesn't exist yet. Please enable the Wiki feature in your repository settings."
+            echo "Once enabled, create at least one page (e.g., Home) via the GitHub UI, then run this workflow again."
+            exit 1
+          fi
+
+      - name: Copy wiki files
+        run: |
+          # Copy all markdown files from wiki/ to wiki-repo/
+          cp wiki/*.md wiki-repo/
+
+      - name: Commit and push changes
+        run: |
+          cd wiki-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if there are any changes
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git add *.md
+          git commit -m "Auto-sync wiki from main repository (commit: ${{ github.sha }})"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git master
+
+      - name: Summary
+        run: |
+          echo "✅ Wiki synced successfully!"
+          echo "Updated from commit: ${{ github.sha }}"
