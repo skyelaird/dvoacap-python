@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V2: Smooth Heat Map - Coverage Map Mockup</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0e1a;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            padding: 12px 20px;
+            border-bottom: 3px solid #4a90e2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .control-group label.group-label {
+            font-weight: 600;
+            color: #4a90e2;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .control-group input[type="radio"] {
+            display: none;
+        }
+
+        .control-group label.radio-label {
+            padding: 5px 12px;
+            background-color: #162236;
+            border: 2px solid #2a3f5f;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .control-group label.radio-label:hover {
+            background-color: #1a2738;
+            border-color: #4a90e2;
+        }
+
+        .control-group input[type="radio"]:checked + label.radio-label {
+            background-color: #4a90e2;
+            border-color: #4a90e2;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 130px);
+        }
+
+        /* Map Container */
+        #map {
+            flex: 1;
+            background-color: #0a0e1a;
+        }
+
+        /* Quick Summary Bar */
+        .quick-summary {
+            background: linear-gradient(135deg, #162236 0%, #0d1520 100%);
+            padding: 10px 20px;
+            border-top: 2px solid #4a90e2;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .quick-summary .label {
+            color: #8a9bb5;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .quick-summary .value {
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+        .quick-summary .best {
+            color: #4ade80;
+            font-weight: 700;
+        }
+
+        .quick-summary .dxcc {
+            color: #f87171;
+            font-weight: 700;
+        }
+
+        .quick-summary .next {
+            color: #fbbf24;
+        }
+
+        /* Tooltips */
+        .leaflet-tooltip {
+            background-color: rgba(22, 34, 54, 0.95) !important;
+            border: 2px solid #4a90e2 !important;
+            border-radius: 6px !important;
+            color: #e0e0e0 !important;
+            font-size: 12px !important;
+            padding: 8px 12px !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+        }
+
+        /* Popup */
+        .leaflet-popup-content-wrapper {
+            background-color: #162236 !important;
+            color: #e0e0e0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 12px !important;
+            font-size: 12px !important;
+        }
+
+        .popup-entity-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #4a90e2;
+            margin-bottom: 8px;
+        }
+
+        .popup-status.needed {
+            color: #f87171;
+        }
+
+        .popup-status.worked {
+            color: #fbbf24;
+        }
+
+        .popup-propagation {
+            background-color: #0d1520;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .popup-propagation strong {
+            color: #4ade80;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 60px;
+            right: 20px;
+            background-color: rgba(22, 34, 54, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #4a90e2;
+            z-index: 1000;
+            font-size: 11px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .legend h4 {
+            margin-bottom: 8px;
+            color: #4a90e2;
+            font-size: 13px;
+        }
+
+        .legend-gradient {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(to right,
+                rgba(138, 155, 181, 0.3) 0%,
+                rgba(248, 113, 113, 0.6) 20%,
+                rgba(251, 191, 36, 0.6) 50%,
+                rgba(74, 222, 128, 0.6) 100%);
+            border-radius: 4px;
+            border: 1px solid #2a3f5f;
+            margin: 8px 0;
+        }
+
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            margin-top: 4px;
+            color: #8a9bb5;
+        }
+
+        .legend-separator {
+            margin: 8px 0;
+            border-top: 1px solid #2a3f5f;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 1px solid #2a3f5f;
+        }
+
+        /* Mockup Watermark */
+        .mockup-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(74, 222, 128, 0.08);
+            z-index: 500;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Version Badge */
+        .version-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #4ade80 0%, #2d8c5a 100%);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="version-badge">V2: SMOOTH HEAT MAP</div>
+
+    <div class="header">
+        <h1>📡 VE1ATM HF Propagation Monitor</h1>
+
+        <div class="control-panel">
+            <!-- Band Selection -->
+            <div class="control-group">
+                <label class="group-label">Band:</label>
+                <input type="radio" id="band-40m" name="band" value="40m">
+                <label for="band-40m" class="radio-label">40m</label>
+
+                <input type="radio" id="band-30m" name="band" value="30m">
+                <label for="band-30m" class="radio-label">30m</label>
+
+                <input type="radio" id="band-20m" name="band" value="20m" checked>
+                <label for="band-20m" class="radio-label">20m</label>
+
+                <input type="radio" id="band-17m" name="band" value="17m">
+                <label for="band-17m" class="radio-label">17m</label>
+
+                <input type="radio" id="band-15m" name="band" value="15m">
+                <label for="band-15m" class="radio-label">15m</label>
+
+                <input type="radio" id="band-12m" name="band" value="12m">
+                <label for="band-12m" class="radio-label">12m</label>
+
+                <input type="radio" id="band-10m" name="band" value="10m">
+                <label for="band-10m" class="radio-label">10m</label>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="control-group">
+                <label class="group-label">Mode:</label>
+                <input type="radio" id="mode-ft8" name="mode" value="FT8" checked>
+                <label for="mode-ft8" class="radio-label">FT8</label>
+
+                <input type="radio" id="mode-ft4" name="mode" value="FT4">
+                <label for="mode-ft4" class="radio-label">FT4</label>
+
+                <input type="radio" id="mode-ssb" name="mode" value="SSB">
+                <label for="mode-ssb" class="radio-label">SSB</label>
+
+                <input type="radio" id="mode-cw" name="mode" value="CW">
+                <label for="mode-cw" class="radio-label">CW</label>
+            </div>
+
+            <!-- TX Power Selection -->
+            <div class="control-group">
+                <label class="group-label">TX Power:</label>
+                <input type="radio" id="power-5" name="power" value="5">
+                <label for="power-5" class="radio-label">5W</label>
+
+                <input type="radio" id="power-25" name="power" value="25">
+                <label for="power-25" class="radio-label">25W</label>
+
+                <input type="radio" id="power-50" name="power" value="50">
+                <label for="power-50" class="radio-label">50W</label>
+
+                <input type="radio" id="power-100" name="power" value="100" checked>
+                <label for="power-100" class="radio-label">100W</label>
+
+                <input type="radio" id="power-500" name="power" value="500">
+                <label for="power-500" class="radio-label">500W</label>
+
+                <input type="radio" id="power-1000" name="power" value="1000">
+                <label for="power-1000" class="radio-label">1000W</label>
+
+                <input type="radio" id="power-1500" name="power" value="1500">
+                <label for="power-1500" class="radio-label">1500W</label>
+            </div>
+
+            <!-- Time Selection -->
+            <div class="control-group">
+                <label class="group-label">Time:</label>
+                <input type="radio" id="time-now" name="time" value="now" checked>
+                <label for="time-now" class="radio-label">Now</label>
+
+                <input type="radio" id="time-3h" name="time" value="3h">
+                <label for="time-3h" class="radio-label">+3h</label>
+
+                <input type="radio" id="time-6h" name="time" value="6h">
+                <label for="time-6h" class="radio-label">+6h</label>
+
+                <input type="radio" id="time-12h" name="time" value="12h">
+                <label for="time-12h" class="radio-label">+12h</label>
+
+                <input type="radio" id="time-24h" name="time" value="24h">
+                <label for="time-24h" class="radio-label">+24h</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div id="map"></div>
+        <div class="mockup-watermark">V2 MOCKUP</div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h4>Signal Strength</h4>
+            <div class="legend-gradient"></div>
+            <div class="legend-labels">
+                <span>Closed</span>
+                <span>Poor</span>
+                <span>Fair</span>
+                <span>Good</span>
+            </div>
+
+            <div class="legend-separator"></div>
+            <h4>DXCC Status</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #f87171;"></div>
+                <span>Needed + Open</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8a9bb5;"></div>
+                <span>Needed + Closed</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-summary">
+        <div>
+            <span class="label">CURRENT:</span>
+            <span class="value" id="currentTime">0045 UTC</span>
+        </div>
+        <div>
+            <span class="label">BEST:</span>
+            <span class="best" id="bestOpportunity">20m to JA @ 14.074: S9+20</span>
+        </div>
+        <div>
+            <span class="label">DXCC:</span>
+            <span class="dxcc" id="dxccOpportunity">VP8 (Falklands) @ 14.074: S9</span>
+        </div>
+        <div>
+            <span class="label">NEXT:</span>
+            <span class="next" id="nextChange">40m→EU opens @ 0200 UTC</span>
+        </div>
+        <div style="margin-left: auto; font-size: 11px; color: #6a7f9f;">
+            Click map for details
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script>
+        // Mode-specific calling frequencies (in MHz, format: implied unit)
+        const modeFrequencies = {
+            '40m': { 'FT8': '7.074', 'FT4': '7.047', 'SSB': '7.200', 'CW': '7.030' },
+            '30m': { 'FT8': '10.136', 'FT4': '10.140', 'SSB': null, 'CW': '10.120' },
+            '20m': { 'FT8': '14.074', 'FT4': '14.080', 'SSB': '14.200', 'CW': '14.050' },
+            '17m': { 'FT8': '18.100', 'FT4': '18.104', 'SSB': '18.140', 'CW': '18.090' },
+            '15m': { 'FT8': '21.074', 'FT4': '21.140', 'SSB': '21.300', 'CW': '21.050' },
+            '12m': { 'FT8': '24.915', 'FT4': '24.919', 'SSB': '24.950', 'CW': '24.910' },
+            '10m': { 'FT8': '28.074', 'FT4': '28.180', 'SSB': '28.400', 'CW': '28.050' }
+        };
+
+        function getCurrentFrequency() {
+            const band = document.querySelector('input[name="band"]:checked').value;
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            return modeFrequencies[band][mode] || '14.074';
+        }
+
+        function updateSummary() {
+            const freq = getCurrentFrequency();
+            document.getElementById('bestOpportunity').textContent = `20m to JA @ ${freq}: S9+20`;
+            document.getElementById('dxccOpportunity').textContent = `VP8 (Falklands) @ ${freq}: S9`;
+        }
+
+        // Initialize map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 8,
+            worldCopyJump: false
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '©OpenStreetMap, ©CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Home station marker
+        const homeMarker = L.marker([44.374, -64.300], {
+            icon: L.divIcon({
+                className: 'home-marker',
+                html: '<div style="background-color: #4a90e2; width: 14px; height: 14px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.5);"></div>',
+                iconSize: [14, 14],
+                iconAnchor: [7, 7]
+            })
+        }).addTo(map);
+        homeMarker.bindTooltip('<strong>VE1ATM</strong><br>Lunenburg, NS', {
+            permanent: false,
+            direction: 'top'
+        });
+
+        // Generate heat map data points (simulating propagation quality across the globe)
+        // In real implementation, this would come from VOACAP predictions on a grid
+        const heatData = [];
+
+        // Europe - GOOD
+        for (let lat = 36; lat <= 71; lat += 2) {
+            for (let lon = -10; lon <= 40; lon += 2) {
+                heatData.push([lat, lon, 0.85]); // High intensity
+            }
+        }
+
+        // Japan/Asia - EXCELLENT
+        for (let lat = 30; lat <= 70; lat += 2) {
+            for (let lon = 40; lon <= 150; lon += 2) {
+                heatData.push([lat, lon, 0.95]); // Very high intensity
+            }
+        }
+
+        // South America - FAIR
+        for (let lat = -56; lat <= 12; lat += 3) {
+            for (let lon = -82; lon <= -34; lon += 3) {
+                heatData.push([lat, lon, 0.65]); // Medium intensity
+            }
+        }
+
+        // Africa - POOR
+        for (let lat = -35; lat <= 37; lat += 4) {
+            for (let lon = -17; lon <= 51; lon += 4) {
+                heatData.push([lat, lon, 0.40]); // Low intensity
+            }
+        }
+
+        // Oceania - CLOSED
+        for (let lat = -50; lat <= 10; lat += 5) {
+            for (let lon = 110; lon <= 180; lon += 5) {
+                heatData.push([lat, lon, 0.15]); // Very low intensity
+            }
+        }
+
+        // Create heat layer
+        const heat = L.heatLayer(heatData, {
+            radius: 40,
+            blur: 35,
+            maxZoom: 8,
+            max: 1.0,
+            gradient: {
+                0.0: 'rgba(138, 155, 181, 0.3)',  // Closed
+                0.3: 'rgba(248, 113, 113, 0.6)',   // Poor
+                0.5: 'rgba(251, 191, 36, 0.6)',    // Fair
+                0.7: 'rgba(74, 222, 128, 0.6)',    // Good
+                1.0: 'rgba(74, 222, 128, 0.9)'     // Excellent
+            }
+        }).addTo(map);
+
+        // DXCC Entity pins
+        const dxccEntities = [
+            { name: 'VP8 (Falkland Islands)', coords: [-51.7, -59.5], status: 'needed-open', signal: 'S9', band: '20m' },
+            { name: '3B8 (Mauritius)', coords: [-20.3, 57.6], status: 'needed-closed', signal: 'S0', band: '-' },
+            { name: 'JA1 (Tokyo)', coords: [35.7, 139.7], status: 'needed-open', signal: 'S9+20', band: '20m' },
+            { name: 'ZL (New Zealand)', coords: [-41, 174], status: 'needed-closed', signal: 'S0', band: '-' },
+            { name: 'G (England)', coords: [51.5, -0.1], status: 'needed-open', signal: 'S9+10', band: '20m' }
+        ];
+
+        dxccEntities.forEach(entity => {
+            const pinColor = entity.status === 'needed-open' ? '#f87171' : '#8a9bb5';
+            const marker = L.circleMarker(entity.coords, {
+                radius: 7,
+                fillColor: pinColor,
+                color: '#fff',
+                weight: 2,
+                fillOpacity: 0.95,
+                zIndexOffset: 1000
+            }).addTo(map);
+
+            const popupContent = `
+                <div class="popup-entity-name">${entity.name}</div>
+                <div class="popup-status ${entity.status === 'needed-open' ? 'needed' : 'worked'}">
+                    Status: <strong>${entity.status === 'needed-open' ? 'NEEDED (Open)' : 'NEEDED (Closed)'}</strong>
+                </div>
+                <div class="popup-propagation">
+                    Frequency: <strong>${getCurrentFrequency()}</strong><br>
+                    Signal: <strong>${entity.signal}</strong>
+                </div>
+            `;
+            marker.bindPopup(popupContent);
+            marker.bindTooltip(`<strong>${entity.name}</strong><br>${entity.signal}`, { direction: 'top' });
+        });
+
+        // Event listeners
+        document.querySelectorAll('input[name="band"], input[name="mode"], input[name="power"], input[name="time"]').forEach(radio => {
+            radio.addEventListener('change', updateSummary);
+        });
+
+        // Initialize
+        updateSummary();
+    </script>
+</body>
+</html>
