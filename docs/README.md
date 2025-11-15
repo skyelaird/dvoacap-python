@@ -22,19 +22,26 @@ From the `docs/` directory:
 make html
 ```
 
-#### On Windows (PowerShell or CMD):
+#### On Windows:
 
 From the `docs/` directory:
 
+**Option 1 - Using the batch file (PowerShell or CMD):**
 ```powershell
 .\make.bat html
 ```
 
-Or use `sphinx-build` directly:
+**Option 2 - Using the PowerShell script:**
+```powershell
+.\make.ps1 html
+```
 
+**Option 3 - Using sphinx-build directly:**
 ```powershell
 sphinx-build -M html source build
 ```
+
+**Note:** The `make` command without the `.\` prefix won't work on Windows PowerShell. You must use one of the options above.
 
 The built documentation will be in `docs/build/html/`. Open `docs/build/html/index.html` in your browser.
 
@@ -49,9 +56,9 @@ make man       # Man pages
 
 #### Windows:
 ```powershell
-.\make.bat latexpdf  # PDF via LaTeX
-.\make.bat epub      # EPUB format
-.\make.bat man       # Man pages
+.\make.bat latexpdf  # PDF via LaTeX (or .\make.ps1 latexpdf)
+.\make.bat epub      # EPUB format (or .\make.ps1 epub)
+.\make.bat man       # Man pages (or .\make.ps1 man)
 ```
 
 ### Clean Build
@@ -63,7 +70,7 @@ make clean
 
 #### Windows:
 ```powershell
-.\make.bat clean
+.\make.bat clean  # or .\make.ps1 clean
 ```
 
 ## Documentation Structure
