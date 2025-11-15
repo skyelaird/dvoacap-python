@@ -171,7 +171,7 @@ class GeomagneticField:
     model truncated to degree 6 for computational efficiency.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize geomagnetic field calculator"""
         self.m_sin = math.sin(MAG_POLE_LAT)
         self.m_cos = math.cos(MAG_POLE_LAT)
@@ -333,7 +333,7 @@ class GeomagneticCalculator:
     parameters needed in HF propagation modeling.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize geomagnetic calculator"""
         self.field = GeomagneticField()
     

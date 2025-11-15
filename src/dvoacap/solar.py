@@ -231,7 +231,7 @@ class SolarCalculator:
     needed in HF propagation modeling.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize solar calculator"""
         pass
     
