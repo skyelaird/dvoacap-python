@@ -181,7 +181,14 @@ def generate_prediction(
                     'snr': round(snr, 1),
                     'mode': pred.get_mode_name(engine.path.dist),
                     'hops': pred.hop_count,
-                    'elevation': round(np.rad2deg(pred.tx_elevation), 1)
+                    'elevation': round(np.rad2deg(pred.tx_elevation), 1),
+                    # Enhanced data for prop charts
+                    'muf_day': round(pred.signal.muf_day * 100, 1),  # MUF probability as %
+                    'signal_dbw': round(pred.signal.power_dbw, 1),   # Median signal power
+                    'signal_10': round(pred.signal.power10, 1),      # Lower decile (weak)
+                    'signal_90': round(pred.signal.power90, 1),      # Upper decile (strong)
+                    'snr_10': round(pred.signal.snr10, 1),           # Lower decile SNR
+                    'snr_90': round(pred.signal.snr90, 1),           # Upper decile SNR
                 }
             else:
                 # No prediction available
@@ -191,7 +198,13 @@ def generate_prediction(
                     'snr': -999,
                     'mode': 'N/A',
                     'hops': 0,
-                    'elevation': 0
+                    'elevation': 0,
+                    'muf_day': 0,
+                    'signal_dbw': -999,
+                    'signal_10': -999,
+                    'signal_90': -999,
+                    'snr_10': -999,
+                    'snr_90': -999,
                 }
 
         # Calculate path info
@@ -210,7 +223,7 @@ def generate_prediction(
 
     except Exception as e:
         print(f"  [WARNING] Error predicting {region_code} at {utc_hour:02d}00 UTC: {e}")
-        # Return empty prediction
+        # Return empty prediction with all enhanced fields
         return {
             'region': region_code,
             'region_name': region_info['name'],
@@ -219,7 +232,9 @@ def generate_prediction(
             'azimuth': 0,
             'muf': 0,
             'bands': {band: {'status': 'ERROR', 'reliability': 0, 'snr': -999,
-                            'mode': 'N/A', 'hops': 0, 'elevation': 0}
+                            'mode': 'N/A', 'hops': 0, 'elevation': 0,
+                            'muf_day': 0, 'signal_dbw': -999, 'signal_10': -999,
+                            'signal_90': -999, 'snr_10': -999, 'snr_90': -999}
                      for band in BANDS.keys()}
         }
 
@@ -257,8 +272,8 @@ def generate_24hour_forecast() -> Dict:
     frequencies = list(BANDS.values())
     all_predictions = []
 
-    # Sample UTC hours (every 2 hours for performance, can do hourly if needed)
-    utc_hours = range(0, 24, 2)
+    # Generate hourly predictions for detailed prop charts (v1.0 enhancement)
+    utc_hours = range(0, 24, 1)  # Changed from 2-hour to 1-hour intervals
 
     print(f"\n[OK] Generating predictions for {len(TARGET_REGIONS)} regions, {len(utc_hours)} time points...")
     print()
