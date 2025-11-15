@@ -83,7 +83,7 @@ class NoiseModel:
         self._ns_mhz_1 = 0.0
         self._ns_mhz_2 = 0.0
 
-    def compute_noise_at_1mhz(self, location: GeoPoint, local_time: float):
+    def compute_noise_at_1mhz(self, location: GeoPoint, local_time: float) -> None:
         """
         Prepare 1MHz noise coefficients for use in compute_distribution.
 
@@ -138,7 +138,7 @@ class NoiseModel:
             FixedMapKind.NOISE1 + self._t2, self._lat, self._east_lon
         )
 
-    def compute_distribution(self, frequency: float, fof2: float):
+    def compute_distribution(self, frequency: float, fof2: float) -> None:
         """
         Compute noise probability density functions for a specific frequency.
 

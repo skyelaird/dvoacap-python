@@ -43,7 +43,7 @@ class GeographicPoint:
     longitude: float  # radians
 
     @classmethod
-    def from_degrees(cls, lat: float, lon: float):
+    def from_degrees(cls, lat: float, lon: float) -> "GeographicPoint":
         """Create from degrees"""
         return cls(lat * RinD, lon * RinD)
 
@@ -165,7 +165,7 @@ def compute_f2_retardation(pnt: ControlPoint) -> float:
     return result
 
 
-def compute_iono_params(pnt: ControlPoint, maps: FourierMaps):
+def compute_iono_params(pnt: ControlPoint, maps: FourierMaps) -> None:
     """
     Compute all ionospheric layer parameters for a control point.
 

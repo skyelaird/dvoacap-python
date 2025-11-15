@@ -115,7 +115,7 @@ class ModeInfo:
 # Helper Functions
 # ============================================================================
 
-def interpolate_linear(arr: np.ndarray, start_h: int, end_h: int):
+def interpolate_linear(arr: np.ndarray, start_h: int, end_h: int) -> None:
     """Populate array with linearly interpolated data"""
     if end_h <= start_h or end_h >= len(arr):
         return
@@ -259,7 +259,7 @@ class IonosphericProfile:
         self._mhz: float = 0.0
         self._true_h: float = 0.0
 
-    def compute_el_density_profile(self):
+    def compute_el_density_profile(self) -> None:
         """
         Compute the electron density profile.
 
@@ -279,7 +279,7 @@ class IonosphericProfile:
         self._populate_true_height_array()
         self._populate_electron_density_array()
 
-    def _analyze_layers(self):
+    def _analyze_layers(self) -> None:
         """Analyze layer parameters and determine profile characteristics"""
         X_LOW = 0.8516
         X_UP = 0.98 * self.e.fo / self.f2.fo
@@ -346,7 +346,7 @@ class IonosphericProfile:
 
         self._top_f1 = htw
 
-    def _populate_true_height_array(self):
+    def _populate_true_height_array(self) -> None:
         """Populate the true height array with appropriate spacing"""
         # D-E region
         dif = max(0.0, 0.25 * (BOT_E - HM_D))
@@ -379,7 +379,7 @@ class IonosphericProfile:
             interpolate_linear(self.dens_true_height, 18, 28)
             interpolate_linear(self.dens_true_height, 28, 50)
 
-    def _populate_electron_density_array(self):
+    def _populate_electron_density_array(self) -> None:
         """Populate electron density array for each height"""
         # Slope of E is same as slope of valley at BOT_E
         fsq = FNX * math.exp(-ALP * (BOT_E - HM_D))
@@ -503,7 +503,7 @@ class IonosphericProfile:
 
         return self.dens_true_height[1] + ht * TWDIV * result
 
-    def compute_ionogram(self):
+    def compute_ionogram(self) -> None:
         """
         Compute ionogram (true and virtual height vs frequency).
 
@@ -623,7 +623,7 @@ class IonosphericProfile:
 
         return {'E': e_angle, 'F1': f1_angle, 'F2': f2_angle}
 
-    def compute_oblique_frequencies(self):
+    def compute_oblique_frequencies(self) -> None:
         """
         Compute oblique reflection frequencies for all angles and heights.
 
@@ -660,7 +660,7 @@ class IonosphericProfile:
 
                 self.oblique_freq[ang_idx, h] = oblique_freq
 
-    def compute_derivative_loss(self, muf_info: dict):
+    def compute_derivative_loss(self, muf_info: dict) -> None:
         """
         Compute derivative loss for the ionospheric profile.
 
@@ -678,7 +678,7 @@ class IonosphericProfile:
         else:
             self.dev_loss = np.zeros(31, dtype=np.float32)
 
-    def populate_mode_info(self, mode: ModeInfo, idx: int, r: float = 0.0):
+    def populate_mode_info(self, mode: ModeInfo, idx: int, r: float = 0.0) -> None:
         """
         Populate mode information from ionogram data.
 
