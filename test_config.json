@@ -28,7 +28,7 @@
       "frequencies_mhz": [3.5, 7.0, 14.0, 21.0, 28.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_short_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "short_002_europe",
@@ -42,7 +42,7 @@
       "frequencies_mhz": [7.0, 14.0, 21.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_short_002.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "medium_001_transatlantic",
@@ -56,7 +56,7 @@
       "frequencies_mhz": [7.0, 10.1, 14.0, 18.1, 21.0, 24.9, 28.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_medium_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "medium_002_us_japan",
@@ -70,7 +70,7 @@
       "frequencies_mhz": [7.0, 14.0, 21.0, 28.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_medium_002.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "long_001_antipodal",
@@ -84,7 +84,7 @@
       "frequencies_mhz": [7.0, 10.1, 14.0, 18.1, 21.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_long_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "long_002_australia",
@@ -98,7 +98,7 @@
       "frequencies_mhz": [7.0, 14.0, 21.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_long_002.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "polar_001_arctic",
@@ -112,7 +112,7 @@
       "frequencies_mhz": [7.0, 14.0, 21.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_polar_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "equatorial_001",
@@ -126,7 +126,7 @@
       "frequencies_mhz": [7.0, 14.0, 21.0, 28.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_equatorial_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "solar_min_001",
@@ -140,7 +140,7 @@
       "frequencies_mhz": [3.5, 7.0, 10.1, 14.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_solar_min_001.out",
-      "status": "pending_reference"
+      "status": "active"
     },
     {
       "id": "solar_max_001",
@@ -154,7 +154,7 @@
       "frequencies_mhz": [14.0, 21.0, 28.0, 50.0],
       "utc_hours": [0, 6, 12, 18],
       "reference_file": "SampleIO/ref_solar_max_001.out",
-      "status": "pending_reference"
+      "status": "active"
     }
   ],
   "tolerance_specifications": {
