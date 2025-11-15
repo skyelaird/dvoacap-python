@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     from src.dvoacap.path_geometry import GeoPoint
     from src.dvoacap.prediction_engine import PredictionEngine
+    from src.dvoacap.space_weather_sources import MultiSourceSpaceWeatherFetcher
     import requests
 except ImportError as e:
     print(f"Error: Could not import DVOACAP modules: {e}")
@@ -84,125 +85,42 @@ TARGET_REGIONS = {
 
 def fetch_solar_conditions() -> Dict:
     """
-    Fetch current solar-terrestrial conditions from NOAA SWPC
+    Fetch current solar-terrestrial conditions from multiple international sources
     Returns dict with SFI, SSN, Kp, A-index
 
-    Data sources:
-    - Solar Flux Index (F10.7): https://services.swpc.noaa.gov/json/f107_cm_flux.json
-    - Sunspot Number: https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json
-    - Kp Index: https://services.swpc.noaa.gov/json/planetary_k_index_1m.json
-    - A Index: https://services.swpc.noaa.gov/json/boulder_k_index_1m.json (for deriving A)
+    Data sources (with automatic fallback):
+    - Solar Flux Index (F10.7): NOAA SWPC, LISIRD, Space Weather Canada
+    - Sunspot Number: SIDC/SILSO (Belgium), NOAA SWPC
+    - Kp Index: GFZ Potsdam (Germany), NOAA SWPC
+    - A Index: GFZ Potsdam (Germany), NOAA SWPC
+
+    This function uses the MultiSourceSpaceWeatherFetcher which automatically
+    tries multiple sources and falls back if primary sources are unavailable.
     """
-    # Default values (mid-cycle conditions) - used if API fetch fails
-    defaults = {
-        'sfi': 150.0,
-        'ssn': 100.0,
-        'kp': 2.0,
-        'a_index': 10.0,
-        'timestamp': datetime.now(timezone.utc).isoformat(),
-        'source': 'defaults'
-    }
+    print("\n" + "=" * 70)
+    print("Fetching Space Weather Data from International Sources")
+    print("=" * 70)
 
-    solar_data = defaults.copy()
-    fetched_any = False
+    # Use the multi-source fetcher for increased reliability
+    fetcher = MultiSourceSpaceWeatherFetcher(timeout=10, verbose=True)
 
-    try:
-        # Fetch Solar Flux Index (F10.7 cm)
-        try:
-            sfi_url = "https://services.swpc.noaa.gov/json/f107_cm_flux.json"
-            response = requests.get(sfi_url, timeout=10)
-            if response.status_code == 200:
-                sfi_data = response.json()
-                # Get the most recent flux value
-                if sfi_data and len(sfi_data) > 0:
-                    latest = sfi_data[-1]
-                    solar_data['sfi'] = float(latest.get('flux', defaults['sfi']))
-                    fetched_any = True
-                    print(f"[OK] Fetched SFI: {solar_data['sfi']:.1f}")
-        except Exception as e:
-            print(f"[WARNING] Could not fetch SFI: {e}")
+    # Fetch data in legacy format for backward compatibility
+    solar_data = fetcher.fetch_all_legacy_format()
 
-        # Fetch Sunspot Number - use observed solar cycle data
-        try:
-            ssn_url = "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json"
-            response = requests.get(ssn_url, timeout=10)
-            if response.status_code == 200:
-                ssn_data = response.json()
-                # Get the most recent SSN value
-                if ssn_data and len(ssn_data) > 0:
-                    latest = ssn_data[-1]
-                    # Try 'ssn' or 'sunspot' field
-                    ssn_value = latest.get('ssn') or latest.get('sunspot') or latest.get('smoothed_ssn')
-                    if ssn_value is not None:
-                        solar_data['ssn'] = float(ssn_value)
-                        fetched_any = True
-                        print(f"[OK] Fetched SSN: {solar_data['ssn']:.1f}")
-        except Exception as e:
-            print(f"[WARNING] Could not fetch SSN: {e}")
+    print()
+    print(f"[OK] Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, "
+          f"Kp={solar_data['kp']:.1f}, A={solar_data['a_index']:.1f}")
+    print(f"     Overall source: {solar_data['source']}")
+    print(f"     Detailed sources:")
+    for param, source in solar_data.get('sources_detail', {}).items():
+        print(f"       {param.upper()}: {source}")
 
-        # Fetch Kp Index (planetary K-index)
-        try:
-            kp_url = "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
-            response = requests.get(kp_url, timeout=10)
-            if response.status_code == 200:
-                kp_data = response.json()
-                # Get the most recent Kp value
-                if kp_data and len(kp_data) > 0:
-                    latest = kp_data[-1]
-                    kp_value = latest.get('kp_index') or latest.get('Kp') or latest.get('kp')
-                    if kp_value is not None:
-                        solar_data['kp'] = float(kp_value)
-                        fetched_any = True
-                        print(f"[OK] Fetched Kp: {solar_data['kp']:.1f}")
-        except Exception as e:
-            print(f"[WARNING] Could not fetch Kp index: {e}")
+    if solar_data.get('errors'):
+        print(f"     Note: Some sources failed, see above for details")
 
-        # Fetch A Index - calculate from K indices or use predicted values
-        try:
-            # Try predicted A-index first
-            a_url = "https://services.swpc.noaa.gov/json/predicted_fredericksburg_a_index.json"
-            response = requests.get(a_url, timeout=10)
-            if response.status_code == 200:
-                a_data = response.json()
-                if a_data and len(a_data) > 0:
-                    # Find today's A-index
-                    today = datetime.now(timezone.utc).date()
-                    for entry in reversed(a_data):  # Start from most recent
-                        time_tag = entry.get('time_tag', '')
-                        if time_tag.startswith(str(today)):
-                            a_value = entry.get('a_index') or entry.get('A') or entry.get('a')
-                            if a_value is not None:
-                                solar_data['a_index'] = float(a_value)
-                                fetched_any = True
-                                print(f"[OK] Fetched A-index: {solar_data['a_index']:.1f}")
-                                break
+    print("=" * 70)
 
-                    # If not found for today, use the most recent
-                    if solar_data['a_index'] == defaults['a_index'] and a_data:
-                        latest = a_data[-1]
-                        a_value = latest.get('a_index') or latest.get('A') or latest.get('a')
-                        if a_value is not None:
-                            solar_data['a_index'] = float(a_value)
-                            fetched_any = True
-                            print(f"[OK] Fetched A-index (latest): {solar_data['a_index']:.1f}")
-        except Exception as e:
-            print(f"[WARNING] Could not fetch A-index: {e}")
-
-        # Update source and timestamp
-        solar_data['timestamp'] = datetime.now(timezone.utc).isoformat()
-        if fetched_any:
-            solar_data['source'] = 'NOAA SWPC (live)'
-
-        print(f"[OK] Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, "
-              f"Kp={solar_data['kp']:.1f}, A={solar_data['a_index']:.1f}")
-        print(f"     Source: {solar_data['source']}")
-
-        return solar_data
-
-    except Exception as e:
-        print(f"[WARNING] Error fetching solar data: {e}")
-        print("  Using default mid-cycle conditions")
-        return defaults
+    return solar_data
 
 
 # =============================================================================
