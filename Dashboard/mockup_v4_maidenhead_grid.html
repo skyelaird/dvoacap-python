@@ -242,6 +242,13 @@
                 <input type="radio" name="time" id="time-24h" value="24">
                 <label for="time-24h" class="radio-label">+24h</label>
             </div>
+
+            <!-- Opacity Control -->
+            <div class="control-group">
+                <label class="group-label">Opacity:</label>
+                <input type="range" name="opacity" id="opacity-slider" min="0.1" max="0.9" step="0.1" value="0.6" style="width: 100px; cursor: pointer;">
+                <span id="opacity-value" style="color: #4aed88; font-weight: 600; margin-left: 5px;">60%</span>
+            </div>
         </div>
     </div>
 
@@ -272,13 +279,6 @@
                     <span>30-45%</span>
                 </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: rgba(138, 155, 181, 0.4);"></div>
-                <div class="legend-label">
-                    <span>Closed</span>
-                    <span>0-30%</span>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -290,7 +290,7 @@
         </div>
         <div class="summary-item">
             <span class="summary-label">TX Location:</span>
-            <span class="summary-value" id="tx-location">FN20 (Halifax, NS)</span>
+            <span class="summary-value" id="tx-location">FN74ui</span>
         </div>
         <div class="summary-item">
             <span class="summary-label">Frequency:</span>
@@ -389,11 +389,11 @@
             maxZoom: 20
         }).addTo(map);
 
-        // TX Location (Halifax, NS - FN20)
+        // TX Location (FN74ui)
         const txLocation = {
-            lat: 44.6488,
-            lon: -63.5752,
-            grid: 'FN44'
+            lat: 44.25,
+            lon: -79.85,
+            grid: 'FN74ui'
         };
 
         // Add TX marker
@@ -407,7 +407,6 @@
             <div style="color: #000; font-weight: bold;">
                 <strong>📍 TX Location</strong><br>
                 Grid: ${txLocation.grid}<br>
-                Halifax, NS<br>
                 ${txLocation.lat.toFixed(4)}°N, ${Math.abs(txLocation.lon).toFixed(4)}°W
             </div>
         `);
@@ -417,8 +416,8 @@
 
         // Simulate propagation calculation
         function calculatePropagation(targetLat, targetLon, band, mode, power, timeOffset) {
-            // Distance from TX
-            const dx = targetLon - txLocation.lon;
+            // Distance from TX (using proper great circle distance approximation)
+            const dx = (targetLon - txLocation.lon) * Math.cos((targetLat + txLocation.lat) / 2 * Math.PI / 180);
             const dy = targetLat - txLocation.lat;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
@@ -431,40 +430,74 @@
 
             // Distance factor (0-1, optimal at different distances for different bands)
             let distanceFactor;
+            let optimalDistance;
             if (band === '40m') {
-                distanceFactor = 1 - Math.abs(distance - 30) / 60;
+                optimalDistance = 30;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 60;
+            } else if (band === '30m') {
+                optimalDistance = 50;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 60;
             } else if (band === '20m') {
-                distanceFactor = 1 - Math.abs(distance - 70) / 70;
+                optimalDistance = 70;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 70;
+            } else if (band === '17m') {
+                optimalDistance = 80;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 80;
             } else if (band === '15m') {
-                distanceFactor = 1 - Math.abs(distance - 90) / 90;
+                optimalDistance = 90;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 90;
+            } else if (band === '12m') {
+                optimalDistance = 95;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 95;
             } else if (band === '10m') {
-                distanceFactor = 1 - Math.abs(distance - 100) / 100;
+                optimalDistance = 100;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 100;
             } else {
-                distanceFactor = 1 - Math.abs(distance - 50) / 50;
+                optimalDistance = 50;
+                distanceFactor = 1 - Math.abs(distance - optimalDistance) / 50;
             }
             distanceFactor = Math.max(0, Math.min(1, distanceFactor));
 
             // Time factor (day/night propagation)
             const timeFactor = (Math.sin((hour - 12) * Math.PI / 12) + 1) / 2;
 
-            // Direction bias (better to Europe from North America)
-            const directionFactor = bearing > 0 && bearing < 90 ? 1.2 : 1.0;
+            // Remove direction bias to fix N/S asymmetry
+            const directionFactor = 1.0;
 
             // Power factor
             const powerFactor = Math.log10(power / 5) / Math.log10(300);
 
+            // Mode-specific factors
+            let modeFactor = 1.0;
+            if (mode === 'FT8' || mode === 'FT4') {
+                modeFactor = 1.1; // Digital modes better weak signal
+            } else if (mode === 'CW') {
+                modeFactor = 1.05;
+            } else if (mode === 'SSB') {
+                modeFactor = 0.9;
+            }
+
             // Combined reliability (0-100%)
-            let reliability = (distanceFactor * 0.5 + timeFactor * 0.3 + powerFactor * 0.2) * directionFactor * 100;
+            let reliability = (distanceFactor * 0.5 + timeFactor * 0.3 + powerFactor * 0.2) * directionFactor * modeFactor * 100;
             reliability = Math.max(0, Math.min(100, reliability));
 
-            // Add some randomness for realism
-            reliability += (Math.random() - 0.5) * 15;
+            // Reduce randomness to avoid red blobs
+            reliability += (Math.random() - 0.5) * 8;
             reliability = Math.max(0, Math.min(100, reliability));
+
+            // Calculate SNR (simplified model)
+            // Base SNR on power, distance, and band
+            const pathLoss = 20 * Math.log10(distance) + 20 * Math.log10(parseFloat(band.replace('m', ''))) + 32.45;
+            const txPowerDbm = 10 * Math.log10(power * 1000);
+            const rxSensitivity = mode === 'FT8' ? -24 : mode === 'FT4' ? -22 : mode === 'CW' ? -10 : 0;
+            let snr = txPowerDbm - pathLoss - rxSensitivity + (Math.random() - 0.5) * 6;
+            snr = Math.max(-30, Math.min(60, snr));
 
             return {
                 reliability: Math.round(reliability),
                 distance: Math.round(distance * 111), // Convert to km
-                bearing: Math.round((bearing + 360) % 360)
+                bearing: Math.round((bearing + 360) % 360),
+                snr: Math.round(snr)
             };
         }
 
@@ -493,9 +526,10 @@
             const mode = document.querySelector('input[name="mode"]:checked').value;
             const power = parseInt(document.querySelector('input[name="power"]:checked').value);
             const timeOffset = parseInt(document.querySelector('input[name="time"]:checked').value);
+            const opacity = parseFloat(document.getElementById('opacity-slider').value);
 
-            // Generate global grids (optimize by only generating visible grids)
-            const grids = MAIDENHEAD.generateGrids(-90, 90, -180, 180);
+            // Generate global grids, filtering Antarctica (latitude < -55)
+            const grids = MAIDENHEAD.generateGrids(-55, 90, -180, 180);
 
             let goodCount = 0;
             let fairCount = 0;
@@ -529,24 +563,28 @@
                     bestGrid = { id: gridId, ...prop, ...bounds.center };
                 }
 
+                // Skip rendering "Closed" grids (reliability < 30%) - no more grey
+                if (prop.reliability < 30) return;
+
                 // Create rectangle for grid
                 const rectangle = L.rectangle(
                     [[bounds.south, bounds.west], [bounds.north, bounds.east]],
                     {
                         color: getColor(prop.reliability),
                         fillColor: getColor(prop.reliability),
-                        fillOpacity: 0.6,
+                        fillOpacity: opacity,
                         weight: 0.5,
-                        opacity: 0.3
+                        opacity: opacity * 0.5
                     }
                 );
 
-                // Add popup with detailed info
+                // Add popup with detailed info including SNR
                 rectangle.bindPopup(`
                     <div style="color: #000;">
                         <strong>Grid: ${gridId}</strong><br>
                         <strong>Propagation: ${getLabel(prop.reliability)}</strong><br>
                         Likelihood: ${prop.reliability}%<br>
+                        SNR: ${prop.snr > 0 ? '+' : ''}${prop.snr} dB<br>
                         Distance: ${prop.distance} km<br>
                         Bearing: ${prop.bearing}°<br>
                         <hr style="margin: 5px 0;">
@@ -561,7 +599,7 @@
                     this.setStyle({ weight: 2, opacity: 1 });
                 });
                 rectangle.on('mouseout', function() {
-                    this.setStyle({ weight: 0.5, opacity: 0.3 });
+                    this.setStyle({ weight: 0.5, opacity: opacity * 0.5 });
                 });
 
                 gridLayer.addLayer(rectangle);
@@ -574,7 +612,7 @@
                     `${bestGrid.id} - ${bestReliability}% (${bestGrid.distance}km @ ${bestGrid.bearing}°)`;
             }
 
-            console.log(`Rendered ${grids.length} grids: ${goodCount} good, ${fairCount} fair, ${poorCount} poor, ${closedCount} closed`);
+            console.log(`Rendered ${grids.length} grids: ${goodCount} good, ${fairCount} fair, ${poorCount} poor, ${closedCount} closed (not shown)`);
         }
 
         // Mode-specific calling frequencies
@@ -626,6 +664,16 @@
                 updateFrequency();
                 renderGrids();
             });
+        });
+
+        // Opacity slider event listener
+        const opacitySlider = document.getElementById('opacity-slider');
+        const opacityValue = document.getElementById('opacity-value');
+
+        opacitySlider.addEventListener('input', () => {
+            const value = Math.round(opacitySlider.value * 100);
+            opacityValue.textContent = `${value}%`;
+            renderGrids();
         });
 
         // Initial render
