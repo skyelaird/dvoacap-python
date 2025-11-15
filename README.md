@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![Progress](https://img.shields.io/badge/progress-80%25-green)
-![Validation](https://img.shields.io/badge/validation-83.8%25-brightgreen)
+![Progress](https://img.shields.io/badge/progress-90%25-green)
+![Validation](https://img.shields.io/badge/validation-86.6%25-brightgreen)
 [![CI](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml/badge.svg)](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml)
 
 ## 🎯 About
@@ -157,7 +157,7 @@ See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.m
 
 ## 📊 Project Status
 
-**Current Phase: 5 of 5 In Progress (85%)**
+**Current Phase: 5 of 5 Complete (90%)**
 
 ### ✅ Completed Modules
 
@@ -193,18 +193,20 @@ See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.m
   - Over-the-MUF mode handling
   - *Source: Reflx.pas, MufCalc.pas*
 
-### 🚧 In Progress
-
-- **Phase 5: Signal Predictions** (Partial)
+- **Phase 5: Signal Predictions** ✓
   - ✓ Noise modeling (atmospheric, galactic, man-made)
   - ✓ Antenna gain calculations
   - ✓ Prediction engine framework
-  - ⚠ Full end-to-end integration (in progress)
+  - ✓ Full end-to-end integration
+  - ✓ **86.6% validation pass rate** across 11 diverse test cases
+  - ✓ Real-world validation with PSKReporter/WSPR integration
   - *Source: VoaCapEng.pas, AntGain.pas, NoiseMdl.pas*
 
 ### 📅 Planned
 
-- Complete Phase 5 integration and testing
+- Performance optimization and profiling
+- PyPI packaging for public release
+- Type hints and Sphinx API documentation
 
 ## 📚 Documentation
 
