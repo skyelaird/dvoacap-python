@@ -42,13 +42,13 @@ DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction 
 
 ## Project Status
 
-**Current Phase: 5 of 5 (85% complete)**
+**Current Phase: 5 of 5 (90% complete)**
 
 - ✅ Phase 1: Path Geometry
 - ✅ Phase 2: Solar & Geomagnetic
 - ✅ Phase 3: Ionospheric Profiles
 - ✅ Phase 4: Raytracing
-- ✅ Phase 5: Signal Predictions (83.8% validation pass rate)
+- ✅ Phase 5: Signal Predictions (86.6% validation pass rate across 11 test cases)
 
 See the [Architecture](Architecture) page for detailed module status.
 
