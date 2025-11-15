@@ -60,7 +60,7 @@ class FixedCoeff:
 
     def load_from_arrays(self, fakp: np.ndarray, fakmap: np.ndarray,
                          hmym: np.ndarray, fakabp: np.ndarray,
-                         abmap: np.ndarray):
+                         abmap: np.ndarray) -> None:
         """Load coefficients from separate arrays"""
         # Fill P array: first 6 are from FAKP
         self.P[0:6, :, :] = fakp
