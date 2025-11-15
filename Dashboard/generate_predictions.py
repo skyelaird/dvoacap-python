@@ -84,37 +84,125 @@ TARGET_REGIONS = {
 
 def fetch_solar_conditions() -> Dict:
     """
-    Fetch current solar-terrestrial conditions from NOAA
+    Fetch current solar-terrestrial conditions from NOAA SWPC
     Returns dict with SFI, SSN, Kp, A-index
+
+    Data sources:
+    - Solar Flux Index (F10.7): https://services.swpc.noaa.gov/json/f107_cm_flux.json
+    - Sunspot Number: https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json
+    - Kp Index: https://services.swpc.noaa.gov/json/planetary_k_index_1m.json
+    - A Index: https://services.swpc.noaa.gov/json/boulder_k_index_1m.json (for deriving A)
     """
+    # Default values (mid-cycle conditions) - used if API fetch fails
+    defaults = {
+        'sfi': 150.0,
+        'ssn': 100.0,
+        'kp': 2.0,
+        'a_index': 10.0,
+        'timestamp': datetime.now(timezone.utc).isoformat(),
+        'source': 'defaults'
+    }
+
+    solar_data = defaults.copy()
+    fetched_any = False
+
     try:
-        # NOAA Space Weather Prediction Center - latest indices
-        url = "https://services.swpc.noaa.gov/products/summary/solar-wind-mag-field.json"
-        response = requests.get(url, timeout=10)
+        # Fetch Solar Flux Index (F10.7 cm)
+        try:
+            sfi_url = "https://services.swpc.noaa.gov/json/f107_cm_flux.json"
+            response = requests.get(sfi_url, timeout=10)
+            if response.status_code == 200:
+                sfi_data = response.json()
+                # Get the most recent flux value
+                if sfi_data and len(sfi_data) > 0:
+                    latest = sfi_data[-1]
+                    solar_data['sfi'] = float(latest.get('flux', defaults['sfi']))
+                    fetched_any = True
+                    print(f"[OK] Fetched SFI: {solar_data['sfi']:.1f}")
+        except Exception as e:
+            print(f"[WARNING] Could not fetch SFI: {e}")
 
-        # For now, use reasonable defaults and try to get SFI
-        # This is a simplified implementation - full version would parse NOAA data
-        solar_data = {
-            'sfi': 150.0,  # Solar Flux Index (10.7cm flux)
-            'ssn': 100.0,  # Sunspot Number
-            'kp': 2.0,     # Kp index (geomagnetic activity)
-            'a_index': 10.0,  # A index
-            'timestamp': datetime.now(timezone.utc).isoformat()
-        }
+        # Fetch Sunspot Number - use observed solar cycle data
+        try:
+            ssn_url = "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json"
+            response = requests.get(ssn_url, timeout=10)
+            if response.status_code == 200:
+                ssn_data = response.json()
+                # Get the most recent SSN value
+                if ssn_data and len(ssn_data) > 0:
+                    latest = ssn_data[-1]
+                    # Try 'ssn' or 'sunspot' field
+                    ssn_value = latest.get('ssn') or latest.get('sunspot') or latest.get('smoothed_ssn')
+                    if ssn_value is not None:
+                        solar_data['ssn'] = float(ssn_value)
+                        fetched_any = True
+                        print(f"[OK] Fetched SSN: {solar_data['ssn']:.1f}")
+        except Exception as e:
+            print(f"[WARNING] Could not fetch SSN: {e}")
 
-        print(f"[OK] Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, Kp={solar_data['kp']:.1f}")
+        # Fetch Kp Index (planetary K-index)
+        try:
+            kp_url = "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
+            response = requests.get(kp_url, timeout=10)
+            if response.status_code == 200:
+                kp_data = response.json()
+                # Get the most recent Kp value
+                if kp_data and len(kp_data) > 0:
+                    latest = kp_data[-1]
+                    kp_value = latest.get('kp_index') or latest.get('Kp') or latest.get('kp')
+                    if kp_value is not None:
+                        solar_data['kp'] = float(kp_value)
+                        fetched_any = True
+                        print(f"[OK] Fetched Kp: {solar_data['kp']:.1f}")
+        except Exception as e:
+            print(f"[WARNING] Could not fetch Kp index: {e}")
+
+        # Fetch A Index - calculate from K indices or use predicted values
+        try:
+            # Try predicted A-index first
+            a_url = "https://services.swpc.noaa.gov/json/predicted_fredericksburg_a_index.json"
+            response = requests.get(a_url, timeout=10)
+            if response.status_code == 200:
+                a_data = response.json()
+                if a_data and len(a_data) > 0:
+                    # Find today's A-index
+                    today = datetime.now(timezone.utc).date()
+                    for entry in reversed(a_data):  # Start from most recent
+                        time_tag = entry.get('time_tag', '')
+                        if time_tag.startswith(str(today)):
+                            a_value = entry.get('a_index') or entry.get('A') or entry.get('a')
+                            if a_value is not None:
+                                solar_data['a_index'] = float(a_value)
+                                fetched_any = True
+                                print(f"[OK] Fetched A-index: {solar_data['a_index']:.1f}")
+                                break
+
+                    # If not found for today, use the most recent
+                    if solar_data['a_index'] == defaults['a_index'] and a_data:
+                        latest = a_data[-1]
+                        a_value = latest.get('a_index') or latest.get('A') or latest.get('a')
+                        if a_value is not None:
+                            solar_data['a_index'] = float(a_value)
+                            fetched_any = True
+                            print(f"[OK] Fetched A-index (latest): {solar_data['a_index']:.1f}")
+        except Exception as e:
+            print(f"[WARNING] Could not fetch A-index: {e}")
+
+        # Update source and timestamp
+        solar_data['timestamp'] = datetime.now(timezone.utc).isoformat()
+        if fetched_any:
+            solar_data['source'] = 'NOAA SWPC (live)'
+
+        print(f"[OK] Solar conditions: SFI={solar_data['sfi']:.0f}, SSN={solar_data['ssn']:.0f}, "
+              f"Kp={solar_data['kp']:.1f}, A={solar_data['a_index']:.1f}")
+        print(f"     Source: {solar_data['source']}")
+
         return solar_data
 
     except Exception as e:
-        print(f"[WARNING] Could not fetch live solar data: {e}")
+        print(f"[WARNING] Error fetching solar data: {e}")
         print("  Using default mid-cycle conditions")
-        return {
-            'sfi': 150.0,
-            'ssn': 100.0,
-            'kp': 2.0,
-            'a_index': 10.0,
-            'timestamp': datetime.now(timezone.utc).isoformat()
-        }
+        return defaults
 
 
 # =============================================================================

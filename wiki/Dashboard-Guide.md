@@ -113,7 +113,7 @@ python3 generate_predictions.py
 ```
 
 This will:
-- Fetch current solar data from NOAA
+- Fetch current solar data from NOAA SWPC (SFI, SSN, Kp, A-index)
 - Run DVOACAP predictions for all configured bands and regions
 - Generate `propagation_data.json` (takes 30-60 seconds)
 
@@ -260,25 +260,33 @@ The dashboard uses color-coded indicators to show band conditions:
 
 ### Solar Conditions Display
 
+All solar-terrestrial indices are fetched live from NOAA Space Weather Prediction Center:
+
 **SFI (Solar Flux Index):**
 - Measured at 10.7 cm wavelength
 - Higher values = better HF conditions
 - Typical range: 70-250
+- **Source**: https://services.swpc.noaa.gov/json/f107_cm_flux.json
 
 **SSN (Sunspot Number):**
 - Indicates solar cycle phase
 - Higher during solar maximum
 - Typical range: 0-300
+- **Source**: https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json
 
 **Kp Index:**
 - Geomagnetic activity (0-9 scale)
 - Lower = more stable propagation
 - Kp > 5 indicates disturbed conditions
+- **Source**: https://services.swpc.noaa.gov/json/planetary_k_index_1m.json
 
 **A-Index:**
 - D-layer absorption indicator
 - Lower = less absorption
 - High A-index degrades low-band propagation
+- **Source**: https://services.swpc.noaa.gov/json/predicted_fredericksburg_a_index.json
+
+**Note**: If NOAA APIs are unavailable, the system falls back to default mid-cycle values (SFI=150, SSN=100, Kp=2.0, A=10).
 
 ---
 
@@ -538,11 +546,15 @@ python3 generate_predictions.py
 
 **Symptom:** "Could not fetch live solar data" message.
 
-**Cause:** NOAA API temporarily unavailable.
+**Cause:** NOAA SWPC API temporarily unavailable or network issues.
 
-**Impact:** Predictions will use default values (SSN=100). This is normal and predictions will still work.
+**Impact:** Predictions will use default mid-cycle values (SFI=150, SSN=100, Kp=2.0, A=10). This is normal and predictions will still work.
 
-**Solution:** The script automatically retries and uses reasonable defaults.
+**Solution:** The script automatically handles failures gracefully:
+- Each index (SFI, SSN, Kp, A) is fetched independently
+- If some indices fail, others may still be fetched successfully
+- Check output messages to see which indices were fetched live vs. using defaults
+- The 'source' field in solar_conditions indicates if data is 'NOAA SWPC (live)' or 'defaults'
 
 ---
 

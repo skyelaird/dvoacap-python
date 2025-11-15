@@ -73,7 +73,7 @@ python3 generate_predictions.py
 ```
 
 This will:
-- Fetch current solar-terrestrial conditions from NOAA
+- Fetch current solar-terrestrial conditions from NOAA SWPC (SFI, SSN, Kp, A-index)
 - Run DVOACAP predictions for all bands and regions
 - Generate `propagation_data.json` with 24-hour forecasts
 - Takes ~30-60 seconds depending on your system
@@ -120,11 +120,11 @@ For best results, regenerate predictions:
 
 ### Solar Conditions
 
-The dashboard displays current:
-- **SFI** (Solar Flux Index) - Higher = better HF conditions
-- **SSN** (Sunspot Number) - Indicates solar cycle phase
-- **Kp** (Geomagnetic activity) - Lower = more stable propagation
-- **A-index** (Absorption) - Lower = less D-layer absorption
+The dashboard displays current conditions fetched live from NOAA Space Weather Prediction Center:
+- **SFI** (Solar Flux Index) - Higher = better HF conditions (fetched from F10.7 cm flux data)
+- **SSN** (Sunspot Number) - Indicates solar cycle phase (fetched from observed solar cycle indices)
+- **Kp** (Geomagnetic activity) - Lower = more stable propagation (fetched from planetary K-index)
+- **A-index** (Absorption) - Lower = less D-layer absorption (fetched from predicted A-index data)
 
 ---
 
@@ -419,7 +419,13 @@ python3 generate_predictions.py
 
 **Error**: "Could not fetch live solar data"
 
-**Solution**: The script will use default values. This is normal if NOAA API is temporarily unavailable. Predictions will still work.
+**Solution**: The script will use default values (SFI=150, SSN=100, Kp=2.0, A=10). This is normal if NOAA SWPC API is temporarily unavailable. Predictions will still work with these mid-cycle defaults.
+
+**Data Sources**:
+- SFI: https://services.swpc.noaa.gov/json/f107_cm_flux.json
+- SSN: https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json
+- Kp: https://services.swpc.noaa.gov/json/planetary_k_index_1m.json
+- A-index: https://services.swpc.noaa.gov/json/predicted_fredericksburg_a_index.json
 
 ### Slow Prediction Generation
 

@@ -220,18 +220,24 @@ See [Quick Examples](Quick-Examples) for more examples.
 ### What solar and geomagnetic parameters do I need?
 
 **Required parameters:**
-- **SSN (Sunspot Number):** 0-300 (typical: 0-200)
 - **Month:** 1-12
 - **UTC time:** 0-24 hours
 
-**Optional (auto-computed if not provided):**
-- **Solar Flux Index (SFI):** Auto-derived from SSN
-- **Kp index:** Defaults to 2 (quiet conditions)
-- **A-index:** Defaults to 8 (low absorption)
+**Automatically fetched (when using Dashboard):**
+- **SFI (Solar Flux Index):** Fetched live from NOAA SWPC (F10.7 cm flux)
+- **SSN (Sunspot Number):** Fetched live from NOAA SWPC (observed solar cycle indices)
+- **Kp index:** Fetched live from NOAA SWPC (planetary K-index)
+- **A-index:** Fetched live from NOAA SWPC (predicted A-index)
 
-**Where to get current values:**
-- NOAA Space Weather: https://www.swpc.noaa.gov/
-- Dashboard auto-fetches from NOAA API
+**For manual API usage:**
+- **SSN (Sunspot Number):** 0-300 (typical: 0-200)
+- **Kp index:** 0-9 (typical: 0-5, defaults to 2 for quiet conditions)
+- **A-index:** 0-400 (typical: 0-50, defaults to 10 for low absorption)
+
+**Data Sources:**
+- NOAA SWPC: https://www.swpc.noaa.gov/
+- Dashboard auto-fetches from: https://services.swpc.noaa.gov/json/
+- Manual fetch: See `Dashboard/generate_predictions.py` for implementation
 
 ---
 
