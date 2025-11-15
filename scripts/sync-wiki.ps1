@@ -3,8 +3,21 @@
 
 $ErrorActionPreference = "Stop"
 
-$REPO_NAME = "skyelaird/dvoacap-python"
-$WIKI_URL = "https://github.com/$REPO_NAME.wiki.git"
+# Get the origin URL from git config
+$ORIGIN_URL = git config --get remote.origin.url
+if ([string]::IsNullOrWhiteSpace($ORIGIN_URL)) {
+    Write-Host "[ERROR] Could not get origin URL from git config" -ForegroundColor Red
+    exit 1
+}
+
+# Construct wiki URL from origin URL
+# For URLs like http://local_proxy@127.0.0.1:31448/git/skyelaird/dvoacap-python
+# We need http://local_proxy@127.0.0.1:31448/git/skyelaird/dvoacap-python.wiki
+$WIKI_URL = $ORIGIN_URL -replace '\.git$', '.wiki.git'
+if (-not $WIKI_URL.EndsWith('.wiki.git')) {
+    $WIKI_URL = "$WIKI_URL.wiki.git"
+}
+
 $WIKI_DIR = "wiki-repo-temp"
 
 Write-Host "[INFO] Starting wiki sync..." -ForegroundColor Cyan
