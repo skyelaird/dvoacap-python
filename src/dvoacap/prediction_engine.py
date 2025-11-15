@@ -213,7 +213,7 @@ class PredictionEngine:
         rx_location: GeoPoint,
         utc_time: float,
         frequencies: list[float]
-    ):
+    ) -> None:
         """
         Perform complete propagation prediction.
 
@@ -317,7 +317,7 @@ class PredictionEngine:
 
             self.predictions[f] = prediction
 
-    def _compute_control_points(self):
+    def _compute_control_points(self) -> None:
         """Compute control points along the path."""
         self._control_points = []
 
@@ -352,7 +352,7 @@ class PredictionEngine:
                 )
                 self._control_points.append(ctrl_pt)
 
-    def _compute_geo_params(self, ctrl_pt: ControlPoint):
+    def _compute_geo_params(self, ctrl_pt: ControlPoint) -> None:
         """Compute geophysical parameters for a control point."""
         # East longitude (0..2π)
         if ctrl_pt.location.longitude >= 0:
@@ -387,7 +387,7 @@ class PredictionEngine:
         # Local time
         ctrl_pt.local_time = compute_local_time(self.utc_time, ctrl_pt.location.longitude)
 
-    def _create_iono_profiles(self):
+    def _create_iono_profiles(self) -> None:
         """Create ionospheric profiles from control points."""
         # Clear existing profiles
         self._profiles = []
@@ -487,7 +487,7 @@ class PredictionEngine:
         idx = min(7, int(self.path.dist / self.RAD_2000_KM))
         return self.NANGX[idx]
 
-    def _adjust_signal_distribution_tables(self):
+    def _adjust_signal_distribution_tables(self) -> None:
         """Adjust signal distribution tables (SIGDIS/SYSSY)."""
         # Average over all profiles
         self._absorption_index = 0.0
@@ -637,7 +637,7 @@ class PredictionEngine:
 
         return prediction
 
-    def _compute_signal(self, mode: ModeInfo, frequency: float):
+    def _compute_signal(self, mode: ModeInfo, frequency: float) -> None:
         """Compute signal parameters for a mode (REGMOD)."""
         # Initialize signal info if not already present
         if mode.signal is None:
@@ -891,7 +891,7 @@ class PredictionEngine:
 
         return prediction
 
-    def _calc_reliability(self, signal: SignalInfo, clamp: bool = False):
+    def _calc_reliability(self, signal: SignalInfo, clamp: bool = False) -> None:
         """Calculate circuit reliability."""
         # Debug logging
         import sys
@@ -978,7 +978,7 @@ class PredictionEngine:
             return (self.params.required_snr - signal.snr_db +
                    self.TME[idx] / self.TME[8] * signal.snr10)
 
-    def _calc_sum_of_modes(self, prediction: Prediction):
+    def _calc_sum_of_modes(self, prediction: Prediction) -> None:
         """Sum power from all modes (random phase addition)."""
         # Find maximum values
         max_pwr = max(m.signal.power_dbw for m in self._modes)

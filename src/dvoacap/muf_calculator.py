@@ -76,7 +76,7 @@ class MufInfo:
 @dataclass
 class CircuitMuf:
     """Circuit MUF for all layers"""
-    muf_info: dict  # Dictionary mapping layer name to MufInfo
+    muf_info: dict[str, MufInfo]  # Dictionary mapping layer name to MufInfo
     fot: float = 0.0  # Circuit FOT (MHz)
     muf: float = 0.0  # Circuit MUF (MHz)
     hpf: float = 0.0  # Circuit HPF (MHz)
