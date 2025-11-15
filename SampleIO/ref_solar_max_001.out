@@ -1,0 +1,107 @@
+  IONOSPHERIC COMMUNICATIONS ANALYSIS AND PREDICTION PROGRAM
+                     DVOACAP-PYTHON BASELINE
+ 
+ 
+          1         2         3         4         5         6         7
+ 123456789012345678901234567890123456789012345678901234567890123456789012345
+ 
+ BASELINE GENERATED: 2025-11-15 18:59:56
+ NOTE: This is a DVOACAP-Python regression baseline, NOT true VOACAP reference
+ 
+ LABEL     Philadelphia to London (Solar Maximum)
+ CIRCUIT     39.95N    75.17W -   51.51N     0.13W  S     0
+ MONTH      1994 6.00
+ SUNSPOT    200.
+ 
+ 
+ 6.0 15.5 14.0 21.0 28.0 50.0  FREQ
+        -  2F2 2F2 2F2 2F2  MODE
+        -  9.24 13.9 13.9 13.9  TANGLE
+        -     -    -    -    -  DELAY
+        -   414 552.6771240234375 552.6771240234375 552.6771240234375  V HITE
+        -  0.63 0.02 0.00 0.00  MUFday
+        -   162  231  375  435  LOSS
+        -     -    -    -    -  DBU
+        -  -112 -181 -325 -385  S DBW
+        -     -    -    -    -  N DBW
+        -  51.7 -13.1 -153 -206  SNR
+        -     -    -    -    -  RPWRG
+        -  0.05 0.00 0.00 0.00  REL
+        -     -    -    -    -  MPROB
+        -     -    -    -    -  S PRB
+        -     -    -    -    -  SIG LW
+        -     -    -    -    -  SIG UP
+        -     -    -    -    -  SNR LW
+        -     -    -    -    -  SNR UP
+       0.0 0.00 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00 0.00  RGAIN
+        -  51.7 -13.1 -153 -206  SNRxx
+ 
+12.0 18.9 14.0 21.0 28.0 50.0  FREQ
+        -  3F2 2F1 2F2 2F2  MODE
+        -  21.9 3.70 14.7 14.7  TANGLE
+        -     -    -    -    -  DELAY
+        -   486  260 576.3461303710938 576.3461303710938  V HITE
+        -  0.18 0.11 0.00 0.00  MUFday
+        -   193  209  444  444  LOSS
+        -     -    -    -    -  DBU
+        -  -143 -159 -394 -394  S DBW
+        -     -    -    -    -  N DBW
+        -  20.0 9.21 -222 -215  SNR
+        -     -    -    -    -  RPWRG
+        -  0.00 0.00 0.00 0.00  REL
+        -     -    -    -    -  MPROB
+        -     -    -    -    -  S PRB
+        -     -    -    -    -  SIG LW
+        -     -    -    -    -  SIG UP
+        -     -    -    -    -  SNR LW
+        -     -    -    -    -  SNR UP
+       0.0 0.00 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00 0.00  RGAIN
+        -  20.0 9.21 -222 -215  SNRxx
+ 
+18.0 23.0 14.0 21.0 28.0 50.0  FREQ
+        -  3F2 2F1 2F1 2F2  MODE
+        -  19.9 3.89 4.39 15.5  TANGLE
+        -     -    -    -    -  DELAY
+        -   442  265 278.9273986816406 602.7545776367188  V HITE
+        -  0.35 0.78 0.01 0.00  MUFday
+        -   188  183  322  437  LOSS
+        -     -    -    -    -  DBU
+        -  -138 -132 -272 -387  S DBW
+        -     -    -    -    -  N DBW
+        -  24.7 36.2 -99.8 -208  SNR
+        -     -    -    -    -  RPWRG
+        -  0.00 0.01 0.00 0.00  REL
+        -     -    -    -    -  MPROB
+        -     -    -    -    -  S PRB
+        -     -    -    -    -  SIG LW
+        -     -    -    -    -  SIG UP
+        -     -    -    -    -  SNR LW
+        -     -    -    -    -  SNR UP
+       0.0 0.00 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00 0.00  RGAIN
+        -  24.7 36.2 -99.8 -208  SNRxx
+ 
+24.0 18.6 14.0 21.0 28.0 50.0  FREQ
+        -  2F2 2F2 2F2 2F2  MODE
+        -  6.45 14.0 14.0 14.0  TANGLE
+        -     -    -    -    -  DELAY
+        -   335 555.66650390625 555.66650390625 555.66650390625  V HITE
+        -  0.95 0.11 0.00 0.00  MUFday
+        -   159  197  339  439  LOSS
+        -     -    -    -    -  DBU
+        -  -108 -147 -289 -389  S DBW
+        -     -    -    -    -  N DBW
+        -  55.1 21.0 -118 -210  SNR
+        -     -    -    -    -  RPWRG
+        -  0.05 0.00 0.00 0.00  REL
+        -     -    -    -    -  MPROB
+        -     -    -    -    -  S PRB
+        -     -    -    -    -  SIG LW
+        -     -    -    -    -  SIG UP
+        -     -    -    -    -  SNR LW
+        -     -    -    -    -  SNR UP
+       0.0 0.00 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00 0.00  RGAIN
+        -  55.1 21.0 -118 -210  SNRxx

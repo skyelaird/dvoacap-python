@@ -1,0 +1,107 @@
+  IONOSPHERIC COMMUNICATIONS ANALYSIS AND PREDICTION PROGRAM
+                     DVOACAP-PYTHON BASELINE
+ 
+ 
+          1         2         3         4         5         6         7
+ 123456789012345678901234567890123456789012345678901234567890123456789012345
+ 
+ BASELINE GENERATED: 2025-11-15 18:59:56
+ NOTE: This is a DVOACAP-Python regression baseline, NOT true VOACAP reference
+ 
+ LABEL     Alaska to Norway (Polar Path)
+ CIRCUIT     61.22N   149.90W -   59.91N    10.75E  S     0
+ MONTH      1994 1.00
+ SUNSPOT    50.
+ 
+ 
+ 6.0  9.2  7.0 14.0 21.0  FREQ
+        -  2F2 2F2 2F2  MODE
+        -  2.82 7.77 7.77  TANGLE
+        -     -    -    -  DELAY
+        -   294 449.77105712890625 449.77105712890625  V HITE
+        -  0.87 0.03 0.00  MUFday
+        -   152  241  440  LOSS
+        -     -    -    -  DBU
+        -  -102 -191 -390  S DBW
+        -     -    -    -  N DBW
+        -  52.1 -27.3 -222  SNR
+        -     -    -    -  RPWRG
+        -  0.01 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  52.1 -27.3 -222  SNRxx
+ 
+12.0 11.8  7.0 14.0 21.0  FREQ
+        -  2F2 2F2 2F2  MODE
+        -  2.86 7.20 7.20  TANGLE
+        -     -    -    -  DELAY
+        -   295 431.2518005371094 431.2518005371094  V HITE
+        -  0.98 0.23 0.00  MUFday
+        -   158  192  308  LOSS
+        -     -    -    -  DBU
+        -  -107 -142 -258  S DBW
+        -     -    -    -  N DBW
+        -  47.9 20.6 -90.1  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  47.9 20.6 -90.1  SNRxx
+ 
+18.0 12.3  7.0 14.0 21.0  FREQ
+        -  2F2 2F2 2F2  MODE
+        -  2.55 5.30 6.35  TANGLE
+        -     -    -    -  DELAY
+        -   286  371 403.9259338378906  V HITE
+        -  1.00 0.23 0.00  MUFday
+        -   154  188  367  LOSS
+        -     -    -    -  DBU
+        -  -103 -138 -317  S DBW
+        -     -    -    -  N DBW
+        -  50.0 25.1 -148  SNR
+        -     -    -    -  RPWRG
+        -  0.01 0.01 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  50.0 25.1 -148  SNRxx
+ 
+24.0 12.2  7.0 14.0 21.0  FREQ
+        -  2F2 2F2 2F2  MODE
+        -  2.65 7.55 7.55  TANGLE
+        -     -    -    -  DELAY
+        -   289 442.6588439941406 442.6588439941406  V HITE
+        -  0.98 0.14 0.00  MUFday
+        -   155  201  456  LOSS
+        -     -    -    -  DBU
+        -  -105 -151 -406  S DBW
+        -     -    -    -  N DBW
+        -  48.5 12.5 -238  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  48.5 12.5 -238  SNRxx

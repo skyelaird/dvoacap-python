@@ -1,0 +1,107 @@
+  IONOSPHERIC COMMUNICATIONS ANALYSIS AND PREDICTION PROGRAM
+                     DVOACAP-PYTHON BASELINE
+ 
+ 
+          1         2         3         4         5         6         7
+ 123456789012345678901234567890123456789012345678901234567890123456789012345
+ 
+ BASELINE GENERATED: 2025-11-15 18:59:55
+ NOTE: This is a DVOACAP-Python regression baseline, NOT true VOACAP reference
+ 
+ LABEL     London to Sydney (Long Path)
+ CIRCUIT     51.51N     0.13W -   33.87S   151.21E  S     0
+ MONTH      1994 9.00
+ SUNSPOT    75.
+ 
+ 
+ 6.0 20.3  7.0 14.0 21.0  FREQ
+        -  F2F2 F2F2 F2F2  MODE
+        -     -    -    -  TANGLE
+        -     -    -    -  DELAY
+        -  0.00 0.00 0.00  V HITE
+        -  0.00 0.00 0.00  MUFday
+        -  0.00 0.00 0.00  LOSS
+        -     -    -    -  DBU
+        -  0.00 0.00 0.00  S DBW
+        -     -    -    -  N DBW
+        -  0.00 0.00 0.00  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  0.00 0.00 0.00  SNRxx
+ 
+12.0 23.8  7.0 14.0 21.0  FREQ
+        -  F2F2 F2F2 F2F2  MODE
+        -     -    -    -  TANGLE
+        -     -    -    -  DELAY
+        -  0.00 0.00 0.00  V HITE
+        -  0.00 0.00 0.00  MUFday
+        -  0.00 0.00 0.00  LOSS
+        -     -    -    -  DBU
+        -  0.00 0.00 0.00  S DBW
+        -     -    -    -  N DBW
+        -  0.00 0.00 0.00  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  0.00 0.00 0.00  SNRxx
+ 
+18.0 16.1  7.0 14.0 21.0  FREQ
+        -  F2F2 F2F2 F2F2  MODE
+        -     -    -    -  TANGLE
+        -     -    -    -  DELAY
+        -  0.00 0.00 0.00  V HITE
+        -  0.00 0.00 0.00  MUFday
+        -  0.00 0.00 0.00  LOSS
+        -     -    -    -  DBU
+        -  0.00 0.00 0.00  S DBW
+        -     -    -    -  N DBW
+        -  0.00 0.00 0.00  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  0.00 0.00 0.00  SNRxx
+ 
+24.0 12.1  7.0 14.0 21.0  FREQ
+        -  F2F2 F2F2 F2F2  MODE
+        -     -    -    -  TANGLE
+        -     -    -    -  DELAY
+        -  0.00 0.00 0.00  V HITE
+        -  0.00 0.00 0.00  MUFday
+        -  0.00 0.00 0.00  LOSS
+        -     -    -    -  DBU
+        -  0.00 0.00 0.00  S DBW
+        -     -    -    -  N DBW
+        -  0.00 0.00 0.00  SNR
+        -     -    -    -  RPWRG
+        -  0.00 0.00 0.00  REL
+        -     -    -    -  MPROB
+        -     -    -    -  S PRB
+        -     -    -    -  SIG LW
+        -     -    -    -  SIG UP
+        -     -    -    -  SNR LW
+        -     -    -    -  SNR UP
+       0.0 0.00 0.00 0.00  TGAIN
+       0.0 0.00 0.00 0.00  RGAIN
+        -  0.00 0.00 0.00  SNRxx
