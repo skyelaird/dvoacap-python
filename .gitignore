@@ -172,3 +172,6 @@ Dashboard/pskreporter_data.json
 
 # GitHub Wiki repository (managed separately)
 dvoacap-python.wiki/
+
+# Wiki sync script temporary directory
+wiki-repo-temp/
