@@ -15,8 +15,8 @@ License: Mozilla Public License Version 1.1
 
 import numpy as np
 from pathlib import Path
-from typing import Dict, Any, Tuple
 from enum import IntEnum
+from typing import Any
 
 
 class VarMapKind(IntEnum):
@@ -271,7 +271,7 @@ class VoacapParser:
         return data
 
     @staticmethod
-    def load_monthly_data(data_dir: Path, month: int) -> Tuple[CoeffData, F2Data]:
+    def load_monthly_data(data_dir: Path, month: int) -> tuple[CoeffData, F2Data]:
         """
         Load both coefficient and F2 data files for a given month.
 
@@ -298,7 +298,7 @@ class VoacapParser:
         return coeff_data, f2_data
 
     @staticmethod
-    def get_data_summary(coeff_data: CoeffData) -> Dict[str, Any]:
+    def get_data_summary(coeff_data: CoeffData) -> dict[str, Any]:
         """
         Get a summary of the coefficient data for inspection.
 
@@ -359,7 +359,7 @@ def load_f2_file(filepath: str) -> F2Data:
     return VoacapParser.parse_f2_file(Path(filepath))
 
 
-def load_month(data_dir: str, month: int) -> Tuple[CoeffData, F2Data]:
+def load_month(data_dir: str, month: int) -> tuple[CoeffData, F2Data]:
     """
     Load monthly coefficient data.
 

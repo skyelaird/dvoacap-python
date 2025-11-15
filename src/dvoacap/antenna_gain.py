@@ -10,7 +10,6 @@ Author: Ported from VOACAP Pascal source (VE3NEA)
 """
 
 import numpy as np
-from typing import List, Optional
 
 
 class AntennaModel:
@@ -165,7 +164,7 @@ class AntennaFarm:
         """Initialize antenna farm with isotropic default antenna."""
         self._isotropic_antenna = IsotropicAntenna()
         self._current_antenna = self._isotropic_antenna
-        self.antennas: List[AntennaModel] = []
+        self.antennas: list[AntennaModel] = []
 
     @property
     def current_antenna(self) -> AntennaModel:

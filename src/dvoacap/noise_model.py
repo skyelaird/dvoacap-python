@@ -10,7 +10,6 @@ Author: Ported from VOACAP Pascal source (VE3NEA)
 """
 
 import numpy as np
-from typing import Tuple
 from dataclasses import dataclass
 
 from .path_geometry import GeoPoint

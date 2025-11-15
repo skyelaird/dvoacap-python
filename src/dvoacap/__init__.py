@@ -8,7 +8,7 @@ Original DVOACAP by Alex Shovkoplyas, VE3NEA
 Python Port: 2025
 """
 
-from typing import Dict, Any
+# Modern Python 3.11+ uses built-in types for annotations
 
 __version__ = "0.5.0"
 __author__ = "Python Port Contributors"
@@ -156,12 +156,12 @@ _phase_status = {
 }
 
 
-def get_phase_status() -> Dict[str, str]:
+def get_phase_status() -> dict[str, str]:
     """Return the current development phase status"""
     return _phase_status.copy()
 
 
-def get_version_info() -> Dict[str, Any]:
+def get_version_info() -> dict[str, str | int]:
     """Return version and build information"""
     total_modules = (len(__all_phase1__) + len(__all_phase2__) + len(__all_phase3__) +
                     len(__all_phase4__) + len(__all_phase5__))
@@ -169,7 +169,7 @@ def get_version_info() -> Dict[str, Any]:
         "version": __version__,
         "author": __author__,
         "license": __license__,
-        "python_requires": ">=3.8",
+        "python_requires": ">=3.11",
         "modules_complete": total_modules,
         "progress": "90%",
     }

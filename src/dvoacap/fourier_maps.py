@@ -17,7 +17,6 @@ import math
 import struct
 import os
 from dataclasses import dataclass
-from typing import Tuple, Optional, Dict
 from pathlib import Path
 import numpy as np
 
@@ -120,7 +119,7 @@ class FourierMaps:
         >>> fof2 = maps.compute_var_map(VarMapKind.F2, lat, lon, cos_lat)
     """
 
-    def __init__(self, data_dir: Optional[str] = None):
+    def __init__(self, data_dir: str | None = None):
         """
         Initialize Fourier maps handler.
 
@@ -140,33 +139,33 @@ class FourierMaps:
         self.utc_fraction: float = -1.0
 
         # Coefficient arrays (loaded from files)
-        self.ikim: Dict[int, np.ndarray] = {}
-        self.sys: Optional[np.ndarray] = None
-        self.f2d: Optional[np.ndarray] = None
-        self.perr: Optional[np.ndarray] = None
-        self.anew: Optional[np.ndarray] = None
-        self.bnew: Optional[np.ndarray] = None
-        self.achi: Optional[np.ndarray] = None
-        self.bchi: Optional[np.ndarray] = None
-        self.dud: Optional[np.ndarray] = None
-        self.fam: Optional[np.ndarray] = None
+        self.ikim: dict[int, np.ndarray] = {}
+        self.sys: np.ndarray | None = None
+        self.f2d: np.ndarray | None = None
+        self.perr: np.ndarray | None = None
+        self.anew: np.ndarray | None = None
+        self.bnew: np.ndarray | None = None
+        self.achi: np.ndarray | None = None
+        self.bchi: np.ndarray | None = None
+        self.dud: np.ndarray | None = None
+        self.fam: np.ndarray | None = None
 
         # Fixed coefficient arrays
-        self.coef_fixed_p: Optional[np.ndarray] = None
-        self.coef_fixed_abp: Optional[np.ndarray] = None
+        self.coef_fixed_p: np.ndarray | None = None
+        self.coef_fixed_abp: np.ndarray | None = None
 
         # Variable coefficient arrays (before UTC interpolation)
-        self.xf2cof: Optional[np.ndarray] = None
-        self.xfm3cf: Optional[np.ndarray] = None
-        self.xesmcf: Optional[np.ndarray] = None
-        self.xeslcf: Optional[np.ndarray] = None
-        self.xesucf: Optional[np.ndarray] = None
-        self.xercof: Optional[np.ndarray] = None
-        self.xpmap: Optional[np.ndarray] = None
+        self.xf2cof: np.ndarray | None = None
+        self.xfm3cf: np.ndarray | None = None
+        self.xesmcf: np.ndarray | None = None
+        self.xeslcf: np.ndarray | None = None
+        self.xesucf: np.ndarray | None = None
+        self.xercof: np.ndarray | None = None
+        self.xpmap: np.ndarray | None = None
 
         # Interpolated coefficient arrays
-        self.cofion: Dict[int, np.ndarray] = {}
-        self.coef_v: Dict[int, np.ndarray] = {}
+        self.cofion: dict[int, np.ndarray] = {}
+        self.coef_v: dict[int, np.ndarray] = {}
 
         # Initialize with default conditions
         self.set_conditions(1, 1, 0)
