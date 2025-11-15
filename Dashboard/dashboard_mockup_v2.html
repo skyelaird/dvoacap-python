@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE1ATM HF Propagation Dashboard - MOCKUP V2 (Heat Map)</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 15px 20px;
+            border-bottom: 3px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #3498db;
+        }
+
+        .header h1::before {
+            content: '📡 ';
+        }
+
+        /* Control Panel */
+        .control-panel {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .control-group label.group-label {
+            font-weight: 600;
+            color: #3498db;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .control-group input[type="radio"] {
+            display: none;
+        }
+
+        .control-group label.radio-label {
+            padding: 6px 14px;
+            background-color: #2c3e50;
+            border: 2px solid #34495e;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .control-group label.radio-label:hover {
+            background-color: #34495e;
+            border-color: #3498db;
+        }
+
+        .control-group input[type="radio"]:checked + label.radio-label {
+            background-color: #3498db;
+            border-color: #3498db;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Map Layer Toggle */
+        .layer-toggle {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .layer-toggle label.group-label {
+            color: #95a5a6;
+            font-size: 13px;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 165px);
+        }
+
+        /* Map Container */
+        #map {
+            flex: 1;
+            background-color: #1a1a1a;
+        }
+
+        /* Quick Summary Bar */
+        .quick-summary {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            padding: 12px 20px;
+            border-top: 2px solid #3498db;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .quick-summary .emoji {
+            font-size: 18px;
+        }
+
+        .quick-summary .label {
+            color: #95a5a6;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .quick-summary .value {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .quick-summary .best-opportunity {
+            color: #2ecc71;
+            font-weight: 700;
+        }
+
+        .quick-summary .dxcc-opportunity {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .quick-summary .next-change {
+            color: #f39c12;
+        }
+
+        /* Tooltips */
+        .leaflet-tooltip {
+            background-color: rgba(44, 62, 80, 0.95) !important;
+            border: 2px solid #3498db !important;
+            border-radius: 6px !important;
+            color: #e0e0e0 !important;
+            font-size: 13px !important;
+            padding: 8px 12px !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+        }
+
+        /* DXCC Pin Popup */
+        .leaflet-popup-content-wrapper {
+            background-color: #2c3e50 !important;
+            color: #e0e0e0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 12px !important;
+            font-size: 13px !important;
+        }
+
+        .popup-entity-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+
+        .popup-status {
+            margin-bottom: 6px;
+        }
+
+        .popup-status.needed {
+            color: #e74c3c;
+        }
+
+        .popup-propagation {
+            background-color: #1a252f;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .popup-propagation strong {
+            color: #2ecc71;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 70px;
+            right: 20px;
+            background-color: rgba(44, 62, 80, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #3498db;
+            z-index: 1000;
+            font-size: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .legend h4 {
+            margin-bottom: 8px;
+            color: #3498db;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            border: 1px solid #555;
+        }
+
+        .legend-separator {
+            margin: 10px 0;
+            border-top: 1px solid #555;
+        }
+
+        /* MOCKUP Watermark */
+        .mockup-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.08);
+            z-index: 500;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>VE1ATM HF Propagation Monitor</h1>
+
+        <div class="control-panel">
+            <!-- Band Selection -->
+            <div class="control-group">
+                <label class="group-label">Band:</label>
+                <input type="radio" id="band-40m" name="band" value="40m">
+                <label for="band-40m" class="radio-label">40m</label>
+
+                <input type="radio" id="band-30m" name="band" value="30m">
+                <label for="band-30m" class="radio-label">30m</label>
+
+                <input type="radio" id="band-20m" name="band" value="20m" checked>
+                <label for="band-20m" class="radio-label">20m</label>
+
+                <input type="radio" id="band-17m" name="band" value="17m">
+                <label for="band-17m" class="radio-label">17m</label>
+
+                <input type="radio" id="band-15m" name="band" value="15m">
+                <label for="band-15m" class="radio-label">15m</label>
+
+                <input type="radio" id="band-12m" name="band" value="12m">
+                <label for="band-12m" class="radio-label">12m</label>
+
+                <input type="radio" id="band-10m" name="band" value="10m">
+                <label for="band-10m" class="radio-label">10m</label>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="control-group">
+                <label class="group-label">Mode:</label>
+                <input type="radio" id="mode-ft8" name="mode" value="FT8" checked>
+                <label for="mode-ft8" class="radio-label">FT8/Digital</label>
+
+                <input type="radio" id="mode-ssb" name="mode" value="SSB">
+                <label for="mode-ssb" class="radio-label">SSB</label>
+
+                <input type="radio" id="mode-cw" name="mode" value="CW">
+                <label for="mode-cw" class="radio-label">CW</label>
+            </div>
+
+            <!-- TX Power Selection (NEW) -->
+            <div class="control-group">
+                <label class="group-label">TX:</label>
+                <input type="radio" id="power-5w" name="power" value="5">
+                <label for="power-5w" class="radio-label">5W</label>
+
+                <input type="radio" id="power-100w" name="power" value="100" checked>
+                <label for="power-100w" class="radio-label">100W</label>
+
+                <input type="radio" id="power-500w" name="power" value="500">
+                <label for="power-500w" class="radio-label">500W</label>
+
+                <input type="radio" id="power-1500w" name="power" value="1500">
+                <label for="power-1500w" class="radio-label">1500W</label>
+            </div>
+
+            <!-- Time Selection -->
+            <div class="control-group">
+                <label class="group-label">Time:</label>
+                <input type="radio" id="time-now" name="time" value="now" checked>
+                <label for="time-now" class="radio-label">Now</label>
+
+                <input type="radio" id="time-3h" name="time" value="3h">
+                <label for="time-3h" class="radio-label">+3h</label>
+
+                <input type="radio" id="time-6h" name="time" value="6h">
+                <label for="time-6h" class="radio-label">+6h</label>
+
+                <input type="radio" id="time-12h" name="time" value="12h">
+                <label for="time-12h" class="radio-label">+12h</label>
+
+                <input type="radio" id="time-24h" name="time" value="24h">
+                <label for="time-24h" class="radio-label">+24h</label>
+
+                <input type="radio" id="time-48h" name="time" value="48h">
+                <label for="time-48h" class="radio-label">+48h</label>
+
+                <input type="radio" id="time-72h" name="time" value="72h">
+                <label for="time-72h" class="radio-label">+72h</label>
+            </div>
+
+            <!-- Map Layer Toggle -->
+            <div class="layer-toggle">
+                <label class="group-label">Layer:</label>
+                <input type="radio" id="layer-signal" name="layer" value="signal" checked>
+                <label for="layer-signal" class="radio-label">Signal</label>
+
+                <input type="radio" id="layer-reliability" name="layer" value="reliability">
+                <label for="layer-reliability" class="radio-label">Reliability</label>
+
+                <input type="radio" id="layer-snr" name="layer" value="snr">
+                <label for="layer-snr" class="radio-label">SNR</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div id="map"></div>
+        <div class="mockup-watermark">HEAT MAP v2</div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h4>Signal Strength (FT8)</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #00ff00, #66ff66);"></div>
+                <span>Excellent (S9+20)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #66ff66, #99ff99);"></div>
+                <span>Very Good (S9+10)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #99ff99, #ffff00);"></div>
+                <span>Good (S7-S9)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #ffff00, #ffaa00);"></div>
+                <span>Fair (S5-S7)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #ffaa00, #ff5500);"></div>
+                <span>Marginal (S3-S5)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(to right, #ff5500, #ff0000);"></div>
+                <span>Poor (S1-S3)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #666666;"></div>
+                <span>Closed (<S1)</span>
+            </div>
+
+            <div class="legend-separator"></div>
+            <h4 style="margin-top: 8px;">DXCC Entities</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #e74c3c; border-radius: 50%;"></div>
+                <span>Needed + Open</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #95a5a6; border-radius: 50%;"></div>
+                <span>Needed + Closed</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-summary">
+        <div>
+            <span class="emoji">🎯</span>
+            <span class="label">RIGHT NOW (0045 UTC, 100W, Dipole)</span>
+        </div>
+        <div>
+            <span class="label">BEST:</span>
+            <span class="best-opportunity">14.074 MHz → JA: S9+20 (FT8, 95% reliable)</span>
+        </div>
+        <div>
+            <span class="label">DXCC:</span>
+            <span class="dxcc-opportunity">VP8 on 14.074 MHz (S9) | EA8 on 14.074 MHz (S7)</span>
+        </div>
+        <div>
+            <span class="label">NEXT:</span>
+            <span class="next-change">40m→EU opens 0200 UTC on 7.074 MHz</span>
+        </div>
+        <div style="margin-left: auto; font-size: 11px; color: #7f8c8d;">
+            Hover grid/pins for details
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 8,
+            worldCopyJump: false
+        });
+
+        // Dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Home station marker
+        const homeMarker = L.marker([44.651070, -63.582687], {
+            icon: L.divIcon({
+                className: 'home-marker',
+                html: '<div style="background-color: #3498db; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.5);"></div>',
+                iconSize: [16, 16],
+                iconAnchor: [8, 8]
+            })
+        }).addTo(map);
+        homeMarker.bindTooltip('<strong>VE1ATM</strong><br>Home Station<br>Halifax, NS', {
+            permanent: false,
+            direction: 'top'
+        });
+
+        // SNR to color mapping (FT8 thresholds)
+        function snrToColor(snr) {
+            if (snr >= 20) return '#00ff00';      // Bright green (Excellent)
+            if (snr >= 10) return '#66ff66';      // Light green (Very Good)
+            if (snr >= 0) return '#99ff99';       // Pale green (Good)
+            if (snr >= -5) return '#ffff00';      // Yellow (Fair)
+            if (snr >= -10) return '#ffaa00';     // Orange (Marginal)
+            if (snr >= -15) return '#ff5500';     // Dark orange (Poor)
+            if (snr >= -20) return '#ff0000';     // Red (Very Poor)
+            return '#666666';                      // Gray (Closed)
+        }
+
+        function snrToSMeter(snr) {
+            // Rough conversion: S9 = 0 dB (above noise floor)
+            if (snr >= 40) return 'S9+40';
+            if (snr >= 20) return `S9+${Math.round(snr - 9)}`;
+            if (snr >= 0) return 'S9';
+            if (snr >= -6) return 'S8';
+            if (snr >= -12) return 'S7';
+            if (snr >= -18) return 'S5';
+            if (snr >= -24) return 'S3';
+            return 'S1';
+        }
+
+        // Generate heat map grid (10 degree cells)
+        const heatMapLayer = L.layerGroup().addTo(map);
+        const gridSize = 10;
+        const homeLat = 44.651070;
+        const homeLon = -63.582687;
+
+        // Simulate SNR calculation based on distance and direction
+        function simulateSNR(lat, lon) {
+            const latDiff = lat - homeLat;
+            const lonDiff = lon - homeLon;
+            const distance = Math.sqrt(latDiff * latDiff + lonDiff * lonDiff);
+
+            // Simulate propagation: better to west/east (same latitude), worse to poles
+            const latitudeFactor = Math.cos((lat * Math.PI) / 180);
+            const distanceFactor = Math.max(0, 1 - distance / 180);
+
+            // Simulate 20m band: good medium distance, poor very close and very far
+            let snr;
+            if (distance < 20) {
+                snr = -15 + Math.random() * 10; // Poor (too close, skip zone)
+            } else if (distance < 60) {
+                snr = 10 + Math.random() * 15; // Excellent (ideal skip)
+            } else if (distance < 100) {
+                snr = 0 + Math.random() * 10; // Good
+            } else if (distance < 140) {
+                snr = -10 + Math.random() * 10; // Fair to marginal
+            } else {
+                snr = -20 + Math.random() * 10; // Poor to closed
+            }
+
+            // Latitude factor (polar regions harder)
+            snr *= latitudeFactor;
+
+            // Add some randomness for realism
+            snr += (Math.random() - 0.5) * 5;
+
+            return snr;
+        }
+
+        // Draw heat map grid
+        for (let lat = -80; lat < 80; lat += gridSize) {
+            for (let lon = -180; lon < 180; lon += gridSize) {
+                const cellLat = lat + gridSize / 2;
+                const cellLon = lon + gridSize / 2;
+                const snr = simulateSNR(cellLat, cellLon);
+                const color = snrToColor(snr);
+
+                const rectangle = L.rectangle(
+                    [[lat, lon], [lat + gridSize, lon + gridSize]],
+                    {
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: 0.6,
+                        weight: 0.5,
+                        opacity: 0.3
+                    }
+                ).addTo(heatMapLayer);
+
+                // Tooltip on hover
+                const fot = 14.0 + (snr + 20) / 40 * 0.35; // Simulate FOT
+                rectangle.bindTooltip(
+                    `<strong>${Math.abs(cellLat).toFixed(1)}°${cellLat >= 0 ? 'N' : 'S'}, ` +
+                    `${Math.abs(cellLon).toFixed(1)}°${cellLon >= 0 ? 'E' : 'W'}</strong><br>` +
+                    `Best: ${fot.toFixed(3)} MHz (FT8)<br>` +
+                    `Signal: ${snrToSMeter(snr)}<br>` +
+                    `SNR: ${snr > 0 ? '+' : ''}${snr.toFixed(1)} dB<br>` +
+                    `Reliability: ${Math.max(10, Math.min(95, Math.round(70 + snr)))}%`,
+                    { sticky: true }
+                );
+            }
+        }
+
+        // DXCC Entity pins
+        const dxccEntities = [
+            {
+                name: 'VP8 (Falkland Islands)',
+                coords: [-51.7, -59.5],
+                status: 'needed-open',
+                signal: 'S9',
+                snr: 15,
+                fot: 14.074,
+                band: '20m'
+            },
+            {
+                name: '3B8 (Mauritius)',
+                coords: [-20.3, 57.6],
+                status: 'needed-closed',
+                signal: 'S0',
+                snr: -25,
+                fot: 0,
+                band: '-'
+            },
+            {
+                name: 'JA (Japan)',
+                coords: [36.2, 138.2],
+                status: 'needed-open',
+                signal: 'S9+20',
+                snr: 22,
+                fot: 14.074,
+                band: '20m'
+            },
+            {
+                name: 'ZL (New Zealand)',
+                coords: [-40.9, 174.9],
+                status: 'needed-closed',
+                signal: 'S0',
+                snr: -22,
+                fot: 0,
+                band: '-'
+            },
+            {
+                name: 'EA8 (Canary Islands)',
+                coords: [28.3, -16.5],
+                status: 'needed-open',
+                signal: 'S7',
+                snr: 8,
+                fot: 14.074,
+                band: '20m'
+            }
+        ];
+
+        dxccEntities.forEach(entity => {
+            const pinColor = entity.status === 'needed-open' ? '#e74c3c' : '#95a5a6';
+            const marker = L.circleMarker(entity.coords, {
+                radius: 8,
+                fillColor: pinColor,
+                color: '#fff',
+                weight: 2,
+                fillOpacity: 0.9,
+                zIndexOffset: 1000
+            }).addTo(map);
+
+            // Enhanced popup with frequency info
+            const popupContent = `
+                <div class="popup-entity-name">${entity.name}</div>
+                <div class="popup-status ${entity.status === 'needed-open' ? 'needed' : 'worked'}">
+                    Status: <strong>${entity.status === 'needed-open' ? 'NEEDED (Open Now!)' : 'NEEDED (Closed)'}</strong>
+                </div>
+                <div class="popup-propagation">
+                    ${entity.fot > 0 ? `Best Freq: <strong>${entity.fot.toFixed(3)} MHz</strong><br>` : ''}
+                    Current: <strong>${entity.band}</strong> at <strong>${entity.signal}</strong><br>
+                    SNR: <strong>${entity.snr > 0 ? '+' : ''}${entity.snr} dB</strong><br>
+                    ${entity.fot > 0 ? `MUF: ${(entity.fot * 1.15).toFixed(1)} MHz<br>` : ''}
+                    Distance: 8,420 km | Bearing: 045°
+                </div>
+            `;
+            marker.bindPopup(popupContent);
+
+            // Enhanced tooltip with frequency
+            marker.bindTooltip(
+                `<strong>${entity.name}</strong><br>` +
+                `${entity.fot > 0 ? `${entity.fot.toFixed(3)} MHz - ` : ''}${entity.signal}`,
+                { direction: 'top' }
+            );
+        });
+
+        // Greyline
+        const now = new Date();
+        const utcHour = now.getUTCHours() + now.getUTCMinutes() / 60;
+        const sunLon = ((utcHour - 12) * 15) % 360;
+
+        const greylineCircle = L.circle([0, sunLon], {
+            radius: 10000000,
+            color: '#f39c12',
+            fillColor: 'rgba(243, 156, 18, 0.1)',
+            fillOpacity: 0.1,
+            weight: 2,
+            dashArray: '5, 5'
+        }).addTo(map);
+        greylineCircle.bindTooltip('Greyline (Day/Night)', { permanent: false });
+
+        // Interactive controls
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                console.log(`${this.name} changed to:`, this.value);
+                // In real implementation, this would update the heat map
+            });
+        });
+    </script>
+</body>
+</html>
