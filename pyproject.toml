@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvoacap"
-version = "0.5.0"
-description = "Python port of DVOACAP HF propagation prediction engine"
-readme = "README.md"
+version = "0.9.0"
+description = "Python port of DVOACAP HF propagation prediction engine with 86.6% validation accuracy"
+readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
@@ -22,12 +22,16 @@ keywords = [
     "amateur radio",
     "ham radio",
     "MUF",
-    "radio propagation"
+    "radio propagation",
+    "ionospheric prediction",
+    "skywave",
+    "HF radio"
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Telecommunications Industry",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -37,6 +41,7 @@ classifiers = [
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Physics",
     "Topic :: Communications :: Ham Radio",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 dependencies = [
