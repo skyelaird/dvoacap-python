@@ -116,16 +116,37 @@ wiki/
 
 ## Updating the Wiki
 
+### Automated Sync ✨
+
+**Good news!** Wiki syncing is now automated via GitHub Actions.
+
+When you push changes to the `main` branch that modify files in `wiki/`, the wiki is automatically synced to GitHub Wiki within a few minutes.
+
+**Workflow:** `.github/workflows/wiki-sync.yml`
+
+Just edit the markdown files and push to main - the rest happens automatically!
+
 ### Local Development
 
 Edit markdown files in this directory:
 ```bash
 cd wiki/
 vim Getting-Started.md  # Make your changes
+git add wiki/Getting-Started.md
+git commit -m "Update getting started guide"
+git push origin main  # ← Triggers automatic wiki sync!
 ```
 
-### Syncing to GitHub Wiki
+### Manual Sync (If Needed)
 
+If you need to sync the wiki manually (for testing or troubleshooting):
+
+**Option 1: Use the sync script**
+```bash
+./scripts/sync-wiki.sh
+```
+
+**Option 2: Manual git commands**
 ```bash
 # Clone wiki repo
 git clone https://github.com/skyelaird/dvoacap-python.wiki.git wiki-repo
@@ -140,12 +161,17 @@ git commit -m "Update wiki documentation"
 git push
 ```
 
+**Option 3: Trigger GitHub Action manually**
+1. Go to Actions tab on GitHub
+2. Select "Sync Wiki" workflow
+3. Click "Run workflow"
+
 ### Best Practices
 
 1. **Edit locally first** - Keep wiki/ directory as source of truth
 2. **Test links** - Verify all internal links work
 3. **Preview markdown** - Use a markdown previewer
-4. **Update both places** - Keep wiki/ and GitHub Wiki in sync
+4. **Automatic sync** - Push to main and let GitHub Actions handle the sync
 5. **Commit to main repo** - Wiki markdown is version controlled
 
 ## Wiki Conventions
@@ -270,8 +296,10 @@ If you have questions about the wiki:
 
 ---
 
-**Wiki Status:** ✅ Complete and ready to deploy
+**Wiki Status:** ✅ Complete and ready to deploy (with automatic sync!)
 
-**Last Updated:** 2025-11-14
+**Last Updated:** 2025-11-15
 
 **Total Pages:** 9 (including this README)
+
+**Automation:** Automatic sync via GitHub Actions (`.github/workflows/wiki-sync.yml`)
