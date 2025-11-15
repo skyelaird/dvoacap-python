@@ -103,7 +103,7 @@ DVOACAP-Python includes a web-based dashboard for visualizing propagation predic
 - 📈 **Band Condition Meters** - Real-time signal quality indicators for 160m-10m
 - 🏆 **DXCC Progress Tracking** - Monitor worked/confirmed entities by band and mode
 - ⚡ **On-Demand Predictions** - One-click refresh with Flask server backend
-- 📡 **Solar Data Integration** - Live solar flux, sunspot numbers, and geomagnetic indices
+- 📡 **Live Space Weather Data** - Real-time Kp/A-index, solar flux, and sunspot numbers from NOAA SWPC with international fallback sources
 - 🎨 **Responsive Design** - Works on desktop and mobile devices
 
 ### Quick Start with Dashboard
