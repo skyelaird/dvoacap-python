@@ -60,13 +60,18 @@ dev = [
     "mypy>=0.950",
 ]
 
+docs = [
+    "sphinx>=5.0",
+    "sphinx-rtd-theme>=1.0",
+]
+
 all = [
-    "dvoacap[dashboard,dev]",
+    "dvoacap[dashboard,dev,docs]",
 ]
 
 [project.urls]
 Homepage = "https://github.com/skyelaird/dvoacap-python"
-Documentation = "https://github.com/skyelaird/dvoacap-python/tree/main/docs"
+Documentation = "https://skyelaird.github.io/dvoacap-python/"
 Repository = "https://github.com/skyelaird/dvoacap-python"
 "Bug Tracker" = "https://github.com/skyelaird/dvoacap-python/issues"
 "Original DVOACAP" = "https://github.com/VE3NEA/DVOACAP"
