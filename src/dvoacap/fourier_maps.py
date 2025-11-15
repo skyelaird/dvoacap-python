@@ -18,6 +18,7 @@ import struct
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import List, Tuple
 import numpy as np
 
 
@@ -62,7 +63,7 @@ class VarMapKind:
 # Helper Functions
 # ============================================================================
 
-def make_sincos_array(angle: float, count: int) -> list:
+def make_sincos_array(angle: float, count: int) -> List[Tuple[float, float]]:
     """
     Generate array of sine and cosine values for Fourier series.
 
@@ -92,7 +93,7 @@ class Distribution:
 
     @classmethod
     def with_error(cls, value_mdn: float, value_hi: float, value_lo: float,
-                   error_mdn: float, error_hi: float, error_lo: float):
+                   error_mdn: float, error_hi: float, error_lo: float) -> "Distribution":
         """Create distribution with separate value and error components"""
         return cls(
             median=value_mdn + error_mdn,
@@ -119,7 +120,7 @@ class FourierMaps:
         >>> fof2 = maps.compute_var_map(VarMapKind.F2, lat, lon, cos_lat)
     """
 
-    def __init__(self, data_dir: str | None = None):
+    def __init__(self, data_dir: str | None = None) -> None:
         """
         Initialize Fourier maps handler.
 
@@ -170,7 +171,7 @@ class FourierMaps:
         # Initialize with default conditions
         self.set_conditions(1, 1, 0)
 
-    def set_conditions(self, month: int, ssn: float, utc_fraction: float):
+    def set_conditions(self, month: int, ssn: float, utc_fraction: float) -> None:
         """
         Set month, sunspot number, and UTC time for coefficient interpolation.
 
@@ -192,7 +193,7 @@ class FourierMaps:
         elif utc_fraction != self.utc_fraction:
             self._interpolate_utc(utc_fraction)
 
-    def _load_month_coefficients(self, month: int):
+    def _load_month_coefficients(self, month: int) -> None:
         """Load coefficient files for specified month"""
         self.month = month
 
@@ -300,7 +301,7 @@ class FourierMaps:
             xf2cof_data = struct.unpack('1976f', f.read(1976 * 4))
             self.xf2cof = np.array(xf2cof_data, dtype=np.float32).reshape(2, 76, 13)
 
-    def _interpolate_ssn(self, ssn: float):
+    def _interpolate_ssn(self, ssn: float) -> None:
         """Interpolate coefficients for specified sunspot number"""
         self.ssn = ssn
 
@@ -344,7 +345,7 @@ class FourierMaps:
             self.xercof[0] * (1 - r150) + self.xercof[1] * r150
         )
 
-    def _interpolate_utc(self, utc_fraction: float):
+    def _interpolate_utc(self, utc_fraction: float) -> None:
         """Interpolate coefficients for specified UTC time"""
         self.utc_fraction = utc_fraction
 

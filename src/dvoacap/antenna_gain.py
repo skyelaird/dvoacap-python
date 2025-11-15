@@ -30,7 +30,7 @@ class AntennaModel:
         high_frequency: float = 1e9,
         extra_gain_db: float = 0.0,
         tx_power_dbw: float = 1.0
-    ):
+    ) -> None:
         """
         Initialize antenna model.
 
@@ -120,7 +120,7 @@ class IsotropicAntenna(AntennaModel):
     for a given frequency range.
     """
 
-    def __init__(self, tx_power_dbw: float = 1.0):
+    def __init__(self, tx_power_dbw: float = 1.0) -> None:
         """
         Initialize isotropic antenna.
 
@@ -160,7 +160,7 @@ class AntennaFarm:
         antennas: List of available antenna models
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize antenna farm with isotropic default antenna."""
         self._isotropic_antenna = IsotropicAntenna()
         self._current_antenna = self._isotropic_antenna
@@ -171,7 +171,7 @@ class AntennaFarm:
         """Get currently selected antenna."""
         return self._current_antenna
 
-    def add_antenna(self, antenna: AntennaModel):
+    def add_antenna(self, antenna: AntennaModel) -> None:
         """
         Add an antenna to the farm.
 
@@ -180,7 +180,7 @@ class AntennaFarm:
         """
         self.antennas.append(antenna)
 
-    def select_antenna(self, frequency: float):
+    def select_antenna(self, frequency: float) -> None:
         """
         Select antenna for specified frequency.
 
@@ -216,7 +216,7 @@ class HalfWaveDipole(AntennaModel):
         low_frequency: float,
         high_frequency: float,
         tx_power_dbw: float = 1.0
-    ):
+    ) -> None:
         """
         Initialize half-wave dipole antenna.
 
@@ -263,7 +263,7 @@ class VerticalMonopole(AntennaModel):
         low_frequency: float,
         high_frequency: float,
         tx_power_dbw: float = 1.0
-    ):
+    ) -> None:
         """
         Initialize vertical monopole antenna.
 
