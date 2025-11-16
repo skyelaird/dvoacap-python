@@ -127,8 +127,9 @@ def voacap_parser(data_dir):
 @pytest.fixture
 def fourier_maps(data_dir):
     """Create a FourierMaps instance loaded with January data."""
-    fourier_maps = FourierMaps()
-    fourier_maps.load_month(data_dir, 1)
+    fourier_maps = FourierMaps(data_dir=str(data_dir))
+    # Initialize with January, SSN=100, noon UTC
+    fourier_maps.set_conditions(month=1, ssn=100.0, utc_fraction=0.5)
     return fourier_maps
 
 

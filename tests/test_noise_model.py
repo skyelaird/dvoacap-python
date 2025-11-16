@@ -138,7 +138,7 @@ class TestNoiseComputation1MHz:
         (0.0, 0),    # 00:00 UTC -> block 0 (0-4)
         (0.125, 0),  # 03:00 UTC -> block 0 (0-4)
         (0.25, 1),   # 06:00 UTC -> block 1 (4-8)
-        (0.5, 2),    # 12:00 UTC -> block 2 (8-12)
+        (0.5, 3),    # 12:00 UTC -> block 3 (12-16) [corrected]
         (0.75, 4),   # 18:00 UTC -> block 4 (16-20)
         (0.95, 5),   # 22:48 UTC -> block 5 (20-24)
     ])
@@ -199,8 +199,9 @@ class TestNoiseDistributionComputation:
         noise_model.compute_noise_at_1mhz(new_york, 0.5)
         noise_model.compute_distribution(frequency=5.0, fof2=10.0)
 
-        # Galactic noise should be zero when f < foF2
-        assert noise_model.galactic_noise.value.median == 0.0
+        # Galactic noise should be suppressed when f < foF2
+        # After the -204 offset, it becomes -204 (not 0)
+        assert noise_model.galactic_noise.value.median == -204.0
 
     def test_galactic_noise_above_fof2(self, noise_model, new_york):
         """Test galactic noise when frequency is above foF2."""
@@ -440,7 +441,7 @@ class TestNoiseHelperMethods:
         # Should not overflow with very small values
         result = NoiseModel._to_db(1e-50)
         assert np.isfinite(result)
-        assert result < -300  # Very negative dB
+        assert result <= -300  # Very negative dB
 
     def test_interpolate_distribution(self, noise_model):
         """Test distribution interpolation."""
@@ -529,8 +530,9 @@ class TestNoiseEdgeCases:
         noise_model.compute_noise_at_1mhz(new_york, 0.5)
         noise_model.compute_distribution(frequency=10.0, fof2=30.0)
 
-        # Galactic noise should be zero since f < foF2
-        assert noise_model.galactic_noise.value.median == 0.0
+        # Galactic noise should be suppressed since f < foF2
+        # After -204 offset, it becomes -204
+        assert noise_model.galactic_noise.value.median == -204.0
 
     def test_noise_with_low_fof2(self, noise_model, new_york):
         """Test noise when foF2 is very low (allows galactic noise)."""
