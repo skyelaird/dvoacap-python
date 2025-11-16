@@ -87,6 +87,9 @@ where = ["src"]
 include = ["dvoacap*"]
 exclude = ["original*"]
 
+[tool.setuptools.package-data]
+dvoacap = ["DVoaData/*.dat"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]

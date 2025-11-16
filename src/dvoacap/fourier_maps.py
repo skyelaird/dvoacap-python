@@ -128,9 +128,14 @@ class FourierMaps:
             data_dir: Path to DVoaData directory. If None, uses default location.
         """
         if data_dir is None:
-            # Default to DVoaData directory relative to package
-            package_dir = Path(__file__).parent.parent.parent
+            # Default to DVoaData directory inside package
+            package_dir = Path(__file__).parent
             data_dir = package_dir / "DVoaData"
+
+            # Fallback to repository root for development/editable installs
+            if not data_dir.exists():
+                repo_root = package_dir.parent.parent
+                data_dir = repo_root / "DVoaData"
 
         self.data_dir = Path(data_dir)
 
