@@ -31,17 +31,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest pytest-cov
 
-      - name: Run pytest
+      - name: Run pytest with coverage
         run: |
-          python -m pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=short --cov=src/dvoacap --cov-report=term --cov-report=xml --cov-report=html
 
-      - name: Generate test report
+      - name: Generate test and coverage report
         if: always()
         run: |
           echo "## Test Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          python -m pytest tests/ -v --tb=line | tee test_output.txt
+          python -m pytest tests/ -v --tb=line --cov=src/dvoacap --cov-report=term | tee test_output.txt
           if [ $? -eq 0 ]; then
             echo "✅ All tests passed" >> $GITHUB_STEP_SUMMARY
           else
@@ -50,3 +51,15 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Test Summary" >> $GITHUB_STEP_SUMMARY
           grep -E "passed|failed|error" test_output.txt | tail -1 >> $GITHUB_STEP_SUMMARY || echo "Could not extract summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          grep -A 10 "TOTAL" test_output.txt >> $GITHUB_STEP_SUMMARY || echo "Could not extract coverage" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage reports
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: |
+            coverage.xml
+            htmlcov/
