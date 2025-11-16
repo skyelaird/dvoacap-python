@@ -10,7 +10,7 @@ Python Port: 2025
 
 # Modern Python 3.11+ uses built-in types for annotations
 
-__version__ = "0.5.0"
+__version__ = "0.9.0"
 __author__ = "Python Port Contributors"
 __license__ = "MIT"
 

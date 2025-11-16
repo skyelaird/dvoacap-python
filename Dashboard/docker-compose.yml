@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  dvoacap-dashboard:
+    build:
+      context: ..
+      dockerfile: Dashboard/Dockerfile
+    container_name: dvoacap-dashboard
+    ports:
+      - "8000:8000"
+    environment:
+      # Customize these for your station
+      - CALLSIGN=VE1ATM
+      - LAT=44.374
+      - LON=-64.300
+      - GRID=FN74ui
+      - ANTENNA=DX Commander 7m Vertical
+      - PORT=8000
+    volumes:
+      # Optional: mount predictions data for persistence
+      - ./propagation_data.json:/app/Dashboard/propagation_data.json
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+# Usage:
+#   docker-compose up -d              # Start in background
+#   docker-compose logs -f            # View logs
+#   docker-compose down               # Stop and remove
+#   docker-compose restart            # Restart service

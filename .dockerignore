@@ -1,0 +1,64 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation build
+docs/build/
+docs/_build/
+
+# Archives and temp files
+archive/
+*.tar.gz
+*.zip
+*.log
+
+# Development
+notebooks/
+reference/
+scripts/
+tests/
+
+# Large or unnecessary files
+*.pdf
+*.png
+*.jpg
+*.jpeg
+gn55_in25_comparison_results.json
