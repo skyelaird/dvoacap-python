@@ -1634,7 +1634,12 @@
         
         async function loadPropagationData() {
             try {
-                const response = await fetch('enhanced_predictions.json');
+                // Try API endpoint first, fallback to direct file access
+                let response = await fetch('/api/data');
+                if (!response.ok) {
+                    // Fallback to direct file access for backwards compatibility
+                    response = await fetch('enhanced_predictions.json');
+                }
                 const data = await response.json();
                 // Extract the predictions object from the data structure
                 propData = data.predictions || data;

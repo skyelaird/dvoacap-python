@@ -377,6 +377,34 @@ jobs:
 
 ## 🐛 Troubleshooting
 
+### Dashboard Shows No Dynamic Data
+
+**Error**: Dashboard loads but shows no propagation data, maps, or predictions.
+
+**Cause**: Missing prediction data files (`enhanced_predictions.json`).
+
+**Solution**:
+
+1. Generate initial prediction data:
+   ```bash
+   cd Dashboard
+   python3 generate_predictions.py
+   ```
+
+2. If dependencies are missing, install them:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+3. Start or restart the server:
+   ```bash
+   python3 server.py
+   ```
+
+4. Hard refresh your browser: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
+
+**Note**: The dashboard now automatically tries the `/api/data` endpoint first, with fallback to direct file access for backwards compatibility.
+
 ### "Generator failed" Error in Dashboard
 
 **Error**: When clicking "Refresh Predictions", you see "Complete! Error: Generator failed:"
@@ -462,6 +490,12 @@ python3 generate_predictions.py
 ---
 
 ## 📚 Additional Resources
+
+### Dashboard Documentation
+
+- **[USER_MANUAL.md](USER_MANUAL.md)** - Complete user manual with detailed instructions
+- **[Dashboard Guide](../wiki/Dashboard-Guide.md)** - Wiki guide with examples
+- **[Design Recommendations](../DASHBOARD_DESIGN_RECOMMENDATIONS.md)** - Architecture and design
 
 ### DVOACAP-Python Documentation
 
