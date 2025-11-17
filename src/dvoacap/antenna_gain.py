@@ -300,3 +300,156 @@ class VerticalMonopole(AntennaModel):
         # Peak gain of ~5 dBi at low angles
         gain = 5.0 - 10.0 * (elevation / (np.pi / 2))
         return gain + self.extra_gain_db
+
+
+class InvertedVDipole(AntennaModel):
+    """
+    Inverted V dipole antenna model.
+
+    Similar to half-wave dipole but with drooping elements.
+    Better low-angle radiation than horizontal dipole.
+    Peak gain around 3-4 dBi at moderate elevation angles.
+    """
+
+    def __init__(
+        self,
+        low_frequency: float,
+        high_frequency: float,
+        tx_power_dbw: float = 1.0
+    ) -> None:
+        """
+        Initialize inverted V dipole antenna.
+
+        Args:
+            low_frequency: Lower frequency limit in MHz
+            high_frequency: Upper frequency limit in MHz
+            tx_power_dbw: Transmit power in dBW (default: 1 = 10W)
+        """
+        super().__init__(
+            low_frequency=low_frequency,
+            high_frequency=high_frequency,
+            extra_gain_db=0.0,
+            tx_power_dbw=tx_power_dbw
+        )
+
+    def get_gain_db(self, elevation: float) -> float:
+        """
+        Get inverted V dipole gain at specified elevation.
+
+        Args:
+            elevation: Elevation angle in radians
+
+        Returns:
+            Antenna gain in dBi
+        """
+        if elevation < 0 or elevation > np.pi / 2:
+            return -40.0  # Very low gain below horizon or overhead
+
+        # Inverted V has better low-angle radiation than horizontal dipole
+        # Peak gain around 15-20 degrees elevation
+        # Model with gaussian-like pattern centered around 20 degrees
+        optimal_angle = np.radians(20)
+        gain = 3.5 * np.exp(-((elevation - optimal_angle) ** 2) / 0.3)
+        return gain + self.extra_gain_db
+
+
+class ThreeElementYagi(AntennaModel):
+    """
+    3-element Yagi antenna model.
+
+    Directional beam antenna with higher gain than dipoles.
+    Excellent for DX work with proper aiming.
+    Peak gain around 7-8 dBi at low to moderate elevation angles.
+    """
+
+    def __init__(
+        self,
+        low_frequency: float,
+        high_frequency: float,
+        tx_power_dbw: float = 1.0
+    ) -> None:
+        """
+        Initialize 3-element Yagi antenna.
+
+        Args:
+            low_frequency: Lower frequency limit in MHz
+            high_frequency: Upper frequency limit in MHz
+            tx_power_dbw: Transmit power in dBW (default: 1 = 10W)
+        """
+        super().__init__(
+            low_frequency=low_frequency,
+            high_frequency=high_frequency,
+            extra_gain_db=0.0,
+            tx_power_dbw=tx_power_dbw
+        )
+
+    def get_gain_db(self, elevation: float) -> float:
+        """
+        Get 3-element Yagi gain at specified elevation.
+
+        Args:
+            elevation: Elevation angle in radians
+
+        Returns:
+            Antenna gain in dBi
+        """
+        if elevation < 0:
+            return -40.0  # No radiation below horizon
+
+        if elevation > np.pi / 2:
+            return -40.0  # No radiation overhead
+
+        # Yagi has good gain at low angles, decreasing with elevation
+        # Peak gain of ~7.5 dBi at low angles (5-15 degrees)
+        # Model with exponential decay
+        elevation_deg = np.degrees(elevation)
+
+        if elevation_deg < 5:
+            gain = 6.0  # Slightly reduced at very low angles
+        elif elevation_deg < 15:
+            gain = 7.5  # Peak gain zone
+        else:
+            # Exponential decay above 15 degrees
+            gain = 7.5 * np.exp(-(elevation_deg - 15) / 30)
+
+        return gain + self.extra_gain_db
+
+
+def create_antenna(
+    antenna_type: str,
+    low_frequency: float,
+    high_frequency: float,
+    tx_power_dbw: float = 1.0
+) -> AntennaModel:
+    """
+    Factory function to create antenna models by type name.
+
+    Args:
+        antenna_type: Type of antenna ('vertical', 'dipole', 'inverted-v', 'yagi', 'isotropic')
+        low_frequency: Lower frequency limit in MHz
+        high_frequency: Upper frequency limit in MHz
+        tx_power_dbw: Transmit power in dBW (default: 1 = 10W)
+
+    Returns:
+        Appropriate AntennaModel instance
+
+    Raises:
+        ValueError: If antenna_type is not recognized
+    """
+    antenna_type_lower = antenna_type.lower()
+
+    if antenna_type_lower in ['vertical', 'vertical-monopole', 'monopole']:
+        return VerticalMonopole(low_frequency, high_frequency, tx_power_dbw)
+    elif antenna_type_lower in ['dipole', 'half-wave-dipole', 'halfwave']:
+        return HalfWaveDipole(low_frequency, high_frequency, tx_power_dbw)
+    elif antenna_type_lower in ['inverted-v', 'invertedv', 'inv-v']:
+        return InvertedVDipole(low_frequency, high_frequency, tx_power_dbw)
+    elif antenna_type_lower in ['yagi', '3-element-yagi', '3element', 'beam']:
+        return ThreeElementYagi(low_frequency, high_frequency, tx_power_dbw)
+    elif antenna_type_lower in ['isotropic', 'reference']:
+        return IsotropicAntenna(tx_power_dbw)
+    else:
+        raise ValueError(
+            f"Unknown antenna type: {antenna_type}. "
+            f"Valid types: vertical, dipole, inverted-v, yagi, isotropic"
+        )
