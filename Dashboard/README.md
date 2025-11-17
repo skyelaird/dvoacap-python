@@ -62,6 +62,29 @@ Click the **⚡ Refresh Predictions** button in the dashboard to generate fresh 
 - ✅ Progress indicator shows generation status
 - ✅ Dashboard auto-reloads when complete
 
+**Server Options:**
+```bash
+# Normal mode (HTTP caching enabled for performance)
+python3 server.py
+
+# Development mode (disables caching for active development)
+python3 server.py --debug
+python3 server.py --no-cache
+
+# Custom host/port
+python3 server.py --host 0.0.0.0 --port 8080
+```
+
+**HTTP Caching:**
+The server uses HTTP caching for optimal performance. You'll see:
+- First request: `200` (full content sent)
+- Subsequent requests: `304` (browser uses cached version)
+
+This is **normal and correct** - it reduces bandwidth and speeds up page loads!
+
+For active development, use `--no-cache` or `--debug` to disable caching.
+See [HTTP_CACHING_GUIDE.md](../HTTP_CACHING_GUIDE.md) for details.
+
 ---
 
 ### Option B: Static Files (Manual Updates)

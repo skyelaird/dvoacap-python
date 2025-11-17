@@ -19,7 +19,7 @@ import threading
 import subprocess
 from pathlib import Path
 from datetime import datetime
-from flask import Flask, jsonify, send_from_directory, request
+from flask import Flask, jsonify, send_from_directory, request, make_response
 from flask_cors import CORS
 
 # Add parent directory to import dvoacap
@@ -36,6 +36,33 @@ generation_state = {
     'last_updated': None,
     'error': None
 }
+
+# Global configuration
+server_config = {
+    'disable_cache': False  # Set to True to disable HTTP caching
+}
+
+
+def apply_cache_control(response):
+    """
+    Apply cache control headers to a response based on server configuration
+
+    Args:
+        response: Flask response object
+
+    Returns:
+        Modified response with cache control headers
+    """
+    if server_config.get('disable_cache', False) or app.debug:
+        # Disable caching for development
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    else:
+        # Allow caching in production with 5 minute max-age
+        response.headers['Cache-Control'] = 'public, max-age=300'
+
+    return response
 
 
 def run_prediction_generator():
@@ -263,6 +290,36 @@ def antenna_config():
             return jsonify({'error': str(e)}), 500
 
 
+@app.route('/api/debug/cache', methods=['GET'])
+def debug_cache():
+    """
+    API endpoint to debug HTTP caching configuration
+
+    Returns:
+        JSON with current cache configuration and sample headers
+    """
+    # Create a sample response to show what headers would be sent
+    sample_response = make_response("sample")
+    sample_response = apply_cache_control(sample_response)
+
+    return jsonify({
+        'cache_enabled': not (server_config.get('disable_cache', False) or app.debug),
+        'debug_mode': app.debug,
+        'disable_cache_flag': server_config.get('disable_cache', False),
+        'sample_headers': dict(sample_response.headers),
+        'explanation': {
+            '200': 'First request - Full content sent with ETag/Last-Modified headers',
+            '304': 'Subsequent requests - Browser sends If-None-Match/If-Modified-Since, server responds with 304 if unchanged',
+            'cache_control': sample_response.headers.get('Cache-Control', 'default')
+        },
+        'tips': {
+            'disable_cache': 'Start server with --no-cache flag to disable caching',
+            'debug_mode': 'Start server with --debug flag to auto-disable caching',
+            'browser_refresh': 'Use Ctrl+Shift+R (Cmd+Shift+R on Mac) for hard refresh'
+        }
+    })
+
+
 # =============================================================================
 # Static File Serving
 # =============================================================================
@@ -270,13 +327,15 @@ def antenna_config():
 @app.route('/')
 def index():
     """Serve the main dashboard"""
-    return send_from_directory('.', 'dashboard.html')
+    response = make_response(send_from_directory('.', 'dashboard.html'))
+    return apply_cache_control(response)
 
 
 @app.route('/<path:path>')
 def serve_static(path):
     """Serve static files"""
-    return send_from_directory('.', path)
+    response = make_response(send_from_directory('.', path))
+    return apply_cache_control(response)
 
 
 # =============================================================================
@@ -319,9 +378,14 @@ def main():
     parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
     parser.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    parser.add_argument('--no-cache', action='store_true', help='Disable HTTP caching (for development)')
     parser.add_argument('--skip-deps-check', action='store_true', help='Skip dependency check')
 
     args = parser.parse_args()
+
+    # Configure caching
+    if args.no_cache:
+        server_config['disable_cache'] = True
 
     # Check dependencies unless skipped
     if not args.skip_deps_check:
@@ -345,6 +409,8 @@ def main():
     print("=" * 80)
     print(f"\n✓ Server starting on http://{args.host}:{args.port}")
     print(f"✓ Dashboard: http://{args.host}:{args.port}/")
+    print(f"✓ Debug mode: {'Enabled' if args.debug else 'Disabled'}")
+    print(f"✓ HTTP caching: {'Disabled' if server_config['disable_cache'] or args.debug else 'Enabled'}")
     print(f"✓ Press Ctrl+C to stop\n")
     print("=" * 80)
 
