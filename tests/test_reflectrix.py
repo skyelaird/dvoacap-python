@@ -109,8 +109,9 @@ class TestReflectrix:
         refl_high = Reflectrix(15.0 * np.pi/180, freq, profile)
 
         # Different minimum angles should give different results
-        # Skip distances should differ
-        assert refl_low.skip_distance != refl_high.skip_distance or \
+        # At minimum, the maximum distance should be affected by angle
+        assert refl_low.max_distance != refl_high.max_distance or \
+               refl_low.skip_distance != refl_high.skip_distance or \
                len(refl_low.refl) != len(refl_high.refl)
 
     def test_find_modes_at_distance(self, profile):

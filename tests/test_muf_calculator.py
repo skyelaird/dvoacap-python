@@ -29,11 +29,11 @@ class TestMufInfo:
     def test_initialization(self):
         """Test MufInfo creation"""
         ref = Reflection(
-            freq=7.0,
-            height=300.0,
-            angle=0.5,
-            dist=0.15,
-            virt_height=350.0
+            elevation=0.5,
+            true_height=300.0,
+            virt_height=350.0,
+            vert_freq=7.0,
+            dev_loss=0.0
         )
 
         muf_info = MufInfo(
@@ -61,7 +61,7 @@ class TestCircuitMuf:
 
     def test_initialization(self):
         """Test CircuitMuf creation"""
-        ref = Reflection(freq=14.0, height=300.0, angle=0.5, dist=0.2, virt_height=350.0)
+        ref = Reflection(elevation=0.5, true_height=300.0, virt_height=350.0, vert_freq=14.0, dev_loss=0.0)
         muf_info_f2 = MufInfo(ref=ref, hop_count=2, fot=10.0, hpf=12.0, muf=14.0)
 
         circuit_muf = CircuitMuf(
@@ -132,7 +132,7 @@ class TestCalcMufProb:
         """Test MUF probability calculation"""
         muf_info = {
             'F2': MufInfo(
-                ref=Reflection(freq=14.0, height=300.0, angle=0.5, dist=0.2, virt_height=350.0),
+                ref=Reflection(elevation=0.5, true_height=300.0, virt_height=350.0, vert_freq=14.0, dev_loss=0.0),
                 hop_count=2,
                 muf=14.0,
                 sig_lo=2.0,
@@ -161,7 +161,7 @@ class TestCalcMufProb:
         """Test that probabilities stay within [0, 1]"""
         muf_info = {
             'F2': MufInfo(
-                ref=Reflection(freq=10.0, height=300.0, angle=0.5, dist=0.2, virt_height=350.0),
+                ref=Reflection(elevation=0.5, true_height=300.0, virt_height=350.0, vert_freq=10.0, dev_loss=0.0),
                 hop_count=1,
                 muf=10.0,
                 sig_lo=1.0,
@@ -183,10 +183,12 @@ class TestMufCalculator:
     @pytest.fixture
     def path(self):
         """Create a sample path geometry"""
+        from dvoacap.path_geometry import GeoPoint
         path = PathGeometry()
         # Philadelphia to London path (~5500 km)
-        path.set_tx_rx(40.0 * np.pi/180, -75.0 * np.pi/180,
-                      51.5 * np.pi/180, -0.1 * np.pi/180)
+        tx = GeoPoint.from_degrees(40.0, -75.0)
+        rx = GeoPoint.from_degrees(51.5, -0.1)
+        path.set_tx_rx(tx, rx)
         return path
 
     @pytest.fixture
@@ -254,15 +256,19 @@ class TestMufCalculator:
 
     def test_muf_varies_with_distance(self, fourier_maps, profile):
         """Test that MUF varies with path distance"""
+        from dvoacap.path_geometry import GeoPoint
+
         # Short path
         short_path = PathGeometry()
-        short_path.set_tx_rx(40.0 * np.pi/180, -75.0 * np.pi/180,
-                           42.0 * np.pi/180, -71.0 * np.pi/180)
+        tx_short = GeoPoint.from_degrees(40.0, -75.0)
+        rx_short = GeoPoint.from_degrees(42.0, -71.0)
+        short_path.set_tx_rx(tx_short, rx_short)
 
         # Long path
         long_path = PathGeometry()
-        long_path.set_tx_rx(40.0 * np.pi/180, -75.0 * np.pi/180,
-                          51.5 * np.pi/180, -0.1 * np.pi/180)
+        tx_long = GeoPoint.from_degrees(40.0, -75.0)
+        rx_long = GeoPoint.from_degrees(51.5, -0.1)
+        long_path.set_tx_rx(tx_long, rx_long)
 
         calc_short = MufCalculator(short_path, fourier_maps)
         calc_long = MufCalculator(long_path, fourier_maps)
