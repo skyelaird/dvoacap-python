@@ -522,6 +522,127 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Help System Styles */
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2a3f5f;
+            color: #4a90e2;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+            border: 1px solid #4a90e2;
+        }
+
+        .help-icon:hover {
+            background: #4a90e2;
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.5);
+        }
+
+        .help-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #162236;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 2rem;
+            min-width: 500px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .help-modal.show {
+            display: block;
+        }
+
+        .help-modal h3 {
+            color: #4a90e2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 0.5rem;
+        }
+
+        .help-modal h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .help-modal p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .help-modal ul {
+            color: #8a9bb5;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .help-modal li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .help-modal code {
+            background: #0a0e1a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            color: #4ade80;
+            font-family: monospace;
+        }
+
+        .help-modal .warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            color: #fbbf24;
+        }
+
+        .help-modal .info {
+            background: rgba(74, 144, 226, 0.1);
+            border-left: 3px solid #4a90e2;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            color: #8a9bb5;
+        }
+
+        .help-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #2a3f5f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .help-close-btn:hover {
+            background: #3a5f8f;
+        }
     </style>
 </head>
 <body>
@@ -638,6 +759,12 @@
         </div>
     </div>
 
+    <!-- Help Modals -->
+    <div class="help-modal" id="helpModal">
+        <button class="help-close-btn" onclick="closeHelp()">✕ Close</button>
+        <div id="helpContent"></div>
+    </div>
+
     <div class="header">
         <h1>📡 VE1ATM HF Propagation Monitor</h1>
         <div class="station-info">
@@ -669,7 +796,10 @@
         <div id="tab-overview" class="tab-content active">
             <div class="grid-2col">
                 <div class="card">
-                    <h2>🌍 Current Band Openings <span id="grayLineTime" style="float: right; font-size: 0.75rem; font-weight: normal;"></span></h2>
+                    <h2>🌍 Current Band Openings
+                        <span class="help-icon" onclick="showHelp('bandopenings')" title="Click for explanation">?</span>
+                        <span id="grayLineTime" style="float: right; font-size: 0.75rem; font-weight: normal;"></span>
+                    </h2>
 
                     <!-- Map Controls -->
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
@@ -686,7 +816,10 @@
 
                         <!-- Gray Line Time Control -->
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label for="grayLineTimeSlider" style="font-weight: bold; color: #9aa5b1;">Time (UTC):</label>
+                            <label for="grayLineTimeSlider" style="font-weight: bold; color: #9aa5b1;">
+                                Time (UTC):
+                                <span class="help-icon" onclick="showHelp('grayline')" title="Click for grayline explanation">?</span>
+                            </label>
                             <input type="range" id="grayLineTimeSlider" min="0" max="23" step="1"
                                    style="width: 200px;" onchange="updateGrayLineTime(this.value)" oninput="updateGrayLineTimeDisplay(this.value)">
                             <span id="grayLineTimeValue" style="font-weight: bold; min-width: 50px;">--:--</span>
@@ -714,7 +847,9 @@
 
             <div class="grid-2col" style="margin-top: 1rem;">
                 <div class="card">
-                    <h2>⏰ 24-Hour Propagation Wheel</h2>
+                    <h2>⏰ 24-Hour Propagation Wheel
+                        <span class="help-icon" onclick="showHelp('propwheel')" title="Click for explanation">?</span>
+                    </h2>
                     <div style="margin-bottom: 0.5rem; font-size: 0.8rem; color: #8a9bb5;">
                         <label>Select Region: </label>
                         <select id="wheelRegionSelect" onchange="renderPropWheel()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">
@@ -764,11 +899,14 @@
                     </select>
                 </div>
 
-                <!-- Most Reliable Mode (MRM) Indicator -->
+                <!-- Most Reliable Band (MRB) Indicator -->
                 <div id="mrmIndicator" style="margin-bottom: 2rem; padding: 1rem; background: #1a2332; border-radius: 8px; border-left: 4px solid #4a90e2;">
-                    <h3 style="margin: 0 0 0.75rem 0; color: #4a90e2; font-size: 1rem;">🎯 Most Reliable Mode (MRM) by Hour</h3>
+                    <h3 style="margin: 0 0 0.75rem 0; color: #4a90e2; font-size: 1rem;">
+                        🎯 Most Reliable Band by Hour
+                        <span class="help-icon" onclick="showHelp('mrb')" title="Click for explanation">?</span>
+                    </h3>
                     <div id="mrmContent" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.5rem; font-size: 0.85rem;">
-                        <!-- MRM data populated dynamically -->
+                        <!-- MRB data populated dynamically -->
                     </div>
                 </div>
 
@@ -779,10 +917,18 @@
                 <div id="snrChart" style="height: 300px; margin-bottom: 2rem;"></div>
 
                 <!-- Signal Power (SDBW) Chart -->
-                <div id="sdbwChart" style="height: 300px; margin-bottom: 2rem;"></div>
+                <div id="sdbwChart" style="height: 300px;"></div>
+                <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-bottom: 2rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
+                    Shows signal variability: median (solid), 10th/90th percentiles (dotted), shaded = 80% of signals fall in this range
+                    <span class="help-icon" onclick="showHelp('signalpower')" title="Click for detailed explanation" style="margin-left: 0.3rem;">?</span>
+                </div>
 
                 <!-- MUFday Chart -->
                 <div id="mufdayChart" style="height: 300px;"></div>
+                <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.5rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
+                    Operating frequency as % of MUF - Values >90% indicate unreliable propagation
+                    <span class="help-icon" onclick="showHelp('mufday')" title="Click for detailed explanation" style="margin-left: 0.3rem;">?</span>
+                </div>
             </div>
         </div>
 
@@ -1022,6 +1168,221 @@
         let grayLineLayer = null;
         let pathMode = 'sp';  // 'sp' for short path, 'lp' for long path
         let grayLineHour = null;  // null = use current time, otherwise use this hour (0-23)
+
+        // Help System
+        const helpContent = {
+            'bandopenings': `
+                <h2>🌍 Current Band Openings</h2>
+                <p>This interactive map shows predicted HF propagation paths from your station to major DX regions worldwide.</p>
+
+                <h3>Understanding the Map</h3>
+                <ul>
+                    <li><strong>Color-coded regions:</strong> Green = Good, Yellow = Fair, Red = Poor propagation</li>
+                    <li><strong>Dashed lines:</strong> Show propagation paths (great circle routes)</li>
+                    <li><strong>Yellow band:</strong> The grayline/terminator zone between day and night</li>
+                    <li><strong>Click markers:</strong> View detailed info for each region</li>
+                </ul>
+
+                <h3>Short Path vs Long Path</h3>
+                <p>Radio signals can travel the short way around Earth or the long way:</p>
+                <ul>
+                    <li><strong>Short Path (SP):</strong> Direct great circle route (default)</li>
+                    <li><strong>Long Path (LP):</strong> The opposite direction around Earth - can provide better propagation when short path is disturbed</li>
+                </ul>
+
+                <h3>Time Control</h3>
+                <p>Use the time slider to preview propagation conditions at any UTC hour. The grayline position updates to show where twilight zones will be.</p>
+
+                <div class="info">
+                    <strong>Tip:</strong> The grayline (twilight zone) often provides enhanced propagation, especially on lower bands like 40m and 80m.
+                </div>
+            `,
+            'grayline': `
+                <h2>🌅 Grayline (Terminator Zone)</h2>
+                <p>The grayline is the twilight zone between day and night on Earth, visible on the map as a yellow band.</p>
+
+                <h3>Why is the Grayline Important?</h3>
+                <ul>
+                    <li><strong>Enhanced propagation:</strong> D-layer absorption is minimal (D-layer disappears at night)</li>
+                    <li><strong>Lower noise:</strong> Both ends of the path experience low noise levels</li>
+                    <li><strong>Mixed ionosphere:</strong> Can support both day and night propagation modes</li>
+                    <li><strong>Best for DX:</strong> Excellent for working distant stations on 40m-10m</li>
+                </ul>
+
+                <h3>How to Use It</h3>
+                <ul>
+                    <li><strong>Now button:</strong> Shows current grayline position</li>
+                    <li><strong>Time slider:</strong> Preview grayline at any UTC hour for planning</li>
+                    <li><strong>Strategy:</strong> Plan QSOs when both stations are in or near the grayline</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>Note:</strong> The grayline moves at ~15° longitude per hour (1000+ mph). Openings can be brief but spectacular!
+                </div>
+            `,
+            'propwheel': `
+                <h2>⏰ 24-Hour Propagation Wheel</h2>
+                <p>This polar chart shows predicted band reliability over 24 hours for a selected region.</p>
+
+                <h3>How to Read the Wheel</h3>
+                <ul>
+                    <li><strong>Clock positions:</strong> Each hour of the day (00-23 UTC) arranged clockwise from top</li>
+                    <li><strong>Radial distance:</strong> Reliability percentage (0% at center, 100% at edge)</li>
+                    <li><strong>Colored bands:</strong> Each band (40m-10m) shown as filled areas</li>
+                    <li><strong>Band colors:</strong> Purple (40m) → Blue (20m) → Green (15m) → Red (10m)</li>
+                </ul>
+
+                <h3>Using the Wheel for Planning</h3>
+                <ul>
+                    <li><strong>Find best times:</strong> Look for where bands reach furthest from center</li>
+                    <li><strong>Compare bands:</strong> See which bands are open simultaneously</li>
+                    <li><strong>Spot openings:</strong> 10m/12m openings appear as the outer bands expanding</li>
+                </ul>
+
+                <div class="info">
+                    <strong>VOACAP Compatibility:</strong> This wheel represents VOACAP reliability data (probability of successful circuit). Unlike simplified propagation models, VOACAP accounts for all ionospheric layers, multiple hops, and actual signal loss.
+                </div>
+
+                <div class="warning">
+                    <strong>Note:</strong> Reliability >60% = Good, 30-60% = Fair, <30% = Poor. Values >80% indicate very reliable propagation.
+                </div>
+            `,
+            'mrb': `
+                <h2>🎯 Most Reliable Band by Hour</h2>
+                <p>Shows which amateur radio band (40m-10m) offers the best propagation for each hour of the day to the selected region.</p>
+
+                <h3>Understanding the Display</h3>
+                <ul>
+                    <li><strong>Band shown:</strong> The frequency band with highest predicted reliability for that hour</li>
+                    <li><strong>Percentage:</strong> Reliability score (0-100%)</li>
+                    <li><strong>Colors:</strong>
+                        <ul>
+                            <li>Green background = Good (≥60% reliability)</li>
+                            <li>Yellow background = Fair (30-60% reliability)</li>
+                            <li>Gray background = Poor (<30% reliability)</li>
+                        </ul>
+                    </li>
+                    <li><strong>⚠️ Warning icon:</strong> Appears when MUFday >90% (see MUF Usage explanation below)</li>
+                </ul>
+
+                <h3>How to Use This</h3>
+                <p>Plan your operating schedule by identifying which band will work best at which times. For example:</p>
+                <ul>
+                    <li><strong>Daytime:</strong> Higher bands (20m, 17m, 15m) often best</li>
+                    <li><strong>Evening:</strong> Transition to 30m and 40m</li>
+                    <li><strong>Night:</strong> Lower bands (40m, 30m) dominate</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>MUFday Warning (⚠️):</strong> When you see this icon, the operating frequency is above 90% of the maximum usable frequency. While signals may still get through, propagation becomes unreliable and subject to rapid fading.
+                </div>
+            `,
+            'signalpower': `
+                <h2>📊 Signal Power Chart</h2>
+                <p>Shows predicted received signal power in dBW (decibels relative to 1 watt) over 24 hours.</p>
+
+                <h3>Understanding the Lines</h3>
+                <ul>
+                    <li><strong>Green solid line (Median):</strong> Expected median signal power</li>
+                    <li><strong>Light green dotted (10th percentile):</strong> Weaker end of signal variation</li>
+                    <li><strong>Dark green dotted (90th percentile):</strong> Stronger end of signal variation</li>
+                    <li><strong>Shaded area:</strong> Range where 80% of signals fall (between 10th and 90th percentile)</li>
+                </ul>
+
+                <h3>Why Three Lines?</h3>
+                <p>HF propagation is variable due to:</p>
+                <ul>
+                    <li>Ionospheric irregularities and turbulence</li>
+                    <li>Multipath propagation (signals arriving via different paths)</li>
+                    <li>Fading (constructive/destructive interference)</li>
+                    <li>Geomagnetic disturbances</li>
+                </ul>
+
+                <h3>What Values Mean</h3>
+                <ul>
+                    <li><strong>-140 dBW:</strong> Very weak signal (minimum detectable)</li>
+                    <li><strong>-130 dBW:</strong> Weak but workable with digital modes</li>
+                    <li><strong>-120 dBW:</strong> Moderate signal</li>
+                    <li><strong>-110 dBW or higher:</strong> Strong signal</li>
+                </ul>
+
+                <div class="info">
+                    <strong>Note:</strong> If the 10th and 90th percentiles are close together, propagation is stable. Wide separation indicates more fading and variability.
+                </div>
+
+                <div class="warning">
+                    <strong>Data Issue:</strong> If you see the 10th and 90th percentiles above the median, this indicates a calculation error in the data pipeline that needs investigation.
+                </div>
+            `,
+            'mufday': `
+                <h2>📈 MUF Usage (MUFday)</h2>
+                <p>Shows what percentage of the Maximum Usable Frequency (MUF) your operating frequency represents.</p>
+
+                <h3>What is MUFday?</h3>
+                <p>MUFday = (Operating Frequency / Predicted MUF) × 100%</p>
+                <ul>
+                    <li><strong>Low values (30-50%):</strong> Very reliable, but signals may be weak</li>
+                    <li><strong>Optimal (70-85%):</strong> Best balance of reliability and signal strength</li>
+                    <li><strong>High (85-90%):</strong> Strong signals but less reliable</li>
+                    <li><strong>>90% (warning zone):</strong> Unreliable, prone to dropout</li>
+                </ul>
+
+                <h3>Why the 90% Warning Threshold?</h3>
+                <p>When operating above 90% of MUF:</p>
+                <ul>
+                    <li>Small ionospheric changes can close the path completely</li>
+                    <li>Propagation becomes sporadic and unreliable</li>
+                    <li>Skip zone (dead zone) may expand</li>
+                    <li>Higher bands may be better choices</li>
+                </ul>
+
+                <h3>Understanding the Graph Behavior</h3>
+                <p><strong>If the graph is consistently above the warning line:</strong></p>
+                <ul>
+                    <li>The MUF for this path is lower than your operating frequency</li>
+                    <li>Propagation may still occur via higher-order modes or scattering</li>
+                    <li>VOACAP models these modes, which is why you may still see reliability predictions</li>
+                    <li>Consider trying a lower frequency band for more reliable propagation</li>
+                </ul>
+
+                <div class="info">
+                    <strong>VOACAP Insight:</strong> Unlike simple models, VOACAP accounts for multiple propagation modes beyond the basic MUF, including higher-order F2 hops, sporadic E, and field-aligned irregularities (FAI). This is why predictions may show some reliability even when MUFday >100%.
+                </div>
+
+                <div class="warning">
+                    <strong>Operating Strategy:</strong> If MUFday is consistently >90%, consider:
+                    <ul>
+                        <li>Moving to the next lower band (e.g., 20m instead of 17m)</li>
+                        <li>Waiting for solar activity to increase the MUF</li>
+                        <li>Using the path during grayline enhancement periods</li>
+                    </ul>
+                </div>
+            `
+        };
+
+        function showHelp(topic) {
+            const modal = document.getElementById('helpModal');
+            const overlay = document.getElementById('modalOverlay');
+            const content = document.getElementById('helpContent');
+
+            content.innerHTML = helpContent[topic] || '<p>Help content not found.</p>';
+
+            modal.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('show');
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        // Close help modal when clicking overlay
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeHelp();
+                closeSettings();
+            }
+        });
 
         function showTab(tabName) {
             // Hide all tabs

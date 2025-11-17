@@ -280,8 +280,9 @@ def generate_prediction(
                     # Enhanced data for prop charts
                     'muf_day': round(pred.signal.muf_day * 100, 1),  # MUF probability as %
                     'signal_dbw': round(pred.signal.power_dbw, 1),   # Median signal power
-                    'signal_10': round(pred.signal.power10, 1),      # Lower decile (weak)
-                    'signal_90': round(pred.signal.power90, 1),      # Upper decile (strong)
+                    # power10/power90 are DEVIATIONS from median, not absolute values
+                    'signal_10': round(pred.signal.power_dbw - pred.signal.power10, 1),  # 10th percentile (weaker)
+                    'signal_90': round(pred.signal.power_dbw + pred.signal.power90, 1),  # 90th percentile (stronger)
                     'snr_10': round(pred.signal.snr10, 1),           # Lower decile SNR
                     'snr_90': round(pred.signal.snr90, 1),           # Upper decile SNR
                 }
