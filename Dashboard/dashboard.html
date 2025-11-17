@@ -651,9 +651,9 @@
         ⚡ Refresh Predictions
     </button>
 
-    <!-- Settings Button -->
+    <!-- Prediction Settings Button -->
     <button class="refresh-btn" id="settingsBtn" onclick="showSettings()" style="top: 1rem; right: 13rem; background: linear-gradient(135deg, #2d5a8c 0%, #4a90e2 100%); border-color: #7cb8f7;">
-        ⚙️ Settings
+        ⚙️ Prediction Settings
     </button>
 
     <!-- Modal Overlay -->
@@ -714,6 +714,17 @@
                             <option value="ray-hop">Ray-Hop Only</option>
                             <option value="ducted">Ducted Mode</option>
                         </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Path Mode</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="pathShort" name="pathMode" value="short" checked>
+                            <label for="pathShort" style="margin-right: 1rem;">Short Path (SP)</label>
+                            <input type="radio" id="pathLong" name="pathMode" value="long">
+                            <label for="pathLong">Long Path (LP)</label>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Short path is the direct route; long path goes the opposite direction around Earth</div>
                     </div>
                 </div>
 
@@ -847,6 +858,21 @@
                     </div>
 
                     <div id="map"></div>
+                    <div style="margin-top: 1rem; padding: 0.5rem; background: #1a2738; border-radius: 6px;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="color: #4a90e2; font-weight: bold; white-space: nowrap;">Greyline Time:</label>
+                            <input type="range" id="grayLineSlider" min="0" max="23.99" step="0.25" value="0"
+                                   oninput="updateGrayLineSlider(this.value)"
+                                   style="flex: 1;">
+                            <button onclick="resetGrayLineSlider()"
+                                    style="background: #2d5a8c; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; white-space: nowrap;">
+                                🔄 Current Time
+                            </button>
+                        </div>
+                        <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.3rem;">
+                            Drag slider to preview greyline at different times
+                        </div>
+                    </div>
                     <div class="legend">
                         <div class="legend-item"><span class="status-dot status-good"></span> Good (&gt;60%)</div>
                         <div class="legend-item"><span class="status-dot status-fair"></span> Fair (30-60%)</div>
@@ -1104,7 +1130,7 @@
             <!-- Band-to-Antenna Assignment -->
             <div class="card" style="margin-top: 1rem;">
                 <h2>🔗 Band-to-Antenna Assignment</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
                     <div>
                         <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">160m</label>
                         <select id="band-160m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
@@ -1446,6 +1472,10 @@
         function initializeDashboard() {
             renderSolarBar();
             renderMap();
+            // Initialize greyline slider to current time
+            const now = new Date();
+            const currentHour = now.getUTCHours() + now.getUTCMinutes() / 60;
+            document.getElementById('grayLineSlider').value = currentHour;
             renderQuickSummary();
             renderBandGrid();
             renderTimeline();
@@ -2277,7 +2307,7 @@
             }
         }
         
-        function drawGrayLine() {
+        function drawGrayLine(customHour = null) {
             if (!map) return;
 
             // Remove old gray line
@@ -2591,11 +2621,19 @@
         // =================================================================
 
         const ANTENNA_TYPES = [
-            { id: 'vertical', name: 'Vertical Monopole (1/4 wave)' },
-            { id: 'dipole', name: 'Half-Wave Dipole' },
-            { id: 'inverted_v', name: 'Inverted V' },
-            { id: 'yagi', name: '3-Element Yagi' },
-            { id: 'isotropic', name: 'Isotropic (Reference)' }
+            { id: 'vertical', name: 'Vertical Monopole (1/4 wave)', requiresHeight: false },
+            { id: 'dipole', name: 'Half-Wave Dipole', requiresHeight: true },
+            { id: 'inverted_v', name: 'Inverted V', requiresHeight: true },
+            { id: 'efhw', name: 'End-Fed Half-Wave (EFHW)', requiresHeight: true },
+            { id: 'random_wire', name: 'Random Wire / Long Wire', requiresHeight: true },
+            { id: 'yagi_3el', name: '3-Element Yagi', requiresHeight: true },
+            { id: 'yagi_5el', name: '5-Element Yagi', requiresHeight: true },
+            { id: 'yagi_7el', name: '7-Element Yagi', requiresHeight: true },
+            { id: 'log_periodic', name: 'Log Periodic', requiresHeight: true },
+            { id: 'hex_beam', name: 'Hex Beam', requiresHeight: true },
+            { id: 'loop', name: 'Full-Wave Loop', requiresHeight: true },
+            { id: 'magnetic_loop', name: 'Magnetic Loop', requiresHeight: false },
+            { id: 'isotropic', name: 'Isotropic (Reference)', requiresHeight: false }
         ];
 
         let antennas = [];
@@ -2606,7 +2644,8 @@
             antennas.push({
                 id: antennaId,
                 name: `Antenna ${antennaId + 1}`,
-                type: 'vertical'
+                type: 'vertical',
+                height_agl: 10  // Default height in meters AGL
             });
             renderAntennas();
             updateBandAntennaSelects();
@@ -2630,6 +2669,14 @@
             const antenna = antennas.find(a => a.id === antennaId);
             if (antenna) {
                 antenna.type = newType;
+                renderAntennas();  // Re-render to show/hide height field
+            }
+        }
+
+        function updateAntennaHeight(antennaId, newHeight) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.height_agl = parseFloat(newHeight) || 10;
             }
         }
 
@@ -2638,8 +2685,21 @@
             antennaList.innerHTML = '';
 
             antennas.forEach(antenna => {
+                const antennaType = ANTENNA_TYPES.find(t => t.id === antenna.type);
+                const requiresHeight = antennaType ? antennaType.requiresHeight : true;
+
                 const antennaDiv = document.createElement('div');
                 antennaDiv.style.cssText = 'background: #1a2332; padding: 1rem; border-radius: 4px; border: 1px solid #2a3f5f;';
+
+                const heightField = requiresHeight ? `
+                    <div style="margin-top: 0.5rem;">
+                        <label style="display: block; font-size: 0.85rem; color: #8a9bb5; margin-bottom: 0.3rem;">Height (meters AGL)</label>
+                        <input type="number" value="${antenna.height_agl || 10}" min="1" max="100" step="0.5"
+                               onchange="updateAntennaHeight(${antenna.id}, this.value)"
+                               style="width: 100%; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                ` : '';
+
                 antennaDiv.innerHTML = `
                     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
                         <input type="text" value="${antenna.name}"
@@ -2654,6 +2714,7 @@
                             `<option value="${type.id}" ${antenna.type === type.id ? 'selected' : ''}>${type.name}</option>`
                         ).join('')}
                     </select>
+                    ${heightField}
                 `;
                 antennaList.appendChild(antennaDiv);
             });
@@ -2756,7 +2817,18 @@
                 .then(response => response.json())
                 .then(config => {
                     if (config && config.antennas) {
-                        antennas = config.antennas;
+                        // Convert legacy antenna types and ensure all have height
+                        antennas = config.antennas.map(ant => {
+                            // Convert legacy 'yagi' to 'yagi_3el'
+                            if (ant.type === 'yagi') {
+                                ant.type = 'yagi_3el';
+                            }
+                            // Ensure height_agl exists
+                            if (!ant.height_agl) {
+                                ant.height_agl = 10;
+                            }
+                            return ant;
+                        });
                         antennaIdCounter = Math.max(...antennas.map(a => a.id), 0) + 1;
                         renderAntennas();
                         updateBandAntennaSelects();
@@ -3033,6 +3105,12 @@
             document.getElementById('ssnValue').textContent = `SSN: ${ssn}`;
         }
 
+        function updateSNRValue() {
+            const customRadio = document.getElementById('snrCustom');
+            const customInput = document.getElementById('snrCustomValue');
+            customInput.disabled = !customRadio.checked;
+        }
+
         function loadSettings() {
             // Load from localStorage or use defaults
             const settings = JSON.parse(localStorage.getItem('propSettings') || '{}');
@@ -3053,6 +3131,14 @@
             // Other settings
             document.getElementById('noiseLevel').value = settings.noiseLevel || 'quiet';
             document.getElementById('propMethod').value = settings.propMethod || 'auto';
+
+            // Path mode
+            if (settings.pathMode === 'long') {
+                document.getElementById('pathLong').checked = true;
+            } else {
+                document.getElementById('pathShort').checked = true;
+            }
+
             document.getElementById('minToaSlider').value = settings.minToa || 3.0;
             document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
 
@@ -3080,6 +3166,7 @@
                 ssn: parseInt(document.getElementById('ssnSlider').value),
                 noiseLevel: document.getElementById('noiseLevel').value,
                 propMethod: document.getElementById('propMethod').value,
+                pathMode: document.getElementById('pathLong').checked ? 'long' : 'short',
                 minToa: parseFloat(document.getElementById('minToaSlider').value),
                 reqSnr: parseInt(selectedSnrMode ? selectedSnrMode.value : 10),
                 txPower: parseInt(document.getElementById('txPower').value)

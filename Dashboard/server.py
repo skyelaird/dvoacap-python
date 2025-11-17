@@ -118,6 +118,38 @@ def trigger_generation():
     })
 
 
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """
+    API endpoint for health check monitoring
+
+    Returns:
+        JSON with health status
+    """
+    return jsonify({
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+        'service': 'dvoacap-dashboard'
+    })
+
+
+@app.route('/api/train', methods=['GET', 'POST'])
+def train_model():
+    """
+    API endpoint for model training status
+
+    Returns:
+        JSON with training status
+    """
+    # For now, return a placeholder response
+    # This can be expanded to handle actual model training
+    return jsonify({
+        'status': 'not_implemented',
+        'message': 'Training endpoint placeholder',
+        'timestamp': datetime.now().isoformat()
+    })
+
+
 @app.route('/api/status', methods=['GET'])
 def get_status():
     """
