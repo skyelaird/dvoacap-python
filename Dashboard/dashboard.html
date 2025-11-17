@@ -643,6 +643,49 @@
         .help-close-btn:hover {
             background: #3a5f8f;
         }
+
+        /* Heatmap Legend */
+        .heatmap-legend {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            background: rgba(22, 34, 54, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #2a3f5f;
+            z-index: 1000;
+            font-size: 11px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .heatmap-legend h4 {
+            margin-bottom: 8px;
+            color: #4a90e2;
+            font-size: 13px;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 5px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 18px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .legend-label {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
     </style>
 </head>
 <body>
@@ -855,9 +898,46 @@
                                 Now
                             </button>
                         </div>
+
+                        <!-- Heatmap Opacity Control -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label for="heatmapOpacitySlider" style="font-weight: bold; color: #9aa5b1;">Heatmap:</label>
+                            <input type="range" id="heatmapOpacitySlider" min="0" max="100" step="10" value="60"
+                                   style="width: 150px;" onchange="updateHeatmapOpacity(this.value)" oninput="updateHeatmapOpacityDisplay(this.value)">
+                            <span id="heatmapOpacityValue" style="font-weight: bold; min-width: 40px;">60%</span>
+                        </div>
                     </div>
 
-                    <div id="map"></div>
+                    <div style="position: relative;">
+                        <div id="map"></div>
+
+                        <!-- Heatmap Legend -->
+                        <div class="heatmap-legend">
+                            <h4>Propagation Likelihood</h4>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(74, 222, 128, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Good</span>
+                                    <span>70-100%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(251, 191, 36, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Fair</span>
+                                    <span>45-70%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(248, 113, 113, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Poor</span>
+                                    <span>30-45%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div style="margin-top: 1rem; padding: 0.5rem; background: #1a2738; border-radius: 6px;">
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <label style="color: #4a90e2; font-weight: bold; white-space: nowrap;">Greyline Time:</label>
@@ -1062,13 +1142,31 @@
         
         <!-- DXCC TAB -->
         <div id="tab-dxcc" class="tab-content">
+            <!-- Logbook Import Section -->
+            <div class="card" style="margin-bottom: 1rem;">
+                <h2>📥 Import Logbook (ADIF)</h2>
+                <div style="background: #1a2738; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <div style="color: #8a9bb5; font-size: 0.85rem; margin-bottom: 0.5rem;">
+                        Import your ADIF logbook to analyze worked DXCC entities and identify needed countries.
+                        Only DXCC statistics are retained - the full logbook is not stored.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <input type="file" id="logbookFile" accept=".adi,.adif" style="flex: 1; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    <button onclick="uploadLogbook()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer; white-space: nowrap;">
+                        📤 Analyze Logbook
+                    </button>
+                </div>
+                <div id="logbookStatus" style="margin-top: 0.75rem; font-size: 0.85rem; color: #4aed88;"></div>
+            </div>
+
             <div class="grid-2col">
                 <div class="card">
                     <h2>🎯 DXCC Progress</h2>
                     <div class="dxcc-grid" id="dxccStats"></div>
                     <div class="most-wanted" id="mostWanted"></div>
                 </div>
-                
+
                 <div class="card">
                     <h2>📈 DXCC Statistics</h2>
                     <div id="dxccDetails"></div>
@@ -1208,8 +1306,79 @@
         let propData = null;
         let map = null;
         let grayLineLayer = null;
+        let gridLayer = null;  // Layer for Maidenhead grid heatmap
         let pathMode = 'sp';  // 'sp' for short path, 'lp' for long path
         let grayLineHour = null;  // null = use current time, otherwise use this hour (0-23)
+        let heatmapOpacity = 0.6;  // Default opacity for heatmap grid squares
+
+        // Maidenhead Grid Calculation Functions
+        const MAIDENHEAD = {
+            // Convert lat/lon to 4-character Maidenhead grid
+            toGrid: function(lat, lon) {
+                const adjLon = lon + 180;
+                const adjLat = lat + 90;
+
+                const fieldLon = String.fromCharCode(65 + Math.floor(adjLon / 20));
+                const fieldLat = String.fromCharCode(65 + Math.floor(adjLat / 10));
+                const squareLon = Math.floor((adjLon % 20) / 2);
+                const squareLat = Math.floor((adjLat % 10) / 1);
+
+                return fieldLon + fieldLat + squareLon + squareLat;
+            },
+
+            // Convert 4-character Maidenhead grid to lat/lon bounds
+            toBounds: function(grid) {
+                if (grid.length !== 4) return null;
+
+                const field1 = grid.charCodeAt(0) - 65;
+                const field2 = grid.charCodeAt(1) - 65;
+                const square1 = parseInt(grid.charAt(2));
+                const square2 = parseInt(grid.charAt(3));
+
+                const lonMin = field1 * 20 + square1 * 2 - 180;
+                const lonMax = lonMin + 2;
+                const latMin = field2 * 10 + square2 * 1 - 90;
+                const latMax = latMin + 1;
+
+                return {
+                    south: latMin,
+                    north: latMax,
+                    west: lonMin,
+                    east: lonMax,
+                    center: {
+                        lat: (latMin + latMax) / 2,
+                        lon: (lonMin + lonMax) / 2
+                    }
+                };
+            },
+
+            // Generate all 4-character grids within a lat/lon range
+            generateGrids: function(latMin, latMax, lonMin, lonMax) {
+                const grids = new Set();
+                for (let lat = latMin; lat <= latMax; lat += 0.5) {
+                    for (let lon = lonMin; lon <= lonMax; lon += 1) {
+                        const grid = this.toGrid(lat, lon);
+                        grids.add(grid);
+                    }
+                }
+                return Array.from(grids);
+            }
+        };
+
+        // Get color for reliability value
+        function getColorForReliability(reliability) {
+            if (reliability >= 70) return 'rgba(74, 222, 128, 0.7)';      // Good - Green
+            if (reliability >= 45) return 'rgba(251, 191, 36, 0.7)';      // Fair - Yellow
+            if (reliability >= 30) return 'rgba(248, 113, 113, 0.7)';     // Poor - Red
+            return 'rgba(138, 155, 181, 0.4)';                            // Closed - Gray
+        }
+
+        function getReliabilityLabel(reliability) {
+            if (reliability >= 70) return 'Good';
+            if (reliability >= 45) return 'Fair';
+            if (reliability >= 30) return 'Poor';
+            return 'Closed';
+        }
 
         // Help System
         const helpContent = {
@@ -2389,7 +2558,90 @@
                 `${String(currentHour).padStart(2, '0')}:00`;
             drawGrayLine();
         }
-        
+
+        function updateHeatmapOpacityDisplay(value) {
+            document.getElementById('heatmapOpacityValue').textContent = value + '%';
+        }
+
+        function updateHeatmapOpacity(value) {
+            heatmapOpacity = parseFloat(value) / 100;
+            if (map && propData && gridLayer) {
+                renderHeatmap();
+            }
+        }
+
+        function renderHeatmap() {
+            // Clear existing grid layer
+            if (gridLayer) {
+                map.removeLayer(gridLayer);
+            }
+            gridLayer = L.layerGroup().addTo(map);
+
+            // Generate global grids (exclude Antarctica < -55 lat)
+            const grids = MAIDENHEAD.generateGrids(-55, 90, -180, 180);
+
+            // Mock propagation calculation - in production this would come from VOACAP
+            // For now, simulate based on sample regions from propData
+            const homeLat = 44.374, homeLon = -64.300;
+
+            grids.forEach(gridId => {
+                const bounds = MAIDENHEAD.toBounds(gridId);
+                if (!bounds) return;
+
+                // Calculate mock reliability based on distance and region match
+                let reliability = 0;
+                const gridLat = bounds.center.lat;
+                const gridLon = bounds.center.lon;
+
+                // Simple distance-based mock (replace with real VOACAP data)
+                const dx = (gridLon - homeLon) * Math.cos((gridLat + homeLat) / 2 * Math.PI / 180);
+                const dy = gridLat - homeLat;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Simulate propagation patterns
+                reliability = Math.max(0, 100 - distance * 1.2 + (Math.random() - 0.5) * 30);
+                reliability = Math.min(100, Math.max(0, reliability));
+
+                // Only show grids with reliability >= 30%
+                if (reliability < 30) return;
+
+                const color = getColorForReliability(reliability);
+
+                const rectangle = L.rectangle(
+                    [[bounds.south, bounds.west], [bounds.north, bounds.east]],
+                    {
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: heatmapOpacity,
+                        weight: 0.5,
+                        opacity: heatmapOpacity * 0.5
+                    }
+                );
+
+                rectangle.bindPopup(`
+                    <div style="color: #000;">
+                        <strong>Grid: ${gridId}</strong><br>
+                        <strong>Propagation: ${getReliabilityLabel(reliability)}</strong><br>
+                        Likelihood: ${Math.round(reliability)}%<br>
+                        Distance: ~${Math.round(distance * 111)} km<br>
+                        <hr style="margin: 5px 0;">
+                        <em>Note: Using simulated data. Real VOACAP integration in progress.</em>
+                    </div>
+                `);
+
+                rectangle.on('mouseover', function() {
+                    this.setStyle({ weight: 2, opacity: 1 });
+                });
+                rectangle.on('mouseout', function() {
+                    this.setStyle({ weight: 0.5, opacity: heatmapOpacity * 0.5 });
+                });
+
+                gridLayer.addLayer(rectangle);
+            });
+
+            console.log(`Rendered ${grids.length} Maidenhead grid squares on heatmap`);
+        }
+
         function renderMap() {
             map = L.map('map', {
                 center: [20, -30],
@@ -2490,6 +2742,9 @@
                     `);
                 }
             }
+
+            // Render Maidenhead grid heatmap
+            renderHeatmap();
         }
         
         function renderUpdateInfo() {
@@ -2739,6 +2994,49 @@
                     select.appendChild(option);
                 });
             });
+        }
+
+        async function uploadLogbook() {
+            const fileInput = document.getElementById('logbookFile');
+            const statusDiv = document.getElementById('logbookStatus');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                statusDiv.textContent = '⚠️ Please select an ADIF file first';
+                statusDiv.style.color = '#fbbf24';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('logbook', file);
+
+            statusDiv.textContent = '⏳ Analyzing logbook...';
+            statusDiv.style.color = '#4a90e2';
+
+            try {
+                const response = await fetch('/api/upload-logbook', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusDiv.textContent = `✅ Analyzed ${result.total_qsos} QSOs | Worked: ${result.dxcc_worked} | Confirmed: ${result.dxcc_confirmed} | Needed: ${result.dxcc_needed}`;
+                    statusDiv.style.color = '#4aed88';
+
+                    // Reload page to update DXCC data
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    statusDiv.textContent = `❌ Error: ${result.error}`;
+                    statusDiv.style.color = '#f87171';
+                }
+            } catch (error) {
+                statusDiv.textContent = `❌ Error uploading logbook: ${error.message}`;
+                statusDiv.style.color = '#f87171';
+            }
         }
 
         function saveStationConfig() {

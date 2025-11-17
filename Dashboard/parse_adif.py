@@ -205,26 +205,32 @@ DXCC_ENTITIES = {
     531: "Yemen", 532: "Zambia", 533: "Zimbabwe"
 }
 
-if __name__ == '__main__':
+def generate_dxcc_summary(adif_filename, output_filename='dxcc_summary.json'):
+    """
+    Parse ADIF file and generate DXCC summary JSON
+    Returns the summary dict and saves to file
+    """
+    import json
+
     # Parse the ADIF file
-    qsos = parse_adif('/mnt/user-data/uploads/ve1atm_387479_20251110000825.adi')
-    
+    qsos = parse_adif(adif_filename)
+
     print(f"Total QSOs parsed: {len(qsos)}")
-    
+
     # Analyze DXCC
     worked, lotw_confirmed, qsl_confirmed, qso_by_dxcc = analyze_dxcc(qsos)
-    
+
     print(f"\n=== DXCC STATISTICS ===")
     print(f"DXCC Entities Worked: {len(worked)}")
     print(f"DXCC Entities Confirmed (LoTW): {len(lotw_confirmed)}")
     print(f"DXCC Entities Confirmed (QSL): {len(qsl_confirmed)}")
-    
+
     # Find missing entities
     all_current = set(DXCC_ENTITIES.keys())
     missing = all_current - worked
-    
+
     print(f"\nMissing DXCC Entities: {len(missing)}")
-    
+
     # Show worked entities with country names
     print(f"\n=== WORKED DXCC ENTITIES ({len(worked)}) ===")
     worked_list = sorted(worked)
@@ -234,28 +240,40 @@ if __name__ == '__main__':
         lotw_mark = "✓" if dxcc in lotw_confirmed else " "
         qsl_mark = "✓" if dxcc in qsl_confirmed else " "
         print(f"  {dxcc:3d}: {country:40s} [{qso_count:3d} QSOs] LoTW:{lotw_mark} QSL:{qsl_mark}")
-    
+
     # Show missing entities - "Most Wanted"
     print(f"\n=== MOST WANTED - MISSING DXCC ENTITIES ({len(missing)}) ===")
     missing_list = sorted(missing)
     for dxcc in missing_list:
         country = DXCC_ENTITIES.get(dxcc, f"Unknown ({dxcc})")
         print(f"  {dxcc:3d}: {country}")
-    
-    # Save to JSON for use in web tool
-    import json
-    
+
+    # Create summary dict
     summary = {
         'total_qsos': len(qsos),
         'dxcc_worked': list(worked),
         'dxcc_confirmed_lotw': list(lotw_confirmed),
         'dxcc_confirmed_qsl': list(qsl_confirmed),
         'dxcc_missing': list(missing),
-        'qso_count_by_dxcc': {k: len(v) for k, v in qso_by_dxcc.items()},
+        'qso_count_by_dxcc': {str(k): len(v) for k, v in qso_by_dxcc.items()},
         'entity_names': DXCC_ENTITIES
     }
-    
-    with open('/home/claude/dxcc_summary.json', 'w') as f:
+
+    # Save to JSON for use in web tool
+    with open(output_filename, 'w') as f:
         json.dump(summary, f, indent=2)
-    
-    print(f"\n=== Summary saved to dxcc_summary.json ===")
+
+    print(f"\n=== Summary saved to {output_filename} ===")
+
+    return summary
+
+if __name__ == '__main__':
+    import sys
+
+    if len(sys.argv) > 1:
+        adif_file = sys.argv[1]
+        output_file = sys.argv[2] if len(sys.argv) > 2 else 'dxcc_summary.json'
+        generate_dxcc_summary(adif_file, output_file)
+    else:
+        print("Usage: python3 parse_adif.py <adif_file> [output_file]")
+        print("Example: python3 parse_adif.py my_logbook.adi dxcc_summary.json")
