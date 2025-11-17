@@ -41,6 +41,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "Topic :: Communications :: Ham Radio",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
 ]
 
 dependencies = [

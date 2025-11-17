@@ -1,29 +1,8 @@
-# Include documentation and license
-include LICENSE
 include README.md
+include LICENSE
 include CHANGELOG.md
 include CONTRIBUTING.md
-
-# Include CCIR/URSI ionospheric data files (required by library)
-recursive-include DVoaData *.dat
-
-# Exclude development and testing files
-exclude .gitignore
-recursive-exclude tests *
-recursive-exclude examples *
-recursive-exclude docs *
-recursive-exclude Dashboard *
-recursive-exclude archive *
-recursive-exclude reference *
-recursive-exclude notebooks *
-recursive-exclude scripts *
-recursive-exclude .github *
-prune tests
-prune examples
-prune docs
-prune Dashboard
-prune archive
-prune reference
-prune notebooks
-prune scripts
-prune .github
+include pyproject.toml
+recursive-include src/dvoacap/DVoaData *.dat
+recursive-include docs *.rst *.md *.py
+global-exclude *.pyc __pycache__ .DS_Store
