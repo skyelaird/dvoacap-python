@@ -491,15 +491,31 @@ crontab -e
 
 ## Troubleshooting
 
-### Dashboard shows "No data available"
+### Dashboard shows "No data available" or no dynamic data
 
-**Cause:** Predictions haven't been generated yet.
+**Cause:** Missing prediction data files (`enhanced_predictions.json` and `propagation_data.json`).
 
 **Solution:**
-```bash
-cd Dashboard
-python3 generate_predictions.py
-```
+
+1. Generate initial prediction data:
+   ```bash
+   cd Dashboard
+   python3 generate_predictions.py
+   ```
+
+2. If you see dependency errors, install requirements:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+3. Start or restart the Flask server:
+   ```bash
+   python3 server.py
+   ```
+
+4. Hard refresh your browser: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
+
+**Note:** The dashboard now uses the `/api/data` endpoint with automatic fallback to direct file access for backwards compatibility.
 
 ---
 
@@ -604,6 +620,14 @@ python3 parse_adif.py your_logbook.adi
 This generates `dxcc_summary.json` with worked/confirmed entity tracking.
 
 ---
+
+## Documentation
+
+For more detailed information, see:
+
+- **[USER_MANUAL.md](../Dashboard/USER_MANUAL.md)** - Complete user manual with setup and configuration
+- **[Dashboard README](../Dashboard/README.md)** - Quick start and features overview
+- **[Design Recommendations](../DASHBOARD_DESIGN_RECOMMENDATIONS.md)** - Architecture and design guidelines
 
 ## Next Steps
 
