@@ -1,0 +1,174 @@
+{
+  "antennas": [
+    {
+      "id": "dx-commander-vertical",
+      "name": "DX Commander 7m Vertical",
+      "type": "vertical",
+      "description": "Multi-band vertical monopole, good DX performance on all bands"
+    },
+    {
+      "id": "g5rv-junior",
+      "name": "G5RV Junior (40m-10m)",
+      "type": "dipole",
+      "description": "Classic multi-band wire antenna, horizontal polarization"
+    },
+    {
+      "id": "inverted-v-40m",
+      "name": "40m Inverted V Dipole",
+      "type": "inverted-v",
+      "description": "Inverted V for 40m band, better low-angle radiation"
+    },
+    {
+      "id": "end-fed-half-wave",
+      "name": "End-Fed Half Wave (EFHW)",
+      "type": "dipole",
+      "description": "Multi-band end-fed wire antenna (80m-10m)"
+    },
+    {
+      "id": "20m-yagi",
+      "name": "3-Element Yagi (20m)",
+      "type": "yagi",
+      "description": "Directional beam antenna for 20m band, excellent for DX"
+    },
+    {
+      "id": "15m-yagi",
+      "name": "3-Element Yagi (15m)",
+      "type": "yagi",
+      "description": "Directional beam antenna for 15m band, excellent for DX"
+    },
+    {
+      "id": "80m-inverted-l",
+      "name": "80m Inverted L",
+      "type": "vertical",
+      "description": "Low band vertical antenna for 80m and 160m"
+    },
+    {
+      "id": "hex-beam",
+      "name": "Hex Beam (20m-10m)",
+      "type": "yagi",
+      "description": "Lightweight multi-band directional antenna"
+    },
+    {
+      "id": "off-center-fed-dipole",
+      "name": "Off-Center Fed Dipole (OCFD)",
+      "type": "dipole",
+      "description": "Windom-style multi-band antenna (160m-10m)"
+    },
+    {
+      "id": "buddipole",
+      "name": "Buddipole Portable",
+      "type": "dipole",
+      "description": "Portable dipole antenna for field operations"
+    },
+    {
+      "id": "magnetic-loop",
+      "name": "Magnetic Loop",
+      "type": "isotropic",
+      "description": "Small loop antenna for limited space installations"
+    },
+    {
+      "id": "vertical-butterfly",
+      "name": "Butternut HF9V Vertical",
+      "type": "vertical",
+      "description": "Commercial multi-band vertical (80m-10m)"
+    },
+    {
+      "id": "longwire-160m",
+      "name": "160m Longwire",
+      "type": "dipole",
+      "description": "Long wire antenna for 160m and 80m bands"
+    },
+    {
+      "id": "fan-dipole",
+      "name": "Fan Dipole (40m/20m/10m)",
+      "type": "dipole",
+      "description": "Multiple dipoles in parallel for multi-band operation"
+    },
+    {
+      "id": "tribander-yagi",
+      "name": "Tri-Band Yagi (20m/15m/10m)",
+      "type": "yagi",
+      "description": "Multi-band beam antenna covering three bands"
+    },
+    {
+      "id": "attic-dipole",
+      "name": "Attic Dipole",
+      "type": "dipole",
+      "description": "Indoor horizontal dipole for stealth installations"
+    }
+  ],
+  "band_assignments": {
+    "160m": "dx-commander-vertical",
+    "80m": "dx-commander-vertical",
+    "40m": "dx-commander-vertical",
+    "30m": "dx-commander-vertical",
+    "20m": "dx-commander-vertical",
+    "17m": "dx-commander-vertical",
+    "15m": "dx-commander-vertical",
+    "12m": "dx-commander-vertical",
+    "10m": "dx-commander-vertical"
+  },
+  "station_info": {
+    "callsign": "VE1ATM",
+    "location": "Lunenburg, Nova Scotia (FN74ui)",
+    "notes": "Default configuration using DX Commander vertical for all bands. Update band_assignments to use different antennas per band."
+  },
+  "examples": {
+    "dx_optimized": {
+      "description": "Optimized configuration for DX with directional antennas on higher bands",
+      "assignments": {
+        "160m": "longwire-160m",
+        "80m": "80m-inverted-l",
+        "40m": "inverted-v-40m",
+        "30m": "g5rv-junior",
+        "20m": "20m-yagi",
+        "17m": "tribander-yagi",
+        "15m": "15m-yagi",
+        "12m": "tribander-yagi",
+        "10m": "tribander-yagi"
+      }
+    },
+    "wire_antennas": {
+      "description": "All wire antenna configuration for simple installation",
+      "assignments": {
+        "160m": "end-fed-half-wave",
+        "80m": "end-fed-half-wave",
+        "40m": "g5rv-junior",
+        "30m": "g5rv-junior",
+        "20m": "g5rv-junior",
+        "17m": "g5rv-junior",
+        "15m": "g5rv-junior",
+        "12m": "g5rv-junior",
+        "10m": "g5rv-junior"
+      }
+    },
+    "vertical_only": {
+      "description": "Vertical antennas only - good for limited space",
+      "assignments": {
+        "160m": "vertical-butterfly",
+        "80m": "vertical-butterfly",
+        "40m": "vertical-butterfly",
+        "30m": "vertical-butterfly",
+        "20m": "vertical-butterfly",
+        "17m": "vertical-butterfly",
+        "15m": "vertical-butterfly",
+        "12m": "vertical-butterfly",
+        "10m": "vertical-butterfly"
+      }
+    },
+    "portable_field": {
+      "description": "Portable field operation setup",
+      "assignments": {
+        "160m": "buddipole",
+        "80m": "buddipole",
+        "40m": "buddipole",
+        "30m": "buddipole",
+        "20m": "buddipole",
+        "17m": "buddipole",
+        "15m": "buddipole",
+        "12m": "buddipole",
+        "10m": "buddipole"
+      }
+    }
+  }
+}

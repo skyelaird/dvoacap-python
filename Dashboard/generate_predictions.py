@@ -278,7 +278,9 @@ def generate_prediction(
                     'hops': pred.hop_count,
                     'elevation': round(np.rad2deg(pred.tx_elevation), 1),
                     # Enhanced data for prop charts
-                    'muf_day': round(pred.signal.muf_day * 100, 1),  # MUF probability as %
+                    # muf_day is probability that MUF exceeds frequency (1.0=well below MUF, 0.0=at/above MUF)
+                    # Dashboard inverts this to show "MUF usage percentage"
+                    'muf_day': round(pred.signal.muf_day * 100, 1),  # MUF probability (%) - inverted by dashboard for display
                     'signal_dbw': round(pred.signal.power_dbw, 1),   # Median signal power
                     # power10/power90 are DEVIATIONS from median, not absolute values
                     'signal_10': round(pred.signal.power_dbw - pred.signal.power10, 1),  # 10th percentile (weaker)
