@@ -33,6 +33,7 @@ try:
     from src.dvoacap.path_geometry import GeoPoint
     from src.dvoacap.prediction_engine import PredictionEngine
     from src.dvoacap.space_weather_sources import MultiSourceSpaceWeatherFetcher
+    from src.dvoacap.antenna_gain import create_antenna
     import requests
 except ImportError as e:
     print(f"Error: Could not import DVOACAP modules: {e}")
@@ -79,6 +80,98 @@ TARGET_REGIONS = {
     'AS': {'name': 'Asia', 'location': GeoPoint.from_degrees(30.0, 100.0)},
     'OC': {'name': 'Oceania', 'location': GeoPoint.from_degrees(-10.0, 150.0)},
 }
+
+
+# =============================================================================
+# Antenna Configuration
+# =============================================================================
+
+def load_antenna_configuration() -> Dict:
+    """
+    Load antenna configuration from antenna_config.json
+
+    Returns dict with:
+    - antennas: List of antenna definitions
+    - band_assignments: Dict mapping bands to antenna names
+    """
+    config_file = Path(__file__).parent / 'antenna_config.json'
+
+    if config_file.exists():
+        try:
+            with open(config_file, 'r') as f:
+                config = json.load(f)
+                print(f"[OK] Loaded antenna configuration: {len(config.get('antennas', []))} antennas")
+                return config
+        except Exception as e:
+            print(f"[WARNING] Error loading antenna config: {e}")
+            return {'antennas': [], 'band_assignments': {}}
+    else:
+        # Default: DX Commander vertical for all bands
+        print("[INFO] No antenna config found, using default (Vertical Monopole)")
+        return {
+            'antennas': [{
+                'id': 'default',
+                'name': 'DX Commander Vertical',
+                'type': 'vertical'
+            }],
+            'band_assignments': {band: 'default' for band in BANDS.keys()}
+        }
+
+
+def configure_antennas(engine: PredictionEngine, config: Dict) -> None:
+    """
+    Configure antenna farm based on user configuration
+
+    Args:
+        engine: PredictionEngine instance
+        config: Antenna configuration dict
+    """
+    # Get band-to-frequency mapping
+    band_freqs = {
+        '160m': (1.8, 2.0),
+        '80m': (3.5, 4.0),
+        '40m': (7.0, 7.3),
+        '30m': (10.1, 10.15),
+        '20m': (14.0, 14.35),
+        '17m': (18.068, 18.168),
+        '15m': (21.0, 21.45),
+        '12m': (24.89, 24.99),
+        '10m': (28.0, 29.7)
+    }
+
+    antennas = config.get('antennas', [])
+    band_assignments = config.get('band_assignments', {})
+
+    # Build antenna lookup by ID
+    antenna_lookup = {ant['id']: ant for ant in antennas}
+
+    # For each band, add the assigned antenna to the farm
+    for band, antenna_id in band_assignments.items():
+        if band in band_freqs and antenna_id in antenna_lookup:
+            antenna_info = antenna_lookup[antenna_id]
+            antenna_type = antenna_info.get('type', 'vertical')
+
+            # Get frequency range for this band
+            low_freq, high_freq = band_freqs[band]
+
+            try:
+                # Create antenna instance
+                antenna = create_antenna(
+                    antenna_type=antenna_type,
+                    low_frequency=low_freq,
+                    high_frequency=high_freq,
+                    tx_power_dbw=10.0  # Will be set from engine.params.tx_power
+                )
+
+                # Add to both TX and RX antenna farms
+                engine.tx_antennas.add_antenna(antenna)
+                engine.rx_antennas.add_antenna(antenna)
+
+                print(f"  [OK] {band}: {antenna_info['name']} ({antenna_type})")
+            except ValueError as e:
+                print(f"  [WARNING] {band}: Could not create antenna: {e}")
+
+    print(f"[OK] Configured {len(engine.tx_antennas.antennas)} antenna(s)")
 
 
 # =============================================================================
@@ -187,8 +280,9 @@ def generate_prediction(
                     # Enhanced data for prop charts
                     'muf_day': round(pred.signal.muf_day * 100, 1),  # MUF probability as %
                     'signal_dbw': round(pred.signal.power_dbw, 1),   # Median signal power
-                    'signal_10': round(pred.signal.power10, 1),      # Lower decile (weak)
-                    'signal_90': round(pred.signal.power90, 1),      # Upper decile (strong)
+                    # power10/power90 are DEVIATIONS from median, not absolute values
+                    'signal_10': round(pred.signal.power_dbw - pred.signal.power10, 1),  # 10th percentile (weaker)
+                    'signal_90': round(pred.signal.power_dbw + pred.signal.power90, 1),  # 90th percentile (stronger)
                     'snr_10': round(pred.signal.snr10, 1),           # Lower decile SNR
                     'snr_90': round(pred.signal.snr90, 1),           # Upper decile SNR
                 }
@@ -269,6 +363,11 @@ def generate_24hour_forecast() -> Dict:
     engine.params.required_reliability = 0.9
 
     print(f"[OK] Configuration: Month={now.month}, SSN={solar['ssn']:.0f}, TX Power=100W")
+
+    # Configure antennas
+    print("\n[OK] Configuring antennas...")
+    antenna_config = load_antenna_configuration()
+    configure_antennas(engine, antenna_config)
 
     # Generate predictions
     frequencies = list(BANDS.values())
