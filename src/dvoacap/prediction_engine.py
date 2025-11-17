@@ -124,6 +124,7 @@ class VoacapParams:
     required_reliability: float = 0.9       # Required circuit reliability (0-1)
     multipath_power_tolerance: float = 3.0  # Multipath power tolerance (dB)
     max_tolerable_delay: float = 0.1        # Max tolerable delay (ms)
+    bandwidth_hz: float = 2700.0            # Receiver bandwidth in Hz (default: SSB = 2.7 kHz)
 
 
 class PredictionEngine:
