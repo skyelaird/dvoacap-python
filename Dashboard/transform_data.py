@@ -48,7 +48,9 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
     for band_name in raw_data['bands']:
         # Get frequency from first prediction
         freq = 0
-        if band_name == '40m': freq = 7.150
+        if band_name == '160m': freq = 1.900
+        elif band_name == '80m': freq = 3.600
+        elif band_name == '40m': freq = 7.150
         elif band_name == '30m': freq = 10.125
         elif band_name == '20m': freq = 14.150
         elif band_name == '17m': freq = 18.118

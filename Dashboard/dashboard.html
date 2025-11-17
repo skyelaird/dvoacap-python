@@ -166,7 +166,7 @@
         
         .band-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(9, 1fr);
             gap: 0.6rem;
         }
         
@@ -1278,7 +1278,7 @@
                             <li>Gray background = Poor (<30% reliability)</li>
                         </ul>
                     </li>
-                    <li><strong>⚠️ Warning icon:</strong> Appears when MUFday >90% (see MUF Usage explanation below)</li>
+                    <li><strong>⚠️ Warning icon:</strong> Appears when MUF usage >90% (frequency near or above MUF limit)</li>
                 </ul>
 
                 <h3>How to Use This</h3>
@@ -1290,7 +1290,7 @@
                 </ul>
 
                 <div class="warning">
-                    <strong>MUFday Warning (⚠️):</strong> When you see this icon, the operating frequency is above 90% of the maximum usable frequency. While signals may still get through, propagation becomes unreliable and subject to rapid fading.
+                    <strong>MUF Usage Warning (⚠️):</strong> When you see this icon, the operating frequency is near or above the MUF limit (>90% usage). While signals may still get through, propagation becomes unreliable and subject to rapid fading.
                 </div>
             `,
             'signalpower': `
@@ -1331,13 +1331,21 @@
                 </div>
             `,
             'mufday': `
-                <h2>📈 MUF Usage (MUFday)</h2>
-                <p>Shows what percentage of the Maximum Usable Frequency (MUF) your operating frequency represents.</p>
+                <h2>📈 MUF Usage</h2>
+                <p>Shows how close your operating frequency is to the Maximum Usable Frequency (MUF) limit.</p>
 
-                <h3>What is MUFday?</h3>
-                <p>MUFday = (Operating Frequency / Predicted MUF) × 100%</p>
+                <h3>What is MUF Usage?</h3>
+                <p>MUF Usage represents how close you are to the MUF ceiling:</p>
                 <ul>
-                    <li><strong>Low values (30-50%):</strong> Very reliable, but signals may be weak</li>
+                    <li><strong>Low usage (0-30%):</strong> Frequency well below MUF - very reliable propagation</li>
+                    <li><strong>Medium usage (30-70%):</strong> Moderate safety margin - good propagation</li>
+                    <li><strong>High usage (70-90%):</strong> Approaching MUF limit - propagation may be unstable</li>
+                    <li><strong>Very high usage (>90%):</strong> At or above MUF - unreliable, subject to fading</li>
+                </ul>
+
+                <h3>Understanding the Values:</h3>
+                <ul>
+                    <li><strong>Low values (0-50%):</strong> Very reliable, excellent propagation conditions</li>
                     <li><strong>Optimal (70-85%):</strong> Best balance of reliability and signal strength</li>
                     <li><strong>High (85-90%):</strong> Strong signals but less reliable</li>
                     <li><strong>>90% (warning zone):</strong> Unreliable, prone to dropout</li>
@@ -1366,9 +1374,9 @@
                 </div>
 
                 <div class="warning">
-                    <strong>Operating Strategy:</strong> If MUFday is consistently >90%, consider:
+                    <strong>Operating Strategy:</strong> If MUF usage is consistently >90%, consider:
                     <ul>
-                        <li>Moving to the next lower band (e.g., 20m instead of 17m)</li>
+                        <li>Moving to the next lower band (e.g., 20m instead of 17m) for better reliability</li>
                         <li>Waiting for solar activity to increase the MUF</li>
                         <li>Using the path during grayline enhancement periods</li>
                     </ul>
@@ -1509,8 +1517,10 @@
             if (!propData.propagation_charts) return;
 
             // Bands to display (from low to high frequency)
-            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
             const bandColors = {
+                '160m': '#dc2626',
+                '80m': '#ea580c',
                 '40m': '#8b5cf6',
                 '30m': '#6366f1',
                 '20m': '#3b82f6',
@@ -1597,7 +1607,7 @@
             }
 
             const currentHour = new Date().getUTCHours();
-            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
 
             // Calculate scores for each band across all regions
             const bandScores = [];
@@ -1617,11 +1627,11 @@
                     const regionData = chartData.regions[regionCode];
                     const reliability = regionData.reliability[hourIdx] || 0;
                     const snr = regionData.snr[hourIdx] || -999;
-                    const mufDay = regionData.muf_day[hourIdx] || 0;
+                    const mufProb = regionData.muf_day[hourIdx] || 0;  // Probability MUF exceeds freq (higher is better)
 
-                    // Scoring algorithm: (Reliability × 0.5) + (SNR_normalized × 0.3) + ((100-MUFday) × 0.2)
+                    // Scoring algorithm: (Reliability × 0.5) + (SNR_normalized × 0.3) + (MUF_margin × 0.2)
                     const snrNormalized = Math.max(0, Math.min(100, (snr + 20) * 2));  // Normalize SNR to 0-100
-                    const mufScore = 100 - mufDay;  // Lower MUFday is better
+                    const mufScore = mufProb;  // Higher mufProb is better (freq well below MUF)
                     const score = (reliability * 0.5) + (snrNormalized * 0.3) + (mufScore * 0.2);
 
                     totalScore += score;
@@ -1834,19 +1844,23 @@
                 yaxis: { ...commonLayout.yaxis, title: 'Power (dBW)' }
             }, {responsive: true, displayModeBar: false});
 
-            // 4. MUFday Chart
+            // 4. MUF Usage Chart (inverted from muf_day probability)
+            // muf_day is probability that MUF exceeds freq (100=good, 0=bad)
+            // MUF usage is (100 - muf_day) showing how close to MUF limit (0=good, 100=bad)
+            const mufUsageData = regionData.muf_day.map(val => 100 - val);
+
             const mufdayTrace = {
                 x: hours,
-                y: regionData.muf_day,
+                y: mufUsageData,
                 mode: 'lines+markers',
-                name: 'MUFday (%)',
+                name: 'MUF Usage (%)',
                 line: { color: '#f87171', width: 3 },
                 marker: { size: 6, color: '#f87171' },
                 fill: 'tozeroy',
                 fillcolor: 'rgba(248, 113, 113, 0.2)'
             };
 
-            // Add warning line at 90%
+            // Add warning line at 90% usage (means muf_day < 10)
             const warningLine = {
                 x: hours,
                 y: Array(hours.length).fill(90),
@@ -1858,13 +1872,13 @@
             Plotly.newPlot('mufdayChart', [mufdayTrace, warningLine], {
                 ...commonLayout,
                 title: { text: `MUF Usage - ${band} to ${regionName}`, font: { color: '#f87171', size: 16 } },
-                yaxis: { ...commonLayout.yaxis, title: 'MUFday (%)', range: [0, 100] },
+                yaxis: { ...commonLayout.yaxis, title: 'MUF Usage (%)', range: [0, 100] },
                 annotations: [{
                     x: hours[Math.floor(hours.length / 2)],
                     y: 90,
                     xref: 'x',
                     yref: 'y',
-                    text: 'Warning: >90% may be unreliable',
+                    text: 'Warning: >90% usage means near MUF limit',
                     showarrow: false,
                     yshift: 15,
                     font: { color: '#fbbf24', size: 10 }
@@ -1883,7 +1897,7 @@
 
             const regionName = regionData.name;
             const hours = propData.propagation_charts['20m'].hours;
-            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
 
             const mrmContent = document.getElementById('mrmContent');
             mrmContent.innerHTML = '';
@@ -1892,7 +1906,7 @@
             hours.forEach((hour, hourIdx) => {
                 let bestBand = null;
                 let bestReliability = 0;
-                let bestMufDay = 0;
+                let bestMufProb = 0;  // Probability that MUF exceeds freq
 
                 // Check all bands for this hour
                 bands.forEach(band => {
@@ -1903,7 +1917,7 @@
                             if (reliability > bestReliability) {
                                 bestReliability = reliability;
                                 bestBand = band;
-                                bestMufDay = bandRegionData.muf_day[hourIdx] || 0;
+                                bestMufProb = bandRegionData.muf_day[hourIdx] || 0;
                             }
                         }
                     }
@@ -1918,8 +1932,9 @@
                 if (bestReliability >= 60) bgColor = 'rgba(74, 222, 128, 0.2)';  // Good (green)
                 else if (bestReliability >= 30) bgColor = 'rgba(251, 191, 36, 0.2)';  // Fair (yellow)
 
-                // Add warning indicator if MUFday > 90%
-                const warningIcon = bestMufDay > 90 ? ' ⚠️' : '';
+                // Add warning indicator if MUF usage > 90% (muf_day < 10)
+                const mufUsage = 100 - bestMufProb;
+                const warningIcon = mufUsage > 90 ? ' ⚠️' : '';
 
                 hourCell.style.background = bgColor;
                 hourCell.innerHTML = `
@@ -1931,7 +1946,7 @@
                 `;
 
                 // Add tooltip on hover
-                hourCell.title = `${hour}:00 UTC\nBest: ${bestBand}\nReliability: ${bestReliability.toFixed(1)}%\nMUFday: ${bestMufDay.toFixed(1)}%${bestMufDay > 90 ? '\n⚠️ Warning: High MUF usage!' : ''}`;
+                hourCell.title = `${hour}:00 UTC\nBest: ${bestBand}\nReliability: ${bestReliability.toFixed(1)}%\nMUF Usage: ${mufUsage.toFixed(1)}%${mufUsage > 90 ? '\n⚠️ Warning: Near MUF limit!' : ''}`;
 
                 mrmContent.appendChild(hourCell);
             });
@@ -2290,30 +2305,79 @@
             const hours = grayLineHour !== null ? grayLineHour : (now.getUTCHours() + now.getUTCMinutes() / 60);
             const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
             const declination = 23.45 * Math.sin((360/365) * (dayOfYear - 81) * Math.PI / 180);
+            const declinationRad = declination * Math.PI / 180;
 
-            // Calculate solar position
-            const solarLon = -15 * (hours - 12);
-
-            // Draw gray line as a thick band
+            // Draw gray line as a band (civil twilight: solar altitude between -6° and +6°)
             const grayLinePoints = [];
-            for (let lat = -90; lat <= 90; lat += 5) {
-                const solarAlt = Math.asin(
-                    Math.sin(lat * Math.PI / 180) * Math.sin(declination * Math.PI / 180) +
-                    Math.cos(lat * Math.PI / 180) * Math.cos(declination * Math.PI / 180) *
-                    Math.cos(solarLon * Math.PI / 180)
-                ) * 180 / Math.PI;
 
-                // Gray line is where solar altitude is near 0 (±6 degrees)
-                if (Math.abs(solarAlt) < 6) {
-                    grayLinePoints.push([lat, solarLon]);
+            // Sweep across all longitudes and latitudes to find twilight zone
+            for (let lon = -180; lon <= 180; lon += 2) {
+                for (let lat = -90; lat <= 90; lat += 2) {
+                    const latRad = lat * Math.PI / 180;
+
+                    // Calculate hour angle from longitude and time
+                    const solarLon = -15 * (hours - 12);  // Sun's longitude at this time
+                    const hourAngle = (lon - solarLon) * Math.PI / 180;
+
+                    // Calculate solar altitude using spherical astronomy
+                    const sinAlt = Math.sin(latRad) * Math.sin(declinationRad) +
+                                   Math.cos(latRad) * Math.cos(declinationRad) * Math.cos(hourAngle);
+                    const solarAlt = Math.asin(Math.max(-1, Math.min(1, sinAlt))) * 180 / Math.PI;
+
+                    // Gray line is where solar altitude is near 0 (±6 degrees for civil twilight)
+                    if (Math.abs(solarAlt) < 6) {
+                        grayLinePoints.push([lat, lon]);
+                    }
                 }
             }
 
             if (grayLinePoints.length > 0) {
-                grayLineLayer = L.polyline(grayLinePoints, {
+                // Create a feature group for better visualization
+                const features = [];
+
+                // Group nearby points to create a continuous band
+                const grouped = {};
+                grayLinePoints.forEach(([lat, lon]) => {
+                    const latKey = Math.round(lat / 5) * 5;  // Group by 5-degree latitude bands
+                    if (!grouped[latKey]) grouped[latKey] = [];
+                    grouped[latKey].push(lon);
+                });
+
+                // For each latitude band, create a polygon strip
+                const polygons = [];
+                for (const [latKey, lons] of Object.entries(grouped)) {
+                    const lat = parseFloat(latKey);
+                    lons.sort((a, b) => a - b);
+
+                    // Create rectangles for continuous longitude segments
+                    let segmentStart = lons[0];
+                    for (let i = 1; i < lons.length; i++) {
+                        if (lons[i] - lons[i-1] > 10) {  // Gap detected
+                            // Close current segment
+                            polygons.push([
+                                [lat - 5, segmentStart],
+                                [lat + 5, segmentStart],
+                                [lat + 5, lons[i-1]],
+                                [lat - 5, lons[i-1]]
+                            ]);
+                            segmentStart = lons[i];
+                        }
+                    }
+                    // Close final segment
+                    polygons.push([
+                        [lat - 5, segmentStart],
+                        [lat + 5, segmentStart],
+                        [lat + 5, lons[lons.length - 1]],
+                        [lat - 5, lons[lons.length - 1]]
+                    ]);
+                }
+
+                grayLineLayer = L.polygon(polygons, {
                     color: '#fbbf24',
-                    weight: 40,
-                    opacity: 0.3
+                    fillColor: '#fbbf24',
+                    weight: 1,
+                    opacity: 0.5,
+                    fillOpacity: 0.3
                 }).addTo(map);
             }
 
