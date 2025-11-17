@@ -659,6 +659,7 @@
             <button class="tab-button active" onclick="showTab('overview')">📊 Overview</button>
             <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
             <button class="tab-button" onclick="showTab('propcharts')">📈 Propagation Charts</button>
+            <button class="tab-button" onclick="showTab('planner')">🗺️ Mini Planner</button>
             <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
             <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
             <button class="tab-button" onclick="showTab('config')">⚙️ Station Config</button>
@@ -747,6 +748,84 @@
 
                 <!-- MUFday Chart -->
                 <div id="mufdayChart" style="height: 300px;"></div>
+            </div>
+        </div>
+
+        <!-- MINI PLANNER TAB -->
+        <div id="tab-planner" class="tab-content">
+            <div class="card">
+                <h2>🗺️ Mini Planner - Custom Target Predictions</h2>
+                <p style="color: #8a9bb5; font-size: 0.85rem; margin-bottom: 1rem;">
+                    Plan propagation to specific locations by entering coordinates, grid squares, or selecting from popular destinations.
+                </p>
+
+                <!-- Target Input Form -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Target Name</label>
+                        <input type="text" id="targetName" placeholder="e.g., Tokyo, JA" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Input Method</label>
+                        <select id="inputMethod" onchange="updatePlannerInputs()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="latlon">Lat/Lon (Decimal)</option>
+                            <option value="maidenhead">Maidenhead Grid</option>
+                            <option value="preset">Popular Destinations</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lat/Lon Inputs -->
+                <div id="latLonInputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Latitude</label>
+                        <input type="number" id="targetLat" placeholder="35.6762" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Longitude</label>
+                        <input type="number" id="targetLon" placeholder="139.6503" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <!-- Maidenhead Input -->
+                <div id="maidenheadInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Maidenhead Grid Square</label>
+                    <input type="text" id="targetGrid" placeholder="PM95" maxlength="6" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px; text-transform: uppercase;">
+                    <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Enter 4 or 6-character grid (e.g., FN20, PM95vr)</div>
+                </div>
+
+                <!-- Preset Destinations -->
+                <div id="presetInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Select Destination</label>
+                    <select id="presetDestination" onchange="loadPreset()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        <option value="">-- Select --</option>
+                        <option value="35.6762,139.6503">Tokyo, Japan (PM95)</option>
+                        <option value="51.5074,-0.1278">London, UK (IO91)</option>
+                        <option value="-33.8688,151.2093">Sydney, Australia (QF56)</option>
+                        <option value="40.7128,-74.0060">New York, USA (FN30)</option>
+                        <option value="55.7558,37.6173">Moscow, Russia (KO85)</option>
+                        <option value="-23.5505,-46.6333">São Paulo, Brazil (GG66)</option>
+                        <option value="1.3521,103.8198">Singapore (OJ11)</option>
+                        <option value="-26.2041,28.0473">Johannesburg, South Africa (KG33)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="addPlannerTarget()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        ➕ Add Target
+                    </button>
+                    <button onclick="clearPlannerTargets()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        🗑️ Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Target List and Predictions -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>📊 Custom Target Predictions</h2>
+                <div id="plannerTargets" style="min-height: 200px;">
+                    <p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>
+                </div>
             </div>
         </div>
 
@@ -2139,6 +2218,233 @@
                     }
                 })
                 .catch(error => console.error('Error loading antenna config:', error));
+        }
+
+        // =================================================================
+        // Mini Planner Functions
+        // =================================================================
+
+        let plannerTargets = [];
+
+        function updatePlannerInputs() {
+            const method = document.getElementById('inputMethod').value;
+
+            document.getElementById('latLonInputs').style.display = method === 'latlon' ? 'grid' : 'none';
+            document.getElementById('maidenheadInput').style.display = method === 'maidenhead' ? 'block' : 'none';
+            document.getElementById('presetInput').style.display = method === 'preset' ? 'block' : 'none';
+        }
+
+        function maidenheadToLatLon(grid) {
+            // Convert Maidenhead grid to lat/lon (center of grid)
+            grid = grid.toUpperCase();
+
+            if (grid.length < 4 || grid.length > 6) {
+                return null;
+            }
+
+            const lon = (grid.charCodeAt(0) - 65) * 20 - 180;
+            const lat = (grid.charCodeAt(1) - 65) * 10 - 90;
+
+            const lon2 = parseFloat(grid.substring(2, 3)) * 2;
+            const lat2 = parseFloat(grid.substring(3, 4));
+
+            let finalLat = lat + lat2 + 0.5;
+            let finalLon = lon + lon2 + 1;
+
+            if (grid.length >= 6) {
+                const lon3 = (grid.charCodeAt(4) - 65) * (2/24);
+                const lat3 = (grid.charCodeAt(5) - 65) * (1/24);
+                finalLat += lat3;
+                finalLon += lon3;
+            }
+
+            return {lat: finalLat, lon: finalLon};
+        }
+
+        function loadPreset() {
+            const preset = document.getElementById('presetDestination').value;
+            if (!preset) return;
+
+            const [lat, lon] = preset.split(',').map(parseFloat);
+            document.getElementById('targetLat').value = lat;
+            document.getElementById('targetLon').value = lon;
+
+            // Switch to lat/lon view
+            document.getElementById('inputMethod').value = 'latlon';
+            updatePlannerInputs();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function calculateBearing(lat1, lon1, lat2, lon2) {
+            // Calculate initial bearing
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const y = Math.sin(dLon) * Math.cos(lat2 * Math.PI / 180);
+            const x = Math.cos(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180) -
+                     Math.sin(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.cos(dLon);
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            return (bearing + 360) % 360;
+        }
+
+        function addPlannerTarget() {
+            const name = document.getElementById('targetName').value.trim();
+            const method = document.getElementById('inputMethod').value;
+
+            let lat, lon;
+
+            if (method === 'latlon') {
+                lat = parseFloat(document.getElementById('targetLat').value);
+                lon = parseFloat(document.getElementById('targetLon').value);
+
+                if (isNaN(lat) || isNaN(lon)) {
+                    alert('Please enter valid latitude and longitude values.');
+                    return;
+                }
+            } else if (method === 'maidenhead') {
+                const grid = document.getElementById('targetGrid').value.trim();
+                const coords = maidenheadToLatLon(grid);
+
+                if (!coords) {
+                    alert('Invalid Maidenhead grid square. Enter 4 or 6 characters (e.g., FN20, PM95vr).');
+                    return;
+                }
+
+                lat = coords.lat;
+                lon = coords.lon;
+            } else if (method === 'preset') {
+                const preset = document.getElementById('presetDestination').value;
+                if (!preset) {
+                    alert('Please select a destination.');
+                    return;
+                }
+
+                [lat, lon] = preset.split(',').map(parseFloat);
+            }
+
+            if (!name) {
+                alert('Please enter a target name.');
+                return;
+            }
+
+            if (plannerTargets.length >= 5) {
+                alert('Maximum 5 targets allowed.');
+                return;
+            }
+
+            // Calculate path geometry from home station
+            const homeLat = 44.374;  // VE1ATM
+            const homeLon = -64.300;
+
+            const distance = calculateDistance(homeLat, homeLon, lat, lon);
+            const bearing = calculateBearing(homeLat, homeLon, lat, lon);
+            const longPath = 360 - bearing;
+            const longPathDist = 40075 - distance;  // Earth circumference - short path
+
+            plannerTargets.push({
+                name: name,
+                lat: lat,
+                lon: lon,
+                distance: distance,
+                bearing: bearing,
+                longPath: longPath,
+                longPathDist: longPathDist
+            });
+
+            // Clear inputs
+            document.getElementById('targetName').value = '';
+            document.getElementById('targetLat').value = '';
+            document.getElementById('targetLon').value = '';
+            document.getElementById('targetGrid').value = '';
+            document.getElementById('presetDestination').value = '';
+
+            renderPlannerTargets();
+        }
+
+        function clearPlannerTargets() {
+            if (confirm('Clear all targets?')) {
+                plannerTargets = [];
+                renderPlannerTargets();
+            }
+        }
+
+        function renderPlannerTargets() {
+            const container = document.getElementById('plannerTargets');
+
+            if (plannerTargets.length === 0) {
+                container.innerHTML = '<p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>';
+                return;
+            }
+
+            let html = '<div style="overflow-x: auto;">';
+
+            plannerTargets.forEach((target, idx) => {
+                html += `
+                    <div style="background: #0d1520; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; border-left: 4px solid #4a90e2;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="color: #4a90e2; margin: 0;">${target.name}</h3>
+                            <button onclick="removePlannerTarget(${idx})" style="background: #8b2e2e; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;">🗑️ Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; font-size: 0.85rem;">
+                            <div><strong>Coordinates:</strong> ${target.lat.toFixed(4)}°, ${target.lon.toFixed(4)}°</div>
+                            <div><strong>Distance (SP):</strong> ${target.distance.toFixed(0)} km</div>
+                            <div><strong>Bearing (SP):</strong> ${target.bearing.toFixed(0)}°</div>
+                            <div><strong>Long Path:</strong> ${target.longPath.toFixed(0)}° (${target.longPathDist.toFixed(0)} km)</div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <div style="font-size: 0.8rem; color: #8a9bb5; margin-bottom: 0.5rem;"><strong>Best Bands (Current Conditions):</strong></div>
+                            <div style="background: #1a2738; padding: 0.7rem; border-radius: 4px; text-align: center; color: #8a9bb5;">
+                                Prediction engine integration coming soon - will show band-by-band reliability matrix here
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += `<div style="margin-top: 1rem; text-align: center;">
+                <button onclick="exportPlannerCSV()" style="background: #4a90e2; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-right: 0.5rem;">
+                    📥 Export as CSV
+                </button>
+                <span style="color: #8a9bb5; font-size: 0.75rem;">Full predictions require backend integration</span>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+
+        function removePlannerTarget(idx) {
+            plannerTargets.splice(idx, 1);
+            renderPlannerTargets();
+        }
+
+        function exportPlannerCSV() {
+            if (plannerTargets.length === 0) {
+                alert('No targets to export.');
+                return;
+            }
+
+            let csv = 'Name,Latitude,Longitude,Distance (km),Bearing (°),Long Path (°),Long Path Dist (km)\n';
+
+            plannerTargets.forEach(target => {
+                csv += `"${target.name}",${target.lat},${target.lon},${target.distance.toFixed(0)},${target.bearing.toFixed(0)},${target.longPath.toFixed(0)},${target.longPathDist.toFixed(0)}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'planner_targets.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
         }
 
         // =================================================================
