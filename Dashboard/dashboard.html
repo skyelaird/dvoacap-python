@@ -571,6 +571,7 @@
             <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
             <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
             <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
+            <button class="tab-button" onclick="showTab('config')">⚙️ Station Config</button>
         </div>
         
         <!-- OVERVIEW TAB -->
@@ -625,7 +626,131 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- STATION CONFIG TAB -->
+        <div id="tab-config" class="tab-content">
+            <div class="grid-2col">
+                <!-- Station Information -->
+                <div class="card">
+                    <h2>📡 Station Information</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Operator Name</label>
+                            <input type="text" id="stationName" placeholder="Your Name" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Callsign</label>
+                            <input type="text" id="stationCallsign" placeholder="VE1ATM" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Grid Square</label>
+                            <input type="text" id="stationGrid" placeholder="FN74ui" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Latitude</label>
+                                <input type="number" id="stationLat" placeholder="44.374" step="0.001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Longitude</label>
+                                <input type="number" id="stationLon" placeholder="-64.300" step="0.001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            </div>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Power (Watts)</label>
+                            <input type="number" id="stationPower" placeholder="100" min="1" max="1500" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <button onclick="saveStationConfig()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 0.5rem;">💾 Save Station Info</button>
+                    </div>
+                </div>
+
+                <!-- Antenna Configuration -->
+                <div class="card">
+                    <h2>📻 Antenna Configuration</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <button onclick="addAntenna()" style="background: #2d5a8c; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%;">➕ Add Antenna</button>
+                        </div>
+                        <div id="antennaList" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <!-- Antennas will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Band-to-Antenna Assignment -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>🔗 Band-to-Antenna Assignment</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">160m</label>
+                        <select id="band-160m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">80m</label>
+                        <select id="band-80m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">40m</label>
+                        <select id="band-40m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">30m</label>
+                        <select id="band-30m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">20m</label>
+                        <select id="band-20m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">17m</label>
+                        <select id="band-17m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">15m</label>
+                        <select id="band-15m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">12m</label>
+                        <select id="band-12m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">10m</label>
+                        <select id="band-10m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="saveBandAssignments()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 1rem;">💾 Save Band Assignments</button>
+            </div>
+
+            <!-- EME Calculator (Placeholder for future) -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>🌙 EME (Earth-Moon-Earth) Calculator</h2>
+                <div style="padding: 2rem; text-align: center; color: #8a9bb5;">
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Coming Soon</p>
+                    <p style="font-size: 0.9rem;">EME propagation calculator will be available in a future update.</p>
+                    <p style="font-size: 0.8rem; margin-top: 1rem; color: #6a7f9f;">Track moonrise/moonset, path loss, Doppler shift, and optimal EME windows.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="update-info" id="updateInfo"></div>
     </div>
     
@@ -1284,10 +1409,199 @@
         }
 
         // =================================================================
+        // Station Configuration Functions
+        // =================================================================
+
+        const ANTENNA_TYPES = [
+            { id: 'vertical', name: 'Vertical Monopole (1/4 wave)' },
+            { id: 'dipole', name: 'Half-Wave Dipole' },
+            { id: 'inverted_v', name: 'Inverted V' },
+            { id: 'yagi', name: '3-Element Yagi' },
+            { id: 'isotropic', name: 'Isotropic (Reference)' }
+        ];
+
+        let antennas = [];
+        let antennaIdCounter = 0;
+
+        function addAntenna() {
+            const antennaId = antennaIdCounter++;
+            antennas.push({
+                id: antennaId,
+                name: `Antenna ${antennaId + 1}`,
+                type: 'vertical'
+            });
+            renderAntennas();
+            updateBandAntennaSelects();
+        }
+
+        function removeAntenna(antennaId) {
+            antennas = antennas.filter(a => a.id !== antennaId);
+            renderAntennas();
+            updateBandAntennaSelects();
+        }
+
+        function updateAntennaName(antennaId, newName) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.name = newName;
+                updateBandAntennaSelects();
+            }
+        }
+
+        function updateAntennaType(antennaId, newType) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.type = newType;
+            }
+        }
+
+        function renderAntennas() {
+            const antennaList = document.getElementById('antennaList');
+            antennaList.innerHTML = '';
+
+            antennas.forEach(antenna => {
+                const antennaDiv = document.createElement('div');
+                antennaDiv.style.cssText = 'background: #1a2332; padding: 1rem; border-radius: 4px; border: 1px solid #2a3f5f;';
+                antennaDiv.innerHTML = `
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" value="${antenna.name}"
+                               onchange="updateAntennaName(${antenna.id}, this.value)"
+                               style="flex: 1; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        <button onclick="removeAntenna(${antenna.id})"
+                                style="background: #8b2e2e; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">🗑️</button>
+                    </div>
+                    <select onchange="updateAntennaType(${antenna.id}, this.value)"
+                            style="width: 100%; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        ${ANTENNA_TYPES.map(type =>
+                            `<option value="${type.id}" ${antenna.type === type.id ? 'selected' : ''}>${type.name}</option>`
+                        ).join('')}
+                    </select>
+                `;
+                antennaList.appendChild(antennaDiv);
+            });
+
+            if (antennas.length === 0) {
+                antennaList.innerHTML = '<div style="text-align: center; color: #8a9bb5; padding: 1rem;">No antennas configured. Click "Add Antenna" to get started.</div>';
+            }
+        }
+
+        function updateBandAntennaSelects() {
+            const selects = document.querySelectorAll('.band-antenna-select');
+            selects.forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Not Configured</option>';
+                antennas.forEach(antenna => {
+                    const option = document.createElement('option');
+                    option.value = antenna.id;
+                    option.textContent = antenna.name;
+                    if (currentValue == antenna.id) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        function saveStationConfig() {
+            const config = {
+                name: document.getElementById('stationName').value,
+                callsign: document.getElementById('stationCallsign').value,
+                grid: document.getElementById('stationGrid').value,
+                lat: parseFloat(document.getElementById('stationLat').value),
+                lon: parseFloat(document.getElementById('stationLon').value),
+                power: parseInt(document.getElementById('stationPower').value)
+            };
+
+            fetch('/api/station-config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Station configuration saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving station config:', error);
+                alert('Error saving station configuration. See console for details.');
+            });
+        }
+
+        function saveBandAssignments() {
+            const assignments = {};
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            bands.forEach(band => {
+                const select = document.getElementById(`band-${band}`);
+                if (select.value) {
+                    assignments[band] = parseInt(select.value);
+                }
+            });
+
+            const config = {
+                antennas: antennas,
+                band_assignments: assignments
+            };
+
+            fetch('/api/antenna-config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Antenna configuration saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving antenna config:', error);
+                alert('Error saving antenna configuration. See console for details.');
+            });
+        }
+
+        function loadStationConfig() {
+            // Load station info
+            fetch('/api/station-config')
+                .then(response => response.json())
+                .then(config => {
+                    if (config) {
+                        document.getElementById('stationName').value = config.name || '';
+                        document.getElementById('stationCallsign').value = config.callsign || '';
+                        document.getElementById('stationGrid').value = config.grid || '';
+                        document.getElementById('stationLat').value = config.lat || '';
+                        document.getElementById('stationLon').value = config.lon || '';
+                        document.getElementById('stationPower').value = config.power || '';
+                    }
+                })
+                .catch(error => console.error('Error loading station config:', error));
+
+            // Load antenna config
+            fetch('/api/antenna-config')
+                .then(response => response.json())
+                .then(config => {
+                    if (config && config.antennas) {
+                        antennas = config.antennas;
+                        antennaIdCounter = Math.max(...antennas.map(a => a.id), 0) + 1;
+                        renderAntennas();
+                        updateBandAntennaSelects();
+
+                        if (config.band_assignments) {
+                            Object.keys(config.band_assignments).forEach(band => {
+                                const select = document.getElementById(`band-${band}`);
+                                if (select) {
+                                    select.value = config.band_assignments[band];
+                                }
+                            });
+                        }
+                    }
+                })
+                .catch(error => console.error('Error loading antenna config:', error));
+        }
+
+        // =================================================================
         // Initialize Dashboard
         // =================================================================
 
         loadPropagationData();
+        loadStationConfig();
     </script>
 </body>
 </html>

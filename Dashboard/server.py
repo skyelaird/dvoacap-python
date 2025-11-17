@@ -151,6 +151,86 @@ def get_prediction_data():
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/api/station-config', methods=['GET', 'POST'])
+def station_config():
+    """
+    API endpoint to get/set station configuration
+
+    GET: Returns current station configuration
+    POST: Saves new station configuration
+
+    Returns:
+        JSON with station configuration
+    """
+    config_file = Path(__file__).parent / 'station_config.json'
+
+    if request.method == 'POST':
+        try:
+            config = request.get_json()
+            with open(config_file, 'w') as f:
+                json.dump(config, f, indent=2)
+            return jsonify({'status': 'success', 'message': 'Station configuration saved'})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+    else:  # GET
+        try:
+            if config_file.exists():
+                with open(config_file, 'r') as f:
+                    config = json.load(f)
+                return jsonify(config)
+            else:
+                # Return default configuration
+                return jsonify({
+                    'name': '',
+                    'callsign': 'VE1ATM',
+                    'grid': 'FN74ui',
+                    'lat': 44.374,
+                    'lon': -64.300,
+                    'power': 100
+                })
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/antenna-config', methods=['GET', 'POST'])
+def antenna_config():
+    """
+    API endpoint to get/set antenna configuration
+
+    GET: Returns current antenna configuration and band assignments
+    POST: Saves new antenna configuration
+
+    Returns:
+        JSON with antenna configuration
+    """
+    config_file = Path(__file__).parent / 'antenna_config.json'
+
+    if request.method == 'POST':
+        try:
+            config = request.get_json()
+            with open(config_file, 'w') as f:
+                json.dump(config, f, indent=2)
+            return jsonify({'status': 'success', 'message': 'Antenna configuration saved'})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+    else:  # GET
+        try:
+            if config_file.exists():
+                with open(config_file, 'r') as f:
+                    config = json.load(f)
+                return jsonify(config)
+            else:
+                # Return empty configuration
+                return jsonify({
+                    'antennas': [],
+                    'band_assignments': {}
+                })
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+
 # =============================================================================
 # Static File Serving
 # =============================================================================

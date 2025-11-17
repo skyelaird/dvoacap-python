@@ -55,6 +55,8 @@ MY_QTH = {
 
 # HF Amateur bands (center frequencies in MHz)
 BANDS = {
+    '160m': 1.900,
+    '80m': 3.600,
     '40m': 7.150,
     '30m': 10.125,
     '20m': 14.150,
