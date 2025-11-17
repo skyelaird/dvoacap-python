@@ -370,6 +370,81 @@ def check_dependencies():
     return len(missing) == 0, missing
 
 
+def check_and_generate_predictions(skip_auto_gen=False):
+    """
+    Check if prediction data exists and is recent.
+    Auto-generate if missing or stale (>24 hours old).
+
+    Args:
+        skip_auto_gen: If True, skip automatic generation
+
+    Returns:
+        bool: True if data is available, False otherwise
+    """
+    data_file = Path(__file__).parent / 'enhanced_predictions.json'
+
+    # Check if data file exists
+    if not data_file.exists():
+        if skip_auto_gen:
+            print("⚠️  No prediction data found (use --skip-auto-gen=False to auto-generate)")
+            return False
+
+        print("\n" + "=" * 80)
+        print("No prediction data found - generating initial predictions...")
+        print("=" * 80)
+        generate_predictions_now()
+        return True
+
+    # Check if data is stale (>24 hours old)
+    file_age = datetime.now(timezone.utc).timestamp() - data_file.stat().st_mtime
+    hours_old = file_age / 3600
+
+    if hours_old > 24:
+        if skip_auto_gen:
+            print(f"⚠️  Prediction data is {hours_old:.1f} hours old (use --skip-auto-gen=False to auto-refresh)")
+            return True
+
+        print("\n" + "=" * 80)
+        print(f"Prediction data is {hours_old:.1f} hours old - regenerating...")
+        print("=" * 80)
+        generate_predictions_now()
+    else:
+        print(f"✓ Prediction data is {hours_old:.1f} hours old (fresh)")
+
+    return True
+
+
+def generate_predictions_now():
+    """
+    Synchronously generate predictions during server startup
+    """
+    script_path = Path(__file__).parent / 'generate_predictions.py'
+
+    try:
+        result = subprocess.run(
+            [sys.executable, str(script_path)],
+            cwd=str(Path(__file__).parent),
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 minute timeout
+        )
+
+        if result.returncode == 0:
+            print("✓ Predictions generated successfully")
+            # Print summary from the output
+            if "Total predictions:" in result.stdout:
+                for line in result.stdout.split('\n'):
+                    if 'Total predictions:' in line or 'Generated:' in line:
+                        print(f"  {line.strip()}")
+        else:
+            print(f"✗ Prediction generation failed: {result.stderr[:200]}")
+
+    except subprocess.TimeoutExpired:
+        print("✗ Prediction generation timed out (>5 minutes)")
+    except Exception as e:
+        print(f"✗ Error generating predictions: {e}")
+
+
 def main():
     """Start the Flask server"""
     import argparse
@@ -380,6 +455,7 @@ def main():
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')
     parser.add_argument('--no-cache', action='store_true', help='Disable HTTP caching (for development)')
     parser.add_argument('--skip-deps-check', action='store_true', help='Skip dependency check')
+    parser.add_argument('--skip-auto-gen', action='store_true', help='Skip automatic prediction generation on startup')
 
     args = parser.parse_args()
 
@@ -411,7 +487,12 @@ def main():
     print(f"✓ Dashboard: http://{args.host}:{args.port}/")
     print(f"✓ Debug mode: {'Enabled' if args.debug else 'Disabled'}")
     print(f"✓ HTTP caching: {'Disabled' if server_config['disable_cache'] or args.debug else 'Enabled'}")
-    print(f"✓ Press Ctrl+C to stop\n")
+
+    # Check and auto-generate predictions if needed
+    print()
+    check_and_generate_predictions(skip_auto_gen=args.skip_auto_gen)
+
+    print(f"\n✓ Press Ctrl+C to stop")
     print("=" * 80)
 
     app.run(host=args.host, port=args.port, debug=args.debug)
