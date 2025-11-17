@@ -89,7 +89,7 @@ class ControlPoint:
     hpf2: float = 0.0      # F2 peak height before retardation
     rat: float = 0.0       # F2 layer shape ratio (hm/ym)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize layer info objects"""
         if self.e is None:
             self.e = LayerInfo()

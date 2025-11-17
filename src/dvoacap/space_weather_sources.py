@@ -426,7 +426,7 @@ class MultiSourceSpaceWeatherFetcher:
         >>> print(f"SSN: {data.ssn} from {data.sources['ssn']}")
     """
 
-    def __init__(self, timeout: int = 10, verbose: bool = True):
+    def __init__(self, timeout: int = 10, verbose: bool = True) -> None:
         """
         Initialize fetcher
 
@@ -545,7 +545,7 @@ class MultiSourceSpaceWeatherFetcher:
 # CLI / Testing
 # =============================================================================
 
-def main():
+def main() -> None:
     """Test the multi-source fetcher"""
     print("\n" + "=" * 70)
     print("DVOACAP Multi-Source Space Weather Data Fetcher")

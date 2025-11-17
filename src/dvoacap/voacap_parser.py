@@ -49,7 +49,7 @@ class FixedCoeff:
     Contains arrays used for computing fixed ionospheric maps.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # P: array[TFixedMapKind, 0..15, 0..28] of Single
         # This is structured as FAKP (6x16x29) + FAKMAP (16x29) + HMYM (16x29)
         self.P = np.zeros((8, 16, 29), dtype=np.float32)
@@ -83,7 +83,7 @@ class CoeffData:
     from the Coeff##.dat files.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Integer array indices for variable maps
         self.ikim = np.zeros((6, 10), dtype=np.int32)
 
@@ -117,7 +117,7 @@ class F2Data:
     This corresponds to the data loaded from FOF2CCIR##.dat files.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # XF2COF: array[0..1, 0..75, 0..12] of Single
         self.xf2cof = np.zeros((2, 76, 13), dtype=np.float32)
 

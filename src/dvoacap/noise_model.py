@@ -30,7 +30,7 @@ class Distribution:
     value: TripleValue
     error: TripleValue
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.value = TripleValue()
         self.error = TripleValue()
 
@@ -56,7 +56,7 @@ class NoiseModel:
     NP_IN_DB = 1 / DB_IN_NP  # Nepers in dB
     NORM_DECILE = 1.28  # Normal distribution 10% point
 
-    def __init__(self, fourier_maps: FourierMaps):
+    def __init__(self, fourier_maps: FourierMaps) -> None:
         """
         Initialize the noise model.
 

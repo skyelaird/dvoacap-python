@@ -54,7 +54,7 @@ class AntennaModel:
         return self._frequency
 
     @frequency.setter
-    def frequency(self, value: float):
+    def frequency(self, value: float) -> None:
         """
         Set operating frequency in MHz.
 
@@ -77,7 +77,7 @@ class AntennaModel:
         return self._azimuth
 
     @azimuth.setter
-    def azimuth(self, value: float):
+    def azimuth(self, value: float) -> None:
         """
         Set antenna azimuth in radians.
 

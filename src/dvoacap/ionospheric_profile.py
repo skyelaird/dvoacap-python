@@ -212,7 +212,7 @@ class IonosphericProfile:
         >>> true_h = profile.get_true_height(5.0)  # MHz
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Layer information
         self.e = LayerInfo()
         self.f1 = LayerInfo()

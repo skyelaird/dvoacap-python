@@ -170,7 +170,7 @@ class PredictionEngine:
     # Angle count lookup table
     NANGX = np.array([40, 34, 29, 24, 19, 14, 12, 9])
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize prediction engine."""
         # Parameters
         self.params = VoacapParams()
