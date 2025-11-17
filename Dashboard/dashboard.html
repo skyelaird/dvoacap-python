@@ -727,10 +727,26 @@
                     </div>
 
                     <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Required SNR Threshold</label>
-                        <input type="range" id="reqSnrSlider" min="3" max="20" step="1" value="10" oninput="document.getElementById('reqSnrValue').textContent = this.value + ' dB'" style="width: 100%;">
-                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="reqSnrValue">10 dB</div>
-                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">FT8: 3dB, SSB: 10dB, CW: 6dB</div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Communication Mode (SNR Threshold)</label>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="3" id="snrModeFT8" onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">FT8 / Digital Modes</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">3 dB</span>
+                            </label>
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="6" id="snrModeCW" onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">CW / Morse Code</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">6 dB</span>
+                            </label>
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="10" id="snrModeSSB" checked onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">SSB / Voice</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">10 dB</span>
+                            </label>
+                        </div>
+                        <div style="text-align: center; margin-top: 0.5rem; color: #8a9bb5; font-size: 0.8rem;" id="reqSnrValue">Current: 10 dB</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem; text-align: center;">Select mode for typical SNR requirements</div>
                     </div>
 
                     <div style="margin-bottom: 1.5rem;">
@@ -3039,8 +3055,18 @@
             document.getElementById('propMethod').value = settings.propMethod || 'auto';
             document.getElementById('minToaSlider').value = settings.minToa || 3.0;
             document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
-            document.getElementById('reqSnrSlider').value = settings.reqSnr || 10;
-            document.getElementById('reqSnrValue').textContent = (settings.reqSnr || 10) + ' dB';
+
+            // Set SNR mode radio button based on saved value
+            const reqSnr = settings.reqSnr || 10;
+            if (reqSnr <= 3) {
+                document.getElementById('snrModeFT8').checked = true;
+            } else if (reqSnr <= 6) {
+                document.getElementById('snrModeCW').checked = true;
+            } else {
+                document.getElementById('snrModeSSB').checked = true;
+            }
+            updateSnrThreshold();
+
             document.getElementById('txPower').value = settings.txPower || 100;
 
             // Add event listener for SSN slider
@@ -3048,13 +3074,14 @@
         }
 
         function saveSettings() {
+            const selectedSnrMode = document.querySelector('input[name="snrMode"]:checked');
             const settings = {
                 ssnMode: document.getElementById('ssnManual').checked ? 'manual' : 'auto',
                 ssn: parseInt(document.getElementById('ssnSlider').value),
                 noiseLevel: document.getElementById('noiseLevel').value,
                 propMethod: document.getElementById('propMethod').value,
                 minToa: parseFloat(document.getElementById('minToaSlider').value),
-                reqSnr: parseInt(document.getElementById('reqSnrSlider').value),
+                reqSnr: parseInt(selectedSnrMode ? selectedSnrMode.value : 10),
                 txPower: parseInt(document.getElementById('txPower').value)
             };
 
@@ -3069,6 +3096,26 @@
             if (confirm('Reset all settings to defaults?')) {
                 localStorage.removeItem('propSettings');
                 loadSettings();
+            }
+        }
+
+        function updateSnrThreshold() {
+            const selectedMode = document.querySelector('input[name="snrMode"]:checked');
+            if (selectedMode) {
+                const snrValue = selectedMode.value;
+                document.getElementById('reqSnrValue').textContent = `Current: ${snrValue} dB`;
+
+                // Update label backgrounds to show selection
+                document.querySelectorAll('input[name="snrMode"]').forEach(radio => {
+                    const label = radio.parentElement;
+                    if (radio.checked) {
+                        label.style.background = '#1f2937';
+                        label.style.borderColor = '#4a90e2';
+                    } else {
+                        label.style.background = '#1a2332';
+                        label.style.borderColor = '#2a3f5f';
+                    }
+                });
             }
         }
 
