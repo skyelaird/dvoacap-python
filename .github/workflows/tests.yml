@@ -35,14 +35,14 @@ jobs:
 
       - name: Run pytest with coverage
         run: |
-          python -m pytest tests/ -v --tb=short --cov=src/dvoacap --cov-report=term --cov-report=xml --cov-report=html
+          PYTHONPATH=src python -m pytest tests/ -v --tb=short --cov=src/dvoacap --cov-report=term --cov-report=xml --cov-report=html
 
       - name: Generate test and coverage report
         if: always()
         run: |
           echo "## Test Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          python -m pytest tests/ -v --tb=line --cov=src/dvoacap --cov-report=term | tee test_output.txt
+          PYTHONPATH=src python -m pytest tests/ -v --tb=line --cov=src/dvoacap --cov-report=term | tee test_output.txt
           if [ $? -eq 0 ]; then
             echo "✅ All tests passed" >> $GITHUB_STEP_SUMMARY
           else
