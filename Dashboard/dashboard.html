@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VE1ATM HF Propagation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -529,6 +530,11 @@
         ⚡ Refresh Predictions
     </button>
 
+    <!-- Settings Button -->
+    <button class="refresh-btn" id="settingsBtn" onclick="showSettings()" style="top: 1rem; right: 13rem; background: linear-gradient(135deg, #2d5a8c 0%, #4a90e2 100%); border-color: #7cb8f7;">
+        ⚙️ Settings
+    </button>
+
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modalOverlay"></div>
 
@@ -546,6 +552,89 @@
             <button class="modal-close-btn" id="closeBtn" style="display: none;" onclick="closeModal()">
                 Close
             </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="notification-modal" id="settingsModal" style="min-width: 600px; max-width: 800px;">
+        <div class="modal-header">⚙️ Prediction Settings</div>
+        <div class="modal-body" style="text-align: left;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <!-- Left Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Solar Activity (SSN)</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="ssnAuto" name="ssnMode" value="auto" checked onchange="toggleSSNMode()">
+                            <label for="ssnAuto" style="margin-right: 1rem;">Auto (Current)</label>
+                            <input type="radio" id="ssnManual" name="ssnMode" value="manual" onchange="toggleSSNMode()">
+                            <label for="ssnManual">Manual</label>
+                        </div>
+                        <input type="range" id="ssnSlider" min="10" max="200" value="140" disabled style="width: 100%; margin-top: 0.5rem;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="ssnValue">SSN: 140</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Noise Environment</label>
+                        <select id="noiseLevel" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="remote">Remote (Lowest Noise)</option>
+                            <option value="quiet" selected>Quiet Rural</option>
+                            <option value="rural">Rural</option>
+                            <option value="residential">Residential</option>
+                            <option value="urban">Urban</option>
+                            <option value="noisy">Very Noisy</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Propagation Method</label>
+                        <select id="propMethod" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="auto" selected>Auto (Recommended)</option>
+                            <option value="ray-hop">Ray-Hop Only</option>
+                            <option value="ducted">Ducted Mode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Minimum Take-Off Angle</label>
+                        <input type="range" id="minToaSlider" min="0.1" max="10" step="0.1" value="3.0" oninput="document.getElementById('minToaValue').textContent = this.value + '°'" style="width: 100%;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="minToaValue">3.0°</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Lower angles favor DX, higher angles favor NVIS</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Required SNR Threshold</label>
+                        <input type="range" id="reqSnrSlider" min="3" max="20" step="1" value="10" oninput="document.getElementById('reqSnrValue').textContent = this.value + ' dB'" style="width: 100%;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="reqSnrValue">10 dB</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">FT8: 3dB, SSB: 10dB, CW: 6dB</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Transmit Power (W)</label>
+                        <input type="number" id="txPower" min="1" max="1500" value="100" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
+                <button onclick="resetSettings()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    🔄 Reset to Defaults
+                </button>
+                <button onclick="saveSettings()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    💾 Save & Apply
+                </button>
+                <button onclick="closeSettings()" style="background: #2a3f5f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+
+            <div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                <strong>Note:</strong> Settings are saved to localStorage. Click "Refresh Predictions" to generate new forecasts with these settings.
+            </div>
         </div>
     </div>
 
@@ -569,6 +658,8 @@
         <div class="tab-nav">
             <button class="tab-button active" onclick="showTab('overview')">📊 Overview</button>
             <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
+            <button class="tab-button" onclick="showTab('propcharts')">📈 Propagation Charts</button>
+            <button class="tab-button" onclick="showTab('planner')">🗺️ Mini Planner</button>
             <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
             <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
             <button class="tab-button" onclick="showTab('config')">⚙️ Station Config</button>
@@ -587,10 +678,31 @@
                         <div class="legend-item">🌅 Gray Line Zone</div>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <h2>📋 Quick Summary</h2>
                     <div id="quickSummary"></div>
+                </div>
+            </div>
+
+            <div class="grid-2col" style="margin-top: 1rem;">
+                <div class="card">
+                    <h2>⏰ 24-Hour Propagation Wheel</h2>
+                    <div style="margin-bottom: 0.5rem; font-size: 0.8rem; color: #8a9bb5;">
+                        <label>Select Region: </label>
+                        <select id="wheelRegionSelect" onchange="renderPropWheel()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div id="propWheel" style="height: 500px;"></div>
+                    <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.5rem;">
+                        Hover over bands to see reliability percentage. Outer ring = higher bands.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🎯 Best Bands Right Now</h2>
+                    <div id="bestBands"></div>
                 </div>
             </div>
         </div>
@@ -602,7 +714,121 @@
                 <div class="band-grid" id="bandGrid"></div>
             </div>
         </div>
-        
+
+        <!-- PROPAGATION CHARTS TAB -->
+        <div id="tab-propcharts" class="tab-content">
+            <div class="card">
+                <h2>📈 24-Hour Propagation Analysis</h2>
+                <div style="margin-bottom: 1rem;">
+                    <label style="color: #4a90e2; font-weight: bold; margin-right: 0.5rem;">Select Band:</label>
+                    <select id="chartBandSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <option value="40m">40m (7.150 MHz)</option>
+                        <option value="30m">30m (10.125 MHz)</option>
+                        <option value="20m" selected>20m (14.150 MHz)</option>
+                        <option value="17m">17m (18.118 MHz)</option>
+                        <option value="15m">15m (21.200 MHz)</option>
+                        <option value="12m">12m (24.940 MHz)</option>
+                        <option value="10m">10m (28.500 MHz)</option>
+                    </select>
+
+                    <label style="color: #4a90e2; font-weight: bold; margin-left: 1.5rem; margin-right: 0.5rem;">Select Region:</label>
+                    <select id="chartRegionSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- Reliability Chart -->
+                <div id="reliabilityChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- SNR Chart -->
+                <div id="snrChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- Signal Power (SDBW) Chart -->
+                <div id="sdbwChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- MUFday Chart -->
+                <div id="mufdayChart" style="height: 300px;"></div>
+            </div>
+        </div>
+
+        <!-- MINI PLANNER TAB -->
+        <div id="tab-planner" class="tab-content">
+            <div class="card">
+                <h2>🗺️ Mini Planner - Custom Target Predictions</h2>
+                <p style="color: #8a9bb5; font-size: 0.85rem; margin-bottom: 1rem;">
+                    Plan propagation to specific locations by entering coordinates, grid squares, or selecting from popular destinations.
+                </p>
+
+                <!-- Target Input Form -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Target Name</label>
+                        <input type="text" id="targetName" placeholder="e.g., Tokyo, JA" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Input Method</label>
+                        <select id="inputMethod" onchange="updatePlannerInputs()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="latlon">Lat/Lon (Decimal)</option>
+                            <option value="maidenhead">Maidenhead Grid</option>
+                            <option value="preset">Popular Destinations</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lat/Lon Inputs -->
+                <div id="latLonInputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Latitude</label>
+                        <input type="number" id="targetLat" placeholder="35.6762" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Longitude</label>
+                        <input type="number" id="targetLon" placeholder="139.6503" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <!-- Maidenhead Input -->
+                <div id="maidenheadInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Maidenhead Grid Square</label>
+                    <input type="text" id="targetGrid" placeholder="PM95" maxlength="6" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px; text-transform: uppercase;">
+                    <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Enter 4 or 6-character grid (e.g., FN20, PM95vr)</div>
+                </div>
+
+                <!-- Preset Destinations -->
+                <div id="presetInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Select Destination</label>
+                    <select id="presetDestination" onchange="loadPreset()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        <option value="">-- Select --</option>
+                        <option value="35.6762,139.6503">Tokyo, Japan (PM95)</option>
+                        <option value="51.5074,-0.1278">London, UK (IO91)</option>
+                        <option value="-33.8688,151.2093">Sydney, Australia (QF56)</option>
+                        <option value="40.7128,-74.0060">New York, USA (FN30)</option>
+                        <option value="55.7558,37.6173">Moscow, Russia (KO85)</option>
+                        <option value="-23.5505,-46.6333">São Paulo, Brazil (GG66)</option>
+                        <option value="1.3521,103.8198">Singapore (OJ11)</option>
+                        <option value="-26.2041,28.0473">Johannesburg, South Africa (KG33)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="addPlannerTarget()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        ➕ Add Target
+                    </button>
+                    <button onclick="clearPlannerTargets()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        🗑️ Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Target List and Predictions -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>📊 Custom Target Predictions</h2>
+                <div id="plannerTargets" style="min-height: 200px;">
+                    <p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- TIMELINE TAB -->
         <div id="tab-timeline" class="tab-content">
             <div class="card">
@@ -812,9 +1038,407 @@
             renderDXCC();
             renderUpdateInfo();
             checkDXCCAlerts();
-            
+            initPropCharts();
+            initPropWheel();
+            renderBestBands();
+
             // Update gray line every 5 minutes
             setInterval(updateGrayLine, 300000);
+        }
+
+        function initPropWheel() {
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data for wheel');
+                return;
+            }
+
+            // Get available regions from first band
+            const firstBand = Object.keys(propData.propagation_charts)[0];
+            const regions = Object.keys(propData.propagation_charts[firstBand].regions).sort();
+
+            const regionSelect = document.getElementById('wheelRegionSelect');
+            regionSelect.innerHTML = '';
+
+            regions.forEach(regionCode => {
+                const regionName = propData.propagation_charts[firstBand].regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+                renderPropWheel();
+            }
+        }
+
+        function renderPropWheel() {
+            const region = document.getElementById('wheelRegionSelect').value;
+            if (!propData.propagation_charts) return;
+
+            // Bands to display (from low to high frequency)
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bandColors = {
+                '40m': '#8b5cf6',
+                '30m': '#6366f1',
+                '20m': '#3b82f6',
+                '17m': '#06b6d4',
+                '15m': '#10b981',
+                '12m': '#fbbf24',
+                '10m': '#f87171'
+            };
+
+            const traces = [];
+
+            // Create a polar trace for each band
+            bands.forEach((band, idx) => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData || !chartData.regions[region]) return;
+
+                const regionData = chartData.regions[region];
+                const hours = chartData.hours;
+
+                // Convert hours to angles (0 = top/north, clockwise)
+                const theta = hours.map(h => h * 15);  // 15 degrees per hour
+                const r = regionData.reliability;
+
+                traces.push({
+                    type: 'scatterpolar',
+                    r: r,
+                    theta: theta,
+                    mode: 'lines',
+                    name: band,
+                    line: {
+                        color: bandColors[band],
+                        width: 3
+                    },
+                    fill: 'toself',
+                    fillcolor: bandColors[band] + '40'  // Add transparency
+                });
+            });
+
+            const regionName = propData.propagation_charts['20m'].regions[region].name;
+
+            const layout = {
+                polar: {
+                    bgcolor: '#0a0e1a',
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 100],
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#8a9bb5', size: 10 }
+                    },
+                    angularaxis: {
+                        tickmode: 'array',
+                        tickvals: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
+                        ticktext: ['00', '02', '04', '06', '08', '10', '12', '14', '16', '18', '20', '22'],
+                        direction: 'clockwise',
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#e0e0e0', size: 11 }
+                    }
+                },
+                paper_bgcolor: '#162236',
+                font: { color: '#e0e0e0' },
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    y: -0.15,
+                    x: 0.5,
+                    xanchor: 'center',
+                    font: { size: 11 }
+                },
+                title: {
+                    text: `Propagation to ${regionName}`,
+                    font: { color: '#4a90e2', size: 14 },
+                    y: 0.95
+                },
+                margin: { t: 60, r: 40, b: 60, l: 40 }
+            };
+
+            Plotly.newPlot('propWheel', traces, layout, {responsive: true, displayModeBar: false});
+        }
+
+        function renderBestBands() {
+            if (!propData.propagation_charts) {
+                document.getElementById('bestBands').innerHTML = '<p style="color: #8a9bb5; padding: 1rem;">No propagation data available</p>';
+                return;
+            }
+
+            const currentHour = new Date().getUTCHours();
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+
+            // Calculate scores for each band across all regions
+            const bandScores = [];
+
+            bands.forEach(band => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData) return;
+
+                let totalScore = 0;
+                let regionCount = 0;
+
+                // Find data for current hour
+                const hourIdx = chartData.hours.indexOf(currentHour);
+                if (hourIdx === -1) return;
+
+                Object.keys(chartData.regions).forEach(regionCode => {
+                    const regionData = chartData.regions[regionCode];
+                    const reliability = regionData.reliability[hourIdx] || 0;
+                    const snr = regionData.snr[hourIdx] || -999;
+                    const mufDay = regionData.muf_day[hourIdx] || 0;
+
+                    // Scoring algorithm: (Reliability × 0.5) + (SNR_normalized × 0.3) + ((100-MUFday) × 0.2)
+                    const snrNormalized = Math.max(0, Math.min(100, (snr + 20) * 2));  // Normalize SNR to 0-100
+                    const mufScore = 100 - mufDay;  // Lower MUFday is better
+                    const score = (reliability * 0.5) + (snrNormalized * 0.3) + (mufScore * 0.2);
+
+                    totalScore += score;
+                    regionCount++;
+                });
+
+                if (regionCount > 0) {
+                    bandScores.push({
+                        band: band,
+                        avgScore: totalScore / regionCount,
+                        regions: regionCount
+                    });
+                }
+            });
+
+            // Sort by score descending
+            bandScores.sort((a, b) => b.avgScore - a.avgScore);
+
+            // Display top 5 bands
+            let html = '<div style="font-size: 0.9rem;">';
+
+            if (bandScores.length === 0) {
+                html += '<p style="color: #8a9bb5; padding: 1rem; text-align: center;">No band openings currently</p>';
+            } else {
+                bandScores.slice(0, 5).forEach((bandScore, idx) => {
+                    const score = bandScore.avgScore;
+                    let quality = 'Poor';
+                    let color = '#f87171';
+
+                    if (score >= 70) {
+                        quality = 'Excellent';
+                        color = '#4ade80';
+                    } else if (score >= 50) {
+                        quality = 'Good';
+                        color = '#fbbf24';
+                    } else if (score >= 30) {
+                        quality = 'Fair';
+                        color = '#fb923c';
+                    }
+
+                    const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅';
+
+                    html += `
+                        <div style="padding: 0.7rem; margin-bottom: 0.5rem; background: #0d1520; border-radius: 6px; border-left: 4px solid ${color};">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-size: 1.2rem;">${medal}</span>
+                                    <span style="font-weight: bold; font-size: 1.1rem; color: ${color};">${bandScore.band}</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: bold; color: ${color};">${quality}</div>
+                                    <div style="font-size: 0.75rem; color: #8a9bb5;">Score: ${score.toFixed(0)}/100</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.3rem; font-size: 0.75rem; color: #8a9bb5;">
+                                ${bandScore.regions} regions accessible
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `<div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                    <strong>Scoring:</strong> Reliability (50%) + SNR (30%) + MUF Safety (20%)
+                </div>`;
+            }
+
+            html += '</div>';
+            document.getElementById('bestBands').innerHTML = html;
+        }
+
+        function initPropCharts() {
+            // Populate region selector with available regions
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data available');
+                return;
+            }
+
+            const band = '20m';  // Default band
+            const chartData = propData.propagation_charts[band];
+
+            if (!chartData || !chartData.regions) {
+                console.warn('No chart data for band:', band);
+                return;
+            }
+
+            const regionSelect = document.getElementById('chartRegionSelect');
+            regionSelect.innerHTML = '';
+
+            // Add regions as options
+            const regions = Object.keys(chartData.regions).sort();
+            regions.forEach(regionCode => {
+                const regionName = chartData.regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            // Select first region by default (typically EU or UK)
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+            }
+
+            // Render initial charts
+            renderPropChart();
+        }
+
+        function renderPropChart() {
+            const band = document.getElementById('chartBandSelect').value;
+            const region = document.getElementById('chartRegionSelect').value;
+
+            if (!propData.propagation_charts || !propData.propagation_charts[band]) {
+                console.error('No chart data for band:', band);
+                return;
+            }
+
+            const chartData = propData.propagation_charts[band];
+            const regionData = chartData.regions[region];
+
+            if (!regionData) {
+                console.error('No data for region:', region);
+                return;
+            }
+
+            const hours = chartData.hours;
+            const regionName = regionData.name;
+
+            // Common layout settings
+            const commonLayout = {
+                paper_bgcolor: '#162236',
+                plot_bgcolor: '#0a0e1a',
+                font: { color: '#e0e0e0', size: 12 },
+                margin: { t: 40, r: 40, b: 40, l: 60 },
+                xaxis: {
+                    title: 'Hour (UTC)',
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                yaxis: {
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                hovermode: 'x unified'
+            };
+
+            // 1. Reliability Chart
+            const relTrace = {
+                x: hours,
+                y: regionData.reliability,
+                mode: 'lines+markers',
+                name: 'Reliability (%)',
+                line: { color: '#4a90e2', width: 3 },
+                marker: { size: 6, color: '#4a90e2' }
+            };
+
+            Plotly.newPlot('reliabilityChart', [relTrace], {
+                ...commonLayout,
+                title: { text: `Reliability - ${band} to ${regionName}`, font: { color: '#4a90e2', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Reliability (%)', range: [0, 100] }
+            }, {responsive: true, displayModeBar: false});
+
+            // 2. SNR Chart
+            const snrTrace = {
+                x: hours,
+                y: regionData.snr,
+                mode: 'lines+markers',
+                name: 'SNR (dB)',
+                line: { color: '#fbbf24', width: 3 },
+                marker: { size: 6, color: '#fbbf24' }
+            };
+
+            Plotly.newPlot('snrChart', [snrTrace], {
+                ...commonLayout,
+                title: { text: `Signal-to-Noise Ratio - ${band} to ${regionName}`, font: { color: '#fbbf24', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'SNR (dB)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 3. Signal Power (SDBW) Chart with distribution
+            const sdbwTrace = {
+                x: hours,
+                y: regionData.signal_dbw,
+                mode: 'lines+markers',
+                name: 'Median Power (dBW)',
+                line: { color: '#4ade80', width: 3 },
+                marker: { size: 6, color: '#4ade80' }
+            };
+
+            const sdbw10Trace = {
+                x: hours,
+                y: regionData.signal_10,
+                mode: 'lines',
+                name: '10th Percentile (Weak)',
+                line: { color: '#6ee7b7', width: 1, dash: 'dot' },
+                fill: 'none'
+            };
+
+            const sdbw90Trace = {
+                x: hours,
+                y: regionData.signal_90,
+                mode: 'lines',
+                name: '90th Percentile (Strong)',
+                line: { color: '#10b981', width: 1, dash: 'dot' },
+                fill: 'tonexty',
+                fillcolor: 'rgba(74, 222, 128, 0.2)'
+            };
+
+            Plotly.newPlot('sdbwChart', [sdbw10Trace, sdbw90Trace, sdbwTrace], {
+                ...commonLayout,
+                title: { text: `Signal Power - ${band} to ${regionName}`, font: { color: '#4ade80', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Power (dBW)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 4. MUFday Chart
+            const mufdayTrace = {
+                x: hours,
+                y: regionData.muf_day,
+                mode: 'lines+markers',
+                name: 'MUFday (%)',
+                line: { color: '#f87171', width: 3 },
+                marker: { size: 6, color: '#f87171' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(248, 113, 113, 0.2)'
+            };
+
+            // Add warning line at 90%
+            const warningLine = {
+                x: hours,
+                y: Array(hours.length).fill(90),
+                mode: 'lines',
+                name: 'Warning Threshold',
+                line: { color: '#fbbf24', width: 2, dash: 'dash' }
+            };
+
+            Plotly.newPlot('mufdayChart', [mufdayTrace, warningLine], {
+                ...commonLayout,
+                title: { text: `MUF Usage - ${band} to ${regionName}`, font: { color: '#f87171', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'MUFday (%)', range: [0, 100] },
+                annotations: [{
+                    x: hours[Math.floor(hours.length / 2)],
+                    y: 90,
+                    xref: 'x',
+                    yref: 'y',
+                    text: 'Warning: >90% may be unreliable',
+                    showarrow: false,
+                    yshift: 15,
+                    font: { color: '#fbbf24', size: 10 }
+                }]
+            }, {responsive: true, displayModeBar: false});
         }
         
         function renderSolarBar() {
@@ -1594,6 +2218,320 @@
                     }
                 })
                 .catch(error => console.error('Error loading antenna config:', error));
+        }
+
+        // =================================================================
+        // Mini Planner Functions
+        // =================================================================
+
+        let plannerTargets = [];
+
+        function updatePlannerInputs() {
+            const method = document.getElementById('inputMethod').value;
+
+            document.getElementById('latLonInputs').style.display = method === 'latlon' ? 'grid' : 'none';
+            document.getElementById('maidenheadInput').style.display = method === 'maidenhead' ? 'block' : 'none';
+            document.getElementById('presetInput').style.display = method === 'preset' ? 'block' : 'none';
+        }
+
+        function maidenheadToLatLon(grid) {
+            // Convert Maidenhead grid to lat/lon (center of grid)
+            grid = grid.toUpperCase();
+
+            if (grid.length < 4 || grid.length > 6) {
+                return null;
+            }
+
+            const lon = (grid.charCodeAt(0) - 65) * 20 - 180;
+            const lat = (grid.charCodeAt(1) - 65) * 10 - 90;
+
+            const lon2 = parseFloat(grid.substring(2, 3)) * 2;
+            const lat2 = parseFloat(grid.substring(3, 4));
+
+            let finalLat = lat + lat2 + 0.5;
+            let finalLon = lon + lon2 + 1;
+
+            if (grid.length >= 6) {
+                const lon3 = (grid.charCodeAt(4) - 65) * (2/24);
+                const lat3 = (grid.charCodeAt(5) - 65) * (1/24);
+                finalLat += lat3;
+                finalLon += lon3;
+            }
+
+            return {lat: finalLat, lon: finalLon};
+        }
+
+        function loadPreset() {
+            const preset = document.getElementById('presetDestination').value;
+            if (!preset) return;
+
+            const [lat, lon] = preset.split(',').map(parseFloat);
+            document.getElementById('targetLat').value = lat;
+            document.getElementById('targetLon').value = lon;
+
+            // Switch to lat/lon view
+            document.getElementById('inputMethod').value = 'latlon';
+            updatePlannerInputs();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function calculateBearing(lat1, lon1, lat2, lon2) {
+            // Calculate initial bearing
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const y = Math.sin(dLon) * Math.cos(lat2 * Math.PI / 180);
+            const x = Math.cos(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180) -
+                     Math.sin(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.cos(dLon);
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            return (bearing + 360) % 360;
+        }
+
+        function addPlannerTarget() {
+            const name = document.getElementById('targetName').value.trim();
+            const method = document.getElementById('inputMethod').value;
+
+            let lat, lon;
+
+            if (method === 'latlon') {
+                lat = parseFloat(document.getElementById('targetLat').value);
+                lon = parseFloat(document.getElementById('targetLon').value);
+
+                if (isNaN(lat) || isNaN(lon)) {
+                    alert('Please enter valid latitude and longitude values.');
+                    return;
+                }
+            } else if (method === 'maidenhead') {
+                const grid = document.getElementById('targetGrid').value.trim();
+                const coords = maidenheadToLatLon(grid);
+
+                if (!coords) {
+                    alert('Invalid Maidenhead grid square. Enter 4 or 6 characters (e.g., FN20, PM95vr).');
+                    return;
+                }
+
+                lat = coords.lat;
+                lon = coords.lon;
+            } else if (method === 'preset') {
+                const preset = document.getElementById('presetDestination').value;
+                if (!preset) {
+                    alert('Please select a destination.');
+                    return;
+                }
+
+                [lat, lon] = preset.split(',').map(parseFloat);
+            }
+
+            if (!name) {
+                alert('Please enter a target name.');
+                return;
+            }
+
+            if (plannerTargets.length >= 5) {
+                alert('Maximum 5 targets allowed.');
+                return;
+            }
+
+            // Calculate path geometry from home station
+            const homeLat = 44.374;  // VE1ATM
+            const homeLon = -64.300;
+
+            const distance = calculateDistance(homeLat, homeLon, lat, lon);
+            const bearing = calculateBearing(homeLat, homeLon, lat, lon);
+            const longPath = 360 - bearing;
+            const longPathDist = 40075 - distance;  // Earth circumference - short path
+
+            plannerTargets.push({
+                name: name,
+                lat: lat,
+                lon: lon,
+                distance: distance,
+                bearing: bearing,
+                longPath: longPath,
+                longPathDist: longPathDist
+            });
+
+            // Clear inputs
+            document.getElementById('targetName').value = '';
+            document.getElementById('targetLat').value = '';
+            document.getElementById('targetLon').value = '';
+            document.getElementById('targetGrid').value = '';
+            document.getElementById('presetDestination').value = '';
+
+            renderPlannerTargets();
+        }
+
+        function clearPlannerTargets() {
+            if (confirm('Clear all targets?')) {
+                plannerTargets = [];
+                renderPlannerTargets();
+            }
+        }
+
+        function renderPlannerTargets() {
+            const container = document.getElementById('plannerTargets');
+
+            if (plannerTargets.length === 0) {
+                container.innerHTML = '<p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>';
+                return;
+            }
+
+            let html = '<div style="overflow-x: auto;">';
+
+            plannerTargets.forEach((target, idx) => {
+                html += `
+                    <div style="background: #0d1520; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; border-left: 4px solid #4a90e2;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="color: #4a90e2; margin: 0;">${target.name}</h3>
+                            <button onclick="removePlannerTarget(${idx})" style="background: #8b2e2e; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;">🗑️ Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; font-size: 0.85rem;">
+                            <div><strong>Coordinates:</strong> ${target.lat.toFixed(4)}°, ${target.lon.toFixed(4)}°</div>
+                            <div><strong>Distance (SP):</strong> ${target.distance.toFixed(0)} km</div>
+                            <div><strong>Bearing (SP):</strong> ${target.bearing.toFixed(0)}°</div>
+                            <div><strong>Long Path:</strong> ${target.longPath.toFixed(0)}° (${target.longPathDist.toFixed(0)} km)</div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <div style="font-size: 0.8rem; color: #8a9bb5; margin-bottom: 0.5rem;"><strong>Best Bands (Current Conditions):</strong></div>
+                            <div style="background: #1a2738; padding: 0.7rem; border-radius: 4px; text-align: center; color: #8a9bb5;">
+                                Prediction engine integration coming soon - will show band-by-band reliability matrix here
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += `<div style="margin-top: 1rem; text-align: center;">
+                <button onclick="exportPlannerCSV()" style="background: #4a90e2; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-right: 0.5rem;">
+                    📥 Export as CSV
+                </button>
+                <span style="color: #8a9bb5; font-size: 0.75rem;">Full predictions require backend integration</span>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+
+        function removePlannerTarget(idx) {
+            plannerTargets.splice(idx, 1);
+            renderPlannerTargets();
+        }
+
+        function exportPlannerCSV() {
+            if (plannerTargets.length === 0) {
+                alert('No targets to export.');
+                return;
+            }
+
+            let csv = 'Name,Latitude,Longitude,Distance (km),Bearing (°),Long Path (°),Long Path Dist (km)\n';
+
+            plannerTargets.forEach(target => {
+                csv += `"${target.name}",${target.lat},${target.lon},${target.distance.toFixed(0)},${target.bearing.toFixed(0)},${target.longPath.toFixed(0)},${target.longPathDist.toFixed(0)}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'planner_targets.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // =================================================================
+        // Settings Panel Functions
+        // =================================================================
+
+        function showSettings() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('settingsModal').classList.add('show');
+            loadSettings();
+        }
+
+        function closeSettings() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        function toggleSSNMode() {
+            const isManual = document.getElementById('ssnManual').checked;
+            document.getElementById('ssnSlider').disabled = !isManual;
+
+            if (!isManual) {
+                // Set to current solar conditions from data
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+                updateSSNValue();
+            }
+        }
+
+        function updateSSNValue() {
+            const ssn = document.getElementById('ssnSlider').value;
+            document.getElementById('ssnValue').textContent = `SSN: ${ssn}`;
+        }
+
+        function loadSettings() {
+            // Load from localStorage or use defaults
+            const settings = JSON.parse(localStorage.getItem('propSettings') || '{}');
+
+            // SSN
+            if (settings.ssnMode === 'manual') {
+                document.getElementById('ssnManual').checked = true;
+                document.getElementById('ssnSlider').disabled = false;
+                document.getElementById('ssnSlider').value = settings.ssn || 140;
+            } else {
+                document.getElementById('ssnAuto').checked = true;
+                document.getElementById('ssnSlider').disabled = true;
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+            }
+            updateSSNValue();
+
+            // Other settings
+            document.getElementById('noiseLevel').value = settings.noiseLevel || 'quiet';
+            document.getElementById('propMethod').value = settings.propMethod || 'auto';
+            document.getElementById('minToaSlider').value = settings.minToa || 3.0;
+            document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
+            document.getElementById('reqSnrSlider').value = settings.reqSnr || 10;
+            document.getElementById('reqSnrValue').textContent = (settings.reqSnr || 10) + ' dB';
+            document.getElementById('txPower').value = settings.txPower || 100;
+
+            // Add event listener for SSN slider
+            document.getElementById('ssnSlider').oninput = updateSSNValue;
+        }
+
+        function saveSettings() {
+            const settings = {
+                ssnMode: document.getElementById('ssnManual').checked ? 'manual' : 'auto',
+                ssn: parseInt(document.getElementById('ssnSlider').value),
+                noiseLevel: document.getElementById('noiseLevel').value,
+                propMethod: document.getElementById('propMethod').value,
+                minToa: parseFloat(document.getElementById('minToaSlider').value),
+                reqSnr: parseInt(document.getElementById('reqSnrSlider').value),
+                txPower: parseInt(document.getElementById('txPower').value)
+            };
+
+            localStorage.setItem('propSettings', JSON.stringify(settings));
+
+            // Show confirmation
+            alert('Settings saved! Click "Refresh Predictions" to generate new forecasts with these parameters.');
+            closeSettings();
+        }
+
+        function resetSettings() {
+            if (confirm('Reset all settings to defaults?')) {
+                localStorage.removeItem('propSettings');
+                loadSettings();
+            }
         }
 
         // =================================================================
