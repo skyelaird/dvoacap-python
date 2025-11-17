@@ -32,6 +32,7 @@ engine.params.month = 11          # November
 engine.params.tx_power = 80.0     # 80W
 engine.params.tx_location = tx_location
 engine.params.min_angle = np.deg2rad(3.0)
+engine.params.required_snr = 10.0 # 10 dB SNR for SSB (VOACAP uses 73 for validation, but 10 is realistic)
 
 # Time: 1800 UTC = 18/24 = 0.75
 utc_time = 18.0 / 24.0
