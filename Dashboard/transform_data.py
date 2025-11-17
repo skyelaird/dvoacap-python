@@ -112,6 +112,42 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
 
         timeline_hours.append(hour_data)
 
+    # Build propagation charts data (hourly metrics for each band and region)
+    prop_charts = {}
+    for band_name in raw_data['bands']:
+        prop_charts[band_name] = {
+            'hours': [],
+            'regions': {}
+        }
+
+        # For each hour, collect metrics for this band
+        for hour in sorted(predictions_by_hour.keys()):
+            prop_charts[band_name]['hours'].append(hour)
+
+            # Collect metrics for each region
+            for pred in predictions_by_hour[hour]:
+                region_code = pred['region']
+                region_name = pred['region_name']
+
+                if region_code not in prop_charts[band_name]['regions']:
+                    prop_charts[band_name]['regions'][region_code] = {
+                        'name': region_name,
+                        'reliability': [],
+                        'snr': [],
+                        'signal_dbw': [],
+                        'signal_10': [],
+                        'signal_90': [],
+                        'muf_day': []
+                    }
+
+                band_data = pred['bands'][band_name]
+                prop_charts[band_name]['regions'][region_code]['reliability'].append(band_data['reliability'])
+                prop_charts[band_name]['regions'][region_code]['snr'].append(band_data['snr'])
+                prop_charts[band_name]['regions'][region_code]['signal_dbw'].append(band_data['signal_dbw'])
+                prop_charts[band_name]['regions'][region_code]['signal_10'].append(band_data['signal_10'])
+                prop_charts[band_name]['regions'][region_code]['signal_90'].append(band_data['signal_90'])
+                prop_charts[band_name]['regions'][region_code]['muf_day'].append(band_data['muf_day'])
+
     # Build the transformed structure
     transformed = {
         'predictions': {
@@ -128,6 +164,7 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
             'timeline_24h': {
                 'hours': timeline_hours
             },
+            'propagation_charts': prop_charts,
             'dxcc': dxcc_data if dxcc_data else {
                 'dxcc_worked': [],
                 'dxcc_confirmed_lotw': [],

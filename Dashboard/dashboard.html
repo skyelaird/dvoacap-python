@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VE1ATM HF Propagation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -569,6 +570,7 @@
         <div class="tab-nav">
             <button class="tab-button active" onclick="showTab('overview')">📊 Overview</button>
             <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
+            <button class="tab-button" onclick="showTab('propcharts')">📈 Propagation Charts</button>
             <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
             <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
             <button class="tab-button" onclick="showTab('config')">⚙️ Station Config</button>
@@ -587,10 +589,31 @@
                         <div class="legend-item">🌅 Gray Line Zone</div>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <h2>📋 Quick Summary</h2>
                     <div id="quickSummary"></div>
+                </div>
+            </div>
+
+            <div class="grid-2col" style="margin-top: 1rem;">
+                <div class="card">
+                    <h2>⏰ 24-Hour Propagation Wheel</h2>
+                    <div style="margin-bottom: 0.5rem; font-size: 0.8rem; color: #8a9bb5;">
+                        <label>Select Region: </label>
+                        <select id="wheelRegionSelect" onchange="renderPropWheel()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div id="propWheel" style="height: 500px;"></div>
+                    <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.5rem;">
+                        Hover over bands to see reliability percentage. Outer ring = higher bands.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🎯 Best Bands Right Now</h2>
+                    <div id="bestBands"></div>
                 </div>
             </div>
         </div>
@@ -602,7 +625,43 @@
                 <div class="band-grid" id="bandGrid"></div>
             </div>
         </div>
-        
+
+        <!-- PROPAGATION CHARTS TAB -->
+        <div id="tab-propcharts" class="tab-content">
+            <div class="card">
+                <h2>📈 24-Hour Propagation Analysis</h2>
+                <div style="margin-bottom: 1rem;">
+                    <label style="color: #4a90e2; font-weight: bold; margin-right: 0.5rem;">Select Band:</label>
+                    <select id="chartBandSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <option value="40m">40m (7.150 MHz)</option>
+                        <option value="30m">30m (10.125 MHz)</option>
+                        <option value="20m" selected>20m (14.150 MHz)</option>
+                        <option value="17m">17m (18.118 MHz)</option>
+                        <option value="15m">15m (21.200 MHz)</option>
+                        <option value="12m">12m (24.940 MHz)</option>
+                        <option value="10m">10m (28.500 MHz)</option>
+                    </select>
+
+                    <label style="color: #4a90e2; font-weight: bold; margin-left: 1.5rem; margin-right: 0.5rem;">Select Region:</label>
+                    <select id="chartRegionSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- Reliability Chart -->
+                <div id="reliabilityChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- SNR Chart -->
+                <div id="snrChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- Signal Power (SDBW) Chart -->
+                <div id="sdbwChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- MUFday Chart -->
+                <div id="mufdayChart" style="height: 300px;"></div>
+            </div>
+        </div>
+
         <!-- TIMELINE TAB -->
         <div id="tab-timeline" class="tab-content">
             <div class="card">
@@ -812,9 +871,407 @@
             renderDXCC();
             renderUpdateInfo();
             checkDXCCAlerts();
-            
+            initPropCharts();
+            initPropWheel();
+            renderBestBands();
+
             // Update gray line every 5 minutes
             setInterval(updateGrayLine, 300000);
+        }
+
+        function initPropWheel() {
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data for wheel');
+                return;
+            }
+
+            // Get available regions from first band
+            const firstBand = Object.keys(propData.propagation_charts)[0];
+            const regions = Object.keys(propData.propagation_charts[firstBand].regions).sort();
+
+            const regionSelect = document.getElementById('wheelRegionSelect');
+            regionSelect.innerHTML = '';
+
+            regions.forEach(regionCode => {
+                const regionName = propData.propagation_charts[firstBand].regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+                renderPropWheel();
+            }
+        }
+
+        function renderPropWheel() {
+            const region = document.getElementById('wheelRegionSelect').value;
+            if (!propData.propagation_charts) return;
+
+            // Bands to display (from low to high frequency)
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bandColors = {
+                '40m': '#8b5cf6',
+                '30m': '#6366f1',
+                '20m': '#3b82f6',
+                '17m': '#06b6d4',
+                '15m': '#10b981',
+                '12m': '#fbbf24',
+                '10m': '#f87171'
+            };
+
+            const traces = [];
+
+            // Create a polar trace for each band
+            bands.forEach((band, idx) => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData || !chartData.regions[region]) return;
+
+                const regionData = chartData.regions[region];
+                const hours = chartData.hours;
+
+                // Convert hours to angles (0 = top/north, clockwise)
+                const theta = hours.map(h => h * 15);  // 15 degrees per hour
+                const r = regionData.reliability;
+
+                traces.push({
+                    type: 'scatterpolar',
+                    r: r,
+                    theta: theta,
+                    mode: 'lines',
+                    name: band,
+                    line: {
+                        color: bandColors[band],
+                        width: 3
+                    },
+                    fill: 'toself',
+                    fillcolor: bandColors[band] + '40'  // Add transparency
+                });
+            });
+
+            const regionName = propData.propagation_charts['20m'].regions[region].name;
+
+            const layout = {
+                polar: {
+                    bgcolor: '#0a0e1a',
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 100],
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#8a9bb5', size: 10 }
+                    },
+                    angularaxis: {
+                        tickmode: 'array',
+                        tickvals: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
+                        ticktext: ['00', '02', '04', '06', '08', '10', '12', '14', '16', '18', '20', '22'],
+                        direction: 'clockwise',
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#e0e0e0', size: 11 }
+                    }
+                },
+                paper_bgcolor: '#162236',
+                font: { color: '#e0e0e0' },
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    y: -0.15,
+                    x: 0.5,
+                    xanchor: 'center',
+                    font: { size: 11 }
+                },
+                title: {
+                    text: `Propagation to ${regionName}`,
+                    font: { color: '#4a90e2', size: 14 },
+                    y: 0.95
+                },
+                margin: { t: 60, r: 40, b: 60, l: 40 }
+            };
+
+            Plotly.newPlot('propWheel', traces, layout, {responsive: true, displayModeBar: false});
+        }
+
+        function renderBestBands() {
+            if (!propData.propagation_charts) {
+                document.getElementById('bestBands').innerHTML = '<p style="color: #8a9bb5; padding: 1rem;">No propagation data available</p>';
+                return;
+            }
+
+            const currentHour = new Date().getUTCHours();
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+
+            // Calculate scores for each band across all regions
+            const bandScores = [];
+
+            bands.forEach(band => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData) return;
+
+                let totalScore = 0;
+                let regionCount = 0;
+
+                // Find data for current hour
+                const hourIdx = chartData.hours.indexOf(currentHour);
+                if (hourIdx === -1) return;
+
+                Object.keys(chartData.regions).forEach(regionCode => {
+                    const regionData = chartData.regions[regionCode];
+                    const reliability = regionData.reliability[hourIdx] || 0;
+                    const snr = regionData.snr[hourIdx] || -999;
+                    const mufDay = regionData.muf_day[hourIdx] || 0;
+
+                    // Scoring algorithm: (Reliability × 0.5) + (SNR_normalized × 0.3) + ((100-MUFday) × 0.2)
+                    const snrNormalized = Math.max(0, Math.min(100, (snr + 20) * 2));  // Normalize SNR to 0-100
+                    const mufScore = 100 - mufDay;  // Lower MUFday is better
+                    const score = (reliability * 0.5) + (snrNormalized * 0.3) + (mufScore * 0.2);
+
+                    totalScore += score;
+                    regionCount++;
+                });
+
+                if (regionCount > 0) {
+                    bandScores.push({
+                        band: band,
+                        avgScore: totalScore / regionCount,
+                        regions: regionCount
+                    });
+                }
+            });
+
+            // Sort by score descending
+            bandScores.sort((a, b) => b.avgScore - a.avgScore);
+
+            // Display top 5 bands
+            let html = '<div style="font-size: 0.9rem;">';
+
+            if (bandScores.length === 0) {
+                html += '<p style="color: #8a9bb5; padding: 1rem; text-align: center;">No band openings currently</p>';
+            } else {
+                bandScores.slice(0, 5).forEach((bandScore, idx) => {
+                    const score = bandScore.avgScore;
+                    let quality = 'Poor';
+                    let color = '#f87171';
+
+                    if (score >= 70) {
+                        quality = 'Excellent';
+                        color = '#4ade80';
+                    } else if (score >= 50) {
+                        quality = 'Good';
+                        color = '#fbbf24';
+                    } else if (score >= 30) {
+                        quality = 'Fair';
+                        color = '#fb923c';
+                    }
+
+                    const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅';
+
+                    html += `
+                        <div style="padding: 0.7rem; margin-bottom: 0.5rem; background: #0d1520; border-radius: 6px; border-left: 4px solid ${color};">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-size: 1.2rem;">${medal}</span>
+                                    <span style="font-weight: bold; font-size: 1.1rem; color: ${color};">${bandScore.band}</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: bold; color: ${color};">${quality}</div>
+                                    <div style="font-size: 0.75rem; color: #8a9bb5;">Score: ${score.toFixed(0)}/100</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.3rem; font-size: 0.75rem; color: #8a9bb5;">
+                                ${bandScore.regions} regions accessible
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `<div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                    <strong>Scoring:</strong> Reliability (50%) + SNR (30%) + MUF Safety (20%)
+                </div>`;
+            }
+
+            html += '</div>';
+            document.getElementById('bestBands').innerHTML = html;
+        }
+
+        function initPropCharts() {
+            // Populate region selector with available regions
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data available');
+                return;
+            }
+
+            const band = '20m';  // Default band
+            const chartData = propData.propagation_charts[band];
+
+            if (!chartData || !chartData.regions) {
+                console.warn('No chart data for band:', band);
+                return;
+            }
+
+            const regionSelect = document.getElementById('chartRegionSelect');
+            regionSelect.innerHTML = '';
+
+            // Add regions as options
+            const regions = Object.keys(chartData.regions).sort();
+            regions.forEach(regionCode => {
+                const regionName = chartData.regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            // Select first region by default (typically EU or UK)
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+            }
+
+            // Render initial charts
+            renderPropChart();
+        }
+
+        function renderPropChart() {
+            const band = document.getElementById('chartBandSelect').value;
+            const region = document.getElementById('chartRegionSelect').value;
+
+            if (!propData.propagation_charts || !propData.propagation_charts[band]) {
+                console.error('No chart data for band:', band);
+                return;
+            }
+
+            const chartData = propData.propagation_charts[band];
+            const regionData = chartData.regions[region];
+
+            if (!regionData) {
+                console.error('No data for region:', region);
+                return;
+            }
+
+            const hours = chartData.hours;
+            const regionName = regionData.name;
+
+            // Common layout settings
+            const commonLayout = {
+                paper_bgcolor: '#162236',
+                plot_bgcolor: '#0a0e1a',
+                font: { color: '#e0e0e0', size: 12 },
+                margin: { t: 40, r: 40, b: 40, l: 60 },
+                xaxis: {
+                    title: 'Hour (UTC)',
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                yaxis: {
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                hovermode: 'x unified'
+            };
+
+            // 1. Reliability Chart
+            const relTrace = {
+                x: hours,
+                y: regionData.reliability,
+                mode: 'lines+markers',
+                name: 'Reliability (%)',
+                line: { color: '#4a90e2', width: 3 },
+                marker: { size: 6, color: '#4a90e2' }
+            };
+
+            Plotly.newPlot('reliabilityChart', [relTrace], {
+                ...commonLayout,
+                title: { text: `Reliability - ${band} to ${regionName}`, font: { color: '#4a90e2', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Reliability (%)', range: [0, 100] }
+            }, {responsive: true, displayModeBar: false});
+
+            // 2. SNR Chart
+            const snrTrace = {
+                x: hours,
+                y: regionData.snr,
+                mode: 'lines+markers',
+                name: 'SNR (dB)',
+                line: { color: '#fbbf24', width: 3 },
+                marker: { size: 6, color: '#fbbf24' }
+            };
+
+            Plotly.newPlot('snrChart', [snrTrace], {
+                ...commonLayout,
+                title: { text: `Signal-to-Noise Ratio - ${band} to ${regionName}`, font: { color: '#fbbf24', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'SNR (dB)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 3. Signal Power (SDBW) Chart with distribution
+            const sdbwTrace = {
+                x: hours,
+                y: regionData.signal_dbw,
+                mode: 'lines+markers',
+                name: 'Median Power (dBW)',
+                line: { color: '#4ade80', width: 3 },
+                marker: { size: 6, color: '#4ade80' }
+            };
+
+            const sdbw10Trace = {
+                x: hours,
+                y: regionData.signal_10,
+                mode: 'lines',
+                name: '10th Percentile (Weak)',
+                line: { color: '#6ee7b7', width: 1, dash: 'dot' },
+                fill: 'none'
+            };
+
+            const sdbw90Trace = {
+                x: hours,
+                y: regionData.signal_90,
+                mode: 'lines',
+                name: '90th Percentile (Strong)',
+                line: { color: '#10b981', width: 1, dash: 'dot' },
+                fill: 'tonexty',
+                fillcolor: 'rgba(74, 222, 128, 0.2)'
+            };
+
+            Plotly.newPlot('sdbwChart', [sdbw10Trace, sdbw90Trace, sdbwTrace], {
+                ...commonLayout,
+                title: { text: `Signal Power - ${band} to ${regionName}`, font: { color: '#4ade80', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Power (dBW)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 4. MUFday Chart
+            const mufdayTrace = {
+                x: hours,
+                y: regionData.muf_day,
+                mode: 'lines+markers',
+                name: 'MUFday (%)',
+                line: { color: '#f87171', width: 3 },
+                marker: { size: 6, color: '#f87171' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(248, 113, 113, 0.2)'
+            };
+
+            // Add warning line at 90%
+            const warningLine = {
+                x: hours,
+                y: Array(hours.length).fill(90),
+                mode: 'lines',
+                name: 'Warning Threshold',
+                line: { color: '#fbbf24', width: 2, dash: 'dash' }
+            };
+
+            Plotly.newPlot('mufdayChart', [mufdayTrace, warningLine], {
+                ...commonLayout,
+                title: { text: `MUF Usage - ${band} to ${regionName}`, font: { color: '#f87171', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'MUFday (%)', range: [0, 100] },
+                annotations: [{
+                    x: hours[Math.floor(hours.length / 2)],
+                    y: 90,
+                    xref: 'x',
+                    yref: 'y',
+                    text: 'Warning: >90% may be unreliable',
+                    showarrow: false,
+                    yshift: 15,
+                    font: { color: '#fbbf24', size: 10 }
+                }]
+            }, {responsive: true, displayModeBar: false});
         }
         
         function renderSolarBar() {
