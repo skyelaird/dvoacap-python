@@ -530,6 +530,11 @@
         ⚡ Refresh Predictions
     </button>
 
+    <!-- Settings Button -->
+    <button class="refresh-btn" id="settingsBtn" onclick="showSettings()" style="top: 1rem; right: 13rem; background: linear-gradient(135deg, #2d5a8c 0%, #4a90e2 100%); border-color: #7cb8f7;">
+        ⚙️ Settings
+    </button>
+
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modalOverlay"></div>
 
@@ -547,6 +552,89 @@
             <button class="modal-close-btn" id="closeBtn" style="display: none;" onclick="closeModal()">
                 Close
             </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="notification-modal" id="settingsModal" style="min-width: 600px; max-width: 800px;">
+        <div class="modal-header">⚙️ Prediction Settings</div>
+        <div class="modal-body" style="text-align: left;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <!-- Left Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Solar Activity (SSN)</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="ssnAuto" name="ssnMode" value="auto" checked onchange="toggleSSNMode()">
+                            <label for="ssnAuto" style="margin-right: 1rem;">Auto (Current)</label>
+                            <input type="radio" id="ssnManual" name="ssnMode" value="manual" onchange="toggleSSNMode()">
+                            <label for="ssnManual">Manual</label>
+                        </div>
+                        <input type="range" id="ssnSlider" min="10" max="200" value="140" disabled style="width: 100%; margin-top: 0.5rem;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="ssnValue">SSN: 140</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Noise Environment</label>
+                        <select id="noiseLevel" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="remote">Remote (Lowest Noise)</option>
+                            <option value="quiet" selected>Quiet Rural</option>
+                            <option value="rural">Rural</option>
+                            <option value="residential">Residential</option>
+                            <option value="urban">Urban</option>
+                            <option value="noisy">Very Noisy</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Propagation Method</label>
+                        <select id="propMethod" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="auto" selected>Auto (Recommended)</option>
+                            <option value="ray-hop">Ray-Hop Only</option>
+                            <option value="ducted">Ducted Mode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Minimum Take-Off Angle</label>
+                        <input type="range" id="minToaSlider" min="0.1" max="10" step="0.1" value="3.0" oninput="document.getElementById('minToaValue').textContent = this.value + '°'" style="width: 100%;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="minToaValue">3.0°</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Lower angles favor DX, higher angles favor NVIS</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Required SNR Threshold</label>
+                        <input type="range" id="reqSnrSlider" min="3" max="20" step="1" value="10" oninput="document.getElementById('reqSnrValue').textContent = this.value + ' dB'" style="width: 100%;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="reqSnrValue">10 dB</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">FT8: 3dB, SSB: 10dB, CW: 6dB</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Transmit Power (W)</label>
+                        <input type="number" id="txPower" min="1" max="1500" value="100" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
+                <button onclick="resetSettings()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    🔄 Reset to Defaults
+                </button>
+                <button onclick="saveSettings()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    💾 Save & Apply
+                </button>
+                <button onclick="closeSettings()" style="background: #2a3f5f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+
+            <div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                <strong>Note:</strong> Settings are saved to localStorage. Click "Refresh Predictions" to generate new forecasts with these settings.
+            </div>
         </div>
     </div>
 
@@ -2051,6 +2139,93 @@
                     }
                 })
                 .catch(error => console.error('Error loading antenna config:', error));
+        }
+
+        // =================================================================
+        // Settings Panel Functions
+        // =================================================================
+
+        function showSettings() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('settingsModal').classList.add('show');
+            loadSettings();
+        }
+
+        function closeSettings() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        function toggleSSNMode() {
+            const isManual = document.getElementById('ssnManual').checked;
+            document.getElementById('ssnSlider').disabled = !isManual;
+
+            if (!isManual) {
+                // Set to current solar conditions from data
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+                updateSSNValue();
+            }
+        }
+
+        function updateSSNValue() {
+            const ssn = document.getElementById('ssnSlider').value;
+            document.getElementById('ssnValue').textContent = `SSN: ${ssn}`;
+        }
+
+        function loadSettings() {
+            // Load from localStorage or use defaults
+            const settings = JSON.parse(localStorage.getItem('propSettings') || '{}');
+
+            // SSN
+            if (settings.ssnMode === 'manual') {
+                document.getElementById('ssnManual').checked = true;
+                document.getElementById('ssnSlider').disabled = false;
+                document.getElementById('ssnSlider').value = settings.ssn || 140;
+            } else {
+                document.getElementById('ssnAuto').checked = true;
+                document.getElementById('ssnSlider').disabled = true;
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+            }
+            updateSSNValue();
+
+            // Other settings
+            document.getElementById('noiseLevel').value = settings.noiseLevel || 'quiet';
+            document.getElementById('propMethod').value = settings.propMethod || 'auto';
+            document.getElementById('minToaSlider').value = settings.minToa || 3.0;
+            document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
+            document.getElementById('reqSnrSlider').value = settings.reqSnr || 10;
+            document.getElementById('reqSnrValue').textContent = (settings.reqSnr || 10) + ' dB';
+            document.getElementById('txPower').value = settings.txPower || 100;
+
+            // Add event listener for SSN slider
+            document.getElementById('ssnSlider').oninput = updateSSNValue;
+        }
+
+        function saveSettings() {
+            const settings = {
+                ssnMode: document.getElementById('ssnManual').checked ? 'manual' : 'auto',
+                ssn: parseInt(document.getElementById('ssnSlider').value),
+                noiseLevel: document.getElementById('noiseLevel').value,
+                propMethod: document.getElementById('propMethod').value,
+                minToa: parseFloat(document.getElementById('minToaSlider').value),
+                reqSnr: parseInt(document.getElementById('reqSnrSlider').value),
+                txPower: parseInt(document.getElementById('txPower').value)
+            };
+
+            localStorage.setItem('propSettings', JSON.stringify(settings));
+
+            // Show confirmation
+            alert('Settings saved! Click "Refresh Predictions" to generate new forecasts with these parameters.');
+            closeSettings();
+        }
+
+        function resetSettings() {
+            if (confirm('Reset all settings to defaults?')) {
+                localStorage.removeItem('propSettings');
+                loadSettings();
+            }
         }
 
         // =================================================================
