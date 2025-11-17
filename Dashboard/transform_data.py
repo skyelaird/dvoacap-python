@@ -88,9 +88,14 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
 
     # Build timeline structure (24-72 hour forecast)
     timeline_hours = []
+
+    # Parse the generated timestamp to get the base date
+    generated_dt = datetime.fromisoformat(raw_data['generated'].replace('Z', '+00:00'))
+    base_date = generated_dt.date()
+
     for hour in sorted(predictions_by_hour.keys()):
         hour_data = {
-            'time': f"2025-11-13T{hour:02d}:00:00Z",  # Use generated timestamp
+            'time': f"{base_date}T{hour:02d}:00:00Z",
             'hour_utc': hour,
             'bands': {}
         }
