@@ -594,6 +594,17 @@
                             <option value="ducted">Ducted Mode</option>
                         </select>
                     </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Path Mode</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="pathShort" name="pathMode" value="short" checked>
+                            <label for="pathShort" style="margin-right: 1rem;">Short Path (SP)</label>
+                            <input type="radio" id="pathLong" name="pathMode" value="long">
+                            <label for="pathLong">Long Path (LP)</label>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Short path is the direct route; long path goes the opposite direction around Earth</div>
+                    </div>
                 </div>
 
                 <!-- Right Column -->
@@ -688,6 +699,21 @@
                 <div class="card">
                     <h2>🌍 Current Band Openings <span id="grayLineTime" style="float: right; font-size: 0.75rem; font-weight: normal;"></span></h2>
                     <div id="map"></div>
+                    <div style="margin-top: 1rem; padding: 0.5rem; background: #1a2738; border-radius: 6px;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="color: #4a90e2; font-weight: bold; white-space: nowrap;">Greyline Time:</label>
+                            <input type="range" id="grayLineSlider" min="0" max="23.99" step="0.25" value="0"
+                                   oninput="updateGrayLineSlider(this.value)"
+                                   style="flex: 1;">
+                            <button onclick="resetGrayLineSlider()"
+                                    style="background: #2d5a8c; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; white-space: nowrap;">
+                                🔄 Current Time
+                            </button>
+                        </div>
+                        <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.3rem;">
+                            Drag slider to preview greyline at different times
+                        </div>
+                    </div>
                     <div class="legend">
                         <div class="legend-item"><span class="status-dot status-good"></span> Good (&gt;60%)</div>
                         <div class="legend-item"><span class="status-dot status-fair"></span> Fair (30-60%)</div>
@@ -765,6 +791,17 @@
 
                 <!-- MUFday Chart -->
                 <div id="mufdayChart" style="height: 300px;"></div>
+
+                <!-- Most Reliable Mode (MRM) Indicator -->
+                <div style="margin-top: 2rem; padding: 1rem; background: #1a2738; border-radius: 6px; border: 2px solid #4a90e2;">
+                    <h3 style="margin-top: 0; color: #4a90e2;">📡 Most Reliable Mode (MRM) - 24-Hour Band Recommendations</h3>
+                    <p style="font-size: 0.85rem; color: #8a9bb5; margin-bottom: 1rem;">
+                        MRM shows the best band for the selected region at each hour, based on reliability percentage.
+                    </p>
+                    <div id="mrmIndicator" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.5rem;">
+                        <!-- MRM indicators will be populated here -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1049,6 +1086,10 @@
         function initializeDashboard() {
             renderSolarBar();
             renderMap();
+            // Initialize greyline slider to current time
+            const now = new Date();
+            const currentHour = now.getUTCHours() + now.getUTCMinutes() / 60;
+            document.getElementById('grayLineSlider').value = currentHour;
             renderQuickSummary();
             renderBandGrid();
             renderTimeline();
@@ -1456,6 +1497,63 @@
                     font: { color: '#fbbf24', size: 10 }
                 }]
             }, {responsive: true, displayModeBar: false});
+
+            // 5. Render MRM Indicator
+            renderMRM(region);
+        }
+
+        function renderMRM(region) {
+            const mrmContainer = document.getElementById('mrmIndicator');
+            if (!propData.propagation_charts) {
+                mrmContainer.innerHTML = '<p style="color: #8a9bb5;">No MRM data available</p>';
+                return;
+            }
+
+            // Get all bands
+            const bands = ['40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const hours = propData.propagation_charts['20m'].hours; // Use any band to get hours
+
+            // Calculate best band for each hour
+            const mrmData = hours.map((hour, hourIndex) => {
+                let bestBand = null;
+                let bestReliability = -1;
+
+                // Check each band for this hour
+                bands.forEach(band => {
+                    const bandData = propData.propagation_charts[band];
+                    if (bandData && bandData.regions[region]) {
+                        const reliability = bandData.regions[region].reliability[hourIndex];
+                        if (reliability > bestReliability) {
+                            bestReliability = reliability;
+                            bestBand = band;
+                        }
+                    }
+                });
+
+                return {
+                    hour: hour,
+                    band: bestBand,
+                    reliability: bestReliability
+                };
+            });
+
+            // Render MRM indicators
+            let html = '';
+            mrmData.forEach(item => {
+                const color = item.reliability >= 60 ? '#4ade80' :
+                             item.reliability >= 30 ? '#fbbf24' : '#f87171';
+                const hourStr = item.hour.toString().padStart(2, '0');
+
+                html += `
+                    <div style="background: #0a0e1a; padding: 0.5rem; border-radius: 4px; text-align: center; border: 2px solid ${color};">
+                        <div style="font-size: 0.7rem; color: #8a9bb5; margin-bottom: 0.2rem;">${hourStr}:00 UTC</div>
+                        <div style="font-weight: bold; color: ${color}; font-size: 1rem;">${item.band || 'N/A'}</div>
+                        <div style="font-size: 0.7rem; color: ${color};">${item.reliability >= 0 ? item.reliability + '%' : 'N/A'}</div>
+                    </div>
+                `;
+            });
+
+            mrmContainer.innerHTML = html;
         }
         
         function renderSolarBar() {
@@ -1798,37 +1896,38 @@
             }
         }
         
-        function drawGrayLine() {
+        function drawGrayLine(customHour = null) {
             if (!map) return;
-            
+
             // Remove old gray line
             if (grayLineLayer) {
                 map.removeLayer(grayLineLayer);
             }
-            
+
             const now = new Date();
-            const hours = now.getUTCHours() + now.getUTCMinutes() / 60;
+            // Use custom hour if provided, otherwise use current time
+            const hours = customHour !== null ? customHour : (now.getUTCHours() + now.getUTCMinutes() / 60);
             const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
             const declination = 23.45 * Math.sin((360/365) * (dayOfYear - 81) * Math.PI / 180);
-            
+
             // Calculate solar position
             const solarLon = -15 * (hours - 12);
-            
+
             // Draw gray line as a thick band
             const grayLinePoints = [];
             for (let lat = -90; lat <= 90; lat += 5) {
                 const solarAlt = Math.asin(
                     Math.sin(lat * Math.PI / 180) * Math.sin(declination * Math.PI / 180) +
-                    Math.cos(lat * Math.PI / 180) * Math.cos(declination * Math.PI / 180) * 
+                    Math.cos(lat * Math.PI / 180) * Math.cos(declination * Math.PI / 180) *
                     Math.cos(solarLon * Math.PI / 180)
                 ) * 180 / Math.PI;
-                
+
                 // Gray line is where solar altitude is near 0 (±6 degrees)
                 if (Math.abs(solarAlt) < 6) {
                     grayLinePoints.push([lat, solarLon]);
                 }
             }
-            
+
             if (grayLinePoints.length > 0) {
                 grayLineLayer = L.polyline(grayLinePoints, {
                     color: '#fbbf24',
@@ -1836,12 +1935,29 @@
                     opacity: 0.3
                 }).addTo(map);
             }
-            
-            document.getElementById('grayLineTime').textContent = 
-                'Updated: ' + now.toUTCString().slice(17, 22) + ' UTC';
+
+            // Update time display
+            const displayHour = Math.floor(hours);
+            const displayMin = Math.floor((hours - displayHour) * 60);
+            const timeStr = customHour !== null
+                ? `Preview: ${displayHour.toString().padStart(2, '0')}:${displayMin.toString().padStart(2, '0')} UTC`
+                : `Updated: ${now.toUTCString().slice(17, 22)} UTC`;
+            document.getElementById('grayLineTime').textContent = timeStr;
         }
         
         function updateGrayLine() {
+            drawGrayLine();
+        }
+
+        function updateGrayLineSlider(value) {
+            const hour = parseFloat(value);
+            drawGrayLine(hour);
+        }
+
+        function resetGrayLineSlider() {
+            const now = new Date();
+            const currentHour = now.getUTCHours() + now.getUTCMinutes() / 60;
+            document.getElementById('grayLineSlider').value = currentHour;
             drawGrayLine();
         }
         
@@ -2564,6 +2680,14 @@
             // Other settings
             document.getElementById('noiseLevel').value = settings.noiseLevel || 'quiet';
             document.getElementById('propMethod').value = settings.propMethod || 'auto';
+
+            // Path mode
+            if (settings.pathMode === 'long') {
+                document.getElementById('pathLong').checked = true;
+            } else {
+                document.getElementById('pathShort').checked = true;
+            }
+
             document.getElementById('minToaSlider').value = settings.minToa || 3.0;
             document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
 
@@ -2605,6 +2729,7 @@
                 ssn: parseInt(document.getElementById('ssnSlider').value),
                 noiseLevel: document.getElementById('noiseLevel').value,
                 propMethod: document.getElementById('propMethod').value,
+                pathMode: document.getElementById('pathLong').checked ? 'long' : 'short',
                 minToa: parseFloat(document.getElementById('minToaSlider').value),
                 reqSnr: reqSnr,
                 txPower: parseInt(document.getElementById('txPower').value)
