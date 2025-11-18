@@ -1,5 +1,8 @@
 # Getting Started with DVOACAP-Python
 
+> **🎉 v1.0.0 Release - Production Ready!**
+> DVOACAP-Python has reached production-ready status with comprehensive HF propagation prediction capabilities validated against VOACAP reference data.
+
 This guide will help you install DVOACAP-Python and run your first propagation prediction.
 
 ## Prerequisites
