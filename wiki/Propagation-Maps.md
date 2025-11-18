@@ -387,6 +387,6 @@ Planned features:
 
 ---
 
-**Last Updated:** 2025-11-17
+**Last Updated:** 2025-11-18
 **Status:** Production Ready
 **Tested With:** 20m/40m/15m on SSB/FT8/CW/WSPR modes

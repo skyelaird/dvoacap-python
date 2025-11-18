@@ -31,10 +31,10 @@ GeographicPoint.from_degrees(lat_deg: float, lon_deg: float)
 
 **Example:**
 ```python
-from dvoacap import PathPoint
+from dvoacap import GeoPoint
 
 # Create point from degrees
-philadelphia = PathPoint.from_degrees(40.0, -75.0)
+philadelphia = GeoPoint.from_degrees(40.0, -75.0)
 ```
 
 ### `PathGeometry`
@@ -54,10 +54,10 @@ PathGeometry.midpoint(p1: GeographicPoint, p2: GeographicPoint) -> GeographicPoi
 
 **Example:**
 ```python
-from dvoacap import PathGeometry, PathPoint
+from dvoacap import PathGeometry, GeoPoint
 
-tx = PathPoint.from_degrees(40.0, -75.0)  # Philadelphia
-rx = PathPoint.from_degrees(51.5, -0.1)   # London
+tx = GeoPoint.from_degrees(40.0, -75.0)  # Philadelphia
+rx = GeoPoint.from_degrees(51.5, -0.1)   # London
 
 distance_km = PathGeometry.distance(tx, rx)
 bearing_rad = PathGeometry.bearing(tx, rx)
@@ -97,10 +97,10 @@ SolarCalculator.is_daytime(
 
 **Example:**
 ```python
-from dvoacap import SolarCalculator, SolarPoint
+from dvoacap import SolarCalculator, GeoPoint
 from datetime import datetime
 
-location = SolarPoint.from_degrees(40.0, -75.0)
+location = GeoPoint.from_degrees(40.0, -75.0)
 utc = datetime(2025, 6, 15, 12, 0)
 
 zenith = SolarCalculator.compute_zenith_angle(location, utc)
