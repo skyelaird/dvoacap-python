@@ -75,32 +75,32 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
 
           if [ -f validation_reference_results.json ]; then
-            python -c "
+            python -c '
 import json
 import sys
 
-with open('validation_reference_results.json') as f:
+with open("validation_reference_results.json") as f:
     results = json.load(f)
 
-summary = results['summary']
-targets = results['targets']
+summary = results["summary"]
+targets = results["targets"]
 
-print(f\"**Test Cases Run:** {summary['test_cases_run']}\")
-print(f\"**Total Comparisons:** {summary['total']}\")
-print(f\"**Passed:** {summary['passed']} ({summary['pass_rate']:.1f}%)\")
-print(f\"**Failed:** {summary['failed']}\")
+print(f"**Test Cases Run:** {summary[\"test_cases_run\"]}")
+print(f"**Total Comparisons:** {summary[\"total\"]}")
+print(f"**Passed:** {summary[\"passed\"]} ({summary[\"pass_rate\"]:.1f}%)")
+print(f"**Failed:** {summary[\"failed\"]}")
 print()
 
-pass_rate = summary['pass_rate']
-if pass_rate >= targets['excellent_pass_rate']:
-    print(f\"✅ **EXCELLENT** - Pass rate {pass_rate:.1f}% exceeds target {targets['excellent_pass_rate']}%\")
-elif pass_rate >= targets['target_pass_rate']:
-    print(f\"✅ **VERY GOOD** - Pass rate {pass_rate:.1f}% exceeds target {targets['target_pass_rate']}%\")
-elif pass_rate >= targets['minimum_pass_rate']:
-    print(f\"✅ **PASSED** - Pass rate {pass_rate:.1f}% meets minimum {targets['minimum_pass_rate']}%\")
+pass_rate = summary["pass_rate"]
+if pass_rate >= targets["excellent_pass_rate"]:
+    print(f"✅ **EXCELLENT** - Pass rate {pass_rate:.1f}% exceeds target {targets[\"excellent_pass_rate\"]}%")
+elif pass_rate >= targets["target_pass_rate"]:
+    print(f"✅ **VERY GOOD** - Pass rate {pass_rate:.1f}% exceeds target {targets[\"target_pass_rate\"]}%")
+elif pass_rate >= targets["minimum_pass_rate"]:
+    print(f"✅ **PASSED** - Pass rate {pass_rate:.1f}% meets minimum {targets[\"minimum_pass_rate\"]}%")
 else:
-    print(f\"❌ **BELOW TARGET** - Pass rate {pass_rate:.1f}% below minimum {targets['minimum_pass_rate']}%\")
-" >> $GITHUB_STEP_SUMMARY
+    print(f"❌ **BELOW TARGET** - Pass rate {pass_rate:.1f}% below minimum {targets[\"minimum_pass_rate\"]}%")
+' >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ Validation failed to produce results" >> $GITHUB_STEP_SUMMARY
           fi
@@ -144,25 +144,25 @@ if active_tests == 0:
       - name: Report test suite status
         run: |
           echo "## Test Suite Status" >> $GITHUB_STEP_SUMMARY
-          python -c "
+          python -c '
 import json
 
-with open('test_config.json') as f:
+with open("test_config.json") as f:
     config = json.load(f)
 
-test_cases = config['test_cases']
-active = [tc for tc in test_cases if tc.get('status') == 'active']
-pending = [tc for tc in test_cases if tc.get('status') == 'pending_reference']
+test_cases = config["test_cases"]
+active = [tc for tc in test_cases if tc.get("status") == "active"]
+pending = [tc for tc in test_cases if tc.get("status") == "pending_reference"]
 
-print(f\"**Total Test Cases:** {len(test_cases)}\")
-print(f\"**Active:** {len(active)}\")
-print(f\"**Pending Reference Data:** {len(pending)}\")
+print(f"**Total Test Cases:** {len(test_cases)}")
+print(f"**Active:** {len(active)}")
+print(f"**Pending Reference Data:** {len(pending)}")
 print()
-print('### Active Test Cases:')
+print("### Active Test Cases:")
 for tc in active:
-    print(f\"- ✅ {tc['id']}: {tc['name']}\")
+    print(f"- ✅ {tc[\"id\"]}: {tc[\"name\"]}")
 print()
-print('### Pending Test Cases:')
+print("### Pending Test Cases:")
 for tc in pending:
-    print(f\"- ⏳ {tc['id']}: {tc['name']}\")
-" >> $GITHUB_STEP_SUMMARY
+    print(f"- ⏳ {tc[\"id\"]}: {tc[\"name\"]}")
+' >> $GITHUB_STEP_SUMMARY
