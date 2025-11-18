@@ -64,7 +64,7 @@ pip install -e ".[all]"
 ### Basic Usage
 
 ```python
-from dvoacap import FourierMaps, ControlPoint, GeographicPoint, compute_iono_params
+from dvoacap import FourierMaps, ControlPoint, IonoPoint, compute_iono_params
 import math
 
 # Load CCIR/URSI ionospheric maps
@@ -73,7 +73,7 @@ maps.set_conditions(month=6, ssn=100, utc_fraction=0.5)  # June, SSN=100, noon U
 
 # Create control point at Philadelphia
 pnt = ControlPoint(
-    location=GeographicPoint.from_degrees(40.0, -75.0),
+    location=IonoPoint.from_degrees(40.0, -75.0),
     east_lon=-75.0 * math.pi/180,
     distance_rad=0.0,
     local_time=0.5,  # Noon local

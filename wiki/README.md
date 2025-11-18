@@ -302,6 +302,6 @@ If you have questions about the wiki:
 
 **Last Updated:** 2025-11-18
 
-**Total Pages:** 9 (including this README)
+**Total Pages:** 18 (including this README)
 
 **Automation:** Automatic sync via GitHub Actions (`.github/workflows/wiki-sync.yml`)
