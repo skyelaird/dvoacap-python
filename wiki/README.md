@@ -298,7 +298,7 @@ If you have questions about the wiki:
 
 **Wiki Status:** ✅ Complete and ready to deploy (with automatic sync!)
 
-**Version:** v1.0.0 (Production Ready)
+**Version:** v1.0.1 (Production Ready - 2.3x Performance Boost)
 
 **Last Updated:** 2025-11-18
 

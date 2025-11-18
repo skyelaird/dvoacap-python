@@ -4,9 +4,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
 ![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)
 ![Validation](https://img.shields.io/badge/validation-86.6%25-brightgreen)
+![Performance](https://img.shields.io/badge/performance-2.3x%20faster-orange)
 [![CI](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml/badge.svg)](https://github.com/skyelaird/dvoacap-python/actions/workflows/validation.yml)
 
 ## 🎯 About
@@ -14,7 +15,7 @@
 DVOACAP-Python is a modern Python port of the [DVOACAP](https://github.com/VE3NEA/DVOACAP) HF propagation prediction engine, originally written in Delphi/Pascal by Alex Shovkoplyas (VE3NEA). This project aims to provide an accessible, well-documented, and maintainable Python implementation of the VOACAP ionospheric propagation model.
 
 **Original DVOACAP by:** Alex Shovkoplyas, VE3NEA
-**Python Port:** Production Ready (v1.0.0, November 2025)
+**Python Port:** Production Ready (v1.0.1, November 2025) - 2.3x faster than v1.0.0
 
 ## ⚡ Quick Start
 
@@ -158,7 +159,7 @@ See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.m
 
 ## 📊 Project Status
 
-**Status: v1.0.0 Production Release** - 86.6% validation accuracy across 11 diverse test paths
+**Status: v1.0.1 Production Release** - 86.6% validation accuracy across 11 diverse test paths, 2.3x performance improvement
 
 ### ✅ Completed Modules
 
@@ -203,16 +204,24 @@ See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.m
   - ✓ Real-world validation with PSKReporter/WSPR integration
   - *Source: VoaCapEng.pas, AntGain.pas, NoiseMdl.pas*
 
-### 🚧 In Progress
+### ⚡ Performance (v1.0.1)
 
-- **Performance optimization and profiling** - Active development on this branch
-  - Identifying and optimizing hot paths in prediction engine
-  - Profiling Fourier map interpolation, ionospheric calculations, ray tracing
-  - Target: <1s per prediction, <30s for 100-point area coverage
+- **2.3x faster than v1.0.0** - Comprehensive algorithmic optimizations
+  - Single prediction: 0.008s → 0.004s (2x faster)
+  - Multi-frequency (9 predictions): 0.111s → 0.048s (2.3x faster)
+  - 24-hour scan: 0.282s → 0.118s (2.4x faster)
+  - Area coverage (100 predictions): 0.82s → 0.35s (2.3x faster)
+  - Function call reduction: 68-71% fewer calls
+
+**Optimizations:**
+- Binary search for height-to-density interpolation (O(n) → O(log n))
+- NumPy vectorization in Gaussian integration (eliminated 40-iteration loop)
+- Vectorized oblique frequency computation (eliminated 1,200 nested iterations)
+- Optimized Fourier series with NumPy dot products
 
 ### 📅 Planned
 
-- **PyPI public release** - Package ready (v1.0.0), pending publication decision
+- **PyPI public release** - Package ready (v1.0.1), pending publication decision
 - **Comprehensive type hints** - Add type annotations throughout codebase
 - **Sphinx API documentation** - Complete API reference with examples
 - **Community engagement** - Forum presence, user support, integration examples

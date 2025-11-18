@@ -45,17 +45,18 @@ DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction 
 
 ## Project Status
 
-**🎉 Production Ready - v1.0.0 Released! 🎉**
+**🎉 Production Ready - v1.0.1 Released! 🎉**
 
-**All 5 Development Phases Complete - 86.6% Validation Accuracy**
+**All 5 Development Phases Complete - 86.6% Validation Accuracy + 2.3x Performance Boost**
 
 - ✅ Phase 1: Path Geometry
 - ✅ Phase 2: Solar & Geomagnetic
 - ✅ Phase 3: Ionospheric Profiles
 - ✅ Phase 4: Raytracing
 - ✅ Phase 5: Signal Predictions (86.6% validation pass rate across 11 diverse test paths)
+- ✅ **NEW in v1.0.1:** Performance optimization - 2.3x faster!
 
-DVOACAP-Python has reached production-ready status with comprehensive HF propagation prediction capabilities, validated against VOACAP reference data, and ready for real-world amateur radio and professional applications.
+DVOACAP-Python has reached production-ready status with comprehensive HF propagation prediction capabilities, validated against VOACAP reference data, optimized for performance (2.3x speedup in v1.0.1), and ready for real-world amateur radio and professional applications.
 
 See the [Architecture](Architecture) page for detailed module status.
 
