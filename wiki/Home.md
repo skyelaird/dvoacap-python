@@ -9,6 +9,8 @@ DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction 
 **Key Features:**
 - Predicts HF radio propagation conditions
 - Calculates Maximum Usable Frequency (MUF), signal strength, and reliability
+- **NEW:** VOACAP-style propagation maps with Maidenhead grid overlay
+- **NEW:** Mode presets for WSPR, FT8, CW, SSB with proper bandwidth parameters
 - Includes interactive web dashboard for visualization
 - Integrates with modern Python scientific stack (NumPy, SciPy, Matplotlib)
 - Validated against original VOACAP reference data
@@ -23,6 +25,7 @@ DVOACAP-Python is a modern Python port of the DVOACAP HF propagation prediction 
 - **[Architecture Overview](Architecture)** - Understanding the 5-phase structure
 - **[API Reference](API-Reference)** - Core classes, methods, and data structures
 - **[Dashboard Guide](Dashboard-Guide)** - Web interface setup and usage
+- **[Propagation Maps](Propagation-Maps)** - NEW! VOACAP-style coverage maps
 - **[Integration Guide](Integration-Guide)** - Using DVOACAP in your applications
 
 ### Validation & Accuracy
