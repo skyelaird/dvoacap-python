@@ -385,4 +385,4 @@ See the [Validation Status](Validation-Status) page for current testing state an
 
 ---
 
-**Phase completion:** 5 of 5 complete (100% - Production Ready v1.0.0)
+**Phase completion:** 5 of 5 complete (100% - Production Ready v1.0.1 with 2.3x performance boost)
