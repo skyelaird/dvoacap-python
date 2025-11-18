@@ -600,4 +600,4 @@ def my_function(
 
 ---
 
-**API Status:** Phase 5 in progress. Some methods may change before v1.0 release.
+**API Status:** v1.0.0 Production Ready. API is stable.
