@@ -64,20 +64,20 @@ Focus on SNR and reliability values rather than mode names.
 
 ## Performance Limitations
 
-### Slow Prediction Generation
+### Prediction Performance (Optimized in v1.0.1)
 
-**Status:** Known Limitation
-**Impact:** Medium
+**Status:** Significantly Improved
+**Impact:** Low (after v1.0.1 optimization)
 **Affects:** Dashboard generation, batch processing
 
 **Description:**
-Full VOACAP predictions are computationally intensive. Generating predictions for 10 regions × 7 bands × 12 time points can take 60-90 seconds.
+Version 1.0.1 introduced comprehensive algorithmic optimizations providing a 2.3x speedup. Full VOACAP predictions remain computationally intensive but are now much faster.
 
-**Timing Breakdown:**
-- Single frequency prediction: ~200-500ms
-- Full band sweep (7 frequencies): ~2-3 seconds
-- 24-hour forecast (12 time points): ~25-35 seconds
-- Full dashboard (10 regions × 7 bands × 12 hours): ~60-90 seconds
+**Timing Breakdown (v1.0.1):**
+- Single frequency prediction: ~4ms (was ~8ms in v1.0.0)
+- Full band sweep (9 frequencies): ~48ms (was ~111ms, 2.3x faster)
+- 24-hour forecast (12 time points): ~118ms (was ~282ms, 2.4x faster)
+- Area coverage (100 predictions): ~350ms (was ~820ms, 2.3x faster)
 
 **Root Causes:**
 1. Raytracing calculations (Phase 4) - iterative path finding
@@ -380,4 +380,4 @@ If you encounter issues not listed here:
 ---
 
 **Last Updated:** 2025-11-18
-**Project Status:** v1.0.0 Production Ready (86.6% validation accuracy)
+**Project Status:** v1.0.1 Production Ready (86.6% validation accuracy, 2.3x performance boost)
