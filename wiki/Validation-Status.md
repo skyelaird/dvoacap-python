@@ -222,7 +222,7 @@ DVOACAP-Python employs a multi-level validation strategy to ensure accurate HF p
 **Signal Strength:**
 - ✅ End-to-end integration validated
 - ✅ Matches FORTRAN reference calculations
-- Accuracy: 83.8% pass rate on reference test
+- Accuracy: 86.6% pass rate across 11 diverse test cases (v1.0.1)
 
 **Path Loss:**
 - ✅ Absorption coefficient verified (677.2)
@@ -238,8 +238,8 @@ DVOACAP-Python employs a multi-level validation strategy to ensure accurate HF p
 - Small variations at extreme solar conditions expected
 
 **Why These Are Acceptable:**
-- 83.8% pass rate exceeds 80% target
-- Failures are at edge cases with inherent uncertainty
+- 86.6% pass rate exceeds 85% target threshold
+- Failures are at edge cases with inherent ionospheric variability
 - Core algorithms verified line-by-line against FORTRAN
 - Typical VOACAP variability (±10 dB SNR tolerance)
 

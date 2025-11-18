@@ -242,10 +242,10 @@ Phase 5: Signal Predictions
 - **Signal strength:**
   - End-to-end integration complete
   - All loss components verified against FORTRAN
-  - 83.8% pass rate on reference validation
+  - 86.6% pass rate on reference validation (v1.0.1, 11 test cases)
 
 **Validation Status:**
-- Reference test pass rate: 83.8% (exceeds 80% target)
+- Reference test pass rate: 86.6% (exceeds 85% target)
 - Reliability calculations verified against FORTRAN
 - Absorption coefficient confirmed (677.2)
 - Edge cases at extreme frequencies documented
@@ -264,7 +264,7 @@ Phase 5: Signal Predictions
 
 **Validation:**
 - ✅ Component tests passing
-- ✅ End-to-end validation complete (83.8% pass rate)
+- ✅ End-to-end validation complete (86.6% pass rate across 11 test cases)
 - ✅ Reference comparison verified against VOACAP
 
 **Source Reference:** `VoaCapEng.pas`, `AntGain.pas`, `NoiseMdl.pas`, `RELBIL.FOR`, `REGMOD.FOR` from original VOACAP

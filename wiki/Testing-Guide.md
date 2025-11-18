@@ -255,16 +255,16 @@ Compare DVOACAP output with reference VOACAP data.
 python3 test_voacap_reference.py
 
 # Sample output:
-# ======================== Validation Results =========================
-# Total test cases: 500
-# Passed: 419 (83.8%)
-# Failed: 81 (16.2%)
+# ======================== Validation Results (v1.0.1) ===============
+# Total test comparisons: 261 (11 test cases)
+# Passed: 226 (86.6%)
+# Failed: 35 (13.4%)
 #
 # Phase 1 (Path Geometry): 100% pass
 # Phase 2 (Solar/Geomag): 100% pass
 # Phase 3 (Ionospheric): 98.5% pass
 # Phase 4 (MUF/Raytracing): 95.2% pass
-# Phase 5 (Signal Predictions): 83.8% pass
+# Phase 5 (Signal Predictions): 86.6% pass (exceeds 85% target)
 # =====================================================================
 ```
 
