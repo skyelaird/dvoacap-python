@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvoacap"
-version = "0.9.0"
+version = "1.0.0"
 description = "Python port of DVOACAP HF propagation prediction engine with 86.6% validation accuracy"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.11"
@@ -28,7 +28,7 @@ keywords = [
     "HF radio"
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Telecommunications Industry",
     "Intended Audience :: Developers",
