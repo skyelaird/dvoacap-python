@@ -15,6 +15,7 @@ This module models the electron density profile of the ionosphere:
 """
 
 import math
+import bisect
 from dataclasses import dataclass
 from typing import Any
 import numpy as np
@@ -440,21 +441,26 @@ class IonosphericProfile:
         return self.dens_true_height[50]
 
     def _height_to_density(self, height: float) -> float:
-        """Convert true height to electron density by interpolation"""
+        """Convert true height to electron density by interpolation (optimized with binary search)"""
         if height <= self.dens_true_height[1]:
             return self.el_density[1]
 
         if height >= self.dens_true_height[50]:
             return self.el_density[50]
 
-        for h in range(2, 51):
-            if height <= self.dens_true_height[h]:
-                r = (height - self.dens_true_height[h-1]) / (
-                    self.dens_true_height[h] - self.dens_true_height[h-1]
-                )
-                return self.el_density[h-1] * (1-r) + self.el_density[h] * r
+        # Binary search for the correct interval - O(log n) instead of O(n)
+        # bisect_left returns insertion point; we need the index where height fits
+        h = bisect.bisect_left(self.dens_true_height, height, lo=2, hi=51)
 
-        return self.el_density[50]
+        # Ensure h is in valid range [2, 50]
+        if h > 50:
+            return self.el_density[50]
+
+        # Linear interpolation between h-1 and h
+        r = (height - self.dens_true_height[h-1]) / (
+            self.dens_true_height[h] - self.dens_true_height[h-1]
+        )
+        return self.el_density[h-1] * (1-r) + self.el_density[h] * r
 
     def get_true_height(self, mhz: float) -> float:
         """
@@ -472,7 +478,7 @@ class IonosphericProfile:
 
     def get_virtual_height_gauss(self, mhz: float) -> float:
         """
-        Get virtual height using Gaussian integration.
+        Get virtual height using Gaussian integration (vectorized).
 
         Virtual height is computed by integrating the group path
         from the ground to the reflection height.
@@ -488,21 +494,30 @@ class IonosphericProfile:
 
         ht = self._true_h - self.dens_true_height[1]
         dens = mhz * mhz
-        result = 0.0
 
-        # Gaussian integration
-        for i in range(20):
-            ymup = self.dens_true_height[1] + ht * (1 - TWDIV * (1 - XT[i]))
-            ymup = min(0.9999, self._height_to_density(ymup) / dens)
-            ymup = 1 / math.sqrt(1 - ymup)
+        # Vectorized Gaussian integration - compute all 20 points at once
+        base_height = self.dens_true_height[1]
 
-            zmup = self.dens_true_height[1] + ht * (1 - TWDIV * (1 + XT[i]))
-            zmup = min(0.9999, self._height_to_density(zmup) / dens)
-            zmup = 1 / math.sqrt(1 - zmup)
+        # Compute all y and z heights at once
+        y_heights = base_height + ht * (1 - TWDIV * (1 - XT))
+        z_heights = base_height + ht * (1 - TWDIV * (1 + XT))
 
-            result += WT[i] * (ymup + zmup)
+        # Get densities for all heights (vectorized interpolation)
+        y_densities = np.interp(y_heights, self.dens_true_height[1:51], self.el_density[1:51])
+        z_densities = np.interp(z_heights, self.dens_true_height[1:51], self.el_density[1:51])
 
-        return self.dens_true_height[1] + ht * TWDIV * result
+        # Compute all ymup and zmup values at once
+        ymup = np.minimum(0.9999, y_densities / dens)
+        zmup = np.minimum(0.9999, z_densities / dens)
+
+        # Vectorized sqrt computation
+        ymup = 1.0 / np.sqrt(1 - ymup)
+        zmup = 1.0 / np.sqrt(1 - zmup)
+
+        # Compute weighted sum
+        result = np.sum(WT * (ymup + zmup))
+
+        return base_height + ht * TWDIV * result
 
     def compute_ionogram(self) -> None:
         """
@@ -626,7 +641,7 @@ class IonosphericProfile:
 
     def compute_oblique_frequencies(self) -> None:
         """
-        Compute oblique reflection frequencies for all angles and heights.
+        Compute oblique reflection frequencies for all angles and heights (vectorized).
 
         This creates a 2D array oblique_freq[angle_idx, height_idx] that stores
         the maximum frequency (in kHz) that can be reflected at each angle and height.
@@ -637,29 +652,30 @@ class IonosphericProfile:
         # Allocate oblique frequency table (40 angles x 31 heights)
         self.oblique_freq = np.zeros((40, 31), dtype=np.int32)
 
-        # For each ionogram point, compute oblique frequencies at all angles
-        for h in range(1, 31):
-            vert_freq = self.igram_vert_freq[h]  # MHz
-            true_h = self.igram_true_height[h]  # km
+        # Pre-compute cos(angles) once - 40 values
+        cos_angles = np.cos(ANGLES)  # Shape: (40,)
 
-            # For each angle
-            for ang_idx in range(40):
-                angle = ANGLES[ang_idx]
+        # Get vertical frequencies and true heights for all ionogram points
+        vert_freqs = self.igram_vert_freq[1:31]  # Shape: (30,) MHz
+        true_heights = self.igram_true_height[1:31]  # Shape: (30,) km
 
-                # Oblique frequency using Snell's law
-                # f_oblique = f_vertical / cos(incidence_angle)
-                # where cos(incidence) = sqrt(1 - sin²(incidence))
-                # and sin(incidence) = R*cos(elev) / (R+h)
+        # Vectorized computation using broadcasting
+        # cos_angles[:, np.newaxis] creates (40, 1) array
+        # (EARTH_R + true_heights) creates (30,) array
+        # Broadcasting creates (40, 30) result
+        sin_i_sqr = (EARTH_R * cos_angles[:, np.newaxis] / (EARTH_R + true_heights)) ** 2
 
-                sin_i_sqr = (EARTH_R * math.cos(angle) / (EARTH_R + true_h)) ** 2
+        # Compute oblique frequencies for all angle-height combinations
+        # Where sin_i_sqr >= 1.0, ray escapes (set to 0)
+        # Otherwise: f_oblique = f_vertical / cos_i
+        mask = sin_i_sqr < 1.0
+        cos_i = np.sqrt(1 - np.minimum(sin_i_sqr, 0.9999))
 
-                if sin_i_sqr >= 1.0:
-                    oblique_freq = 0  # Ray escapes
-                else:
-                    cos_i = math.sqrt(1 - sin_i_sqr)
-                    oblique_freq = int(vert_freq * 1000 / cos_i)  # Convert MHz to kHz
+        # Broadcast vert_freqs to (40, 30) and compute oblique frequencies
+        oblique_freqs = np.where(mask, (vert_freqs * 1000) / cos_i, 0).astype(np.int32)
 
-                self.oblique_freq[ang_idx, h] = oblique_freq
+        # Store results (note: column 0 stays zero, columns 1-30 get the computed values)
+        self.oblique_freq[:, 1:31] = oblique_freqs
 
     def compute_derivative_loss(self, muf_info: dict[str, Any]) -> None:
         """

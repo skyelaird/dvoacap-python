@@ -65,7 +65,7 @@ class VarMapKind:
 
 def make_sincos_array(angle: float, count: int) -> List[Tuple[float, float]]:
     """
-    Generate array of sine and cosine values for Fourier series.
+    Generate array of sine and cosine values for Fourier series (vectorized).
 
     Args:
         angle: Base angle in radians
@@ -74,9 +74,15 @@ def make_sincos_array(angle: float, count: int) -> List[Tuple[float, float]]:
     Returns:
         List of (sin, cos) tuples for each harmonic
     """
-    result = [(0.0, 1.0)]  # 0th element
-    for n in range(1, count):
-        result.append((math.sin(n * angle), math.cos(n * angle)))
+    # Vectorized computation of sin and cos for all harmonics at once
+    n = np.arange(0, count)
+    angles = n * angle
+    sin_vals = np.sin(angles)
+    cos_vals = np.cos(angles)
+
+    # Convert to list of tuples for backward compatibility
+    # 0th element is (0, 1) by definition
+    result = [(float(sin_vals[i]), float(cos_vals[i])) for i in range(count)]
     return result
 
 
@@ -405,12 +411,20 @@ class FourierMaps:
         wn = make_sincos_array(0.5 * east_lon, ln + 1)
         wm = make_sincos_array(lat + HALF_PI, lm + 1)
 
-        # Double Fourier series expansion
-        for m in range(lm):
-            r = 0.0
-            for n in range(ln):
-                r += wn[n+1][0] * self.coef_fixed_p[kind, n, m]
-            result += wm[m+1][0] * (r + self.coef_fixed_p[kind, 15, m])
+        # Double Fourier series expansion (vectorized)
+        # Extract sin values from wn and wm (index [0] is sin component)
+        wn_sin = np.array([w[0] for w in wn[1:ln+1]])  # Shape: (ln,)
+        wm_sin = np.array([w[0] for w in wm[1:lm+1]])  # Shape: (lm,)
+
+        # Vectorized inner loop: r[m] = sum(wn_sin[n] * coef[n, m]) for each m
+        # coef_fixed_p[kind, :ln, :lm] has shape (ln, lm)
+        r = np.dot(wn_sin, self.coef_fixed_p[kind, :ln, :lm])  # Shape: (lm,)
+
+        # Add the additional coefficient term
+        r += self.coef_fixed_p[kind, 15, :lm]
+
+        # Vectorized outer loop: result += sum(wm_sin[m] * r[m])
+        result += np.dot(wm_sin, r)
 
         return result
 
