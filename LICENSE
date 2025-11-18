@@ -2,6 +2,11 @@ MIT License
 
 Copyright (c) 2025 Joel Morin and Contributors
 
+This Python port was developed through a collaboration between Joel Morin
+and Claude (Anthropic's AI assistant), which provided code generation,
+algorithm translation, debugging assistance, and documentation throughout
+the entire development process.
+
 This software is based on DVOACAP by Alex Shovkoplyas (VE3NEA)
 https://github.com/VE3NEA/DVOACAP
 Copyright (c) 2025 Alex Shovkoplyas

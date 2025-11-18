@@ -1,7 +1,16 @@
 DVOACAP-Python
 Copyright 2025 Joel Morin and Contributors
 
-This project was developed with the collaboration and assistance of Claude.ai.
+DEVELOPMENT COLLABORATION:
+This project was developed through an extensive collaboration between Joel Morin
+and Claude (Anthropic's AI assistant). Claude's contributions include:
+  - Translation of Pascal/Delphi algorithms to Python
+  - Code generation for all 5 implementation phases
+  - Performance optimization and vectorization
+  - Validation framework design and implementation
+  - Comprehensive documentation and examples
+  - Debugging and numerical accuracy verification
+  - Test suite development
 
 ================================================================================
 
@@ -39,7 +48,9 @@ ATTRIBUTION CHAIN:
 3. dvoacap-python (2025)
    - Language: Python
    - Primary Author: Joel Morin (skyelaird)
-   - Development: Collaborative work with Claude.ai assistance
+   - Development: Collaborative work between Joel Morin and Claude (Anthropic)
+   - AI Contributions: Algorithm translation, code generation, optimization,
+                       validation, documentation, and debugging assistance
    - License: MIT
    - Purpose: Accessible Python implementation for modern developers
    - Repository: https://github.com/skyelaird/dvoacap-python
