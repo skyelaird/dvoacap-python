@@ -1,0 +1,77 @@
+DVOACAP-Python
+Copyright 2025 Joel Morin and Contributors
+
+This project was developed with the collaboration and assistance of Claude.ai.
+
+================================================================================
+
+This software is a Python port based on DVOACAP by Alex Shovkoplyas (VE3NEA):
+  https://github.com/VE3NEA/DVOACAP
+  Copyright (c) 2013-2025 Alex Shovkoplyas
+  Licensed under MIT License
+
+DVOACAP is a Delphi/Pascal implementation based on VOACAP algorithms
+developed by:
+  Voice of America (VOA)
+  Institute for Telecommunication Sciences (ITS)
+  U.S. Department of Commerce
+
+Original VOACAP software is in the public domain as a work of the
+U.S. Government.
+
+================================================================================
+
+ATTRIBUTION CHAIN:
+
+1. VOACAP (1970s-1990s)
+   - Language: Fortran
+   - Authors: Voice of America / ITS / U.S. Government
+   - License: Public Domain (U.S. Government work)
+   - Purpose: HF propagation prediction for international broadcasting
+
+2. DVOACAP (2013-2025)
+   - Language: Delphi/Pascal
+   - Author: Alex Shovkoplyas (VE3NEA)
+   - License: MIT (relicensed from MPL 1.1 in May 2025)
+   - Purpose: Modern implementation of VOACAP algorithms
+   - Repository: https://github.com/VE3NEA/DVOACAP
+
+3. dvoacap-python (2025)
+   - Language: Python
+   - Primary Author: Joel Morin (skyelaird)
+   - Development: Collaborative work with Claude.ai assistance
+   - License: MIT
+   - Purpose: Accessible Python implementation for modern developers
+   - Repository: https://github.com/skyelaird/dvoacap-python
+
+================================================================================
+
+THIRD-PARTY COMPONENTS:
+
+This software uses the following third-party components:
+
+- NumPy: Copyright (c) 2005-2024, NumPy Developers
+  Licensed under BSD 3-Clause License
+
+- CCIR/URSI Ionospheric Coefficients: Published by ITU-R
+  Public domain scientific data
+
+================================================================================
+
+NOTE ON PASCAL SOURCE FILES:
+
+The Pascal source files in src/original/ directory contain headers indicating
+Mozilla Public License 1.1 (dated 2013). These headers are preserved for
+historical reference, but DVOACAP was relicensed to MIT License in May 2025
+by the original author, Alex Shovkoplyas.
+
+Current license: MIT License
+See: https://github.com/VE3NEA/DVOACAP/blob/master/LICENSE
+
+================================================================================
+
+For the full license text, see the LICENSE file in the root directory.
+
+For questions about licensing, please contact:
+- Joel Morin: https://github.com/skyelaird
+- Original DVOACAP: https://github.com/VE3NEA

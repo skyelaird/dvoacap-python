@@ -10,8 +10,8 @@ Python Port: 2025
 
 # Modern Python 3.11+ uses built-in types for annotations
 
-__version__ = "0.9.0"
-__author__ = "Python Port Contributors"
+__version__ = "1.0.0"
+__author__ = "Joel Morin and Contributors"
 __license__ = "MIT"
 
 # Phase 1: Path Geometry
@@ -152,7 +152,7 @@ _phase_status = {
     "Phase 2": "Complete - Solar & Geomagnetic",
     "Phase 3": "Complete - Ionospheric Profiles",
     "Phase 4": "Complete - Raytracing",
-    "Phase 5": "In Progress - Signal Predictions (Noise & Antennas Complete)",
+    "Phase 5": "Complete - Signal Predictions",
 }
 
 
@@ -171,5 +171,5 @@ def get_version_info() -> dict[str, str | int]:
         "license": __license__,
         "python_requires": ">=3.11",
         "modules_complete": total_modules,
-        "progress": "90%",
+        "progress": "100%",
     }

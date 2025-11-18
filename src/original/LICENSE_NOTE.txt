@@ -1,0 +1,67 @@
+LICENSE NOTE FOR PASCAL SOURCE FILES
+================================================================================
+
+IMPORTANT: License Information for Files in This Directory
+
+The Pascal (.pas) source files in this directory contain headers indicating:
+  "Mozilla Public License Version 1.1 (MPL 1.1)"
+  "Copyright (C) 2013 Alex Shovkoplyas"
+
+These headers are preserved for HISTORICAL REFERENCE ONLY.
+
+================================================================================
+
+CURRENT LICENSE STATUS:
+
+DVOACAP was relicensed by the original author, Alex Shovkoplyas (VE3NEA),
+from MPL 1.1 to MIT License in May 2025.
+
+  Current License: MIT License
+  Copyright: (c) 2025 Alex Shovkoplyas
+  Repository: https://github.com/VE3NEA/DVOACAP
+  License File: https://github.com/VE3NEA/DVOACAP/blob/master/LICENSE
+
+As the original copyright holder, Alex Shovkoplyas has the legal right to
+relicense his own work. The MIT license now governs these files.
+
+================================================================================
+
+PURPOSE OF THESE FILES:
+
+These Pascal source files are included for:
+  1. Reference during Python port development
+  2. Validation and comparison of algorithm implementations
+  3. Historical documentation of the port process
+  4. Educational purposes for understanding the original implementation
+
+They are NOT compiled or distributed as executable code in this Python package.
+
+================================================================================
+
+PYTHON PORT LICENSE:
+
+The Python implementation in ../dvoacap/ is a derivative work based on
+these Pascal sources and is licensed under:
+
+  MIT License
+  Copyright (c) 2025 Joel Morin and Contributors
+  See: /LICENSE file in repository root
+
+================================================================================
+
+TIMELINE:
+
+  2013        - DVOACAP created by Alex Shovkoplyas under MPL 1.1
+  May 2025    - DVOACAP relicensed to MIT by Alex Shovkoplyas
+  Nov 2025    - dvoacap-python Python port created under MIT
+
+Since dvoacap-python was created AFTER the relicensing to MIT, the use
+of MIT License for the Python port is legally sound.
+
+================================================================================
+
+For questions about licensing, contact:
+  - DVOACAP: https://github.com/VE3NEA
+  - dvoacap-python: https://github.com/skyelaird
+
+Last Updated: November 2025

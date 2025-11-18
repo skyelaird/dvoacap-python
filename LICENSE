@@ -1,6 +1,14 @@
 MIT License
 
+Copyright (c) 2025 Joel Morin and Contributors
+
+This software is based on DVOACAP by Alex Shovkoplyas (VE3NEA)
+https://github.com/VE3NEA/DVOACAP
 Copyright (c) 2025 Alex Shovkoplyas
+
+DVOACAP is based on VOACAP algorithms developed by Voice of America
+and the Institute for Telecommunication Sciences (ITS).
+Original VOACAP software is in the public domain.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
