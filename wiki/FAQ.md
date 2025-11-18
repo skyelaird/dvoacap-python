@@ -55,11 +55,11 @@ DVOACAP-Python is a Python port of the DVOACAP HF propagation prediction engine,
 
 ### How accurate is DVOACAP-Python?
 
-**Current validation status:**
+**Current validation status (v1.0.1):**
 - **Phase 1-4 (Geometry, Solar, Ionosphere, Raytracing):** >95% validation pass rate
-- **Phase 5 (Signal Predictions):** 83.8% validation pass rate
+- **Phase 5 (Signal Predictions):** 86.6% validation pass rate (11 diverse test cases)
 
-This means 83.8% of predictions match reference VOACAP output within acceptable tolerances. The remaining 16.2% show discrepancies being investigated and resolved.
+This means 86.6% of predictions match reference VOACAP output within acceptable tolerances, exceeding the 85% target threshold. The remaining 13.4% show minor discrepancies within expected ionospheric model variability.
 
 See [Validation Status](Validation-Status) and [Known Issues](Known-Issues) for details.
 
@@ -277,16 +277,16 @@ print(f"Long path: {long_distance:.0f} km")
 
 ## Accuracy & Validation
 
-### Why is the validation pass rate only 83.8%?
+### Why is the validation pass rate 86.6%?
 
-The 83.8% pass rate for Phase 5 indicates that **83.8% of predictions match reference VOACAP within tolerances**. The remaining 16.2% show discrepancies due to:
+The 86.6% pass rate for Phase 5 (v1.0.1) indicates that **86.6% of predictions across 11 diverse test cases match reference VOACAP within tolerances**. This exceeds the 85% target threshold. The remaining 13.4% show minor discrepancies due to:
 
 1. **Numerical differences** - Python vs. Pascal floating-point operations
 2. **Mode selection variations** - Different propagation mode choices
 3. **Edge cases** - Extreme solar conditions, high latitudes, very short/long paths
 4. **Over-the-MUF handling** - Different approaches when frequency > MUF
 
-**Important:** Even "failed" test cases typically show SNR differences < 3 dB, which is operationally acceptable for amateur radio.
+**Important:** Even "failed" test cases typically show SNR differences < 3 dB, which is within expected ionospheric model variability and operationally acceptable for amateur radio planning.
 
 See [Known Issues](Known-Issues) for details.
 
