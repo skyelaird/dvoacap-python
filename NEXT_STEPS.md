@@ -59,7 +59,7 @@ DVOACAP-Python v1.0.1 is production-ready with **86.6% validation pass rate** ac
 
 ## ~~Priority 1: Fix Phase 5 Integration (Weeks 1-2)~~ ✅ **COMPLETED**
 
-**Status:** Phase 5 validation achieved **83.8% pass rate** (181/216 tests), exceeding the 80% target.
+**Status:** Phase 5 validation achieved **86.6% pass rate** (226/261 tests), exceeding the 85% target.
 
 **Completed Work:**
 - ✅ Reliability calculation verified against FORTRAN RELBIL.FOR
@@ -69,7 +69,7 @@ DVOACAP-Python v1.0.1 is production-ready with **86.6% validation pass rate** ac
 - ✅ All core algorithms match FORTRAN reference
 
 **Results:**
-- Tangier → Belgrade test path: 83.8% pass rate (181/216 comparisons)
+- Total validation: 86.6% pass rate (226/261 comparisons across 11 test cases)
 - Predictions show valid reliability percentages (0-100%)
 - No crashes or exceptions on valid inputs
 - Signal strength predictions in expected range
@@ -85,7 +85,7 @@ DVOACAP-Python v1.0.1 is production-ready with **86.6% validation pass rate** ac
 **Completed Work:**
 - ✅ Created reference validation test suite (`test_voacap_reference.py`)
 - ✅ Established tolerance specifications (SNR ±10 dB, Reliability ±20%, MUF ±2 MHz)
-- ✅ Achieved 83.8% pass rate on baseline test path
+- ✅ Achieved 86.6% pass rate across 11 diverse test paths
 - ✅ CI/CD workflow implemented (`.github/workflows/validation.yml`)
 - ✅ Validation status badge added to README
 
@@ -493,7 +493,7 @@ DVOACAP-Python v1.0.1 is production-ready with **86.6% validation pass rate** ac
 ### ~~Weeks 1-2: Critical Bug Fixes~~ ✅ **COMPLETED**
 - ✅ Fixed Phase 5 reliability calculation
 - ✅ Validated signal strength computations
-- ✅ Basic predictions working correctly (83.8% pass rate)
+- ✅ Basic predictions working correctly (86.6% pass rate)
 - **Milestone:** Predictions show >0% reliability, one path validates ✓
 
 ### ~~Weeks 3-4: Systematic Validation~~ ✅ **COMPLETED**
@@ -625,7 +625,7 @@ python validate_predictions.py
 
 ---
 
-**Last Updated:** 2025-11-15
-**Status:** Phase 5 complete (83.8% validation). Focus: Expand test coverage, documentation maintenance
+**Last Updated:** 2025-11-18
+**Status:** Phase 5 complete (86.6% validation, exceeds 85% target). v1.0.1 released with 2.3x performance boost. Focus: Documentation polish, PyPI preparation
 
-**Next Review:** After expanding test coverage to 7+ diverse paths
+**Next Review:** Before PyPI public release

@@ -55,11 +55,11 @@ DVOACAP-Python is a Python port of the DVOACAP HF propagation prediction engine,
 
 ### How accurate is DVOACAP-Python?
 
-**Current validation status:**
+**Current validation status (v1.0.1):**
 - **Phase 1-4 (Geometry, Solar, Ionosphere, Raytracing):** >95% validation pass rate
-- **Phase 5 (Signal Predictions):** 83.8% validation pass rate
+- **Phase 5 (Signal Predictions):** 86.6% validation pass rate
 
-This means 83.8% of predictions match reference VOACAP output within acceptable tolerances. The remaining 16.2% show discrepancies being investigated and resolved.
+This means 86.6% of predictions match reference VOACAP output within acceptable tolerances. The remaining 13.4% show minor discrepancies at edge cases.
 
 See [Validation Status](Validation-Status) and [Known Issues](Known-Issues) for details.
 
@@ -106,12 +106,12 @@ Yes! DVOACAP-Python is open source under the **MIT License**. You can use it fre
 ### What are the system requirements?
 
 **Minimum:**
-- Python 3.8 or higher
+- Python 3.11 or higher
 - 200 MB disk space
 - 512 MB RAM
 
 **Recommended:**
-- Python 3.10 or higher
+- Python 3.11 or higher
 - 500 MB disk space (with dependencies)
 - 1 GB RAM
 
@@ -155,15 +155,15 @@ The only data files needed are the CCIR/URSI coefficient maps, which are include
 
 ### Can I install DVOACAP-Python with pip from PyPI?
 
-**Not yet.** DVOACAP-Python is currently in active development and not published to PyPI. Install from source using:
+**Not yet.** DVOACAP-Python v1.0.1 is production-ready but not yet published to PyPI. Install from source using:
 
 ```bash
 pip install -e .
 ```
 
-Once the project reaches v1.0, it will be published to PyPI for easier installation with:
+PyPI publication is planned for a future release:
 ```bash
-pip install dvoacap  # Future release
+pip install dvoacap  # Planned future release
 ```
 
 ---
@@ -277,16 +277,16 @@ print(f"Long path: {long_distance:.0f} km")
 
 ## Accuracy & Validation
 
-### Why is the validation pass rate only 83.8%?
+### Why is the validation pass rate 86.6%?
 
-The 83.8% pass rate for Phase 5 indicates that **83.8% of predictions match reference VOACAP within tolerances**. The remaining 16.2% show discrepancies due to:
+The 86.6% pass rate for Phase 5 indicates that **86.6% of predictions match reference VOACAP within tolerances** across 11 diverse test cases. The remaining 13.4% show minor discrepancies due to:
 
 1. **Numerical differences** - Python vs. Pascal floating-point operations
 2. **Mode selection variations** - Different propagation mode choices
 3. **Edge cases** - Extreme solar conditions, high latitudes, very short/long paths
 4. **Over-the-MUF handling** - Different approaches when frequency > MUF
 
-**Important:** Even "failed" test cases typically show SNR differences < 3 dB, which is operationally acceptable for amateur radio.
+**Important:** This validation rate exceeds the 85% target threshold and is considered production-ready. Even "failed" test cases typically show acceptable operational differences.
 
 See [Known Issues](Known-Issues) for details.
 
@@ -306,22 +306,22 @@ The dashboard includes optional PSKreporter validation.
 
 ## Performance
 
-### Why are predictions slow?
+### How fast are predictions in v1.0.1?
 
-DVOACAP predictions are **computationally intensive** because they perform full raytracing through a 3D ionospheric model.
+DVOACAP v1.0.1 delivers a **2.3x performance boost** over v1.0.0 through algorithmic optimizations. While predictions remain computationally intensive (full raytracing through 3D ionospheric model), they are now much faster.
 
-**Typical times:**
-- Single prediction: ~200-500 ms
-- Full band sweep (7 frequencies): ~2-3 seconds
-- 24-hour forecast (12 time points): ~25-35 seconds
-- Full dashboard (10 regions × 7 bands): ~60-90 seconds
+**Typical times (v1.0.1):**
+- Single prediction: ~4 ms (was ~8 ms in v1.0.0)
+- Multi-frequency (9 frequencies): ~48 ms (was ~111 ms, 2.3x faster)
+- 24-hour scan: ~118 ms (was ~282 ms, 2.4x faster)
+- Area coverage (100 predictions): ~350 ms (was ~820 ms, 2.3x faster)
 
-**Why it's slow:**
+**Computational bottlenecks:**
 - Iterative raytracing (Phase 4)
 - CCIR coefficient processing (Phase 3)
 - Python overhead vs. compiled code
 
-See [Performance Tips](Performance-Tips) for optimization strategies.
+See [Performance Tips](Performance-Tips) for optimization strategies and benchmarks.
 
 ---
 
@@ -442,7 +442,7 @@ See [Contributing Guide](Contributing) for guidelines.
 ### What development tools do I need?
 
 **Essential:**
-- Python 3.8+
+- Python 3.11+
 - pytest (testing)
 - black (formatting)
 - flake8 (linting)
