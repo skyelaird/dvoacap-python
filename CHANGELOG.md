@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-11-18
+
+### 🚀 Performance Optimizations
+
+This release delivers a **2.3x speedup** across all prediction benchmarks through algorithmic improvements and vectorization.
+
+### Changed
+- **Optimized ionospheric profile calculations** - Replaced linear search with binary search in height-to-density interpolation (O(n) → O(log n))
+- **Vectorized Gaussian integration** - Replaced 40-iteration loop with NumPy vectorized operations in `get_virtual_height_gauss`
+- **Vectorized oblique frequency computation** - Eliminated 1,200 nested loop iterations using NumPy broadcasting
+- **Optimized Fourier series** - Replaced nested loops with NumPy dot products in `compute_fixed_map`
+- **Updated Performance-Tips.md** - Documented new benchmark timings
+
+### Performance Metrics
+- Single prediction: 0.008s → 0.004s (2x faster)
+- Multi-frequency (9 predictions): 0.111s → 0.048s (2.3x faster)
+- 24-hour scan: 0.282s → 0.118s (2.4x faster)
+- Area coverage (100 predictions): 0.82s → 0.35s (2.3x faster)
+- Function call reduction: 68-71% fewer function calls
+
+### Removed
+- Obsolete debug scripts (debug_*.py, analyze_*.py)
+- Obsolete test scripts (quick_*.py, simple_*.py)
+- Old generator archive (Dashboard/archive/old_generators/)
+
 ## [1.0.0] - 2025-11-18
 
 ### 🎉 First Stable Release - Production Ready
