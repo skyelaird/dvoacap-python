@@ -2,8 +2,37 @@
 
 Optimization strategies for speeding up DVOACAP-Python predictions.
 
+## 🚀 v1.0.1 Performance Improvements
+
+**Released:** November 2025
+**Speedup:** 2.3x faster than v1.0.0
+
+DVOACAP-Python v1.0.1 delivers significant performance improvements through algorithmic optimizations and NumPy vectorization:
+
+### Benchmark Results
+
+| Operation | v1.0.0 | v1.0.1 | Speedup |
+|-----------|--------|--------|---------|
+| Single prediction | 0.008s | 0.004s | **2.0x** |
+| Multi-frequency (9 predictions) | 0.111s | 0.048s | **2.3x** |
+| 24-hour scan | 0.282s | 0.118s | **2.4x** |
+| Area coverage (100 predictions) | 0.82s | 0.35s | **2.3x** |
+| Function calls | 100% | 29-32% | **68-71% reduction** |
+
+### Key Optimizations
+
+1. **Binary Search for Height-to-Density** - O(n) → O(log n) complexity
+2. **Vectorized Gaussian Integration** - Eliminated 40-iteration loop using NumPy
+3. **Vectorized Oblique Frequency** - Eliminated 1,200 nested iterations
+4. **Optimized Fourier Series** - Replaced loops with NumPy dot products
+
+See [CHANGELOG.md](https://github.com/skyelaird/dvoacap-python/blob/main/CHANGELOG.md) for full v1.0.1 release notes.
+
+---
+
 ## Table of Contents
 
+- [v1.0.1 Performance Improvements](#-v101-performance-improvements)
 - [Understanding Performance](#understanding-performance)
 - [Quick Wins](#quick-wins)
 - [Configuration Optimization](#configuration-optimization)
@@ -35,21 +64,16 @@ Optimization strategies for speeding up DVOACAP-Python predictions.
 ### Timing Benchmarks
 
 **Single prediction (1 frequency, 1 path):**
-- Fast system (modern CPU): ~3-5 ms (2.3x faster after v1.0 optimizations)
+- Fast system (modern CPU): ~4 ms (v1.0.1 optimized - 2.3x faster than v1.0.0)
 - Average system: ~10-20 ms
 - Slow system (Raspberry Pi): ~50-100 ms
 
 **Full dashboard generation (10 regions × 7 bands × 12 hours):**
-- Fast system: ~20-30 seconds (2.3x faster after v1.0 optimizations)
+- Fast system: ~20-30 seconds (v1.0.1 optimized - 2.3x faster than v1.0.0)
 - Average system: ~30-45 seconds
 - Slow system: ~1-2 minutes
 
-**Performance Optimizations (v1.0.1):**
-- Binary search for height-to-density interpolation
-- Vectorized Gaussian integration using NumPy
-- Vectorized oblique frequency computation
-- Optimized Fourier series calculations
-- Result: 2.3x speedup, 68-71% reduction in function calls
+**Note:** See the [v1.0.1 Performance Improvements](#-v101-performance-improvements) section above for detailed benchmark data and optimization details.
 
 ---
 
