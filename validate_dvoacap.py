@@ -68,16 +68,16 @@ def validate_installation():
     print("\n" + "=" * 60)
     print("[4/4] Running HF propagation prediction...")
     print("=" * 60)
-    print("Computing ionospheric conditions at Philadelphia, PA")
-    print("Location: 40.0°N, 75.0°W\n")
+    print("Computing ionospheric conditions at Halifax, Nova Scotia")
+    print("Location: 44.65°N, 63.57°W\n")
 
     try:
         import math
 
-        # Create control point at Philadelphia
+        # Create control point at Halifax, NS
         pnt = ControlPoint(
-            location=IonoPoint.from_degrees(40.0, -75.0),
-            east_lon=-75.0 * math.pi/180,
+            location=IonoPoint.from_degrees(44.65, -63.57),
+            east_lon=-63.57 * math.pi/180,
             distance_rad=0.0,
             local_time=0.5,
             zen_angle=0.3,
@@ -96,7 +96,7 @@ def validate_installation():
         print("=" * 60)
         print("IONOSPHERIC PREDICTION RESULTS")
         print("=" * 60)
-        print("\nLocation: Philadelphia, PA (40.0°N, 75.0°W)")
+        print("\nLocation: Halifax, Nova Scotia (44.65°N, 63.57°W)")
         print("Date: June")
         print("Time: 12:00 UTC (Noon)")
         print("Solar Activity: SSN 100 (moderate)")

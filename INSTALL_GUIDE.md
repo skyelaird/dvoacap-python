@@ -152,8 +152,8 @@ Setting conditions:
 ============================================================
 [4/4] Running HF propagation prediction...
 ============================================================
-Computing ionospheric conditions at Philadelphia, PA
-Location: 40.0°N, 75.0°W
+Computing ionospheric conditions at Halifax, Nova Scotia
+Location: 44.65°N, 63.57°W
 
 ✓ Prediction calculation successful!
 
@@ -161,7 +161,7 @@ Location: 40.0°N, 75.0°W
 IONOSPHERIC PREDICTION RESULTS
 ============================================================
 
-Location: Philadelphia, PA (40.0°N, 75.0°W)
+Location: Halifax, Nova Scotia (44.65°N, 63.57°W)
 Date: June
 Time: 12:00 UTC (Noon)
 Solar Activity: SSN 100 (moderate)
@@ -259,9 +259,9 @@ Create a file called `my_first_prediction.py`:
 from dvoacap import FourierMaps, ControlPoint, IonoPoint, compute_iono_params
 import math
 
-# Your QTH coordinates (example: Philadelphia)
-my_lat = 40.0   # degrees North (negative for South)
-my_lon = -75.0  # degrees East (negative for West)
+# Your QTH coordinates (example: Halifax, NS)
+my_lat = 44.65   # degrees North (negative for South)
+my_lon = -63.57  # degrees East (negative for West)
 
 # Load ionospheric data
 maps = FourierMaps()
@@ -279,9 +279,9 @@ pnt = ControlPoint(
     local_time=0.5,
     zen_angle=0.3,
     zen_max=1.5,
-    mag_lat=50.0 * math.pi/180,
-    mag_dip=60.0 * math.pi/180,
-    gyro_freq=1.2
+    mag_lat=55.0 * math.pi/180,
+    mag_dip=70.0 * math.pi/180,
+    gyro_freq=1.4
 )
 
 # Calculate propagation conditions

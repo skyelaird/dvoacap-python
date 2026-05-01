@@ -109,17 +109,17 @@ import math
 maps = FourierMaps()
 maps.set_conditions(month=6, ssn=100, utc_fraction=0.5)  # June, SSN=100, noon UTC
 
-# Create control point at Philadelphia
+# Create control point at Halifax, Nova Scotia
 pnt = ControlPoint(
-    location=IonoPoint.from_degrees(40.0, -75.0),
-    east_lon=-75.0 * math.pi/180,
+    location=IonoPoint.from_degrees(44.65, -63.57),
+    east_lon=-63.57 * math.pi/180,
     distance_rad=0.0,
     local_time=0.5,  # Noon local
     zen_angle=0.3,   # Solar zenith angle
     zen_max=1.5,
-    mag_lat=50.0 * math.pi/180,
-    mag_dip=60.0 * math.pi/180,
-    gyro_freq=1.2
+    mag_lat=55.0 * math.pi/180,
+    mag_dip=70.0 * math.pi/180,
+    gyro_freq=1.4
 )
 
 # Compute ionospheric parameters
