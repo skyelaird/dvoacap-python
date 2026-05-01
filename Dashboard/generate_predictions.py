@@ -431,19 +431,52 @@ def main():
     # Transform data to dashboard-compatible format
     print()
     print("[OK] Transforming data for dashboard...")
+    transform_script = Path(__file__).parent / 'transform_data.py'
     try:
         import subprocess
-        transform_script = Path(__file__).parent / 'transform_data.py'
         result = subprocess.run(
             [sys.executable, str(transform_script)],
             capture_output=True,
             text=True,
-            check=True
+            check=False,
         )
-        print(result.stdout)
+        if result.stdout:
+            print(result.stdout, end="")
+        if result.returncode != 0:
+            print(
+                f"[WARNING] transform_data.py exited with code "
+                f"{result.returncode}.",
+                file=sys.stderr,
+            )
+            if result.stderr:
+                print("--- transform_data.py stderr ---", file=sys.stderr)
+                print(result.stderr, end="", file=sys.stderr)
+                print("--------------------------------", file=sys.stderr)
+            print(
+                "Dashboard may not display correctly without "
+                "enhanced_predictions.json.",
+                file=sys.stderr,
+            )
+    except FileNotFoundError as e:
+        print(
+            f"[WARNING] Could not run transform_data.py: {e}",
+            file=sys.stderr,
+        )
+        print(
+            "Dashboard may not display correctly without "
+            "enhanced_predictions.json.",
+            file=sys.stderr,
+        )
     except Exception as e:
-        print(f"[WARNING] Could not transform data: {e}")
-        print("Dashboard may not display correctly without enhanced_predictions.json")
+        print(
+            f"[WARNING] Unexpected error invoking transform_data.py: {e}",
+            file=sys.stderr,
+        )
+        print(
+            "Dashboard may not display correctly without "
+            "enhanced_predictions.json.",
+            file=sys.stderr,
+        )
 
     print()
     print("Summary:")
