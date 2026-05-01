@@ -71,6 +71,9 @@ all = [
     "dvoacap[dashboard,dev,docs]",
 ]
 
+[project.scripts]
+dvoacap-dashboard = "dvoacap.dashboard.cli:main"
+
 [project.urls]
 Homepage = "https://github.com/skyelaird/dvoacap-python"
 Documentation = "https://skyelaird.github.io/dvoacap-python/"
@@ -88,6 +91,13 @@ exclude = ["original*"]
 
 [tool.setuptools.package-data]
 dvoacap = ["DVoaData/*.dat"]
+"dvoacap.dashboard" = [
+    "*.html",
+    "*.json",
+    "*.md",
+    "*.sh",
+    "requirements.txt",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

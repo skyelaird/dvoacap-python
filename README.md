@@ -147,16 +147,25 @@ DVOACAP-Python includes a web-based dashboard for visualizing propagation predic
 
 ### Quick Start with Dashboard
 
-**Option A: Flask Server (Recommended)**
+**Option A: Install via pip (recommended)**
 
 ```bash
-cd Dashboard
-pip install -r requirements.txt
-python3 server.py
-
-# Visit http://localhost:8000
-# Click "⚡ Refresh Predictions" button to generate new predictions
+pip install "dvoacap[dashboard] @ git+https://github.com/skyelaird/dvoacap-python.git"
+dvoacap-dashboard --data-dir ~/dvoacap-data
 ```
+
+Visit `http://localhost:8000`.
+
+**Option B: From a clone (for development)**
+
+```bash
+git clone https://github.com/skyelaird/dvoacap-python.git
+cd dvoacap-python
+pip install -e ".[dashboard]"
+dvoacap-dashboard
+```
+
+Once published to PyPI, Option A becomes simply `pip install dvoacap[dashboard]`.
 
 The Flask server provides:
 - API endpoints for prediction generation (`/api/generate`)
@@ -164,29 +173,29 @@ The Flask server provides:
 - Background processing (non-blocking)
 - Automatic dashboard reload when complete
 
-**Option B: Static Files**
-
-```bash
-cd Dashboard
-python3 generate_predictions.py
-open dashboard.html
-```
+Generated files (`propagation_data.json`, `enhanced_predictions.json`, etc.)
+are written to the directory passed via `--data-dir`, or the current working
+directory if no flag is given. You can also set `DVOACAP_DATA_DIR` in the
+environment.
 
 ### Configuration
 
-Edit `Dashboard/dvoacap_wrapper.py` to customize:
+Edit `src/dvoacap/dashboard/dvoacap_wrapper.py` to customize:
 - Your callsign and QTH coordinates
 - Station power and antenna characteristics
 - Target bands and DX entities
 - Update frequency
 
+(Note: this config currently lives inside the package and is overwritten on
+upgrade. Phase 2 will move it to `data_dir/dvoacap_config.json`.)
+
 ### Dashboard Documentation
 
-See [Dashboard/README.md](Dashboard/README.md) for complete setup instructions, configuration options, and API documentation.
+See [src/dvoacap/dashboard/README.md](src/dvoacap/dashboard/README.md) for complete setup instructions, configuration options, and API documentation.
 
 ### Future Plans
 
-See [Dashboard/ISSUE_MULTI_USER_WEB_APP.md](Dashboard/ISSUE_MULTI_USER_WEB_APP.md) for the roadmap to expand the dashboard into a multi-user community service with:
+See [src/dvoacap/dashboard/ISSUE_MULTI_USER_WEB_APP.md](src/dvoacap/dashboard/ISSUE_MULTI_USER_WEB_APP.md) for the roadmap to expand the dashboard into a multi-user community service with:
 - User authentication and accounts
 - Per-user station configurations
 - Database backend for historical tracking
@@ -346,14 +355,16 @@ dvoacap-python/
 │   │   └── reflectrix.py           # Phase 4
 │   └── original/                   # Reference Pascal source
 │       └── *.pas
-├── Dashboard/                      # Web-based visualization dashboard
+├── src/dvoacap/dashboard/          # Web-based visualization dashboard (pip-installable subpackage)
 │   ├── server.py                   # Flask API server
+│   ├── cli.py                      # `dvoacap-dashboard` console script
+│   ├── paths.py                    # Data dir / static asset resolution
 │   ├── dashboard.html              # Interactive dashboard UI
 │   ├── generate_predictions.py     # Prediction generation script
 │   ├── dvoacap_wrapper.py          # DVOACAP integration wrapper
-│   ├── requirements.txt            # Server dependencies
 │   ├── README.md                   # Dashboard documentation
 │   └── ISSUE_MULTI_USER_WEB_APP.md # Multi-user service roadmap
+├── Dashboard/                      # Backward-compatibility shims (deprecated)
 ├── tests/                          # Test suite
 │   ├── test_path_geometry.py
 │   ├── test_voacap_parser.py

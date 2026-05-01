@@ -13,12 +13,11 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple
 
-# Add parent directory to import dvoacap
-sys.path.insert(0, str(Path(__file__).parent.parent))
+from dvoacap.path_geometry import GeoPoint
+from dvoacap.prediction_engine import PredictionEngine
 
-from src.dvoacap.path_geometry import GeoPoint
-from src.dvoacap.prediction_engine import PredictionEngine
-from Dashboard.mode_presets import MODE_PRESETS, apply_mode_preset
+from .mode_presets import MODE_PRESETS, apply_mode_preset
+from .paths import get_data_dir
 
 
 def maidenhead_to_latlon(grid: str) -> Tuple[float, float]:
@@ -286,7 +285,7 @@ def main():
         {'freq': 21.074, 'mode': 'FT8', 'hour': 18, 'band': '15m'},
     ]
 
-    output_dir = Path(__file__).parent / 'propagation_maps'
+    output_dir = get_data_dir() / 'propagation_maps'
     output_dir.mkdir(exist_ok=True)
 
     for config in test_configs:

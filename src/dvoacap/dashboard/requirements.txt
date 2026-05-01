@@ -1,0 +1,8 @@
+# Deprecated: dependencies are now declared in pyproject.toml under the
+# [project.optional-dependencies] dashboard extra. Install with:
+#     pip install -e ".[dashboard]"
+# This file is preserved for reference only.
+flask>=2.3.0
+flask-cors>=4.0.0
+requests>=2.31.0
+numpy>=1.24.0
