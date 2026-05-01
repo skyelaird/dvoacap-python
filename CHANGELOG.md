@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-05-01
+
+### Fixed
+
+- **Long-path signal/SNR calculation** - For HF paths longer than 7000 km, the engine was mixing in an unimplemented `_evaluate_long_model` stub that returned an empty `Prediction()`. The smooth-interpolation branch in `_combine_short_and_long` then pulled `power_dbw` toward 0 dBW and back-derived a nonsensically small `total_loss_db`, producing constant `-0.7 dBW` signal levels and SNRs of +150 dB or worse for any region beyond 7000 km, with reliability pinned at 100%. Paths beyond 10000 km returned all-zero predictions outright. Until a real long-path model exists, the short-path result is used at all distances. (#137)
+- **TX power propagation to user-added antennas** - `params.tx_power` was stamped onto `current_antenna` once before the per-frequency loop, where `current_antenna` still pointed at the isotropic default. `select_antenna()` then swapped in the user antenna whose `tx_power_dbw` came from its constructor, leaving a 100 W radio configuration treated as 10 W (a 10 dB undercount). The assignment now happens inside the loop after antenna selection. (#137)
+- **Dashboard buttons unresponsive** - A duplicate `const now` declaration inside `initializeDashboard()` (and again inside its `setInterval` callback) caused a `SyntaxError` that prevented the entire `<script>` block from parsing, leaving `triggerRefresh` and `showSettings` undefined when their `onclick` handlers fired. Renamed the duplicate locals to `currentHourInt` / `tickHour`. (#134, #135)
+- **Gray-line terminator rendering** - `drawGrayLine()` swept a 2° lat/lon grid for points where `|solar altitude| < 6°`, then bucketed them into 5°-wide latitude bands and emitted one rectangle per (band, longitude segment), rendering the twilight zone as a visible staircase of 10°-tall blocks. Replaced with a closed-form analytic solve at every longitude, drawn as a single smooth polygon. (#136)
+
+### Added
+
+- **Regression tests for `PredictionEngine`** - Asserts long-distance predictions produce physically plausible signal levels and that `params.tx_power` reaches user-added antennas. (#137)
+
+### Changed
+
+- **Dashboard packaged as installable subpackage** - Moved from `Dashboard/` to `src/dvoacap/dashboard/`, added `dvoacap-dashboard` console-script entry point, and shipped HTML/JS/CSS with the package so `pip install dvoacap[dashboard]` followed by `dvoacap-dashboard` is sufficient. Backward-compatible `python Dashboard/server.py` shim retained. (#133)
+
 ## [1.0.1] - 2025-11-18
 
 ### 🚀 Performance Optimizations
