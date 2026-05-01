@@ -227,8 +227,6 @@ class PredictionEngine:
         self.utc_time = utc_time
         self.frequencies = frequencies.copy()
 
-        # Initialize transmit power
-        self.tx_antennas.current_antenna.tx_power_dbw = self._to_db(self.params.tx_power)
         self.muf_calculator.min_angle = self.params.min_angle
 
         # Allocate results array
@@ -296,6 +294,12 @@ class PredictionEngine:
         for f, freq in enumerate(self.frequencies):
             self.tx_antennas.select_antenna(freq)
             self.rx_antennas.select_antenna(freq)
+            # Stamp the configured TX power onto whichever antenna was just
+            # selected; setting it once before the loop only writes to the
+            # isotropic default and gets shadowed when select_antenna swaps
+            # in a user-added antenna whose own tx_power_dbw came from its
+            # constructor (typically a placeholder).
+            self.tx_antennas.current_antenna.tx_power_dbw = self._to_db(self.params.tx_power)
 
             # Compute noise distribution
             fof2 = self._profiles[-1].f2.fo
@@ -311,11 +315,13 @@ class PredictionEngine:
             # Evaluate short model
             prediction = self._evaluate_short_model(reflectrix, f)
 
-            # Combine with long model if needed
-            if self.path.dist >= self.RAD_7000_KM:
-                long_pred = self._evaluate_long_model(freq)
-                prediction = self._combine_short_and_long(prediction, long_pred)
-
+            # Long-path model is not implemented (_evaluate_long_model is a
+            # stub that returns an empty Prediction). Calling
+            # _combine_short_and_long with that stub would let its zero-valued
+            # power_dbw pollute the smooth-interpolation branch and back-
+            # derive a near-zero total_loss for any path between 7000 and
+            # 10000 km, or hand back an all-zero prediction beyond 10000 km.
+            # Until the long-path model is real, always use the short result.
             self.predictions[f] = prediction
 
     def _compute_control_points(self) -> None:
