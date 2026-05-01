@@ -1,0 +1,3584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE1ATM HF Propagation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            line-height: 1.4;
+            font-size: 13px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            padding: 0.75rem 1rem;
+            border-bottom: 3px solid #4a90e2;
+        }
+        
+        .header h1 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        
+        .station-info {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.75rem;
+            color: #b0c4de;
+        }
+        
+        .solar-bar {
+            background: #162236;
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            border-bottom: 1px solid #2a3f5f;
+        }
+        
+        .solar-metric {
+            text-align: center;
+        }
+        
+        .solar-metric .label {
+            font-size: 0.65rem;
+            color: #8a9bb5;
+            text-transform: uppercase;
+        }
+        
+        .solar-metric .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .solar-metric .sublabel {
+            font-size: 0.6rem;
+            color: #6a7f9f;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #2a3f5f;
+        }
+        
+        .tab-button {
+            background: #162236;
+            border: none;
+            color: #8a9bb5;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            border-bottom: none;
+        }
+        
+        .tab-button:hover {
+            background: #1a2738;
+            color: #4a90e2;
+        }
+        
+        .tab-button.active {
+            background: #0a0e1a;
+            color: #4a90e2;
+            border-color: #2a3f5f;
+            border-bottom-color: #0a0e1a;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .alert-bar {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 2px solid #fca5a5;
+            display: none;
+        }
+        
+        .alert-bar.active {
+            display: block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1rem;
+        }
+        
+        .card {
+            background: #162236;
+            border-radius: 6px;
+            padding: 1rem;
+            border: 1px solid #2a3f5f;
+        }
+        
+        .card h2 {
+            color: #4a90e2;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            border-bottom: 2px solid #2a3f5f;
+            padding-bottom: 0.4rem;
+        }
+        
+        #map {
+            height: 450px;
+            border-radius: 6px;
+            border: 2px solid #2a3f5f;
+        }
+        
+        .band-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 0.6rem;
+        }
+        
+        .band-card {
+            background: #0d1520;
+            padding: 0.6rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #2a3f5f;
+        }
+        
+        .band-card:hover {
+            border-color: #4a90e2;
+        }
+        
+        .band-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 0.3rem;
+        }
+        
+        .band-freq {
+            font-size: 0.7rem;
+            color: #6a7f9f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .band-detail {
+            font-size: 0.7rem;
+            color: #8a9bb5;
+            margin: 0.2rem 0;
+        }
+        
+        .region-list {
+            font-size: 0.75rem;
+            text-align: left;
+            margin-top: 0.5rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .region-item {
+            padding: 0.25rem 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #1a2738;
+        }
+        
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.4rem;
+        }
+        
+        .status-good { background: #4ade80; }
+        .status-fair { background: #fbbf24; }
+        .status-poor { background: #f87171; }
+        
+        .quality-good { color: #4ade80; }
+        .quality-fair { color: #fbbf24; }
+        .quality-poor { color: #f87171; }
+        
+        .timeline {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .timeline-day {
+            margin-bottom: 1rem;
+        }
+        
+        .day-header {
+            background: #0d1520;
+            padding: 0.5rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .timeline-hour {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 0.75rem;
+            padding: 0.4rem;
+            border-bottom: 1px solid #1a2738;
+            font-size: 0.8rem;
+        }
+        
+        .timeline-hour:hover {
+            background: #0d1520;
+        }
+        
+        .timeline-hour.current {
+            background: rgba(74, 144, 226, 0.2);
+            border-left: 3px solid #4a90e2;
+            font-weight: bold;
+        }
+        
+        .hour-label {
+            color: #4a90e2;
+            font-weight: 600;
+        }
+        
+        .hour-bands {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        
+        .hour-band {
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+        
+        .hour-band.open {
+            background: #065f46;
+            color: #4ade80;
+        }
+        
+        .hour-band.marginal {
+            background: #713f12;
+            color: #fbbf24;
+        }
+        
+        .dxcc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dxcc-stat {
+            background: #0d1520;
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .dxcc-stat .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .dxcc-stat .label {
+            font-size: 0.75rem;
+            color: #8a9bb5;
+            margin-top: 0.3rem;
+        }
+        
+        .most-wanted {
+            font-size: 0.8rem;
+        }
+        
+        .wanted-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #1a2738;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .wanted-item.hot {
+            background: rgba(74, 222, 128, 0.15);
+            border-left: 3px solid #4ade80;
+            animation: pulse 3s infinite;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: #8a9bb5;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .update-info {
+            text-align: center;
+            color: #6a7f9f;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.6rem;
+            background: #162236;
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0d1520;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 3px;
+        }
+        
+        /* Refresh Button */
+        .refresh-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #2d5a4f 0%, #3a8c6d 100%);
+            color: white;
+            border: 2px solid #4ade80;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.5);
+        }
+
+        .refresh-btn:disabled {
+            background: #2a3f5f;
+            border-color: #4a5f7f;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Notification Modal */
+        .notification-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #162236;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 2rem;
+            min-width: 400px;
+            max-width: 90vw;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .notification-modal.show {
+            display: block;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            display: none;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        .modal-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .modal-body {
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #0a0e1a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #4ade80);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .modal-message {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #8a9bb5;
+        }
+
+        .modal-close-btn {
+            background: #2a3f5f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .modal-close-btn:hover {
+            background: #3a5f8f;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(74, 144, 226, 0.3);
+            border-top-color: #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1400px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .band-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .notification-modal {
+                min-width: 300px;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Help System Styles */
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2a3f5f;
+            color: #4a90e2;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+            border: 1px solid #4a90e2;
+        }
+
+        .help-icon:hover {
+            background: #4a90e2;
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.5);
+        }
+
+        .help-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #162236;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 2rem;
+            min-width: 500px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .help-modal.show {
+            display: block;
+        }
+
+        .help-modal h3 {
+            color: #4a90e2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 0.5rem;
+        }
+
+        .help-modal h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .help-modal p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .help-modal ul {
+            color: #8a9bb5;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .help-modal li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .help-modal code {
+            background: #0a0e1a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            color: #4ade80;
+            font-family: monospace;
+        }
+
+        .help-modal .warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            color: #fbbf24;
+        }
+
+        .help-modal .info {
+            background: rgba(74, 144, 226, 0.1);
+            border-left: 3px solid #4a90e2;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            color: #8a9bb5;
+        }
+
+        .help-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #2a3f5f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .help-close-btn:hover {
+            background: #3a5f8f;
+        }
+
+        /* Heatmap Legend */
+        .heatmap-legend {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            background: rgba(22, 34, 54, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #2a3f5f;
+            z-index: 1000;
+            font-size: 11px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .heatmap-legend h4 {
+            margin-bottom: 8px;
+            color: #4a90e2;
+            font-size: 13px;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 5px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 18px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .legend-label {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Refresh Button -->
+    <button class="refresh-btn" id="refreshBtn" onclick="triggerRefresh()">
+        ⚡ Refresh Predictions
+    </button>
+
+    <!-- Prediction Settings Button -->
+    <button class="refresh-btn" id="settingsBtn" onclick="showSettings()" style="top: 1rem; right: 13rem; background: linear-gradient(135deg, #2d5a8c 0%, #4a90e2 100%); border-color: #7cb8f7;">
+        ⚙️ Prediction Settings
+    </button>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- Notification Modal -->
+    <div class="notification-modal" id="notificationModal">
+        <div class="modal-header" id="modalHeader">Generating Predictions</div>
+        <div class="modal-body">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="modal-message" id="modalMessage">
+                <span class="spinner"></span>
+                <span id="statusText">Initializing...</span>
+            </div>
+            <button class="modal-close-btn" id="closeBtn" style="display: none;" onclick="closeModal()">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="notification-modal" id="settingsModal" style="min-width: 600px; max-width: 800px;">
+        <div class="modal-header">⚙️ Prediction Settings</div>
+        <div class="modal-body" style="text-align: left;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <!-- Left Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Solar Activity (SSN)</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="ssnAuto" name="ssnMode" value="auto" checked onchange="toggleSSNMode()">
+                            <label for="ssnAuto" style="margin-right: 1rem;">Auto (Current)</label>
+                            <input type="radio" id="ssnManual" name="ssnMode" value="manual" onchange="toggleSSNMode()">
+                            <label for="ssnManual">Manual</label>
+                        </div>
+                        <input type="range" id="ssnSlider" min="10" max="200" value="140" disabled style="width: 100%; margin-top: 0.5rem;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="ssnValue">SSN: 140</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Noise Environment</label>
+                        <select id="noiseLevel" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="remote">Remote (Lowest Noise)</option>
+                            <option value="quiet" selected>Quiet Rural</option>
+                            <option value="rural">Rural</option>
+                            <option value="residential">Residential</option>
+                            <option value="urban">Urban</option>
+                            <option value="noisy">Very Noisy</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Propagation Method</label>
+                        <select id="propMethod" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="auto" selected>Auto (Recommended)</option>
+                            <option value="ray-hop">Ray-Hop Only</option>
+                            <option value="ducted">Ducted Mode</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Path Mode</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="radio" id="pathShort" name="pathMode" value="short" checked>
+                            <label for="pathShort" style="margin-right: 1rem;">Short Path (SP)</label>
+                            <input type="radio" id="pathLong" name="pathMode" value="long">
+                            <label for="pathLong">Long Path (LP)</label>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Short path is the direct route; long path goes the opposite direction around Earth</div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Minimum Take-Off Angle</label>
+                        <input type="range" id="minToaSlider" min="0.1" max="10" step="0.1" value="3.0" oninput="document.getElementById('minToaValue').textContent = this.value + '°'" style="width: 100%;">
+                        <div style="text-align: center; margin-top: 0.3rem; color: #8a9bb5;" id="minToaValue">3.0°</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Lower angles favor DX, higher angles favor NVIS</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Communication Mode (SNR Threshold)</label>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="3" id="snrModeFT8" onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">FT8 / Digital Modes</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">3 dB</span>
+                            </label>
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="6" id="snrModeCW" onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">CW / Morse Code</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">6 dB</span>
+                            </label>
+                            <label style="display: flex; align-items: center; padding: 0.6rem; background: #1a2332; border: 1px solid #2a3f5f; border-radius: 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#1f2937'" onmouseout="if(!this.querySelector('input').checked) this.style.background='#1a2332'">
+                                <input type="radio" name="snrMode" value="10" id="snrModeSSB" checked onchange="updateSnrThreshold()" style="margin-right: 0.7rem; cursor: pointer;">
+                                <span style="color: #e0e0e0; font-weight: 500;">SSB / Voice</span>
+                                <span style="margin-left: auto; color: #fbbf24; font-weight: bold;">10 dB</span>
+                            </label>
+                        </div>
+                        <div style="text-align: center; margin-top: 0.5rem; color: #8a9bb5; font-size: 0.8rem;" id="reqSnrValue">Current: 10 dB</div>
+                        <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem; text-align: center;">Select mode for typical SNR requirements</div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Transmit Power (W)</label>
+                        <input type="number" id="txPower" min="1" max="1500" value="100" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
+                <button onclick="resetSettings()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    🔄 Reset to Defaults
+                </button>
+                <button onclick="saveSettings()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    💾 Save & Apply
+                </button>
+                <button onclick="closeSettings()" style="background: #2a3f5f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+
+            <div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                <strong>Note:</strong> Settings are saved to localStorage. Click "Refresh Predictions" to generate new forecasts with these settings.
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modals -->
+    <div class="help-modal" id="helpModal">
+        <button class="help-close-btn" onclick="closeHelp()">✕ Close</button>
+        <div id="helpContent"></div>
+    </div>
+
+    <div class="header">
+        <h1>📡 VE1ATM HF Propagation Monitor</h1>
+        <div class="station-info">
+            <span><strong>QTH:</strong> FN74ui (Lunenburg, NS)</span>
+            <span><strong>Antenna:</strong> DX Commander 7m Vertical</span>
+            <span><strong>Bands:</strong> 40m-10m</span>
+        </div>
+    </div>
+    
+    <div class="solar-bar" id="solarBar"></div>
+    
+    <div class="container">
+        <div class="alert-bar" id="dxccAlerts">
+            <strong>🎯 NEEDED DXCC - WORKABLE NOW:</strong>
+            <div id="alertList" style="margin-top: 0.3rem;"></div>
+        </div>
+        
+        <div class="tab-nav">
+            <button class="tab-button active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="tab-button" onclick="showTab('bands')">📻 Band Details</button>
+            <button class="tab-button" onclick="showTab('propcharts')">📈 Propagation Charts</button>
+            <button class="tab-button" onclick="showTab('planner')">🗺️ Mini Planner</button>
+            <button class="tab-button" onclick="showTab('timeline')">⏰ 72-Hour Forecast</button>
+            <button class="tab-button" onclick="showTab('dxcc')">🎯 DXCC Tracking</button>
+            <button class="tab-button" onclick="showTab('config')">⚙️ Station Config</button>
+        </div>
+        
+        <!-- OVERVIEW TAB -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="grid-2col">
+                <div class="card">
+                    <h2>🌍 Current Band Openings
+                        <span class="help-icon" onclick="showHelp('bandopenings')" title="Click for explanation">?</span>
+                        <span id="grayLineTime" style="float: right; font-size: 0.75rem; font-weight: normal;"></span>
+                    </h2>
+
+                    <!-- Map Controls -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
+                        <!-- Path Mode Toggle -->
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="font-weight: bold; color: #9aa5b1;">Path Mode:</label>
+                            <label style="cursor: pointer;">
+                                <input type="radio" name="pathMode" value="sp" checked onchange="updatePathMode()"> Short Path
+                            </label>
+                            <label style="cursor: pointer;">
+                                <input type="radio" name="pathMode" value="lp" onchange="updatePathMode()"> Long Path
+                            </label>
+                        </div>
+
+                        <!-- Gray Line Time Control -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label for="grayLineTimeSlider" style="font-weight: bold; color: #9aa5b1;">
+                                Time (UTC):
+                                <span class="help-icon" onclick="showHelp('grayline')" title="Click for grayline explanation">?</span>
+                            </label>
+                            <input type="range" id="grayLineTimeSlider" min="0" max="23" step="1"
+                                   style="width: 200px;" onchange="updateGrayLineTime(this.value)" oninput="updateGrayLineTimeDisplay(this.value)">
+                            <span id="grayLineTimeValue" style="font-weight: bold; min-width: 50px;">--:--</span>
+                            <button onclick="resetGrayLineTime()"
+                                    style="background: #2d5a8c; color: white; border: none; padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+                                Now
+                            </button>
+                        </div>
+
+                        <!-- Heatmap Opacity Control -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label for="heatmapOpacitySlider" style="font-weight: bold; color: #9aa5b1;">Heatmap:</label>
+                            <input type="range" id="heatmapOpacitySlider" min="0" max="100" step="10" value="60"
+                                   style="width: 150px;" onchange="updateHeatmapOpacity(this.value)" oninput="updateHeatmapOpacityDisplay(this.value)">
+                            <span id="heatmapOpacityValue" style="font-weight: bold; min-width: 40px;">60%</span>
+                        </div>
+                    </div>
+
+                    <div style="position: relative;">
+                        <div id="map"></div>
+
+                        <!-- Heatmap Legend -->
+                        <div class="heatmap-legend">
+                            <h4>Propagation Likelihood</h4>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(74, 222, 128, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Good</span>
+                                    <span>70-100%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(251, 191, 36, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Fair</span>
+                                    <span>45-70%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: rgba(248, 113, 113, 0.7);"></div>
+                                <div class="legend-label">
+                                    <span>Poor</span>
+                                    <span>30-45%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding: 0.5rem; background: #1a2738; border-radius: 6px;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="color: #4a90e2; font-weight: bold; white-space: nowrap;">Greyline Time:</label>
+                            <input type="range" id="grayLineSlider" min="0" max="23.99" step="0.25" value="0"
+                                   oninput="updateGrayLineSlider(this.value)"
+                                   style="flex: 1;">
+                            <button onclick="resetGrayLineSlider()"
+                                    style="background: #2d5a8c; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; white-space: nowrap;">
+                                🔄 Current Time
+                            </button>
+                        </div>
+                        <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.3rem;">
+                            Drag slider to preview greyline at different times
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="legend-item"><span class="status-dot status-good"></span> Good (&gt;60%)</div>
+                        <div class="legend-item"><span class="status-dot status-fair"></span> Fair (30-60%)</div>
+                        <div class="legend-item"><span class="status-dot status-poor"></span> Poor (&lt;30%)</div>
+                        <div class="legend-item">🌅 Gray Line Zone</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📋 Quick Summary</h2>
+                    <div id="quickSummary"></div>
+                </div>
+            </div>
+
+            <div class="grid-2col" style="margin-top: 1rem;">
+                <div class="card">
+                    <h2>⏰ 24-Hour Propagation Wheel
+                        <span class="help-icon" onclick="showHelp('propwheel')" title="Click for explanation">?</span>
+                    </h2>
+                    <div style="margin-bottom: 0.5rem; font-size: 0.8rem; color: #8a9bb5;">
+                        <label>Select Region: </label>
+                        <select id="wheelRegionSelect" onchange="renderPropWheel()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div id="propWheel" style="height: 500px;"></div>
+                    <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.5rem;">
+                        Hover over bands to see reliability percentage. Outer ring = higher bands.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🎯 Best Bands Right Now</h2>
+                    <div id="bestBands"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BANDS TAB -->
+        <div id="tab-bands" class="tab-content">
+            <div class="card">
+                <h2>📊 Detailed Band Conditions (with S-Meter Estimates)</h2>
+                <div class="band-grid" id="bandGrid"></div>
+            </div>
+        </div>
+
+        <!-- PROPAGATION CHARTS TAB -->
+        <div id="tab-propcharts" class="tab-content">
+            <div class="card">
+                <h2>📈 24-Hour Propagation Analysis</h2>
+                <div style="margin-bottom: 1rem;">
+                    <label style="color: #4a90e2; font-weight: bold; margin-right: 0.5rem;">Select Band:</label>
+                    <select id="chartBandSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <option value="40m">40m (7.150 MHz)</option>
+                        <option value="30m">30m (10.125 MHz)</option>
+                        <option value="20m" selected>20m (14.150 MHz)</option>
+                        <option value="17m">17m (18.118 MHz)</option>
+                        <option value="15m">15m (21.200 MHz)</option>
+                        <option value="12m">12m (24.940 MHz)</option>
+                        <option value="10m">10m (28.500 MHz)</option>
+                    </select>
+
+                    <label style="color: #4a90e2; font-weight: bold; margin-left: 1.5rem; margin-right: 0.5rem;">Select Region:</label>
+                    <select id="chartRegionSelect" onchange="renderPropChart()" style="background: #162236; color: #e0e0e0; border: 1px solid #2a3f5f; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- Most Reliable Band (MRB) Indicator -->
+                <div id="mrmIndicator" style="margin-bottom: 2rem; padding: 1rem; background: #1a2332; border-radius: 8px; border-left: 4px solid #4a90e2;">
+                    <h3 style="margin: 0 0 0.75rem 0; color: #4a90e2; font-size: 1rem;">
+                        🎯 Most Reliable Band by Hour
+                        <span class="help-icon" onclick="showHelp('mrb')" title="Click for explanation">?</span>
+                    </h3>
+                    <div id="mrmContent" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.5rem; font-size: 0.85rem;">
+                        <!-- MRB data populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Reliability Chart -->
+                <div id="reliabilityChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- SNR Chart -->
+                <div id="snrChart" style="height: 300px; margin-bottom: 2rem;"></div>
+
+                <!-- Signal Power (SDBW) Chart -->
+                <div id="sdbwChart" style="height: 300px;"></div>
+                <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-bottom: 2rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
+                    Shows signal variability: median (solid), 10th/90th percentiles (dotted), shaded = 80% of signals fall in this range
+                    <span class="help-icon" onclick="showHelp('signalpower')" title="Click for detailed explanation" style="margin-left: 0.3rem;">?</span>
+                </div>
+
+                <!-- MUFday Chart -->
+                <div id="mufdayChart" style="height: 300px;"></div>
+                <div style="text-align: center; font-size: 0.75rem; color: #8a9bb5; margin-top: 0.5rem; padding: 0.5rem; background: #1a2332; border-radius: 4px;">
+                    Operating frequency as % of MUF - Values >90% indicate unreliable propagation
+                    <span class="help-icon" onclick="showHelp('mufday')" title="Click for detailed explanation" style="margin-left: 0.3rem;">?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MINI PLANNER TAB -->
+        <div id="tab-planner" class="tab-content">
+            <div class="card">
+                <h2>🗺️ Mini Planner - Custom Target Predictions</h2>
+                <p style="color: #8a9bb5; font-size: 0.85rem; margin-bottom: 1rem;">
+                    Plan propagation to specific locations by entering coordinates, grid squares, or selecting from popular destinations.
+                </p>
+
+                <!-- Target Input Form -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Target Name</label>
+                        <input type="text" id="targetName" placeholder="e.g., Tokyo, JA" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Input Method</label>
+                        <select id="inputMethod" onchange="updatePlannerInputs()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="latlon">Lat/Lon (Decimal)</option>
+                            <option value="maidenhead">Maidenhead Grid</option>
+                            <option value="preset">Popular Destinations</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lat/Lon Inputs -->
+                <div id="latLonInputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Latitude</label>
+                        <input type="number" id="targetLat" placeholder="35.6762" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Longitude</label>
+                        <input type="number" id="targetLon" placeholder="139.6503" step="0.0001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <!-- Maidenhead Input -->
+                <div id="maidenheadInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Maidenhead Grid Square</label>
+                    <input type="text" id="targetGrid" placeholder="PM95" maxlength="6" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px; text-transform: uppercase;">
+                    <div style="font-size: 0.7rem; color: #6a7f9f; margin-top: 0.3rem;">Enter 4 or 6-character grid (e.g., FN20, PM95vr)</div>
+                </div>
+
+                <!-- Preset Destinations -->
+                <div id="presetInput" style="display: none; margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #4a90e2;">Select Destination</label>
+                    <select id="presetDestination" onchange="loadPreset()" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        <option value="">-- Select --</option>
+                        <option value="35.6762,139.6503">Tokyo, Japan (PM95)</option>
+                        <option value="51.5074,-0.1278">London, UK (IO91)</option>
+                        <option value="-33.8688,151.2093">Sydney, Australia (QF56)</option>
+                        <option value="40.7128,-74.0060">New York, USA (FN30)</option>
+                        <option value="55.7558,37.6173">Moscow, Russia (KO85)</option>
+                        <option value="-23.5505,-46.6333">São Paulo, Brazil (GG66)</option>
+                        <option value="1.3521,103.8198">Singapore (OJ11)</option>
+                        <option value="-26.2041,28.0473">Johannesburg, South Africa (KG33)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="addPlannerTarget()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        ➕ Add Target
+                    </button>
+                    <button onclick="clearPlannerTargets()" style="background: #6a7f9f; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        🗑️ Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Target List and Predictions -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>📊 Custom Target Predictions</h2>
+                <div id="plannerTargets" style="min-height: 200px;">
+                    <p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMELINE TAB -->
+        <div id="tab-timeline" class="tab-content">
+            <div class="card">
+                <h2>⏰ 72-Hour Propagation Forecast</h2>
+                <div class="timeline" id="timeline"></div>
+            </div>
+        </div>
+        
+        <!-- DXCC TAB -->
+        <div id="tab-dxcc" class="tab-content">
+            <!-- Logbook Import Section -->
+            <div class="card" style="margin-bottom: 1rem;">
+                <h2>📥 Import Logbook (ADIF)</h2>
+                <div style="background: #1a2738; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <div style="color: #8a9bb5; font-size: 0.85rem; margin-bottom: 0.5rem;">
+                        Import your ADIF logbook to analyze worked DXCC entities and identify needed countries.
+                        Only DXCC statistics are retained - the full logbook is not stored.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <input type="file" id="logbookFile" accept=".adi,.adif" style="flex: 1; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    <button onclick="uploadLogbook()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer; white-space: nowrap;">
+                        📤 Analyze Logbook
+                    </button>
+                </div>
+                <div id="logbookStatus" style="margin-top: 0.75rem; font-size: 0.85rem; color: #4aed88;"></div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <h2>🎯 DXCC Progress</h2>
+                    <div class="dxcc-grid" id="dxccStats"></div>
+                    <div class="most-wanted" id="mostWanted"></div>
+                </div>
+
+                <div class="card">
+                    <h2>📈 DXCC Statistics</h2>
+                    <div id="dxccDetails"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATION CONFIG TAB -->
+        <div id="tab-config" class="tab-content">
+            <div class="grid-2col">
+                <!-- Station Information -->
+                <div class="card">
+                    <h2>📡 Station Information</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Operator Name</label>
+                            <input type="text" id="stationName" placeholder="Your Name" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Callsign</label>
+                            <input type="text" id="stationCallsign" placeholder="VE1ATM" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Grid Square</label>
+                            <input type="text" id="stationGrid" placeholder="FN74ui" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Latitude</label>
+                                <input type="number" id="stationLat" placeholder="44.374" step="0.001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Longitude</label>
+                                <input type="number" id="stationLon" placeholder="-64.300" step="0.001" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            </div>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">Power (Watts)</label>
+                            <input type="number" id="stationPower" placeholder="100" min="1" max="1500" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        </div>
+                        <button onclick="saveStationConfig()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 0.5rem;">💾 Save Station Info</button>
+                    </div>
+                </div>
+
+                <!-- Antenna Configuration -->
+                <div class="card">
+                    <h2>📻 Antenna Configuration</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <button onclick="addAntenna()" style="background: #2d5a8c; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%;">➕ Add Antenna</button>
+                        </div>
+                        <div id="antennaList" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <!-- Antennas will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Band-to-Antenna Assignment -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>🔗 Band-to-Antenna Assignment</h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">160m</label>
+                        <select id="band-160m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">80m</label>
+                        <select id="band-80m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">40m</label>
+                        <select id="band-40m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">30m</label>
+                        <select id="band-30m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">20m</label>
+                        <select id="band-20m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">17m</label>
+                        <select id="band-17m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">15m</label>
+                        <select id="band-15m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">12m</label>
+                        <select id="band-12m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 0.3rem; color: #4a90e2;">10m</label>
+                        <select id="band-10m" class="band-antenna-select" style="width: 100%; padding: 0.5rem; background: #1a2332; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                            <option value="">Not Configured</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="saveBandAssignments()" style="background: #4a90e2; color: white; border: none; padding: 0.7rem; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 1rem;">💾 Save Band Assignments</button>
+            </div>
+
+            <!-- EME Calculator (Placeholder for future) -->
+            <div class="card" style="margin-top: 1rem;">
+                <h2>🌙 EME (Earth-Moon-Earth) Calculator</h2>
+                <div style="padding: 2rem; text-align: center; color: #8a9bb5;">
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Coming Soon</p>
+                    <p style="font-size: 0.9rem;">EME propagation calculator will be available in a future update.</p>
+                    <p style="font-size: 0.8rem; margin-top: 1rem; color: #6a7f9f;">Track moonrise/moonset, path loss, Doppler shift, and optimal EME windows.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-info" id="updateInfo"></div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let propData = null;
+        let map = null;
+        let grayLineLayer = null;
+        let gridLayer = null;  // Layer for Maidenhead grid heatmap
+        let pathMode = 'sp';  // 'sp' for short path, 'lp' for long path
+        let grayLineHour = null;  // null = use current time, otherwise use this hour (0-23)
+        let heatmapOpacity = 0.6;  // Default opacity for heatmap grid squares
+
+        // Maidenhead Grid Calculation Functions
+        const MAIDENHEAD = {
+            // Convert lat/lon to 4-character Maidenhead grid
+            toGrid: function(lat, lon) {
+                const adjLon = lon + 180;
+                const adjLat = lat + 90;
+
+                const fieldLon = String.fromCharCode(65 + Math.floor(adjLon / 20));
+                const fieldLat = String.fromCharCode(65 + Math.floor(adjLat / 10));
+                const squareLon = Math.floor((adjLon % 20) / 2);
+                const squareLat = Math.floor((adjLat % 10) / 1);
+
+                return fieldLon + fieldLat + squareLon + squareLat;
+            },
+
+            // Convert 4-character Maidenhead grid to lat/lon bounds
+            toBounds: function(grid) {
+                if (grid.length !== 4) return null;
+
+                const field1 = grid.charCodeAt(0) - 65;
+                const field2 = grid.charCodeAt(1) - 65;
+                const square1 = parseInt(grid.charAt(2));
+                const square2 = parseInt(grid.charAt(3));
+
+                const lonMin = field1 * 20 + square1 * 2 - 180;
+                const lonMax = lonMin + 2;
+                const latMin = field2 * 10 + square2 * 1 - 90;
+                const latMax = latMin + 1;
+
+                return {
+                    south: latMin,
+                    north: latMax,
+                    west: lonMin,
+                    east: lonMax,
+                    center: {
+                        lat: (latMin + latMax) / 2,
+                        lon: (lonMin + lonMax) / 2
+                    }
+                };
+            },
+
+            // Generate all 4-character grids within a lat/lon range
+            generateGrids: function(latMin, latMax, lonMin, lonMax) {
+                const grids = new Set();
+                for (let lat = latMin; lat <= latMax; lat += 0.5) {
+                    for (let lon = lonMin; lon <= lonMax; lon += 1) {
+                        const grid = this.toGrid(lat, lon);
+                        grids.add(grid);
+                    }
+                }
+                return Array.from(grids);
+            }
+        };
+
+        // Get color for reliability value
+        function getColorForReliability(reliability) {
+            if (reliability >= 70) return 'rgba(74, 222, 128, 0.7)';      // Good - Green
+            if (reliability >= 45) return 'rgba(251, 191, 36, 0.7)';      // Fair - Yellow
+            if (reliability >= 30) return 'rgba(248, 113, 113, 0.7)';     // Poor - Red
+            return 'rgba(138, 155, 181, 0.4)';                            // Closed - Gray
+        }
+
+        function getReliabilityLabel(reliability) {
+            if (reliability >= 70) return 'Good';
+            if (reliability >= 45) return 'Fair';
+            if (reliability >= 30) return 'Poor';
+            return 'Closed';
+        }
+
+        // Help System
+        const helpContent = {
+            'bandopenings': `
+                <h2>🌍 Current Band Openings</h2>
+                <p>This interactive map shows predicted HF propagation paths from your station to major DX regions worldwide.</p>
+
+                <h3>Understanding the Map</h3>
+                <ul>
+                    <li><strong>Color-coded regions:</strong> Green = Good, Yellow = Fair, Red = Poor propagation</li>
+                    <li><strong>Dashed lines:</strong> Show propagation paths (great circle routes)</li>
+                    <li><strong>Yellow band:</strong> The grayline/terminator zone between day and night</li>
+                    <li><strong>Click markers:</strong> View detailed info for each region</li>
+                </ul>
+
+                <h3>Short Path vs Long Path</h3>
+                <p>Radio signals can travel the short way around Earth or the long way:</p>
+                <ul>
+                    <li><strong>Short Path (SP):</strong> Direct great circle route (default)</li>
+                    <li><strong>Long Path (LP):</strong> The opposite direction around Earth - can provide better propagation when short path is disturbed</li>
+                </ul>
+
+                <h3>Time Control</h3>
+                <p>Use the time slider to preview propagation conditions at any UTC hour. The grayline position updates to show where twilight zones will be.</p>
+
+                <div class="info">
+                    <strong>Tip:</strong> The grayline (twilight zone) often provides enhanced propagation, especially on lower bands like 40m and 80m.
+                </div>
+            `,
+            'grayline': `
+                <h2>🌅 Grayline (Terminator Zone)</h2>
+                <p>The grayline is the twilight zone between day and night on Earth, visible on the map as a yellow band.</p>
+
+                <h3>Why is the Grayline Important?</h3>
+                <ul>
+                    <li><strong>Enhanced propagation:</strong> D-layer absorption is minimal (D-layer disappears at night)</li>
+                    <li><strong>Lower noise:</strong> Both ends of the path experience low noise levels</li>
+                    <li><strong>Mixed ionosphere:</strong> Can support both day and night propagation modes</li>
+                    <li><strong>Best for DX:</strong> Excellent for working distant stations on 40m-10m</li>
+                </ul>
+
+                <h3>How to Use It</h3>
+                <ul>
+                    <li><strong>Now button:</strong> Shows current grayline position</li>
+                    <li><strong>Time slider:</strong> Preview grayline at any UTC hour for planning</li>
+                    <li><strong>Strategy:</strong> Plan QSOs when both stations are in or near the grayline</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>Note:</strong> The grayline moves at ~15° longitude per hour (1000+ mph). Openings can be brief but spectacular!
+                </div>
+            `,
+            'propwheel': `
+                <h2>⏰ 24-Hour Propagation Wheel</h2>
+                <p>This polar chart shows predicted band reliability over 24 hours for a selected region.</p>
+
+                <h3>How to Read the Wheel</h3>
+                <ul>
+                    <li><strong>Clock positions:</strong> Each hour of the day (00-23 UTC) arranged clockwise from top</li>
+                    <li><strong>Radial distance:</strong> Reliability percentage (0% at center, 100% at edge)</li>
+                    <li><strong>Colored bands:</strong> Each band (40m-10m) shown as filled areas</li>
+                    <li><strong>Band colors:</strong> Purple (40m) → Blue (20m) → Green (15m) → Red (10m)</li>
+                </ul>
+
+                <h3>Using the Wheel for Planning</h3>
+                <ul>
+                    <li><strong>Find best times:</strong> Look for where bands reach furthest from center</li>
+                    <li><strong>Compare bands:</strong> See which bands are open simultaneously</li>
+                    <li><strong>Spot openings:</strong> 10m/12m openings appear as the outer bands expanding</li>
+                </ul>
+
+                <div class="info">
+                    <strong>VOACAP Compatibility:</strong> This wheel represents VOACAP reliability data (probability of successful circuit). Unlike simplified propagation models, VOACAP accounts for all ionospheric layers, multiple hops, and actual signal loss.
+                </div>
+
+                <div class="warning">
+                    <strong>Note:</strong> Reliability >60% = Good, 30-60% = Fair, <30% = Poor. Values >80% indicate very reliable propagation.
+                </div>
+            `,
+            'mrb': `
+                <h2>🎯 Most Reliable Band by Hour</h2>
+                <p>Shows which amateur radio band (40m-10m) offers the best propagation for each hour of the day to the selected region.</p>
+
+                <h3>Understanding the Display</h3>
+                <ul>
+                    <li><strong>Band shown:</strong> The frequency band with highest predicted reliability for that hour</li>
+                    <li><strong>Percentage:</strong> Reliability score (0-100%)</li>
+                    <li><strong>Colors:</strong>
+                        <ul>
+                            <li>Green background = Good (≥60% reliability)</li>
+                            <li>Yellow background = Fair (30-60% reliability)</li>
+                            <li>Gray background = Poor (<30% reliability)</li>
+                        </ul>
+                    </li>
+                    <li><strong>⚠️ Warning icon:</strong> Appears when MUF usage >90% (frequency near or above MUF limit)</li>
+                </ul>
+
+                <h3>How to Use This</h3>
+                <p>Plan your operating schedule by identifying which band will work best at which times. For example:</p>
+                <ul>
+                    <li><strong>Daytime:</strong> Higher bands (20m, 17m, 15m) often best</li>
+                    <li><strong>Evening:</strong> Transition to 30m and 40m</li>
+                    <li><strong>Night:</strong> Lower bands (40m, 30m) dominate</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>MUF Usage Warning (⚠️):</strong> When you see this icon, the operating frequency is near or above the MUF limit (>90% usage). While signals may still get through, propagation becomes unreliable and subject to rapid fading.
+                </div>
+            `,
+            'signalpower': `
+                <h2>📊 Signal Power Chart</h2>
+                <p>Shows predicted received signal power in dBW (decibels relative to 1 watt) over 24 hours.</p>
+
+                <h3>Understanding the Lines</h3>
+                <ul>
+                    <li><strong>Green solid line (Median):</strong> Expected median signal power</li>
+                    <li><strong>Light green dotted (10th percentile):</strong> Weaker end of signal variation</li>
+                    <li><strong>Dark green dotted (90th percentile):</strong> Stronger end of signal variation</li>
+                    <li><strong>Shaded area:</strong> Range where 80% of signals fall (between 10th and 90th percentile)</li>
+                </ul>
+
+                <h3>Why Three Lines?</h3>
+                <p>HF propagation is variable due to:</p>
+                <ul>
+                    <li>Ionospheric irregularities and turbulence</li>
+                    <li>Multipath propagation (signals arriving via different paths)</li>
+                    <li>Fading (constructive/destructive interference)</li>
+                    <li>Geomagnetic disturbances</li>
+                </ul>
+
+                <h3>What Values Mean</h3>
+                <ul>
+                    <li><strong>-140 dBW:</strong> Very weak signal (minimum detectable)</li>
+                    <li><strong>-130 dBW:</strong> Weak but workable with digital modes</li>
+                    <li><strong>-120 dBW:</strong> Moderate signal</li>
+                    <li><strong>-110 dBW or higher:</strong> Strong signal</li>
+                </ul>
+
+                <div class="info">
+                    <strong>Note:</strong> If the 10th and 90th percentiles are close together, propagation is stable. Wide separation indicates more fading and variability.
+                </div>
+
+                <div class="warning">
+                    <strong>Data Issue:</strong> If you see the 10th and 90th percentiles above the median, this indicates a calculation error in the data pipeline that needs investigation.
+                </div>
+            `,
+            'mufday': `
+                <h2>📈 MUF Usage</h2>
+                <p>Shows how close your operating frequency is to the Maximum Usable Frequency (MUF) limit.</p>
+
+                <h3>What is MUF Usage?</h3>
+                <p>MUF Usage represents how close you are to the MUF ceiling:</p>
+                <ul>
+                    <li><strong>Low usage (0-30%):</strong> Frequency well below MUF - very reliable propagation</li>
+                    <li><strong>Medium usage (30-70%):</strong> Moderate safety margin - good propagation</li>
+                    <li><strong>High usage (70-90%):</strong> Approaching MUF limit - propagation may be unstable</li>
+                    <li><strong>Very high usage (>90%):</strong> At or above MUF - unreliable, subject to fading</li>
+                </ul>
+
+                <h3>Understanding the Values:</h3>
+                <ul>
+                    <li><strong>Low values (0-50%):</strong> Very reliable, excellent propagation conditions</li>
+                    <li><strong>Optimal (70-85%):</strong> Best balance of reliability and signal strength</li>
+                    <li><strong>High (85-90%):</strong> Strong signals but less reliable</li>
+                    <li><strong>>90% (warning zone):</strong> Unreliable, prone to dropout</li>
+                </ul>
+
+                <h3>Why the 90% Warning Threshold?</h3>
+                <p>When operating above 90% of MUF:</p>
+                <ul>
+                    <li>Small ionospheric changes can close the path completely</li>
+                    <li>Propagation becomes sporadic and unreliable</li>
+                    <li>Skip zone (dead zone) may expand</li>
+                    <li>Higher bands may be better choices</li>
+                </ul>
+
+                <h3>Understanding the Graph Behavior</h3>
+                <p><strong>If the graph is consistently above the warning line:</strong></p>
+                <ul>
+                    <li>The MUF for this path is lower than your operating frequency</li>
+                    <li>Propagation may still occur via higher-order modes or scattering</li>
+                    <li>VOACAP models these modes, which is why you may still see reliability predictions</li>
+                    <li>Consider trying a lower frequency band for more reliable propagation</li>
+                </ul>
+
+                <div class="info">
+                    <strong>VOACAP Insight:</strong> Unlike simple models, VOACAP accounts for multiple propagation modes beyond the basic MUF, including higher-order F2 hops, sporadic E, and field-aligned irregularities (FAI). This is why predictions may show some reliability even when MUFday >100%.
+                </div>
+
+                <div class="warning">
+                    <strong>Operating Strategy:</strong> If MUF usage is consistently >90%, consider:
+                    <ul>
+                        <li>Moving to the next lower band (e.g., 20m instead of 17m) for better reliability</li>
+                        <li>Waiting for solar activity to increase the MUF</li>
+                        <li>Using the path during grayline enhancement periods</li>
+                    </ul>
+                </div>
+            `
+        };
+
+        function showHelp(topic) {
+            const modal = document.getElementById('helpModal');
+            const overlay = document.getElementById('modalOverlay');
+            const content = document.getElementById('helpContent');
+
+            content.innerHTML = helpContent[topic] || '<p>Help content not found.</p>';
+
+            modal.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('show');
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        // Close help modal when clicking overlay
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeHelp();
+                closeSettings();
+            }
+        });
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function snrToSMeter(snr) {
+            if (snr >= 45) return 'S9+40';
+            if (snr >= 35) return 'S9+30';
+            if (snr >= 25) return 'S9+20';
+            if (snr >= 15) return 'S9+10';
+            if (snr >= 10) return 'S9';
+            if (snr >= 4) return 'S8';
+            if (snr >= -2) return 'S7';
+            if (snr >= -8) return 'S6';
+            if (snr >= -14) return 'S5';
+            if (snr >= -20) return 'S4';
+            if (snr >= -26) return 'S3';
+            return 'S2';
+        }
+        
+        async function loadPropagationData() {
+            try {
+                // Try API endpoint first, fallback to direct file access
+                let response = await fetch('/api/data');
+                if (!response.ok) {
+                    // Fallback to direct file access for backwards compatibility
+                    response = await fetch('enhanced_predictions.json');
+                }
+                const data = await response.json();
+                // Extract the predictions object from the data structure
+                propData = data.predictions || data;
+                initializeDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('updateInfo').innerHTML =
+                    '<strong>⚠️ Error loading data. Please regenerate predictions.</strong>';
+            }
+        }
+        
+        function initializeDashboard() {
+            renderSolarBar();
+            renderMap();
+            // Initialize greyline slider to current time
+            const now = new Date();
+            const currentHour = now.getUTCHours() + now.getUTCMinutes() / 60;
+            document.getElementById('grayLineSlider').value = currentHour;
+            renderQuickSummary();
+            renderBandGrid();
+            renderTimeline();
+            renderDXCC();
+            renderUpdateInfo();
+            checkDXCCAlerts();
+            initPropCharts();
+            initPropWheel();
+            renderBestBands();
+
+            // Initialize gray line time slider to current hour
+            const now = new Date();
+            const currentHour = now.getUTCHours();
+            document.getElementById('grayLineTimeSlider').value = currentHour;
+            document.getElementById('grayLineTimeValue').textContent =
+                `${String(currentHour).padStart(2, '0')}:00`;
+
+            // Update gray line every 5 minutes (only when using current time)
+            setInterval(() => {
+                if (grayLineHour === null) {
+                    updateGrayLine();
+                    // Update slider if showing current time
+                    const now = new Date();
+                    const currentHour = now.getUTCHours();
+                    document.getElementById('grayLineTimeSlider').value = currentHour;
+                    document.getElementById('grayLineTimeValue').textContent =
+                        `${String(currentHour).padStart(2, '0')}:00`;
+                }
+            }, 300000);
+        }
+
+        function initPropWheel() {
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data for wheel');
+                return;
+            }
+
+            // Get available regions from first band
+            const firstBand = Object.keys(propData.propagation_charts)[0];
+            const regions = Object.keys(propData.propagation_charts[firstBand].regions).sort();
+
+            const regionSelect = document.getElementById('wheelRegionSelect');
+            regionSelect.innerHTML = '';
+
+            regions.forEach(regionCode => {
+                const regionName = propData.propagation_charts[firstBand].regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+                renderPropWheel();
+            }
+        }
+
+        function renderPropWheel() {
+            const region = document.getElementById('wheelRegionSelect').value;
+            if (!propData.propagation_charts) return;
+
+            // Bands to display (from low to high frequency)
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            const bandColors = {
+                '160m': '#dc2626',
+                '80m': '#ea580c',
+                '40m': '#8b5cf6',
+                '30m': '#6366f1',
+                '20m': '#3b82f6',
+                '17m': '#06b6d4',
+                '15m': '#10b981',
+                '12m': '#fbbf24',
+                '10m': '#f87171'
+            };
+
+            const traces = [];
+
+            // Create a polar trace for each band
+            bands.forEach((band, idx) => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData || !chartData.regions[region]) return;
+
+                const regionData = chartData.regions[region];
+                const hours = chartData.hours;
+
+                // Convert hours to angles (0 = top/north, clockwise)
+                const theta = hours.map(h => h * 15);  // 15 degrees per hour
+                const r = regionData.reliability;
+
+                traces.push({
+                    type: 'scatterpolar',
+                    r: r,
+                    theta: theta,
+                    mode: 'lines',
+                    name: band,
+                    line: {
+                        color: bandColors[band],
+                        width: 3
+                    },
+                    fill: 'toself',
+                    fillcolor: bandColors[band] + '40'  // Add transparency
+                });
+            });
+
+            const regionName = propData.propagation_charts['20m'].regions[region].name;
+
+            const layout = {
+                polar: {
+                    bgcolor: '#0a0e1a',
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 100],
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#8a9bb5', size: 10 }
+                    },
+                    angularaxis: {
+                        tickmode: 'array',
+                        tickvals: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
+                        ticktext: ['00', '02', '04', '06', '08', '10', '12', '14', '16', '18', '20', '22'],
+                        direction: 'clockwise',
+                        gridcolor: '#2a3f5f',
+                        tickfont: { color: '#e0e0e0', size: 11 }
+                    }
+                },
+                paper_bgcolor: '#162236',
+                font: { color: '#e0e0e0' },
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    y: -0.15,
+                    x: 0.5,
+                    xanchor: 'center',
+                    font: { size: 11 }
+                },
+                title: {
+                    text: `Propagation to ${regionName}`,
+                    font: { color: '#4a90e2', size: 14 },
+                    y: 0.95
+                },
+                margin: { t: 60, r: 40, b: 60, l: 40 }
+            };
+
+            Plotly.newPlot('propWheel', traces, layout, {responsive: true, displayModeBar: false});
+        }
+
+        function renderBestBands() {
+            if (!propData.propagation_charts) {
+                document.getElementById('bestBands').innerHTML = '<p style="color: #8a9bb5; padding: 1rem;">No propagation data available</p>';
+                return;
+            }
+
+            const currentHour = new Date().getUTCHours();
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+
+            // Calculate scores for each band across all regions
+            const bandScores = [];
+
+            bands.forEach(band => {
+                const chartData = propData.propagation_charts[band];
+                if (!chartData) return;
+
+                let totalScore = 0;
+                let regionCount = 0;
+
+                // Find data for current hour
+                const hourIdx = chartData.hours.indexOf(currentHour);
+                if (hourIdx === -1) return;
+
+                Object.keys(chartData.regions).forEach(regionCode => {
+                    const regionData = chartData.regions[regionCode];
+                    const reliability = regionData.reliability[hourIdx] || 0;
+                    const snr = regionData.snr[hourIdx] || -999;
+                    const mufProb = regionData.muf_day[hourIdx] || 0;  // Probability MUF exceeds freq (higher is better)
+
+                    // Scoring algorithm: (Reliability × 0.5) + (SNR_normalized × 0.3) + (MUF_margin × 0.2)
+                    const snrNormalized = Math.max(0, Math.min(100, (snr + 20) * 2));  // Normalize SNR to 0-100
+                    const mufScore = mufProb;  // Higher mufProb is better (freq well below MUF)
+                    const score = (reliability * 0.5) + (snrNormalized * 0.3) + (mufScore * 0.2);
+
+                    totalScore += score;
+                    regionCount++;
+                });
+
+                if (regionCount > 0) {
+                    bandScores.push({
+                        band: band,
+                        avgScore: totalScore / regionCount,
+                        regions: regionCount
+                    });
+                }
+            });
+
+            // Sort by score descending
+            bandScores.sort((a, b) => b.avgScore - a.avgScore);
+
+            // Display top 5 bands
+            let html = '<div style="font-size: 0.9rem;">';
+
+            if (bandScores.length === 0) {
+                html += '<p style="color: #8a9bb5; padding: 1rem; text-align: center;">No band openings currently</p>';
+            } else {
+                bandScores.slice(0, 5).forEach((bandScore, idx) => {
+                    const score = bandScore.avgScore;
+                    let quality = 'Poor';
+                    let color = '#f87171';
+
+                    if (score >= 70) {
+                        quality = 'Excellent';
+                        color = '#4ade80';
+                    } else if (score >= 50) {
+                        quality = 'Good';
+                        color = '#fbbf24';
+                    } else if (score >= 30) {
+                        quality = 'Fair';
+                        color = '#fb923c';
+                    }
+
+                    const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅';
+
+                    html += `
+                        <div style="padding: 0.7rem; margin-bottom: 0.5rem; background: #0d1520; border-radius: 6px; border-left: 4px solid ${color};">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-size: 1.2rem;">${medal}</span>
+                                    <span style="font-weight: bold; font-size: 1.1rem; color: ${color};">${bandScore.band}</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: bold; color: ${color};">${quality}</div>
+                                    <div style="font-size: 0.75rem; color: #8a9bb5;">Score: ${score.toFixed(0)}/100</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.3rem; font-size: 0.75rem; color: #8a9bb5;">
+                                ${bandScore.regions} regions accessible
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `<div style="margin-top: 1rem; padding: 0.7rem; background: #1a2738; border-radius: 6px; font-size: 0.75rem; color: #8a9bb5; text-align: center;">
+                    <strong>Scoring:</strong> Reliability (50%) + SNR (30%) + MUF Safety (20%)
+                </div>`;
+            }
+
+            html += '</div>';
+            document.getElementById('bestBands').innerHTML = html;
+        }
+
+        function initPropCharts() {
+            // Populate region selector with available regions
+            if (!propData.propagation_charts) {
+                console.warn('No propagation charts data available');
+                return;
+            }
+
+            const band = '20m';  // Default band
+            const chartData = propData.propagation_charts[band];
+
+            if (!chartData || !chartData.regions) {
+                console.warn('No chart data for band:', band);
+                return;
+            }
+
+            const regionSelect = document.getElementById('chartRegionSelect');
+            regionSelect.innerHTML = '';
+
+            // Add regions as options
+            const regions = Object.keys(chartData.regions).sort();
+            regions.forEach(regionCode => {
+                const regionName = chartData.regions[regionCode].name;
+                const option = document.createElement('option');
+                option.value = regionCode;
+                option.textContent = `${regionCode} - ${regionName}`;
+                regionSelect.appendChild(option);
+            });
+
+            // Select first region by default (typically EU or UK)
+            if (regions.length > 0) {
+                regionSelect.value = regions[0];
+            }
+
+            // Render initial charts
+            renderPropChart();
+        }
+
+        function renderPropChart() {
+            const band = document.getElementById('chartBandSelect').value;
+            const region = document.getElementById('chartRegionSelect').value;
+
+            if (!propData.propagation_charts || !propData.propagation_charts[band]) {
+                console.error('No chart data for band:', band);
+                return;
+            }
+
+            const chartData = propData.propagation_charts[band];
+            const regionData = chartData.regions[region];
+
+            if (!regionData) {
+                console.error('No data for region:', region);
+                return;
+            }
+
+            const hours = chartData.hours;
+            const regionName = regionData.name;
+
+            // Common layout settings
+            const commonLayout = {
+                paper_bgcolor: '#162236',
+                plot_bgcolor: '#0a0e1a',
+                font: { color: '#e0e0e0', size: 12 },
+                margin: { t: 40, r: 40, b: 40, l: 60 },
+                xaxis: {
+                    title: 'Hour (UTC)',
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                yaxis: {
+                    gridcolor: '#2a3f5f',
+                    zeroline: false
+                },
+                hovermode: 'x unified'
+            };
+
+            // 1. Reliability Chart
+            const relTrace = {
+                x: hours,
+                y: regionData.reliability,
+                mode: 'lines+markers',
+                name: 'Reliability (%)',
+                line: { color: '#4a90e2', width: 3 },
+                marker: { size: 6, color: '#4a90e2' }
+            };
+
+            Plotly.newPlot('reliabilityChart', [relTrace], {
+                ...commonLayout,
+                title: { text: `Reliability - ${band} to ${regionName}`, font: { color: '#4a90e2', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Reliability (%)', range: [0, 100] }
+            }, {responsive: true, displayModeBar: false});
+
+            // 2. SNR Chart
+            const snrTrace = {
+                x: hours,
+                y: regionData.snr,
+                mode: 'lines+markers',
+                name: 'SNR (dB)',
+                line: { color: '#fbbf24', width: 3 },
+                marker: { size: 6, color: '#fbbf24' }
+            };
+
+            Plotly.newPlot('snrChart', [snrTrace], {
+                ...commonLayout,
+                title: { text: `Signal-to-Noise Ratio - ${band} to ${regionName}`, font: { color: '#fbbf24', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'SNR (dB)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 3. Signal Power (SDBW) Chart with distribution
+            const sdbwTrace = {
+                x: hours,
+                y: regionData.signal_dbw,
+                mode: 'lines+markers',
+                name: 'Median Power (dBW)',
+                line: { color: '#4ade80', width: 3 },
+                marker: { size: 6, color: '#4ade80' }
+            };
+
+            const sdbw10Trace = {
+                x: hours,
+                y: regionData.signal_10,
+                mode: 'lines',
+                name: '10th Percentile (Weak)',
+                line: { color: '#6ee7b7', width: 1, dash: 'dot' },
+                fill: 'none'
+            };
+
+            const sdbw90Trace = {
+                x: hours,
+                y: regionData.signal_90,
+                mode: 'lines',
+                name: '90th Percentile (Strong)',
+                line: { color: '#10b981', width: 1, dash: 'dot' },
+                fill: 'tonexty',
+                fillcolor: 'rgba(74, 222, 128, 0.2)'
+            };
+
+            Plotly.newPlot('sdbwChart', [sdbw10Trace, sdbw90Trace, sdbwTrace], {
+                ...commonLayout,
+                title: { text: `Signal Power - ${band} to ${regionName}`, font: { color: '#4ade80', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'Power (dBW)' }
+            }, {responsive: true, displayModeBar: false});
+
+            // 4. MUF Usage Chart (inverted from muf_day probability)
+            // muf_day is probability that MUF exceeds freq (100=good, 0=bad)
+            // MUF usage is (100 - muf_day) showing how close to MUF limit (0=good, 100=bad)
+            const mufUsageData = regionData.muf_day.map(val => 100 - val);
+
+            const mufdayTrace = {
+                x: hours,
+                y: mufUsageData,
+                mode: 'lines+markers',
+                name: 'MUF Usage (%)',
+                line: { color: '#f87171', width: 3 },
+                marker: { size: 6, color: '#f87171' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(248, 113, 113, 0.2)'
+            };
+
+            // Add warning line at 90% usage (means muf_day < 10)
+            const warningLine = {
+                x: hours,
+                y: Array(hours.length).fill(90),
+                mode: 'lines',
+                name: 'Warning Threshold',
+                line: { color: '#fbbf24', width: 2, dash: 'dash' }
+            };
+
+            Plotly.newPlot('mufdayChart', [mufdayTrace, warningLine], {
+                ...commonLayout,
+                title: { text: `MUF Usage - ${band} to ${regionName}`, font: { color: '#f87171', size: 16 } },
+                yaxis: { ...commonLayout.yaxis, title: 'MUF Usage (%)', range: [0, 100] },
+                annotations: [{
+                    x: hours[Math.floor(hours.length / 2)],
+                    y: 90,
+                    xref: 'x',
+                    yref: 'y',
+                    text: 'Warning: >90% usage means near MUF limit',
+                    showarrow: false,
+                    yshift: 15,
+                    font: { color: '#fbbf24', size: 10 }
+                }]
+            }, {responsive: true, displayModeBar: false});
+
+            // Render MRM indicator
+            renderMRMIndicator(region);
+        }
+
+        function renderMRMIndicator(regionCode) {
+            if (!propData.propagation_charts) return;
+
+            const regionData = propData.propagation_charts['20m'].regions[regionCode];
+            if (!regionData) return;
+
+            const regionName = regionData.name;
+            const hours = propData.propagation_charts['20m'].hours;
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+
+            const mrmContent = document.getElementById('mrmContent');
+            mrmContent.innerHTML = '';
+
+            // For each hour, find the Most Reliable Mode
+            hours.forEach((hour, hourIdx) => {
+                let bestBand = null;
+                let bestReliability = 0;
+                let bestMufProb = 0;  // Probability that MUF exceeds freq
+
+                // Check all bands for this hour
+                bands.forEach(band => {
+                    if (propData.propagation_charts[band]) {
+                        const bandRegionData = propData.propagation_charts[band].regions[regionCode];
+                        if (bandRegionData) {
+                            const reliability = bandRegionData.reliability[hourIdx] || 0;
+                            if (reliability > bestReliability) {
+                                bestReliability = reliability;
+                                bestBand = band;
+                                bestMufProb = bandRegionData.muf_day[hourIdx] || 0;
+                            }
+                        }
+                    }
+                });
+
+                // Create hour cell
+                const hourCell = document.createElement('div');
+                hourCell.style.cssText = 'padding: 0.5rem; background: #0a0e1a; border-radius: 4px; text-align: center;';
+
+                // Color based on reliability
+                let bgColor = '#1e293b';  // Poor (gray)
+                if (bestReliability >= 60) bgColor = 'rgba(74, 222, 128, 0.2)';  // Good (green)
+                else if (bestReliability >= 30) bgColor = 'rgba(251, 191, 36, 0.2)';  // Fair (yellow)
+
+                // Add warning indicator if MUF usage > 90% (muf_day < 10)
+                const mufUsage = 100 - bestMufProb;
+                const warningIcon = mufUsage > 90 ? ' ⚠️' : '';
+
+                hourCell.style.background = bgColor;
+                hourCell.innerHTML = `
+                    <div style="font-weight: bold; color: #9aa5b1; font-size: 0.75rem;">${String(hour).padStart(2, '0')}:00</div>
+                    <div style="font-weight: bold; color: ${bestReliability >= 60 ? '#4ade80' : bestReliability >= 30 ? '#fbbf24' : '#9aa5b1'}; font-size: 1rem;">
+                        ${bestBand || 'N/A'}${warningIcon}
+                    </div>
+                    <div style="font-size: 0.7rem; color: #64748b;">${bestReliability.toFixed(0)}%</div>
+                `;
+
+                // Add tooltip on hover
+                hourCell.title = `${hour}:00 UTC\nBest: ${bestBand}\nReliability: ${bestReliability.toFixed(1)}%\nMUF Usage: ${mufUsage.toFixed(1)}%${mufUsage > 90 ? '\n⚠️ Warning: Near MUF limit!' : ''}`;
+
+                mrmContent.appendChild(hourCell);
+            });
+        }
+        
+        function renderSolarBar() {
+            const solar = propData.current_conditions.solar;
+            let condition = 'Good';
+            if (solar.kp > 4) condition = 'Poor';
+            else if (solar.kp > 3) condition = 'Fair';
+            
+            document.getElementById('solarBar').innerHTML = `
+                <div class="solar-metric">
+                    <div class="label">SFI</div>
+                    <div class="value">${solar.sfi}</div>
+                    <div class="sublabel">${solar.sfi > 150 ? 'High' : 'Mod'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">SSN</div>
+                    <div class="value">${solar.ssn}</div>
+                    <div class="sublabel">${solar.ssn > 100 ? 'Active' : 'Quiet'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Kp</div>
+                    <div class="value">${solar.kp}</div>
+                    <div class="sublabel">${solar.kp < 3 ? 'Quiet' : 'Unsettled'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">A</div>
+                    <div class="value">${solar.a_index}</div>
+                    <div class="sublabel">${solar.a_index < 20 ? 'Excellent' : 'Good'}</div>
+                </div>
+                <div class="solar-metric">
+                    <div class="label">Conditions</div>
+                    <div class="value" style="font-size: 1rem;">${condition}</div>
+                    <div class="sublabel">HF Prop</div>
+                </div>
+            `;
+        }
+        
+        function renderQuickSummary() {
+            const bands = propData.current_conditions.bands;
+            let summary = '<div style="font-size: 0.85rem;">';
+            
+            // Best bands
+            summary += '<div style="margin-bottom: 1rem;"><strong style="color: #4a90e2;">Best Bands Right Now:</strong><br>';
+            for (const [bandName, bandData] of Object.entries(bands)) {
+                let goodCount = 0;
+                for (const [code, region] of Object.entries(bandData.regions)) {
+                    if (region.reliability > 60) goodCount++;
+                }
+                if (goodCount > 0) {
+                    summary += `<div style="padding: 0.3rem 0;">• ${bandName}: ${goodCount} regions open</div>`;
+                }
+            }
+            summary += '</div>';
+            
+            // DXCC quick stats
+            const dxcc = propData.dxcc;
+            summary += `<div><strong style="color: #4a90e2;">DXCC Progress:</strong><br>
+                <div style="padding: 0.3rem 0;">• Worked: ${dxcc.dxcc_worked?.length || 0}</div>
+                <div style="padding: 0.3rem 0;">• Confirmed: ${dxcc.dxcc_confirmed_lotw?.length || 0}</div>
+                <div style="padding: 0.3rem 0;">• Needed: ${dxcc.dxcc_missing?.length || 0}</div>
+            </div>`;
+            
+            summary += '</div>';
+            document.getElementById('quickSummary').innerHTML = summary;
+        }
+        
+        function renderBandGrid() {
+            const bands = propData.current_conditions.bands;
+            let html = '';
+            
+            for (const [bandName, bandData] of Object.entries(bands)) {
+                let maxMuf = 0;
+                let goodRegions = [];
+                let fairRegions = [];
+                
+                for (const [code, data] of Object.entries(bandData.regions)) {
+                    if (data.muf > maxMuf) maxMuf = data.muf;
+                    if (data.quality === 'GOOD') goodRegions.push({code, ...data});
+                    else if (data.quality === 'FAIR') fairRegions.push({code, ...data});
+                }
+                
+                const optimalFreq = (maxMuf * 0.85).toFixed(2);
+                const peakTime = bandName === '40m' ? 'Evening' : 
+                               (bandName === '30m' || bandName === '20m') ? 'Day/Night' : 'Daytime';
+                
+                let regionHtml = '';
+                [...goodRegions.slice(0, 4), ...fairRegions.slice(0, 3)].forEach(r => {
+                    const quality = r.quality === 'GOOD' ? 'good' : 'fair';
+                    regionHtml += `<div class="region-item">
+                        <span><span class="status-dot status-${quality}"></span>${r.code}</span>
+                        <span class="quality-${quality}">${snrToSMeter(r.snr_db)}</span>
+                    </div>`;
+                });
+                
+                if (!regionHtml) regionHtml = '<div style="text-align: center; color: #6b7280; padding: 0.5rem; font-size: 0.75rem;">Closed</div>';
+                
+                html += `
+                    <div class="band-card">
+                        <div class="band-name">${bandName}</div>
+                        <div class="band-freq">${bandData.frequency} MHz</div>
+                        <div class="band-detail">MUF: ${maxMuf.toFixed(1)}</div>
+                        <div class="band-detail">Best: ${optimalFreq}</div>
+                        <div class="band-detail" style="color: #fbbf24;">${peakTime}</div>
+                        <div class="region-list">${regionHtml}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('bandGrid').innerHTML = html;
+        }
+        
+        function renderTimeline() {
+            const timeline = propData.timeline_24h;
+            const currentHour = new Date().getUTCHours();
+            let html = '';
+            let currentDay = '';
+            
+            for (let i = 0; i < timeline.hours.length; i++) {
+                if (i < 24) {
+                    if (i % 2 !== 0) continue;
+                } else {
+                    if (i % 6 !== 0) continue;
+                }
+                
+                const hour = timeline.hours[i];
+                const time = new Date(hour.time);
+                const dayStr = time.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+                
+                if (dayStr !== currentDay) {
+                    if (currentDay !== '') html += '</div>';
+                    html += `<div class="timeline-day"><div class="day-header">${dayStr}</div>`;
+                    currentDay = dayStr;
+                }
+                
+                const isCurrent = hour.hour_utc === currentHour && i < 24;
+                const hourLabel = time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: false});
+                
+                let bandHtml = '';
+                for (const [bandName, status] of Object.entries(hour.bands)) {
+                    if (status.open.length > 0) {
+                        bandHtml += `<div class="hour-band open">${bandName}: ${status.open.join(',')}</div>`;
+                    } else if (status.marginal.length > 0 && i < 24) {
+                        bandHtml += `<div class="hour-band marginal">${bandName}: ${status.marginal.join(',')}</div>`;
+                    }
+                }
+                
+                if (!bandHtml) bandHtml = '<span style="color: #6b7280;">No openings</span>';
+                
+                html += `
+                    <div class="timeline-hour ${isCurrent ? 'current' : ''}">
+                        <div class="hour-label">${isCurrent ? '▶ ' : ''}${hourLabel}Z</div>
+                        <div class="hour-bands">${bandHtml}</div>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            document.getElementById('timeline').innerHTML = html;
+        }
+        
+        function renderDXCC() {
+            const dxcc = propData.dxcc;
+            const worked = dxcc.dxcc_worked?.length || 0;
+            const confirmed = dxcc.dxcc_confirmed_lotw?.length || 0;
+            const missing = dxcc.dxcc_missing?.length || 0;
+            
+            document.getElementById('dxccStats').innerHTML = `
+                <div class="dxcc-stat">
+                    <div class="number">${worked}</div>
+                    <div class="label">Worked</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${confirmed}</div>
+                    <div class="label">Confirmed</div>
+                </div>
+                <div class="dxcc-stat">
+                    <div class="number">${missing}</div>
+                    <div class="label">Needed</div>
+                </div>
+            `;
+            
+            // Most wanted list with actual propagation data
+            if (dxcc.entity_names && dxcc.dxcc_missing) {
+                const bands = propData.current_conditions.bands;
+                
+                // Map common entities to regions (simplified mapping)
+                const entityToRegion = {
+                    // Africa
+                    'Abu Ail': 'AF', 'Agalega & St Brandon Is.': 'AF', 'Aldabra': 'AF',
+                    'Eritrea': 'AF', 'Chad': 'AF', 'Guinea-Bissau': 'AF',
+                    // Asia
+                    'Afghanistan': 'AS', 'Andaman & Nicobar Is.': 'AS', 'Nepal': 'AS',
+                    'Asiatic Russia': 'AS', 'Bhutan': 'AS', 'North Korea': 'AS',
+                    // Europe
+                    'Aland Islands': 'EU', 'Albania': 'EU', 'Andorra': 'EU',
+                    'Market Reef': 'EU', 'Jan Mayen': 'EU', 'Svalbard': 'EU',
+                    // Oceania
+                    'American Samoa': 'OC', 'Baker & Howland Islands': 'OC',
+                    'Chesterfield Is.': 'OC', 'Conway Reef': 'OC',
+                    // South America
+                    'Galapagos Islands': 'SA', 'Fernando de Noronha': 'SA',
+                    'Trindade & Martim Vaz Islands': 'SA',
+                    // Antarctica
+                    'Antarctica': 'OC', 'Peter 1 Island': 'OC', 'South Sandwich Islands': 'OC',
+                    // Middle East
+                    'Jordan': 'AS', 'Palestine': 'AS', 'Syria': 'AS', 'Yemen': 'AS'
+                };
+                
+                // Build list with propagation status
+                const neededList = [];
+                const topNeeded = dxcc.dxcc_missing.slice(0, 30);
+                
+                topNeeded.forEach(id => {
+                    const entityName = dxcc.entity_names[id];
+                    if (!entityName) return;
+                    
+                    // Find which region this entity is in
+                    const region = entityToRegion[entityName] || null;
+                    const openBands = [];
+                    
+                    if (region) {
+                        // Check which bands have good propagation to this region
+                        for (const [bandName, bandData] of Object.entries(bands)) {
+                            const regionData = bandData.regions[region];
+                            if (regionData && regionData.reliability > 60) {
+                                openBands.push({
+                                    band: bandName,
+                                    reliability: regionData.reliability,
+                                    smeter: snrToSMeter(regionData.snr_db)
+                                });
+                            }
+                        }
+                    }
+                    
+                    neededList.push({
+                        name: entityName,
+                        region: region,
+                        openBands: openBands,
+                        isOpen: openBands.length > 0
+                    });
+                });
+                
+                // Sort: open first, then by name
+                neededList.sort((a, b) => {
+                    if (a.isOpen && !b.isOpen) return -1;
+                    if (!a.isOpen && b.isOpen) return 1;
+                    return a.name.localeCompare(b.name);
+                });
+                
+                // Render list (limit to 15 to avoid scrollbar)
+                let html = '<div style="margin-bottom: 0.5rem; font-weight: bold; color: #4a90e2;">Top 15 Most Wanted:</div>';
+                
+                neededList.slice(0, 15).forEach(entity => {
+                    let statusHtml = '';
+                    if (entity.isOpen) {
+                        const bandList = entity.openBands.map(b => 
+                            `${b.band} (${b.smeter})`
+                        ).join(', ');
+                        statusHtml = `<span style="color: #4ade80; font-weight: bold;">⚡ ${bandList}</span>`;
+                    } else if (entity.region) {
+                        statusHtml = `<span style="color: #6b7280;">→ ${entity.region} closed</span>`;
+                    } else {
+                        statusHtml = `<span style="color: #6b7280;">--</span>`;
+                    }
+                    
+                    html += `<div class="wanted-item ${entity.isOpen ? 'hot' : ''}">
+                        <span style="flex: 1;">${entity.name}</span>
+                        <span style="font-size: 0.75rem;">${statusHtml}</span>
+                    </div>`;
+                });
+                
+                document.getElementById('mostWanted').innerHTML = html;
+            }
+            
+            // DXCC details
+            const confRate = worked > 0 ? Math.round((confirmed / worked) * 100) : 0;
+            document.getElementById('dxccDetails').innerHTML = `
+                <div style="font-size: 0.85rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Confirmation Rate:</strong> ${confRate}%<br>
+                        <div style="background: #0d1520; height: 20px; border-radius: 4px; margin-top: 0.5rem; overflow: hidden;">
+                            <div style="background: #4ade80; height: 100%; width: ${confRate}%;"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 0.5rem 0; border-top: 1px solid #2a3f5f;">
+                        <strong>To DXCC Honor Roll:</strong><br>
+                        Need ${Math.max(0, 331 - confirmed)} more confirmed
+                    </div>
+                    <div style="padding: 0.5rem 0; border-top: 1px solid #2a3f5f;">
+                        <strong>Progress:</strong><br>
+                        ${Math.round((worked / 340) * 100)}% of current DXCC list
+                    </div>
+                </div>
+            `;
+        }
+        
+        function checkDXCCAlerts() {
+            const bands = propData.current_conditions.bands;
+            const dxcc = propData.dxcc;
+            
+            // Find regions with excellent propagation (>70%)
+            let excellentRegions = [];
+            for (const [bandName, bandData] of Object.entries(bands)) {
+                for (const [code, region] of Object.entries(bandData.regions)) {
+                    if (region.reliability > 70) {
+                        excellentRegions.push({
+                            band: bandName,
+                            region: code,
+                            name: region.name,
+                            reliability: region.reliability
+                        });
+                    }
+                }
+            }
+            
+            if (excellentRegions.length > 0) {
+                const alertBar = document.getElementById('dxccAlerts');
+                alertBar.classList.add('active');
+                
+                // Group by region
+                const regionSummary = {};
+                excellentRegions.forEach(r => {
+                    if (!regionSummary[r.region]) {
+                        regionSummary[r.region] = {
+                            name: r.name,
+                            bands: []
+                        };
+                    }
+                    regionSummary[r.region].bands.push(r.band);
+                });
+                
+                let alertText = 'Excellent propagation now: ';
+                const alerts = [];
+                for (const [code, data] of Object.entries(regionSummary)) {
+                    alerts.push(`<strong>${code}</strong> (${data.bands.join(', ')})`);
+                }
+                
+                document.getElementById('alertList').innerHTML = 
+                    alertText + alerts.join(' • ') + ' - Check Most Wanted list below!';
+            }
+        }
+        
+        function drawGrayLine(customHour = null) {
+            if (!map) return;
+
+            // Remove old gray line
+            if (grayLineLayer) {
+                map.removeLayer(grayLineLayer);
+            }
+
+            const now = new Date();
+            // Use custom hour if set, otherwise use current time
+            const hours = grayLineHour !== null ? grayLineHour : (now.getUTCHours() + now.getUTCMinutes() / 60);
+            const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+            const declination = 23.45 * Math.sin((360/365) * (dayOfYear - 81) * Math.PI / 180);
+            const declinationRad = declination * Math.PI / 180;
+
+            // Draw gray line as a band (civil twilight: solar altitude between -6° and +6°)
+            const grayLinePoints = [];
+
+            // Sweep across all longitudes and latitudes to find twilight zone
+            for (let lon = -180; lon <= 180; lon += 2) {
+                for (let lat = -90; lat <= 90; lat += 2) {
+                    const latRad = lat * Math.PI / 180;
+
+                    // Calculate hour angle from longitude and time
+                    const solarLon = -15 * (hours - 12);  // Sun's longitude at this time
+                    const hourAngle = (lon - solarLon) * Math.PI / 180;
+
+                    // Calculate solar altitude using spherical astronomy
+                    const sinAlt = Math.sin(latRad) * Math.sin(declinationRad) +
+                                   Math.cos(latRad) * Math.cos(declinationRad) * Math.cos(hourAngle);
+                    const solarAlt = Math.asin(Math.max(-1, Math.min(1, sinAlt))) * 180 / Math.PI;
+
+                    // Gray line is where solar altitude is near 0 (±6 degrees for civil twilight)
+                    if (Math.abs(solarAlt) < 6) {
+                        grayLinePoints.push([lat, lon]);
+                    }
+                }
+            }
+
+            if (grayLinePoints.length > 0) {
+                // Create a feature group for better visualization
+                const features = [];
+
+                // Group nearby points to create a continuous band
+                const grouped = {};
+                grayLinePoints.forEach(([lat, lon]) => {
+                    const latKey = Math.round(lat / 5) * 5;  // Group by 5-degree latitude bands
+                    if (!grouped[latKey]) grouped[latKey] = [];
+                    grouped[latKey].push(lon);
+                });
+
+                // For each latitude band, create a polygon strip
+                const polygons = [];
+                for (const [latKey, lons] of Object.entries(grouped)) {
+                    const lat = parseFloat(latKey);
+                    lons.sort((a, b) => a - b);
+
+                    // Create rectangles for continuous longitude segments
+                    let segmentStart = lons[0];
+                    for (let i = 1; i < lons.length; i++) {
+                        if (lons[i] - lons[i-1] > 10) {  // Gap detected
+                            // Close current segment
+                            polygons.push([
+                                [lat - 5, segmentStart],
+                                [lat + 5, segmentStart],
+                                [lat + 5, lons[i-1]],
+                                [lat - 5, lons[i-1]]
+                            ]);
+                            segmentStart = lons[i];
+                        }
+                    }
+                    // Close final segment
+                    polygons.push([
+                        [lat - 5, segmentStart],
+                        [lat + 5, segmentStart],
+                        [lat + 5, lons[lons.length - 1]],
+                        [lat - 5, lons[lons.length - 1]]
+                    ]);
+                }
+
+                grayLineLayer = L.polygon(polygons, {
+                    color: '#fbbf24',
+                    fillColor: '#fbbf24',
+                    weight: 1,
+                    opacity: 0.5,
+                    fillOpacity: 0.3
+                }).addTo(map);
+            }
+
+            // Update time display
+            if (grayLineHour !== null) {
+                document.getElementById('grayLineTime').textContent =
+                    `Showing: ${String(Math.floor(grayLineHour)).padStart(2, '0')}:00 UTC (custom)`;
+            } else {
+                document.getElementById('grayLineTime').textContent =
+                    'Updated: ' + now.toUTCString().slice(17, 22) + ' UTC';
+            }
+        }
+
+        function updateGrayLine() {
+            drawGrayLine();
+        }
+
+        function updatePathMode() {
+            const selected = document.querySelector('input[name="pathMode"]:checked').value;
+            pathMode = selected;
+            // Refresh the map to show updated paths
+            if (map && propData) {
+                renderMap();
+            }
+        }
+
+        function updateGrayLineTimeDisplay(hour) {
+            document.getElementById('grayLineTimeValue').textContent =
+                `${String(Math.floor(hour)).padStart(2, '0')}:00`;
+        }
+
+        function updateGrayLineTime(hour) {
+            grayLineHour = parseFloat(hour);
+            drawGrayLine();
+        }
+
+        function resetGrayLineTime() {
+            grayLineHour = null;
+            const now = new Date();
+            const currentHour = now.getUTCHours();
+            document.getElementById('grayLineTimeSlider').value = currentHour;
+            document.getElementById('grayLineTimeValue').textContent =
+                `${String(currentHour).padStart(2, '0')}:00`;
+            drawGrayLine();
+        }
+
+        function updateHeatmapOpacityDisplay(value) {
+            document.getElementById('heatmapOpacityValue').textContent = value + '%';
+        }
+
+        function updateHeatmapOpacity(value) {
+            heatmapOpacity = parseFloat(value) / 100;
+            if (map && propData && gridLayer) {
+                renderHeatmap();
+            }
+        }
+
+        function renderHeatmap() {
+            // Clear existing grid layer
+            if (gridLayer) {
+                map.removeLayer(gridLayer);
+            }
+            gridLayer = L.layerGroup().addTo(map);
+
+            // Generate global grids (exclude Antarctica < -55 lat)
+            const grids = MAIDENHEAD.generateGrids(-55, 90, -180, 180);
+
+            // Mock propagation calculation - in production this would come from VOACAP
+            // For now, simulate based on sample regions from propData
+            const homeLat = 44.374, homeLon = -64.300;
+
+            grids.forEach(gridId => {
+                const bounds = MAIDENHEAD.toBounds(gridId);
+                if (!bounds) return;
+
+                // Calculate mock reliability based on distance and region match
+                let reliability = 0;
+                const gridLat = bounds.center.lat;
+                const gridLon = bounds.center.lon;
+
+                // Simple distance-based mock (replace with real VOACAP data)
+                const dx = (gridLon - homeLon) * Math.cos((gridLat + homeLat) / 2 * Math.PI / 180);
+                const dy = gridLat - homeLat;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Simulate propagation patterns
+                reliability = Math.max(0, 100 - distance * 1.2 + (Math.random() - 0.5) * 30);
+                reliability = Math.min(100, Math.max(0, reliability));
+
+                // Only show grids with reliability >= 30%
+                if (reliability < 30) return;
+
+                const color = getColorForReliability(reliability);
+
+                const rectangle = L.rectangle(
+                    [[bounds.south, bounds.west], [bounds.north, bounds.east]],
+                    {
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: heatmapOpacity,
+                        weight: 0.5,
+                        opacity: heatmapOpacity * 0.5
+                    }
+                );
+
+                rectangle.bindPopup(`
+                    <div style="color: #000;">
+                        <strong>Grid: ${gridId}</strong><br>
+                        <strong>Propagation: ${getReliabilityLabel(reliability)}</strong><br>
+                        Likelihood: ${Math.round(reliability)}%<br>
+                        Distance: ~${Math.round(distance * 111)} km<br>
+                        <hr style="margin: 5px 0;">
+                        <em>Note: Using simulated data. Real VOACAP integration in progress.</em>
+                    </div>
+                `);
+
+                rectangle.on('mouseover', function() {
+                    this.setStyle({ weight: 2, opacity: 1 });
+                });
+                rectangle.on('mouseout', function() {
+                    this.setStyle({ weight: 0.5, opacity: heatmapOpacity * 0.5 });
+                });
+
+                gridLayer.addLayer(rectangle);
+            });
+
+            console.log(`Rendered ${grids.length} Maidenhead grid squares on heatmap`);
+        }
+
+        function renderMap() {
+            map = L.map('map', {
+                center: [20, -30],
+                zoom: 2,
+                maxBounds: [[-90, -180], [90, 180]],
+                zoomControl: true
+            });
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '©OpenStreetMap, ©CartoDB',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add home marker
+            L.marker([44.374, -64.300], {
+                icon: L.divIcon({
+                    className: 'home-marker',
+                    html: '<div style="background: #dc2626; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; border: 2px solid #fca5a5;">VE1ATM</div>',
+                    iconSize: [60, 20]
+                })
+            }).addTo(map);
+            
+            // Draw gray line
+            drawGrayLine();
+            
+            // Add region markers
+            const regions = {
+                'EU': [50, 10], 'UK': [54, -2], 'JA': [36, 138],
+                'VK': [-25, 135], 'ZL': [-41, 174], 'AF': [0, 20],
+                'SA': [-15, -55], 'CA': [15, -90], 'AS': [30, 100], 'OC': [-10, 150]
+            };
+            
+            const bands = propData.current_conditions.bands;
+            
+            for (const [regionCode, coords] of Object.entries(regions)) {
+                let bestReliability = 0;
+                let bestBand = null;
+                let bestData = null;
+                
+                for (const [bandName, bandData] of Object.entries(bands)) {
+                    const regionData = bandData.regions[regionCode];
+                    if (regionData && regionData.reliability > bestReliability) {
+                        bestReliability = regionData.reliability;
+                        bestBand = bandName;
+                        bestData = regionData;
+                    }
+                }
+                
+                if (bestData && bestReliability > 30) {
+                    const color = bestData.quality === 'GOOD' ? '#4ade80' :
+                                bestData.quality === 'FAIR' ? '#fbbf24' : '#f87171';
+
+                    // Draw path based on mode (short path or long path)
+                    const homeLat = 44.374, homeLon = -64.300;
+                    let pathCoords;
+
+                    if (pathMode === 'lp') {
+                        // Long path: go the opposite direction around the globe
+                        // Calculate midpoint on opposite side of Earth
+                        const oppositeLat = -coords[0];
+                        let oppositeLon = coords[1] + 180;
+                        if (oppositeLon > 180) oppositeLon -= 360;
+                        if (oppositeLon < -180) oppositeLon += 360;
+
+                        pathCoords = [
+                            [homeLat, homeLon],
+                            [(homeLat + oppositeLat) / 2, (homeLon + oppositeLon) / 2],
+                            coords
+                        ];
+                    } else {
+                        // Short path: direct line
+                        pathCoords = [[homeLat, homeLon], coords];
+                    }
+
+                    L.polyline(pathCoords, {
+                        color: color,
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: pathMode === 'lp' ? '8, 12' : '8, 12'
+                    }).addTo(map);
+
+                    L.circleMarker(coords, {
+                        radius: 7,
+                        fillColor: color,
+                        color: color,
+                        weight: 2,
+                        opacity: 0.9,
+                        fillOpacity: 0.7
+                    }).addTo(map).bindPopup(`
+                        <strong>${regionCode} - ${bestData.name}</strong><br>
+                        Best: ${bestBand} (${bands[bestBand].frequency} MHz)<br>
+                        Quality: ${bestData.quality}<br>
+                        Reliability: ${bestData.reliability}%<br>
+                        Signal: ${snrToSMeter(bestData.snr_db)}<br>
+                        Distance: ${bestData.distance_km} km<br>
+                        Bearing: ${bestData.bearing}°
+                    `);
+                }
+            }
+
+            // Render Maidenhead grid heatmap
+            renderHeatmap();
+        }
+        
+        function renderUpdateInfo() {
+            const generated = new Date(propData.current_conditions.generated);
+            document.getElementById('updateInfo').innerHTML = `
+                <strong>Last Updated:</strong> ${generated.toLocaleString()} UTC<br>
+                <em>72-hour forecast • Gray line updates every 5 minutes • Refresh after regenerating predictions</em>
+            `;
+        }
+
+        // =================================================================
+        // API Integration for On-Demand Prediction Generation
+        // =================================================================
+
+        let statusCheckInterval = null;
+
+        function showModal() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('notificationModal').classList.add('show');
+            document.getElementById('refreshBtn').disabled = true;
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('notificationModal').classList.remove('show');
+            document.getElementById('refreshBtn').disabled = false;
+        }
+
+        function closeModal() {
+            hideModal();
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+        }
+
+        function updateModalProgress(progress, message, isComplete = false) {
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('statusText').textContent = message;
+
+            if (isComplete) {
+                document.querySelector('.spinner').style.display = 'none';
+                document.getElementById('closeBtn').style.display = 'inline-block';
+                document.getElementById('modalHeader').textContent = 'Complete!';
+            }
+        }
+
+        async function triggerRefresh() {
+            try {
+                showModal();
+                updateModalProgress(0, 'Starting prediction generation...');
+
+                // Call the generate API endpoint
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.status === 409) {
+                    // Already running
+                    updateModalProgress(50, 'Generation already in progress...', false);
+                } else if (result.status === 'started') {
+                    updateModalProgress(10, 'Prediction engine started...');
+                    // Start polling for status
+                    startStatusPolling();
+                } else {
+                    updateModalProgress(0, 'Error: ' + result.message, true);
+                }
+
+            } catch (error) {
+                console.error('Error triggering refresh:', error);
+                updateModalProgress(0, 'Error: ' + error.message, true);
+            }
+        }
+
+        function startStatusPolling() {
+            // Poll every 2 seconds
+            statusCheckInterval = setInterval(checkGenerationStatus, 2000);
+            checkGenerationStatus(); // Check immediately
+        }
+
+        async function checkGenerationStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const status = await response.json();
+
+                if (status.error) {
+                    updateModalProgress(0, 'Error: ' + status.error, true);
+                    if (statusCheckInterval) {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                    }
+                    return;
+                }
+
+                updateModalProgress(status.progress, status.message);
+
+                if (!status.running && status.progress >= 100) {
+                    // Generation complete!
+                    updateModalProgress(100, 'Predictions updated! Reloading dashboard...', true);
+
+                    if (statusCheckInterval) {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                    }
+
+                    // Reload data after a short delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+
+            } catch (error) {
+                console.error('Error checking status:', error);
+                updateModalProgress(0, 'Error checking status', true);
+                if (statusCheckInterval) {
+                    clearInterval(statusCheckInterval);
+                    statusCheckInterval = null;
+                }
+            }
+        }
+
+        // =================================================================
+        // Station Configuration Functions
+        // =================================================================
+
+        const ANTENNA_TYPES = [
+            { id: 'vertical', name: 'Vertical Monopole (1/4 wave)', requiresHeight: false },
+            { id: 'dipole', name: 'Half-Wave Dipole', requiresHeight: true },
+            { id: 'inverted_v', name: 'Inverted V', requiresHeight: true },
+            { id: 'efhw', name: 'End-Fed Half-Wave (EFHW)', requiresHeight: true },
+            { id: 'random_wire', name: 'Random Wire / Long Wire', requiresHeight: true },
+            { id: 'yagi_3el', name: '3-Element Yagi', requiresHeight: true },
+            { id: 'yagi_5el', name: '5-Element Yagi', requiresHeight: true },
+            { id: 'yagi_7el', name: '7-Element Yagi', requiresHeight: true },
+            { id: 'log_periodic', name: 'Log Periodic', requiresHeight: true },
+            { id: 'hex_beam', name: 'Hex Beam', requiresHeight: true },
+            { id: 'loop', name: 'Full-Wave Loop', requiresHeight: true },
+            { id: 'magnetic_loop', name: 'Magnetic Loop', requiresHeight: false },
+            { id: 'isotropic', name: 'Isotropic (Reference)', requiresHeight: false }
+        ];
+
+        let antennas = [];
+        let antennaIdCounter = 0;
+
+        function addAntenna() {
+            const antennaId = antennaIdCounter++;
+            antennas.push({
+                id: antennaId,
+                name: `Antenna ${antennaId + 1}`,
+                type: 'vertical',
+                height_agl: 10  // Default height in meters AGL
+            });
+            renderAntennas();
+            updateBandAntennaSelects();
+        }
+
+        function removeAntenna(antennaId) {
+            antennas = antennas.filter(a => a.id !== antennaId);
+            renderAntennas();
+            updateBandAntennaSelects();
+        }
+
+        function updateAntennaName(antennaId, newName) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.name = newName;
+                updateBandAntennaSelects();
+            }
+        }
+
+        function updateAntennaType(antennaId, newType) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.type = newType;
+                renderAntennas();  // Re-render to show/hide height field
+            }
+        }
+
+        function updateAntennaHeight(antennaId, newHeight) {
+            const antenna = antennas.find(a => a.id === antennaId);
+            if (antenna) {
+                antenna.height_agl = parseFloat(newHeight) || 10;
+            }
+        }
+
+        function renderAntennas() {
+            const antennaList = document.getElementById('antennaList');
+            antennaList.innerHTML = '';
+
+            antennas.forEach(antenna => {
+                const antennaType = ANTENNA_TYPES.find(t => t.id === antenna.type);
+                const requiresHeight = antennaType ? antennaType.requiresHeight : true;
+
+                const antennaDiv = document.createElement('div');
+                antennaDiv.style.cssText = 'background: #1a2332; padding: 1rem; border-radius: 4px; border: 1px solid #2a3f5f;';
+
+                const heightField = requiresHeight ? `
+                    <div style="margin-top: 0.5rem;">
+                        <label style="display: block; font-size: 0.85rem; color: #8a9bb5; margin-bottom: 0.3rem;">Height (meters AGL)</label>
+                        <input type="number" value="${antenna.height_agl || 10}" min="1" max="100" step="0.5"
+                               onchange="updateAntennaHeight(${antenna.id}, this.value)"
+                               style="width: 100%; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                    </div>
+                ` : '';
+
+                antennaDiv.innerHTML = `
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" value="${antenna.name}"
+                               onchange="updateAntennaName(${antenna.id}, this.value)"
+                               style="flex: 1; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        <button onclick="removeAntenna(${antenna.id})"
+                                style="background: #8b2e2e; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">🗑️</button>
+                    </div>
+                    <select onchange="updateAntennaType(${antenna.id}, this.value)"
+                            style="width: 100%; padding: 0.4rem; background: #0a0e1a; border: 1px solid #2a3f5f; color: #e0e0e0; border-radius: 4px;">
+                        ${ANTENNA_TYPES.map(type =>
+                            `<option value="${type.id}" ${antenna.type === type.id ? 'selected' : ''}>${type.name}</option>`
+                        ).join('')}
+                    </select>
+                    ${heightField}
+                `;
+                antennaList.appendChild(antennaDiv);
+            });
+
+            if (antennas.length === 0) {
+                antennaList.innerHTML = '<div style="text-align: center; color: #8a9bb5; padding: 1rem;">No antennas configured. Click "Add Antenna" to get started.</div>';
+            }
+        }
+
+        function updateBandAntennaSelects() {
+            const selects = document.querySelectorAll('.band-antenna-select');
+            selects.forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Not Configured</option>';
+                antennas.forEach(antenna => {
+                    const option = document.createElement('option');
+                    option.value = antenna.id;
+                    option.textContent = antenna.name;
+                    if (currentValue == antenna.id) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        async function uploadLogbook() {
+            const fileInput = document.getElementById('logbookFile');
+            const statusDiv = document.getElementById('logbookStatus');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                statusDiv.textContent = '⚠️ Please select an ADIF file first';
+                statusDiv.style.color = '#fbbf24';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('logbook', file);
+
+            statusDiv.textContent = '⏳ Analyzing logbook...';
+            statusDiv.style.color = '#4a90e2';
+
+            try {
+                const response = await fetch('/api/upload-logbook', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusDiv.textContent = `✅ Analyzed ${result.total_qsos} QSOs | Worked: ${result.dxcc_worked} | Confirmed: ${result.dxcc_confirmed} | Needed: ${result.dxcc_needed}`;
+                    statusDiv.style.color = '#4aed88';
+
+                    // Reload page to update DXCC data
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    statusDiv.textContent = `❌ Error: ${result.error}`;
+                    statusDiv.style.color = '#f87171';
+                }
+            } catch (error) {
+                statusDiv.textContent = `❌ Error uploading logbook: ${error.message}`;
+                statusDiv.style.color = '#f87171';
+            }
+        }
+
+        function saveStationConfig() {
+            const config = {
+                name: document.getElementById('stationName').value,
+                callsign: document.getElementById('stationCallsign').value,
+                grid: document.getElementById('stationGrid').value,
+                lat: parseFloat(document.getElementById('stationLat').value),
+                lon: parseFloat(document.getElementById('stationLon').value),
+                power: parseInt(document.getElementById('stationPower').value)
+            };
+
+            fetch('/api/station-config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Station configuration saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving station config:', error);
+                alert('Error saving station configuration. See console for details.');
+            });
+        }
+
+        function saveBandAssignments() {
+            const assignments = {};
+            const bands = ['160m', '80m', '40m', '30m', '20m', '17m', '15m', '12m', '10m'];
+            bands.forEach(band => {
+                const select = document.getElementById(`band-${band}`);
+                if (select.value) {
+                    assignments[band] = parseInt(select.value);
+                }
+            });
+
+            const config = {
+                antennas: antennas,
+                band_assignments: assignments
+            };
+
+            fetch('/api/antenna-config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Antenna configuration saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving antenna config:', error);
+                alert('Error saving antenna configuration. See console for details.');
+            });
+        }
+
+        function loadStationConfig() {
+            // Load station info
+            fetch('/api/station-config')
+                .then(response => response.json())
+                .then(config => {
+                    if (config) {
+                        document.getElementById('stationName').value = config.name || '';
+                        document.getElementById('stationCallsign').value = config.callsign || '';
+                        document.getElementById('stationGrid').value = config.grid || '';
+                        document.getElementById('stationLat').value = config.lat || '';
+                        document.getElementById('stationLon').value = config.lon || '';
+                        document.getElementById('stationPower').value = config.power || '';
+                    }
+                })
+                .catch(error => console.error('Error loading station config:', error));
+
+            // Load antenna config
+            fetch('/api/antenna-config')
+                .then(response => response.json())
+                .then(config => {
+                    if (config && config.antennas) {
+                        // Convert legacy antenna types and ensure all have height
+                        antennas = config.antennas.map(ant => {
+                            // Convert legacy 'yagi' to 'yagi_3el'
+                            if (ant.type === 'yagi') {
+                                ant.type = 'yagi_3el';
+                            }
+                            // Ensure height_agl exists
+                            if (!ant.height_agl) {
+                                ant.height_agl = 10;
+                            }
+                            return ant;
+                        });
+                        antennaIdCounter = Math.max(...antennas.map(a => a.id), 0) + 1;
+                        renderAntennas();
+                        updateBandAntennaSelects();
+
+                        if (config.band_assignments) {
+                            Object.keys(config.band_assignments).forEach(band => {
+                                const select = document.getElementById(`band-${band}`);
+                                if (select) {
+                                    select.value = config.band_assignments[band];
+                                }
+                            });
+                        }
+                    }
+                })
+                .catch(error => console.error('Error loading antenna config:', error));
+        }
+
+        // =================================================================
+        // Mini Planner Functions
+        // =================================================================
+
+        let plannerTargets = [];
+
+        function updatePlannerInputs() {
+            const method = document.getElementById('inputMethod').value;
+
+            document.getElementById('latLonInputs').style.display = method === 'latlon' ? 'grid' : 'none';
+            document.getElementById('maidenheadInput').style.display = method === 'maidenhead' ? 'block' : 'none';
+            document.getElementById('presetInput').style.display = method === 'preset' ? 'block' : 'none';
+        }
+
+        function maidenheadToLatLon(grid) {
+            // Convert Maidenhead grid to lat/lon (center of grid)
+            grid = grid.toUpperCase();
+
+            if (grid.length < 4 || grid.length > 6) {
+                return null;
+            }
+
+            const lon = (grid.charCodeAt(0) - 65) * 20 - 180;
+            const lat = (grid.charCodeAt(1) - 65) * 10 - 90;
+
+            const lon2 = parseFloat(grid.substring(2, 3)) * 2;
+            const lat2 = parseFloat(grid.substring(3, 4));
+
+            let finalLat = lat + lat2 + 0.5;
+            let finalLon = lon + lon2 + 1;
+
+            if (grid.length >= 6) {
+                const lon3 = (grid.charCodeAt(4) - 65) * (2/24);
+                const lat3 = (grid.charCodeAt(5) - 65) * (1/24);
+                finalLat += lat3;
+                finalLon += lon3;
+            }
+
+            return {lat: finalLat, lon: finalLon};
+        }
+
+        function loadPreset() {
+            const preset = document.getElementById('presetDestination').value;
+            if (!preset) return;
+
+            const [lat, lon] = preset.split(',').map(parseFloat);
+            document.getElementById('targetLat').value = lat;
+            document.getElementById('targetLon').value = lon;
+
+            // Switch to lat/lon view
+            document.getElementById('inputMethod').value = 'latlon';
+            updatePlannerInputs();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function calculateBearing(lat1, lon1, lat2, lon2) {
+            // Calculate initial bearing
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const y = Math.sin(dLon) * Math.cos(lat2 * Math.PI / 180);
+            const x = Math.cos(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180) -
+                     Math.sin(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.cos(dLon);
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            return (bearing + 360) % 360;
+        }
+
+        function addPlannerTarget() {
+            const name = document.getElementById('targetName').value.trim();
+            const method = document.getElementById('inputMethod').value;
+
+            let lat, lon;
+
+            if (method === 'latlon') {
+                lat = parseFloat(document.getElementById('targetLat').value);
+                lon = parseFloat(document.getElementById('targetLon').value);
+
+                if (isNaN(lat) || isNaN(lon)) {
+                    alert('Please enter valid latitude and longitude values.');
+                    return;
+                }
+            } else if (method === 'maidenhead') {
+                const grid = document.getElementById('targetGrid').value.trim();
+                const coords = maidenheadToLatLon(grid);
+
+                if (!coords) {
+                    alert('Invalid Maidenhead grid square. Enter 4 or 6 characters (e.g., FN20, PM95vr).');
+                    return;
+                }
+
+                lat = coords.lat;
+                lon = coords.lon;
+            } else if (method === 'preset') {
+                const preset = document.getElementById('presetDestination').value;
+                if (!preset) {
+                    alert('Please select a destination.');
+                    return;
+                }
+
+                [lat, lon] = preset.split(',').map(parseFloat);
+            }
+
+            if (!name) {
+                alert('Please enter a target name.');
+                return;
+            }
+
+            if (plannerTargets.length >= 5) {
+                alert('Maximum 5 targets allowed.');
+                return;
+            }
+
+            // Calculate path geometry from home station
+            const homeLat = 44.374;  // VE1ATM
+            const homeLon = -64.300;
+
+            const distance = calculateDistance(homeLat, homeLon, lat, lon);
+            const bearing = calculateBearing(homeLat, homeLon, lat, lon);
+            const longPath = 360 - bearing;
+            const longPathDist = 40075 - distance;  // Earth circumference - short path
+
+            plannerTargets.push({
+                name: name,
+                lat: lat,
+                lon: lon,
+                distance: distance,
+                bearing: bearing,
+                longPath: longPath,
+                longPathDist: longPathDist
+            });
+
+            // Clear inputs
+            document.getElementById('targetName').value = '';
+            document.getElementById('targetLat').value = '';
+            document.getElementById('targetLon').value = '';
+            document.getElementById('targetGrid').value = '';
+            document.getElementById('presetDestination').value = '';
+
+            renderPlannerTargets();
+        }
+
+        function clearPlannerTargets() {
+            if (confirm('Clear all targets?')) {
+                plannerTargets = [];
+                renderPlannerTargets();
+            }
+        }
+
+        function renderPlannerTargets() {
+            const container = document.getElementById('plannerTargets');
+
+            if (plannerTargets.length === 0) {
+                container.innerHTML = '<p style="color: #8a9bb5; text-align: center; padding: 2rem;">No targets added yet. Add a target above to see propagation predictions.</p>';
+                return;
+            }
+
+            let html = '<div style="overflow-x: auto;">';
+
+            plannerTargets.forEach((target, idx) => {
+                html += `
+                    <div style="background: #0d1520; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; border-left: 4px solid #4a90e2;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="color: #4a90e2; margin: 0;">${target.name}</h3>
+                            <button onclick="removePlannerTarget(${idx})" style="background: #8b2e2e; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;">🗑️ Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; font-size: 0.85rem;">
+                            <div><strong>Coordinates:</strong> ${target.lat.toFixed(4)}°, ${target.lon.toFixed(4)}°</div>
+                            <div><strong>Distance (SP):</strong> ${target.distance.toFixed(0)} km</div>
+                            <div><strong>Bearing (SP):</strong> ${target.bearing.toFixed(0)}°</div>
+                            <div><strong>Long Path:</strong> ${target.longPath.toFixed(0)}° (${target.longPathDist.toFixed(0)} km)</div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <div style="font-size: 0.8rem; color: #8a9bb5; margin-bottom: 0.5rem;"><strong>Best Bands (Current Conditions):</strong></div>
+                            <div style="background: #1a2738; padding: 0.7rem; border-radius: 4px; text-align: center; color: #8a9bb5;">
+                                Prediction engine integration coming soon - will show band-by-band reliability matrix here
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += `<div style="margin-top: 1rem; text-align: center;">
+                <button onclick="exportPlannerCSV()" style="background: #4a90e2; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-right: 0.5rem;">
+                    📥 Export as CSV
+                </button>
+                <span style="color: #8a9bb5; font-size: 0.75rem;">Full predictions require backend integration</span>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+
+        function removePlannerTarget(idx) {
+            plannerTargets.splice(idx, 1);
+            renderPlannerTargets();
+        }
+
+        function exportPlannerCSV() {
+            if (plannerTargets.length === 0) {
+                alert('No targets to export.');
+                return;
+            }
+
+            let csv = 'Name,Latitude,Longitude,Distance (km),Bearing (°),Long Path (°),Long Path Dist (km)\n';
+
+            plannerTargets.forEach(target => {
+                csv += `"${target.name}",${target.lat},${target.lon},${target.distance.toFixed(0)},${target.bearing.toFixed(0)},${target.longPath.toFixed(0)},${target.longPathDist.toFixed(0)}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'planner_targets.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // =================================================================
+        // Settings Panel Functions
+        // =================================================================
+
+        function showSettings() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('settingsModal').classList.add('show');
+            loadSettings();
+        }
+
+        function closeSettings() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        function toggleSSNMode() {
+            const isManual = document.getElementById('ssnManual').checked;
+            document.getElementById('ssnSlider').disabled = !isManual;
+
+            if (!isManual) {
+                // Set to current solar conditions from data
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+                updateSSNValue();
+            }
+        }
+
+        function updateSSNValue() {
+            const ssn = document.getElementById('ssnSlider').value;
+            document.getElementById('ssnValue').textContent = `SSN: ${ssn}`;
+        }
+
+        function updateSNRValue() {
+            const customRadio = document.getElementById('snrCustom');
+            const customInput = document.getElementById('snrCustomValue');
+            customInput.disabled = !customRadio.checked;
+        }
+
+        function loadSettings() {
+            // Load from localStorage or use defaults
+            const settings = JSON.parse(localStorage.getItem('propSettings') || '{}');
+
+            // SSN
+            if (settings.ssnMode === 'manual') {
+                document.getElementById('ssnManual').checked = true;
+                document.getElementById('ssnSlider').disabled = false;
+                document.getElementById('ssnSlider').value = settings.ssn || 140;
+            } else {
+                document.getElementById('ssnAuto').checked = true;
+                document.getElementById('ssnSlider').disabled = true;
+                const currentSSN = propData?.current_conditions?.solar?.ssn || 140;
+                document.getElementById('ssnSlider').value = currentSSN;
+            }
+            updateSSNValue();
+
+            // Other settings
+            document.getElementById('noiseLevel').value = settings.noiseLevel || 'quiet';
+            document.getElementById('propMethod').value = settings.propMethod || 'auto';
+
+            // Path mode
+            if (settings.pathMode === 'long') {
+                document.getElementById('pathLong').checked = true;
+            } else {
+                document.getElementById('pathShort').checked = true;
+            }
+
+            document.getElementById('minToaSlider').value = settings.minToa || 3.0;
+            document.getElementById('minToaValue').textContent = (settings.minToa || 3.0) + '°';
+
+            // Set SNR mode radio button based on saved value
+            const reqSnr = settings.reqSnr || 10;
+            if (reqSnr <= 3) {
+                document.getElementById('snrModeFT8').checked = true;
+            } else if (reqSnr <= 6) {
+                document.getElementById('snrModeCW').checked = true;
+            } else {
+                document.getElementById('snrModeSSB').checked = true;
+            }
+            updateSnrThreshold();
+
+            document.getElementById('txPower').value = settings.txPower || 100;
+
+            // Add event listener for SSN slider
+            document.getElementById('ssnSlider').oninput = updateSSNValue;
+        }
+
+        function saveSettings() {
+            const selectedSnrMode = document.querySelector('input[name="snrMode"]:checked');
+            const settings = {
+                ssnMode: document.getElementById('ssnManual').checked ? 'manual' : 'auto',
+                ssn: parseInt(document.getElementById('ssnSlider').value),
+                noiseLevel: document.getElementById('noiseLevel').value,
+                propMethod: document.getElementById('propMethod').value,
+                pathMode: document.getElementById('pathLong').checked ? 'long' : 'short',
+                minToa: parseFloat(document.getElementById('minToaSlider').value),
+                reqSnr: parseInt(selectedSnrMode ? selectedSnrMode.value : 10),
+                txPower: parseInt(document.getElementById('txPower').value)
+            };
+
+            localStorage.setItem('propSettings', JSON.stringify(settings));
+
+            // Show confirmation
+            alert('Settings saved! Click "Refresh Predictions" to generate new forecasts with these parameters.');
+            closeSettings();
+        }
+
+        function resetSettings() {
+            if (confirm('Reset all settings to defaults?')) {
+                localStorage.removeItem('propSettings');
+                loadSettings();
+            }
+        }
+
+        function updateSnrThreshold() {
+            const selectedMode = document.querySelector('input[name="snrMode"]:checked');
+            if (selectedMode) {
+                const snrValue = selectedMode.value;
+                document.getElementById('reqSnrValue').textContent = `Current: ${snrValue} dB`;
+
+                // Update label backgrounds to show selection
+                document.querySelectorAll('input[name="snrMode"]').forEach(radio => {
+                    const label = radio.parentElement;
+                    if (radio.checked) {
+                        label.style.background = '#1f2937';
+                        label.style.borderColor = '#4a90e2';
+                    } else {
+                        label.style.background = '#1a2332';
+                        label.style.borderColor = '#2a3f5f';
+                    }
+                });
+            }
+        }
+
+        // =================================================================
+        // Initialize Dashboard
+        // =================================================================
+
+        loadPropagationData();
+        loadStationConfig();
+    </script>
+</body>
+</html>
