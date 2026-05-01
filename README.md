@@ -19,11 +19,46 @@ DVOACAP-Python is a modern Python port of the [DVOACAP](https://github.com/VE3NE
 
 ## ⚡ Quick Start
 
-### Installation
+### Easy Installation (Recommended for New Users)
 
-Choose the installation option that fits your needs:
+**Perfect for ham radio club members and first-time users!**
 
-**Option 1: Core Library Only** (lightweight, for developers)
+1. **Download the installation scripts:**
+   - [install_dvoacap.py](https://raw.githubusercontent.com/skyelaird/dvoacap-python/main/install_dvoacap.py)
+   - [validate_dvoacap.py](https://raw.githubusercontent.com/skyelaird/dvoacap-python/main/validate_dvoacap.py)
+
+2. **Run the installer:**
+   ```bash
+   python install_dvoacap.py
+   ```
+   This will automatically:
+   - Check your Python version (3.11+ required)
+   - Upgrade pip
+   - Install DVOACAP from PyPI
+   - Verify the installation
+
+3. **Validate everything works:**
+   ```bash
+   python validate_dvoacap.py
+   ```
+   This runs a complete test including:
+   - Component availability checks
+   - Ionospheric map loading
+   - Real HF propagation prediction example
+   - Results with detailed explanations
+
+✅ **That's it!** You're ready to start predicting HF propagation.
+
+### Advanced Installation Options
+
+For developers and advanced users:
+
+**Option 1: PyPI Package** (simplest)
+```bash
+pip install dvoacap
+```
+
+**Option 2: From Source - Core Library Only**
 ```bash
 # Clone the repository
 git clone https://github.com/skyelaird/dvoacap-python.git
@@ -33,7 +68,7 @@ cd dvoacap-python
 pip install -e .
 ```
 
-**Option 2: With Dashboard** (includes Flask server and web UI)
+**Option 3: With Dashboard** (includes Flask server and web UI)
 ```bash
 # Clone the repository
 git clone https://github.com/skyelaird/dvoacap-python.git
@@ -43,7 +78,7 @@ cd dvoacap-python
 pip install -e ".[dashboard]"
 ```
 
-**Option 3: Development Setup** (includes testing tools)
+**Option 4: Development Setup** (includes testing tools)
 ```bash
 # Clone the repository
 git clone https://github.com/skyelaird/dvoacap-python.git
@@ -55,8 +90,10 @@ pip install -e ".[all]"
 
 ### What's Included
 
-| Installation | Core Library | Dashboard | Dev Tools |
-|-------------|--------------|-----------|-----------|
+| Installation Method | Core Library | Dashboard | Dev Tools |
+|--------------------|--------------|-----------|-----------|
+| `pip install dvoacap` | ✅ | ❌ | ❌ |
+| `install_dvoacap.py` script | ✅ | ❌ | ❌ |
 | `pip install -e .` | ✅ | ❌ | ❌ |
 | `pip install -e ".[dashboard]"` | ✅ | ✅ | ❌ |
 | `pip install -e ".[dev]"` | ✅ | ❌ | ✅ |
