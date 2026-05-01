@@ -18,8 +18,15 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
     """
     print(f"Loading prediction data from {input_file}...")
 
-    with open(input_file, 'r') as f:
-        raw_data = json.load(f)
+    try:
+        with open(input_file, 'r') as f:
+            raw_data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Invalid JSON in {input_file}: {e}")
+        raise
+    except Exception as e:
+        print(f"ERROR: Failed to load {input_file}: {e}")
+        raise
 
     # Load DXCC data if available
     dxcc_data = {}
@@ -33,15 +40,36 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
     # Build current conditions (using UTC hour 0 as baseline)
     current_hour = datetime.now().hour
 
+    # Validate required fields
+    if 'predictions' not in raw_data:
+        print("ERROR: 'predictions' field missing from input data")
+        raise KeyError("'predictions' field is required")
+
+    if 'bands' not in raw_data:
+        print("ERROR: 'bands' field missing from input data")
+        raise KeyError("'bands' field is required")
+
     # Group predictions by region and hour
     predictions_by_hour = defaultdict(list)
-    for pred in raw_data['predictions']:
-        predictions_by_hour[pred['utc_hour']].append(pred)
+    try:
+        for pred in raw_data['predictions']:
+            if 'utc_hour' not in pred:
+                print(f"WARNING: Prediction missing 'utc_hour' field: {pred.get('region', 'unknown')}")
+                continue
+            predictions_by_hour[pred['utc_hour']].append(pred)
+    except Exception as e:
+        print(f"ERROR: Failed to group predictions by hour: {e}")
+        raise
 
     # Find the closest hour to current time
     available_hours = sorted(predictions_by_hour.keys())
+    if not available_hours:
+        print("ERROR: No valid predictions with utc_hour found")
+        raise ValueError("No predictions available")
+
     closest_hour = min(available_hours, key=lambda h: abs(h - current_hour))
     current_preds = predictions_by_hour[closest_hour]
+    print(f"Using predictions for hour {closest_hour} UTC ({len(current_preds)} predictions)")
 
     # Build current conditions bands structure
     current_bands = {}
@@ -205,8 +233,20 @@ def main():
         print("Run generate_predictions.py first to create the input data.")
         return 1
 
-    transform_predictions(input_file, output_file, dxcc_file)
-    return 0
+    try:
+        transform_predictions(input_file, output_file, dxcc_file)
+        return 0
+    except Exception as e:
+        print(f"\n{'='*60}")
+        print(f"ERROR: Transformation failed!")
+        print(f"{'='*60}")
+        print(f"Exception type: {type(e).__name__}")
+        print(f"Exception message: {str(e)}")
+        print(f"\nPlease report this error with the propagation_data.json file")
+        print(f"{'='*60}")
+        import traceback
+        traceback.print_exc()
+        return 1
 
 
 if __name__ == '__main__':
