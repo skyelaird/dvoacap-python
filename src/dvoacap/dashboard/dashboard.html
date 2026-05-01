@@ -1669,22 +1669,20 @@
             renderBestBands();
 
             // Initialize gray line time slider to current hour
-            const now = new Date();
-            const currentHour = now.getUTCHours();
-            document.getElementById('grayLineTimeSlider').value = currentHour;
+            const currentHourInt = new Date().getUTCHours();
+            document.getElementById('grayLineTimeSlider').value = currentHourInt;
             document.getElementById('grayLineTimeValue').textContent =
-                `${String(currentHour).padStart(2, '0')}:00`;
+                `${String(currentHourInt).padStart(2, '0')}:00`;
 
             // Update gray line every 5 minutes (only when using current time)
             setInterval(() => {
                 if (grayLineHour === null) {
                     updateGrayLine();
                     // Update slider if showing current time
-                    const now = new Date();
-                    const currentHour = now.getUTCHours();
-                    document.getElementById('grayLineTimeSlider').value = currentHour;
+                    const tickHour = new Date().getUTCHours();
+                    document.getElementById('grayLineTimeSlider').value = tickHour;
                     document.getElementById('grayLineTimeValue').textContent =
-                        `${String(currentHour).padStart(2, '0')}:00`;
+                        `${String(tickHour).padStart(2, '0')}:00`;
                 }
             }, 300000);
         }
