@@ -7,9 +7,21 @@ that includes current_conditions, timeline_24h, and DXCC tracking.
 """
 
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 from collections import defaultdict
+
+
+# Make stdout/stderr UTF-8 where the runtime supports it (Python 3.7+).
+# This keeps the script portable across consoles whose default code page
+# (e.g. cp1252 on Windows, or sandboxed Microsoft Store Python) cannot
+# encode characters outside ASCII.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
 
 
 def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
@@ -186,7 +198,7 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
     with open(output_file, 'w') as f:
         json.dump(transformed, f, indent=2)
 
-    print("✓ Transformation complete!")
+    print("[OK] Transformation complete!")
     print(f"  - Bands: {len(current_bands)}")
     print(f"  - Timeline hours: {len(timeline_hours)}")
     print(f"  - Generated: {raw_data['generated']}")
@@ -201,13 +213,46 @@ def main():
     dxcc_file = base_dir / 'dxcc_summary.json'
 
     if not input_file.exists():
-        print(f"Error: {input_file} not found!")
-        print("Run generate_predictions.py first to create the input data.")
+        print(f"Error: {input_file} not found!", file=sys.stderr)
+        print("Run generate_predictions.py first to create the input data.",
+              file=sys.stderr)
         return 1
 
-    transform_predictions(input_file, output_file, dxcc_file)
+    try:
+        transform_predictions(input_file, output_file, dxcc_file)
+    except KeyError as e:
+        print(
+            f"Error: required field {e} is missing from {input_file.name}.",
+            file=sys.stderr,
+        )
+        print(
+            "This usually means generate_predictions.py produced an "
+            "incomplete or older-format file. Try regenerating predictions.",
+            file=sys.stderr,
+        )
+        return 2
+    except json.JSONDecodeError as e:
+        print(
+            f"Error: {input_file.name} is not valid JSON ({e}).",
+            file=sys.stderr,
+        )
+        return 3
+    except OSError as e:
+        print(f"Error: file I/O failed ({e}).", file=sys.stderr)
+        return 4
+    except ValueError as e:
+        print(
+            f"Error: {input_file.name} contains no usable predictions ({e}).",
+            file=sys.stderr,
+        )
+        print(
+            "Re-run generate_predictions.py to produce a populated file.",
+            file=sys.stderr,
+        )
+        return 5
+
     return 0
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())
