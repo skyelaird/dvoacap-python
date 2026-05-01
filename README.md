@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
-![Version](https://img.shields.io/badge/version-1.0.1-blue)
+![Version](https://img.shields.io/badge/version-1.0.2-blue)
 ![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)
 ![Validation](https://img.shields.io/badge/validation-86.6%25-brightgreen)
 ![Performance](https://img.shields.io/badge/performance-2.3x%20faster-orange)
@@ -15,7 +15,7 @@
 DVOACAP-Python is a modern Python port of the [DVOACAP](https://github.com/VE3NEA/DVOACAP) HF propagation prediction engine, originally written in Delphi/Pascal by Alex Shovkoplyas (VE3NEA). This project aims to provide an accessible, well-documented, and maintainable Python implementation of the VOACAP ionospheric propagation model.
 
 **Original DVOACAP by:** Alex Shovkoplyas, VE3NEA
-**Python Port:** Production Ready (v1.0.1, November 2025) - 2.3x faster than v1.0.0
+**Python Port:** Production Ready (v1.0.2, May 2026) - 2.3x faster than v1.0.0
 
 ## ⚡ Quick Start
 
@@ -205,7 +205,7 @@ See [src/dvoacap/dashboard/ISSUE_MULTI_USER_WEB_APP.md](src/dvoacap/dashboard/IS
 
 ## 📊 Project Status
 
-**Status: v1.0.1 Production Release** - 86.6% validation accuracy across 11 diverse test paths, 2.3x performance improvement
+**Status: v1.0.2 Production Release** - 86.6% validation accuracy across 11 diverse test paths, 2.3x performance improvement
 
 ### ✅ Completed Modules
 
@@ -267,7 +267,7 @@ See [src/dvoacap/dashboard/ISSUE_MULTI_USER_WEB_APP.md](src/dvoacap/dashboard/IS
 
 ### 📅 Planned
 
-- **PyPI public release** - Package ready (v1.0.1), pending publication decision
+- **PyPI public release** - Package ready (v1.0.2), pending publication decision
 - **Comprehensive type hints** - Add type annotations throughout codebase
 - **Sphinx API documentation** - Complete API reference with examples
 - **Community engagement** - Forum presence, user support, integration examples

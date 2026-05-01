@@ -93,14 +93,14 @@ Step 2: Installing DVOACAP...
 Step 3: Verifying installation...
 ============================================================
 Name: dvoacap
-Version: 1.0.1
+Version: 1.0.2
 Summary: Python port of DVOACAP HF propagation prediction engine
 ✓ DVOACAP package verified
 
 ============================================================
 Step 4: Testing import...
 ============================================================
-✓ DVOACAP imported successfully (version 1.0.1)
+✓ DVOACAP imported successfully (version 1.0.2)
 
 ============================================================
 ✓ INSTALLATION COMPLETE!
@@ -126,7 +126,7 @@ and run a basic HF propagation prediction.
 ============================================================
 [1/4] Testing package import...
 ============================================================
-✓ Successfully imported dvoacap (version 1.0.1)
+✓ Successfully imported dvoacap (version 1.0.2)
 
 ============================================================
 [2/4] Testing core components...
