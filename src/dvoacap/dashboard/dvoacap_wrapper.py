@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# TODO(phase 2): Externalise station/QTH/callsign config to
+# `data_dir/dvoacap_config.json` so it survives package upgrades.
+# Phase 1 keeps this edit-in-place inside the package.
 """
 DVOACAP Python Wrapper - Corrected Version
 Calls the dvoa.dll with the EXACT format it expects

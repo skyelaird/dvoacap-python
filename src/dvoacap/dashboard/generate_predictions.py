@@ -14,6 +14,13 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+from dvoacap.path_geometry import GeoPoint
+from dvoacap.prediction_engine import PredictionEngine
+from dvoacap.space_weather_sources import MultiSourceSpaceWeatherFetcher
+from dvoacap.antenna_gain import create_antenna
+
+from .paths import get_data_dir, get_user_antenna_config
+
 
 # Custom JSON encoder to handle numpy types
 class NumpyEncoder(json.JSONEncoder):
@@ -25,20 +32,6 @@ class NumpyEncoder(json.JSONEncoder):
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
         return super(NumpyEncoder, self).default(obj)
-
-# Add parent directory to path to import dvoacap
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-try:
-    from src.dvoacap.path_geometry import GeoPoint
-    from src.dvoacap.prediction_engine import PredictionEngine
-    from src.dvoacap.space_weather_sources import MultiSourceSpaceWeatherFetcher
-    from src.dvoacap.antenna_gain import create_antenna
-    import requests
-except ImportError as e:
-    print(f"Error: Could not import DVOACAP modules: {e}")
-    print("Make sure you're running from the dvoacap-python directory")
-    sys.exit(1)
 
 
 # =============================================================================
@@ -94,7 +87,7 @@ def load_antenna_configuration() -> Dict:
     - antennas: List of antenna definitions
     - band_assignments: Dict mapping bands to antenna names
     """
-    config_file = Path(__file__).parent / 'antenna_config.json'
+    config_file = get_user_antenna_config()
 
     if config_file.exists():
         try:
@@ -419,7 +412,7 @@ def main():
     data = generate_24hour_forecast()
 
     # Save to JSON
-    output_file = Path(__file__).parent / 'propagation_data.json'
+    output_file = get_data_dir() / 'propagation_data.json'
     with open(output_file, 'w') as f:
         json.dump(data, f, indent=2, cls=NumpyEncoder)
 
@@ -431,11 +424,10 @@ def main():
     # Transform data to dashboard-compatible format
     print()
     print("[OK] Transforming data for dashboard...")
-    transform_script = Path(__file__).parent / 'transform_data.py'
     try:
         import subprocess
         result = subprocess.run(
-            [sys.executable, str(transform_script)],
+            [sys.executable, '-m', 'dvoacap.dashboard.transform_data'],
             capture_output=True,
             text=True,
             check=False,

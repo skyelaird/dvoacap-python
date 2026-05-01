@@ -22,8 +22,7 @@ from datetime import datetime, timezone
 from flask import Flask, jsonify, send_from_directory, request, make_response
 from flask_cors import CORS
 
-# Add parent directory to import dvoacap
-sys.path.insert(0, str(Path(__file__).parent.parent))
+from .paths import PACKAGE_DIR, get_data_dir, get_static_file, get_user_antenna_config
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for API requests
@@ -78,16 +77,14 @@ def run_prediction_generator():
         generation_state['message'] = 'Starting prediction engine...'
         generation_state['error'] = None
 
-        # Run the prediction generator as a subprocess
-        script_path = Path(__file__).parent / 'generate_predictions.py'
-
         generation_state['progress'] = 20
         generation_state['message'] = 'Fetching solar conditions...'
 
-        # Execute the script
+        # Execute the prediction generator as a subprocess via -m so that
+        # relative imports resolve correctly regardless of install location.
         result = subprocess.run(
-            [sys.executable, str(script_path)],
-            cwd=str(Path(__file__).parent),
+            [sys.executable, '-m', 'dvoacap.dashboard.generate_predictions'],
+            cwd=str(get_data_dir()),
             capture_output=True,
             text=True,
             timeout=300  # 5 minute timeout
@@ -197,7 +194,7 @@ def get_prediction_data():
         JSON prediction data
     """
     try:
-        data_file = Path(__file__).parent / 'enhanced_predictions.json'
+        data_file = get_data_dir() / 'enhanced_predictions.json'
         if data_file.exists():
             with open(data_file, 'r') as f:
                 data = json.load(f)
@@ -221,7 +218,7 @@ def station_config():
     Returns:
         JSON with station configuration
     """
-    config_file = Path(__file__).parent / 'station_config.json'
+    config_file = get_data_dir() / 'station_config.json'
 
     if request.method == 'POST':
         try:
@@ -263,7 +260,7 @@ def antenna_config():
     Returns:
         JSON with antenna configuration
     """
-    config_file = Path(__file__).parent / 'antenna_config.json'
+    config_file = get_user_antenna_config()
 
     if request.method == 'POST':
         try:
@@ -327,14 +324,24 @@ def debug_cache():
 @app.route('/')
 def index():
     """Serve the main dashboard"""
-    response = make_response(send_from_directory('.', 'dashboard.html'))
+    response = make_response(send_from_directory(str(PACKAGE_DIR), 'dashboard.html'))
     return apply_cache_control(response)
 
 
 @app.route('/<path:path>')
 def serve_static(path):
-    """Serve static files"""
-    response = make_response(send_from_directory('.', path))
+    """Serve static files.
+
+    HTML/JS/CSS shipped with the package come from PACKAGE_DIR.
+    Generated JSON (predictions, dxcc summary, etc.) lives in the data dir.
+    Files in the data dir take precedence so users can override packaged
+    templates simply by creating a file there.
+    """
+    data_path = get_data_dir() / path
+    if data_path.is_file():
+        response = make_response(send_from_directory(str(get_data_dir()), path))
+    else:
+        response = make_response(send_from_directory(str(PACKAGE_DIR), path))
     return apply_cache_control(response)
 
 
@@ -362,8 +369,7 @@ def check_dependencies():
 
     # Check if dvoacap module is importable
     try:
-        sys.path.insert(0, str(Path(__file__).parent.parent))
-        from src.dvoacap.prediction_engine import PredictionEngine
+        from dvoacap.prediction_engine import PredictionEngine  # noqa: F401
     except ImportError as e:
         missing.append(f'dvoacap ({str(e)})')
 
@@ -381,7 +387,7 @@ def check_and_generate_predictions(skip_auto_gen=False):
     Returns:
         bool: True if data is available, False otherwise
     """
-    data_file = Path(__file__).parent / 'enhanced_predictions.json'
+    data_file = get_data_dir() / 'enhanced_predictions.json'
 
     # Check if data file exists
     if not data_file.exists():
@@ -418,12 +424,10 @@ def generate_predictions_now():
     """
     Synchronously generate predictions during server startup
     """
-    script_path = Path(__file__).parent / 'generate_predictions.py'
-
     try:
         result = subprocess.run(
-            [sys.executable, str(script_path)],
-            cwd=str(Path(__file__).parent),
+            [sys.executable, '-m', 'dvoacap.dashboard.generate_predictions'],
+            cwd=str(get_data_dir()),
             capture_output=True,
             text=True,
             timeout=300  # 5 minute timeout
@@ -445,26 +449,26 @@ def generate_predictions_now():
         print(f"✗ Error generating predictions: {e}")
 
 
-def main():
-    """Start the Flask server"""
-    import argparse
+def main(
+    host: str = '127.0.0.1',
+    port: int = 8000,
+    debug: bool = False,
+    no_cache: bool = False,
+    skip_deps_check: bool = False,
+    skip_auto_gen: bool = False,
+):
+    """Start the Flask server.
 
-    parser = argparse.ArgumentParser(description='VE1ATM Propagation Dashboard Server')
-    parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
-    parser.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
-    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
-    parser.add_argument('--no-cache', action='store_true', help='Disable HTTP caching (for development)')
-    parser.add_argument('--skip-deps-check', action='store_true', help='Skip dependency check')
-    parser.add_argument('--skip-auto-gen', action='store_true', help='Skip automatic prediction generation on startup')
-
-    args = parser.parse_args()
-
+    All configuration is via keyword arguments. Direct invocation as a
+    script (``python -m dvoacap.dashboard.server``) is handled by the
+    ``__main__`` block below, which parses argv and calls this function.
+    """
     # Configure caching
-    if args.no_cache:
+    if no_cache:
         server_config['disable_cache'] = True
 
     # Check dependencies unless skipped
-    if not args.skip_deps_check:
+    if not skip_deps_check:
         success, missing = check_dependencies()
         if not success:
             print("=" * 80)
@@ -481,22 +485,46 @@ def main():
             sys.exit(1)
 
     print("=" * 80)
-    print("VE1ATM HF Propagation Dashboard Server")
+    print("DVOACAP HF Propagation Dashboard Server")
     print("=" * 80)
-    print(f"\n✓ Server starting on http://{args.host}:{args.port}")
-    print(f"✓ Dashboard: http://{args.host}:{args.port}/")
-    print(f"✓ Debug mode: {'Enabled' if args.debug else 'Disabled'}")
-    print(f"✓ HTTP caching: {'Disabled' if server_config['disable_cache'] or args.debug else 'Enabled'}")
+    print(f"\n✓ Server starting on http://{host}:{port}")
+    print(f"✓ Dashboard: http://{host}:{port}/")
+    print(f"✓ Data directory: {get_data_dir()}")
+    print(f"✓ Debug mode: {'Enabled' if debug else 'Disabled'}")
+    print(f"✓ HTTP caching: {'Disabled' if server_config['disable_cache'] or debug else 'Enabled'}")
 
     # Check and auto-generate predictions if needed
     print()
-    check_and_generate_predictions(skip_auto_gen=args.skip_auto_gen)
+    check_and_generate_predictions(skip_auto_gen=skip_auto_gen)
 
     print(f"\n✓ Press Ctrl+C to stop")
     print("=" * 80)
 
-    app.run(host=args.host, port=args.port, debug=args.debug)
+    app.run(host=host, port=port, debug=debug)
+
+
+def _parse_args_and_run():
+    """Parse command-line arguments and run the server."""
+    import argparse
+
+    parser = argparse.ArgumentParser(description='DVOACAP Propagation Dashboard Server')
+    parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
+    parser.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    parser.add_argument('--no-cache', action='store_true', help='Disable HTTP caching (for development)')
+    parser.add_argument('--skip-deps-check', action='store_true', help='Skip dependency check')
+    parser.add_argument('--skip-auto-gen', action='store_true', help='Skip automatic prediction generation on startup')
+
+    args = parser.parse_args()
+    main(
+        host=args.host,
+        port=args.port,
+        debug=args.debug,
+        no_cache=args.no_cache,
+        skip_deps_check=args.skip_deps_check,
+        skip_auto_gen=args.skip_auto_gen,
+    )
 
 
 if __name__ == '__main__':
-    main()
+    _parse_args_and_run()

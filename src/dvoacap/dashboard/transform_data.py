@@ -12,6 +12,8 @@ from pathlib import Path
 from datetime import datetime
 from collections import defaultdict
 
+from .paths import get_data_dir
+
 
 # Make stdout/stderr UTF-8 where the runtime supports it (Python 3.7+).
 # This keeps the script portable across consoles whose default code page
@@ -206,7 +208,7 @@ def transform_predictions(input_file: Path, output_file: Path, dxcc_file: Path):
 
 def main():
     """Main entry point"""
-    base_dir = Path(__file__).parent
+    base_dir = get_data_dir()
 
     input_file = base_dir / 'propagation_data.json'
     output_file = base_dir / 'enhanced_predictions.json'
